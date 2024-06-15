@@ -11,7 +11,7 @@ class UserService {
         Authorization: `Bearer ${token || CookieManager.get(AUTH_KEY)}`,
       },
     };
-    return await ApiRequest.get("/user/me", options);
+    return await ApiRequest.get("/auth/me", options);
   }
 
   static async login(payload: { username: string; password: string }) {
@@ -22,7 +22,7 @@ class UserService {
       },
       body: JSON.stringify(payload),
     };
-    return await ApiRequest.post("/auth/user/login", options);
+    return await ApiRequest.post("/auth/login", options);
   }
 
   static async register(payload: {}) {

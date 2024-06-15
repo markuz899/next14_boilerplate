@@ -31,8 +31,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
     async function getUser() {
       const token = CookieManager.get(AUTH_KEY);
       if (token) {
-        // const data = await User.getUser();
-        const data: any = {};
+        const data = await User.getUser(token);
         if (data?.error) logout();
         if (data?.id) setUser(data);
       }
@@ -42,9 +41,9 @@ export const AuthProvider = (props: AuthProviderProps) => {
 
   const login = async (payload: any) => {
     let userLogin = await User.login(payload);
-    if (userLogin?.jwt) {
-      CookieManager.set(AUTH_KEY, userLogin);
-      CookieManager.set(USER_KEY, JSON.stringify(userLogin?.user));
+    if (userLogin?.token) {
+      CookieManager.set(AUTH_KEY, userLogin.token);
+      CookieManager.set(USER_KEY, JSON.stringify(userLogin));
       location.replace("/");
     } else {
       console.error("Username o password errati");

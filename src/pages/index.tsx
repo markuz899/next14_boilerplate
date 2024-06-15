@@ -1,12 +1,19 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import { GlobalPageProps } from "@/utils/interface";
+import { Toast } from "@/utils/toast";
 import { WithAuth } from "@/hoc";
+import { useEffect } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Montserrat({ subsets: ["latin"] });
 
 const Home = ({ global }: GlobalPageProps) => {
+  useEffect(() => {
+    // Toast({ type: "error", message: "Error toast" });
+    // Toast({ type: "info", message: "Info toast" });
+    // Toast({ type: "success", message: "Success toast" });
+  }, []);
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
@@ -114,5 +121,13 @@ const Home = ({ global }: GlobalPageProps) => {
     </main>
   );
 };
+
+export async function getServerSideProps(ctx: { req: any }) {
+  const { req } = ctx;
+
+  return {
+    props: {},
+  };
+}
 
 export default WithAuth(Home);

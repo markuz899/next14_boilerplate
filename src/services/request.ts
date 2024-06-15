@@ -3,7 +3,7 @@ import { API_HOST } from "../utils/constants";
 /* eslint-disable */
 class ApiRequest {
   static async http(path: string, options: {}) {
-    const url = `${API_HOST}/api${path}`;
+    const url = `${API_HOST}${path}`;
     return await fetch(url, options);
   }
 
