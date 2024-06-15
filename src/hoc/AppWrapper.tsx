@@ -1,4 +1,3 @@
-import { NextComponentType } from "next";
 import { AppInitialProps, AppProps } from "next/app";
 import { AppContextType } from "next/dist/shared/lib/utils";
 import React from "react";
@@ -19,13 +18,13 @@ interface CustomAppProps extends AppProps {
 }
 
 const AppWrapper = (App: any) => {
-  return class Redux extends React.Component<CustomAppProps> {
+  return class Apper extends React.Component<CustomAppProps> {
     // eslint-disable-next-line
     static async getInitialProps(
       appContext: AppContextType
     ): Promise<AppInitialProps & { authentication: Authentication }> {
       let appProps: AppInitialProps = { pageProps: {} };
-      let isAuth: any = {};
+      let isAuth: any = null;
 
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(appContext);
@@ -40,7 +39,10 @@ const AppWrapper = (App: any) => {
 
       return {
         ...appProps,
-        authentication: { isAuth: isAuth?.id ? true : false, user: isAuth },
+        authentication: {
+          isAuth: isAuth?.id ? true : false,
+          user: isAuth,
+        },
       };
     }
 

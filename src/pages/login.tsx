@@ -3,8 +3,11 @@ import router from "next/router";
 import styled from "styled-components";
 import { Layout } from "@/containers";
 import { GlobalPageProps } from "@/interface";
+import { useAuth } from "@/context";
 
 export default function Login({ global }: GlobalPageProps) {
+  const { login } = useAuth();
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

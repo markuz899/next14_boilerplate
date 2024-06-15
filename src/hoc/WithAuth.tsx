@@ -1,14 +1,8 @@
+import { CookieManager } from "@/utils/cookie";
 import { useRouter } from "next/router";
 import { ComponentType, useEffect, useState } from "react";
 
 type WithAuthProps<P> = P & {};
-
-function getCookie(name: string) {
-  const value = `; ${document.cookie}`;
-  const parts: any = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-}
 
 const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
   const AuthComponent: React.FC<WithAuthProps<P>> = (props) => {
@@ -16,20 +10,13 @@ const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
     const [verified, setVerified] = useState(false);
 
     useEffect(() => {
-      const accessToken = getCookie("auth");
+      const accessToken = CookieManager.get("auth");
       const checkUser = async () => {
-        console.log("enter in WithAuth");
         if (!accessToken) {
           Router.replace("/login");
+          // remove cookie "auth"
         } else {
-          // const data = await User.getUser(accessToken);
-          const data = { id: 123 };
-          if (data.id) {
-            setVerified(true);
-          } else {
-            // Cookies.remove('auth');
-            Router.replace("/login");
-          }
+          setVerified(true);
         }
       };
       checkUser();

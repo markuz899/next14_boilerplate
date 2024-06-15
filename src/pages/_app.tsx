@@ -3,9 +3,12 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { GlobalStyle } from "@/theme/global-styles";
 import { AppWrapper } from "@/hoc";
+import { AuthProvider } from "@/context";
 
 interface AppGlobalProps extends AppProps {
-  authentication: boolean;
+  authentication: {
+    isAuth?: boolean;
+  };
 }
 
 const App = ({ Component, pageProps, authentication }: AppGlobalProps) => {
@@ -13,11 +16,13 @@ const App = ({ Component, pageProps, authentication }: AppGlobalProps) => {
 
   return (
     <React.StrictMode>
-      <Component
-        {...pageProps}
-        global={{ authentication, menuState, setMenuState }}
-      />
-      <GlobalStyle />
+      <AuthProvider isAuth={authentication.isAuth}>
+        <Component
+          {...pageProps}
+          global={{ authentication, menuState, setMenuState }}
+        />
+        <GlobalStyle />
+      </AuthProvider>
     </React.StrictMode>
   );
 };
