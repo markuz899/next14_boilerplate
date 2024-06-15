@@ -4,7 +4,7 @@ import { CookieManager } from "@/utils/cookie";
 
 interface AuthContextType {
   isAuth: boolean;
-  user: any; // Definire un tipo più specifico per l'oggetto utente se possibile
+  user: any;
   login: (payload: any) => Promise<any>;
   registerService: (payload: any) => Promise<any>;
   logout: () => Promise<void>;
