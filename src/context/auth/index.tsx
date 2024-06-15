@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
-// import { User } from "@/services";
+import { User } from "@/services";
 import { CookieManager } from "@/utils/cookie";
-import { AUTH_KEY } from "@/utils/constants";
+import { AUTH_KEY, USER_KEY } from "@/utils/constants";
 
 interface AuthContextType {
   isAuth: boolean;
@@ -41,11 +41,10 @@ export const AuthProvider = (props: AuthProviderProps) => {
   }, []);
 
   const login = async (payload: any) => {
-    // let userLogin = await User.login(payload);
-    let userLogin: any = {};
+    let userLogin = await User.login(payload);
     if (userLogin?.jwt) {
-      CookieManager.set(AUTH_KEY, userLogin?.jwt);
-      CookieManager.set("user", JSON.stringify(userLogin?.user));
+      CookieManager.set(AUTH_KEY, userLogin);
+      CookieManager.set(USER_KEY, JSON.stringify(userLogin?.user));
       location.replace("/");
     } else {
       console.error("Username o password errati");
@@ -59,7 +58,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
     let userRegister: any = {};
     if (userRegister?.jwt) {
       CookieManager.set(AUTH_KEY, userRegister?.jwt);
-      CookieManager.set("user", JSON.stringify(userRegister?.user));
+      CookieManager.set(USER_KEY, JSON.stringify(userRegister?.user));
       location.replace("/");
     } else {
       console.error("Qualcosa è andato storto");
@@ -70,7 +69,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
   const logout = async () => {
     location.replace("/login");
     CookieManager.delete(AUTH_KEY);
-    CookieManager.delete("user");
+    CookieManager.delete(USER_KEY);
   };
 
   return (

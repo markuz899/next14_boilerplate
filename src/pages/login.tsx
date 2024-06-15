@@ -14,19 +14,7 @@ export default function Login({ global }: GlobalPageProps) {
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-    console.log("cred", { email, password });
-
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      router.push("/");
-    } else {
-      console.log("errore in request");
-    }
+    await login({ email, password });
   }
 
   return (

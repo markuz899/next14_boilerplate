@@ -1,3 +1,5 @@
+import { IncomingMessage } from "http";
+
 class CookieManager {
   static get(cookieName: string): string | null {
     const name = cookieName + "=";
@@ -36,6 +38,40 @@ class CookieManager {
     document.cookie =
       cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
+
+  static getSsrCookie(req: IncomingMessage, name: string): string | undefined {
+    if (!req?.headers?.cookie) {
+      return undefined;
+    }
+
+    const cookies = req.headers.cookie?.split(";").reduce((acc, cookie) => {
+      const [key, value] = cookie.split("=").map((part) => part.trim());
+      acc[key] = decodeURIComponent(value);
+      return acc;
+    }, {} as Record<string, string>);
+
+    return cookies[name];
+  }
+
+  static removeSsrCookie = (
+    req: IncomingMessage,
+    res: any,
+    name: string
+  ): void => {
+    if (!req?.headers?.cookie) {
+      return;
+    }
+
+    const cookies = req.headers.cookie?.split(";").reduce((acc, cookie) => {
+      const [key, value] = cookie.split("=").map((part) => part.trim());
+      acc[key] = decodeURIComponent(value);
+      return acc;
+    }, {} as Record<string, string>);
+
+    if (cookies[name]) {
+      res.setHeader("Set-Cookie", `${name}=; Max-Age=0; path=/; httponly`);
+    }
+  };
 }
 
 export { CookieManager };
