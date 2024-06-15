@@ -33,6 +33,7 @@ const useBreakpoints = () => {
 
   useEffect(() => {
     setState(setBreakpoints());
+    // eslint-disable-next-line
   }, [width]);
 
   return state;
