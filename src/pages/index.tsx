@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Link from "next/link";
-import { GlobalPageProps } from "@/interface";
+import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -1,5 +1,6 @@
 import { CookieManager } from "@/utils/cookie";
 import ApiRequest from "../request";
+import { AUTH_KEY } from "@/utils/constants";
 
 class UserService {
   static async getUser(token: string) {
@@ -7,7 +8,7 @@ class UserService {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        Authorization: `Bearer ${token || CookieManager.get("auth")}`,
+        Authorization: `Bearer ${token || CookieManager.get(AUTH_KEY)}`,
       },
     };
     return await ApiRequest.get("/user/me", options);

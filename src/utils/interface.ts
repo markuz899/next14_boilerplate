@@ -1,4 +1,11 @@
+import { AppProps } from "next/app";
 import { ReactNode } from "react";
+
+export interface AppGlobalProps extends AppProps {
+  authentication: {
+    isAuth?: boolean;
+  };
+}
 
 export interface LayoutProps {
   children: ReactNode;

@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 import router from "next/router";
 import styled from "styled-components";
 import { Layout } from "@/containers";
-import { GlobalPageProps } from "@/interface";
+import { GlobalPageProps } from "@/utils/interface";
 import { useAuth } from "@/context";
 
 export default function Login({ global }: GlobalPageProps) {

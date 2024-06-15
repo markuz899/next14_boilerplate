@@ -4,12 +4,7 @@ import type { AppProps } from "next/app";
 import { GlobalStyle } from "@/theme/global-styles";
 import { AppWrapper } from "@/hoc";
 import { AuthProvider } from "@/context";
-
-interface AppGlobalProps extends AppProps {
-  authentication: {
-    isAuth?: boolean;
-  };
-}
+import { AppGlobalProps } from "@/utils/interface";
 
 const App = ({ Component, pageProps, authentication }: AppGlobalProps) => {
   const [menuState, setMenuState] = useState(false);

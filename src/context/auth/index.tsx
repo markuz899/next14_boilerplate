@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 // import { User } from "@/services";
 import { CookieManager } from "@/utils/cookie";
+import { AUTH_KEY } from "@/utils/constants";
 
 interface AuthContextType {
   isAuth: boolean;
@@ -28,7 +29,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
 
   useEffect(() => {
     async function getUser() {
-      const token = CookieManager.get("auth");
+      const token = CookieManager.get(AUTH_KEY);
       if (token) {
         // const data = await User.getUser();
         const data: any = {};
@@ -43,7 +44,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
     // let userLogin = await User.login(payload);
     let userLogin: any = {};
     if (userLogin?.jwt) {
-      CookieManager.set("auth", userLogin?.jwt);
+      CookieManager.set(AUTH_KEY, userLogin?.jwt);
       CookieManager.set("user", JSON.stringify(userLogin?.user));
       location.replace("/");
     } else {
@@ -57,7 +58,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
     // let userRegister = await User.register(payload);
     let userRegister: any = {};
     if (userRegister?.jwt) {
-      CookieManager.set("auth", userRegister?.jwt);
+      CookieManager.set(AUTH_KEY, userRegister?.jwt);
       CookieManager.set("user", JSON.stringify(userRegister?.user));
       location.replace("/");
     } else {
@@ -68,7 +69,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
 
   const logout = async () => {
     location.replace("/login");
-    CookieManager.delete("auth");
+    CookieManager.delete(AUTH_KEY);
     CookieManager.delete("user");
   };
 

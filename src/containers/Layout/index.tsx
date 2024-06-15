@@ -4,7 +4,7 @@ import styled from "styled-components";
 import theme from "../../theme";
 import LayoutContext from "./Context";
 import Head from "next/head";
-import { LayoutProps } from "@/interface";
+import { LayoutProps } from "@/utils/interface";
 
 export const Layout = ({
   children,
