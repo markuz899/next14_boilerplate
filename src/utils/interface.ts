@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import { ReactNode } from "react";
 
 export interface AppGlobalProps extends AppProps {
+  reduxStore: any;
   authentication: {
     isAuth?: boolean;
   };

@@ -1,15 +1,16 @@
+import configureStore from "@/utils/redux/configure-store";
 import { User } from "@/services";
 import { AUTH_KEY, USER_KEY } from "@/utils/constants";
 import { CookieManager } from "@/utils/cookie";
 import { AppInitialProps, AppProps } from "next/app";
-import { AppContextType } from "next/dist/shared/lib/utils";
+import { NextPageContext } from "next/dist/shared/lib/utils";
 import React from "react";
+import { Store } from "redux";
 
-declare module "http" {
-  interface IncomingMessage {
-    user?: any;
-  }
-}
+const isServer = typeof window === "undefined";
+const __NEXT_REDUX_STORE__ = "__NEXT_REDUX_STORE__";
+
+interface AppState {}
 
 interface Authentication {
   isAuth: boolean;
@@ -18,18 +19,45 @@ interface Authentication {
 
 interface CustomAppProps extends AppProps {
   authentication: Authentication;
+  initialReduxState: AppState;
+}
+
+interface CustomNextPageContext extends NextPageContext {
+  reduxStore?: Store<AppState>;
+  req?: any & { cookies?: Record<string, string>; user?: any };
+}
+
+declare global {
+  interface Window {
+    [__NEXT_REDUX_STORE__]?: Store<AppState>;
+  }
+}
+
+function getOrCreateStore(initialState: AppState): Store<AppState> {
+  if (isServer) {
+    return configureStore(initialState);
+  }
+
+  if (!(window as any)[__NEXT_REDUX_STORE__]) {
+    (window as any)[__NEXT_REDUX_STORE__] = configureStore(initialState);
+  }
+  return (window as any)[__NEXT_REDUX_STORE__] as Store<AppState>;
 }
 
 const AppWrapper = (App: any) => {
   return class Apper extends React.Component<CustomAppProps> {
-    // eslint-disable-next-line
-    static async getInitialProps(
-      appContext: AppContextType
-    ): Promise<AppInitialProps & { authentication: Authentication }> {
+    static async getInitialProps(appContext: any): Promise<
+      AppInitialProps & {
+        authentication: Authentication;
+        initialReduxState: AppState;
+      }
+    > {
+      const reduxStore = getOrCreateStore({});
       const { ctx } = appContext;
-      const req = ctx.req as any;
-      const res = ctx.res as any;
+      const req = ctx.req as CustomNextPageContext["req"];
+      const res = ctx.res;
 
+      appContext.ctx.reduxStore = reduxStore;
       let appProps: AppInitialProps = { pageProps: {} };
       let isAuth: any = null;
 
@@ -37,7 +65,6 @@ const AppWrapper = (App: any) => {
         appProps = await App.getInitialProps(appContext);
       }
 
-      // TODO: Check cookie auth
       const authCookie = CookieManager.getSsrCookie(req, AUTH_KEY);
       if (authCookie) {
         try {
@@ -56,6 +83,7 @@ const AppWrapper = (App: any) => {
 
       return {
         ...appProps,
+        initialReduxState: reduxStore.getState(),
         authentication: {
           isAuth: isAuth?.id ? true : false,
           user: isAuth,
@@ -63,15 +91,23 @@ const AppWrapper = (App: any) => {
       };
     }
 
+    reduxStore: Store<AppState>;
     authentication: Authentication;
 
     constructor(props: CustomAppProps) {
       super(props);
+      this.reduxStore = getOrCreateStore(props.initialReduxState);
       this.authentication = props.authentication;
     }
 
     render() {
-      return <App {...this.props} />;
+      return (
+        <App
+          {...this.props}
+          reduxStore={this.reduxStore}
+          authentication={this.authentication}
+        />
+      );
     }
   };
 };

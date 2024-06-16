@@ -3,13 +3,19 @@ import "@/styles/globals.css";
 import { GlobalStyle } from "@/theme/global-styles";
 import { AppWrapper } from "@/hoc";
 import { AuthProvider } from "@/context";
+import { Provider } from "react-redux";
 import { AppGlobalProps } from "@/utils/interface";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 
-const App = ({ Component, pageProps, authentication }: AppGlobalProps) => {
+const App = ({
+  Component,
+  pageProps,
+  authentication,
+  reduxStore,
+}: AppGlobalProps) => {
   const [menuState, setMenuState] = useState(false);
 
   useEffect(() => {
@@ -26,24 +32,26 @@ const App = ({ Component, pageProps, authentication }: AppGlobalProps) => {
 
   return (
     <React.StrictMode>
-      <AuthProvider isAuth={authentication.isAuth}>
-        <Component
-          {...pageProps}
-          global={{ authentication, menuState, setMenuState }}
-        />
-        <ToastContainer
-          position="top-right"
-          stacked
-          limit={3}
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          draggable={false}
-          closeOnClick
-          pauseOnHover
-        />
-        <GlobalStyle />
-      </AuthProvider>
+      <Provider store={reduxStore}>
+        <AuthProvider isAuth={authentication.isAuth}>
+          <Component
+            {...pageProps}
+            global={{ authentication, menuState, setMenuState }}
+          />
+          <ToastContainer
+            position="top-right"
+            stacked
+            limit={3}
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            draggable={false}
+            closeOnClick
+            pauseOnHover
+          />
+          <GlobalStyle />
+        </AuthProvider>
+      </Provider>
     </React.StrictMode>
   );
 };
