@@ -23,8 +23,8 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     margin: 0;
-    color: ${theme.colors.dark};
-    background: ${theme.colors.darkGrey};
+    color: ${theme.colors.white};
+    background: ${theme.colors.body};
     height: 100%;
     width: 100%;
     -webkit-font-smoothing: antialiased;
@@ -39,21 +39,20 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
-    color: ${theme.colors.dark};
+    color: ${theme.colors.white};
   }
   h1 {
     font-weight: ${theme.font.weight.bold};
-    color: ${theme.colors.dark};
+    color: ${theme.colors.white};
     font-size: ${theme.font.size.large};
   }
   h2 {
     font-weight: ${theme.font.weight.regular};
-    color: ${theme.colors.dark};
+    color: ${theme.colors.white};
     font-size: ${theme.font.size.large};
   }
   a {
     text-decoration: none;
-    color: ${theme.colors.primary};
     &:hover {
       color: ${theme.colors.lightGrey};
     }
@@ -66,6 +65,7 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
     line-height: 1.1;
+    color: ${theme.colors.white};
   }
   b, strong {
     ${theme.font.weight.bold}
@@ -141,7 +141,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${theme.colors.black}!important;
   }
   .text-white{
-    color: ${theme.colors.dark}!important;
+    color: ${theme.colors.white}!important;
   }
   .text-primary{
     color: ${theme.colors.primary}!important;

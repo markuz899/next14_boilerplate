@@ -5,6 +5,7 @@ import theme from "../../theme";
 import LayoutContext from "./Context";
 import Head from "next/head";
 import { LayoutProps } from "@/utils/interface";
+import { Header } from "..";
 
 export const Layout = ({
   children,
@@ -27,7 +28,7 @@ export const Layout = ({
       </Head>
       <Flex>
         <Main className={`${className} bodys`}>
-          HEADER
+          <Header />
           <Body background={background}>{children}</Body>
           FOOTER
         </Main>

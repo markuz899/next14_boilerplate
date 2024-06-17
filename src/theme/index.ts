@@ -1,9 +1,9 @@
 const theme = {
   colors: {
-    navbar: "#5c16c5",
+    navbar: "#077187",
     sideMenu: "#410f8c",
     blueFacebook: "#3088ff",
-    primary: "#5c16c5",
+    primary: "#077187",
     primaryDark: "#410f8c",
     primaryLight: "#6c38bc",
     primaryHover: "#FF7D00",
