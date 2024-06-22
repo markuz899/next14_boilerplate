@@ -146,9 +146,6 @@ export const GlobalStyle = createGlobalStyle`
   .text-primary{
     color: ${theme.colors.primary}!important;
   }
-  .text-danger{
-    color: ${theme.colors.danger}!important;
-  }
   .text-error{
     color: ${theme.colors.error}!important;
   }
@@ -159,13 +156,13 @@ export const GlobalStyle = createGlobalStyle`
     color: ${theme.colors.warning}!important;
   }
   .text-blue{
-    color: ${theme.colors.lightBlue}!important;
+    color: ${theme.colors.secondary}!important;
   }
   .text-underlined{
     text-decoration: underline;
     text-underline-offset: 3px;
     &:hover{
-      color: ${theme.colors.lightBlue}!important;
+      color: ${theme.colors.secondary}!important;
     }
   }
   .color-svg-primary{

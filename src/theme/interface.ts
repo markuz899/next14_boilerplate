@@ -4,15 +4,17 @@ export interface ITheme {
     footer: string;
     navbarText: string;
     footerText: string;
-    blueFacebook: string;
     primaryBorder: string;
     primary: string;
+    secondary: string;
     primaryDark: string;
     primaryLight: string;
     primaryHover: string;
     navblue: string;
     dark: string;
+    lightDark: string;
     white: string;
+    whiteLight: string;
     lightWhite: string;
     grey: string;
     lightGrey: string;
@@ -34,6 +36,8 @@ export interface ITheme {
     slideShowOpacity: string;
     backgroundOpacity: string;
     modalOpacity: string;
+    body: string;
+    bodyLight: string;
   };
   height: {
     ss: string;
@@ -105,6 +109,8 @@ export interface ITheme {
     transitionFluid: string;
     shadow: string;
     shadowSoft: string;
+    shadowLight: string;
+    shadowDark: string;
   };
   breakpoints: {
     first: string;
