@@ -1,164 +1,18 @@
-const theme = {
-  colors: {
-    navbar: "#077187",
-    sideMenu: "#410f8c",
-    blueFacebook: "#3088ff",
-    primary: "#077187",
-    primaryDark: "#410f8c",
-    primaryLight: "#6c38bc",
-    primaryHover: "#FF7D00",
-    navblue: "#24303e",
-    body: "#2a2a2a",
-    bodyLight: "#4e4e4e",
-    dark: "#231F20",
-    white: "#FFFFFF",
-    danger: "#EFCB68",
-    whiteLight: "#d5d5d5",
-    lightWhite: "#FAFAFA",
-    grey: "#393E46",
-    shadowGray: "#bfbfbf57",
-    lightDark: "#7d7d7d",
-    lightGrey: "#9DA4AF",
-    superGrey: "#d3d3d3",
-    darkGrey: "#7D7D7D",
-    greyIcon: "#DADEE1",
-    greyScale: "#EEEEEE",
-    borderTable: "#D9DDE0",
-    borderComponent: "#D5D8DD",
-    success: "#22CD91",
-    lightSuccess: "#82d1b5",
-    superLightSuccess: "#82d1b58f",
-    darkSuccess: "#168a62",
-    error: "#C92827",
-    superLightError: "#881a1a75",
-    gold: "#B0903D",
-    lightGold: "#705b26",
-    lightError: "#881a1a",
-    warning: "#FFC947",
-    lightWarning: "#f9ce66",
-    darkWarning: "#be9634",
-    lightInfo: "#E5F3FF",
-    cardLight: "#F8F8FA",
-    cardGrey: "#EEEFF1",
-    black: "#22252A",
-    advantageTitle: "#FFF",
-    preventive: "#C92827",
-    slideShowOpacity: "#5c16c569",
-    backgroundOpacity: "#5c16c569",
-    modalOpacity: "#5c16c569",
-    lightBlue: "#69e2ff",
-    linearBlue:
-      "linear-gradient(130deg, rgba(22, 143, 216, 1) 0%, rgba(105, 226, 255, 1) 100%)",
-    shadow: {
-      primary:
-        "0 3.4623px 6.1418px #5c16c514,0 7.92923px 12.9218px #5c16c514,0 9px 15px #5c16c514",
-      info: "0 3.4623px 6.1418px #3088ff14,0 7.92923px 12.9218px #3088ff14,0 9px 15px #3088ff14",
-      success:
-        "0 3.4623px 6.1418px #22ce9114,0 7.92923px 12.9218px #22ce9114,0 9px 15px #22ce9114",
-      warning:
-        "0 3.4623px 6.1418px #ffca4814,0 7.92923px 12.9218px #ffca4814,0 9px 15px #ffca4814",
-      error:
-        "0 3.4623px 6.1418px #c9282717,0 7.92923px 12.9218px #c9282717,0 9px 15px #c9282717",
-    },
-  },
-  height: {
-    ss: "15px",
-    xs: "20px",
-    sm: "32px",
-    md: "45px",
-    lg: "50px",
-    xl: "60px",
-  },
-  font: {
-    size: {
-      xsmall: "12px",
-      small: "15px",
-      mini: "17px",
-      minor: "18px",
-      tiny: "19px",
-      normal: "21px",
-      large: "23px",
-      medium: "29px",
-      big: "47px",
-      xBig: "51px",
-      extraLarge: "61px",
-      max: "73px",
-      super: "100px",
-    },
-    weight: {
-      regular: "400",
-      medium: "400",
-      bold: "700",
-    },
-    family: {
-      fortnite: "Fortnite",
-      gta: "Gta",
-      valorant: "Valorant",
-      opti: "Opti",
-      montserrat: "Montserrat",
-      montBold: "Montserrat-Bold",
-      montMedium: "Montserrat-Medium",
-      montRegular: "Montserrat-Regular",
-      raleway: "Raleway",
-      ralewayMedium: "Raleway-Medium",
-    },
-  },
-  spaces: {
-    space1: "5px",
-    space2: "10px",
-    space3: "15px",
-    space4: "20px",
-    space5: "25px",
-    space6: "30px",
-    space7: "35px",
-    space8: "40px",
-    space9: "45px",
-    space10: "50px",
-    space11: "55px",
-    space12: "60px",
-    space13: "70px",
-    space14: "75px",
-    space15: "80px",
-    space16: "85px",
-    space17: "90px",
-    space20: "100px",
-  },
-  extra: {
-    polygon: "polygon(0% 16%, 100% 5%, 98% 100%, 2% 90%)",
-    polygonMobile: "polygon(0% 10%, 100% 5%, 98% 100%, 2% 90%)",
-    polygonDiv: "polygon(0% 0%, 0% 100%, 100% 100%, 100% 10%)",
-    radius: "3px",
-    radiusBig: "8px",
-    transition: "0.5s",
-    transitionFluid: "all 0.7s cubic-bezier(0.86, 0, 0.07, 1);",
-    shadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
-    shadowSoft: "0 3px 6px rgba(35,31,32, 0.16)",
-    shadowLight:
-      "0 3.4623px 6.1418px #ffffff0d,0 7.92923px 12.9218px #fffcfc0d,0 9px 15px #ffffff14",
-    shadowDark:
-      "0 3.4623px 6.1418px #0000000d, 0 7.92923px 12.9218px #0000000d, 0 9px 15px #00000014",
-    categoryShadow: "0 -2px 0px",
-  },
-  breakpoints: {
-    first: "320px",
-    mobile: "600px",
-    tablet: "996px",
-  },
-  zIndex: {
-    zIndex0: 0,
-    zIndex1: 100,
-    zIndex2: 200,
-    zIndex3: 300,
-    zIndex4: 400,
-    zIndex5: 500,
-    zIndex6: 600,
-    zIndex7: 700,
-    zIndex8: 800,
-    zIndex9: 900,
-  },
-  container: "1380px",
+import { ITheme } from "./interface";
+import defaultTheme from "./tenant/default";
+
+let palette;
+try {
+  palette = require(`./tenant/${process.env.NEXT_PUBLIC_TENANT}`);
+} catch (error) {
+  console.error(`Theme not found: ${process.env.NEXT_PUBLIC_TENANT}`);
+}
+
+const theme: ITheme = {
+  ...defaultTheme,
+  ...palette,
 };
 
-export const availableSize = ["xs", "sm", "md", "lg", "xl"];
+export const availableSize: string[] = ["xs", "sm", "md", "lg", "xl"];
 
 export default theme;

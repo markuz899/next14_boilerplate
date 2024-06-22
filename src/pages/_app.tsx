@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "@/components";
+// import { Loader } from "@/components";
 
 const App = ({
   Component,
@@ -18,7 +18,7 @@ const App = ({
   reduxStore,
 }: AppGlobalProps) => {
   const [menuState, setMenuState] = useState(false);
-  const [showLoader, setShowLoader] = useState(false);
+  // const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (pageProps?.toast?.isError) {
@@ -32,35 +32,42 @@ const App = ({
     }
   }, [pageProps]);
 
-  useEffect(() => {
-    let timer: any;
+  // useEffect(() => {
+  //   let showLoaderTimer: any;
+  //   let hideLoaderTimer: any;
 
-    const handleRouteChangeStart = () => {
-      timer = setTimeout(() => {
-        setShowLoader(true);
-      }, 1000);
-    };
+  //   const handleRouteChangeStart = () => {
+  //     showLoaderTimer = setTimeout(() => {
+  //       setShowLoader(true);
+  //     }, 1000);
 
-    const handleRouteChangeComplete = () => {
-      setShowLoader(false);
-      clearTimeout(timer);
-    };
+  //     hideLoaderTimer = setTimeout(() => {
+  //       setShowLoader(false);
+  //     }, 5000);
+  //   };
 
-    const handleRouteChangeError = () => {
-      setShowLoader(false);
-      clearTimeout(timer);
-    };
+  //   const handleRouteChangeComplete = () => {
+  //     setShowLoader(false);
+  //     clearTimeout(showLoaderTimer);
+  //     clearTimeout(hideLoaderTimer);
+  //   };
 
-    router.events.on("routeChangeStart", handleRouteChangeStart);
-    router.events.on("routeChangeComplete", handleRouteChangeComplete);
-    router.events.on("routeChangeError", handleRouteChangeError);
+  //   const handleRouteChangeError = () => {
+  //     setShowLoader(false);
+  //     clearTimeout(showLoaderTimer);
+  //     clearTimeout(hideLoaderTimer);
+  //   };
 
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChangeStart);
-      router.events.off("routeChangeComplete", handleRouteChangeComplete);
-      router.events.off("routeChangeError", handleRouteChangeError);
-    };
-  }, []);
+  //   router.events.on("routeChangeStart", handleRouteChangeStart);
+  //   router.events.on("routeChangeComplete", handleRouteChangeComplete);
+  //   router.events.on("routeChangeError", handleRouteChangeError);
+
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleRouteChangeStart);
+  //     router.events.off("routeChangeComplete", handleRouteChangeComplete);
+  //     router.events.off("routeChangeError", handleRouteChangeError);
+  //   };
+  // }, []);
 
   return (
     <React.StrictMode>
@@ -70,7 +77,7 @@ const App = ({
             {...pageProps}
             global={{ authentication, menuState, setMenuState }}
           />
-          {showLoader && <Loader />}
+          {/* {showLoader && <Loader />} */}
           <ToastContainer
             position="top-right"
             stacked
