@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import "@/styles/globals.css";
+import React, { useEffect, useState } from "react";
 import { GlobalStyle } from "@/theme/global-styles";
 import { AppWrapper } from "@/hoc";
 import { AuthProvider } from "@/context";
@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "@/components";
 
 const App = ({
   Component,
@@ -17,6 +18,7 @@ const App = ({
   reduxStore,
 }: AppGlobalProps) => {
   const [menuState, setMenuState] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (pageProps?.toast?.isError) {
@@ -30,6 +32,36 @@ const App = ({
     }
   }, [pageProps]);
 
+  useEffect(() => {
+    let timer: any;
+
+    const handleRouteChangeStart = () => {
+      timer = setTimeout(() => {
+        setShowLoader(true);
+      }, 1000);
+    };
+
+    const handleRouteChangeComplete = () => {
+      setShowLoader(false);
+      clearTimeout(timer);
+    };
+
+    const handleRouteChangeError = () => {
+      setShowLoader(false);
+      clearTimeout(timer);
+    };
+
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    router.events.on("routeChangeError", handleRouteChangeError);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
+      router.events.off("routeChangeError", handleRouteChangeError);
+    };
+  }, []);
+
   return (
     <React.StrictMode>
       <Provider store={reduxStore}>
@@ -38,6 +70,7 @@ const App = ({
             {...pageProps}
             global={{ authentication, menuState, setMenuState }}
           />
+          {showLoader && <Loader />}
           <ToastContainer
             position="top-right"
             stacked

@@ -2,20 +2,13 @@ import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import { GlobalPageProps } from "@/utils/interface";
-import { Toast } from "@/utils/toast";
 import { WithAuth } from "@/hoc";
-import { useEffect } from "react";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
 const Home = ({ global }: GlobalPageProps) => {
-  useEffect(() => {
-    // Toast({ type: "error", message: "Error toast" });
-    // Toast({ type: "info", message: "Info toast" });
-    // Toast({ type: "success", message: "Success toast" });
-  }, []);
   return (
     <Layout global={global}>
       <main
@@ -93,6 +86,8 @@ const Home = ({ global }: GlobalPageProps) => {
 };
 
 export async function getServerSideProps(ctx: { req: any }) {
+  // const delay = (s: number) => new Promise((resolve) => setTimeout(resolve, s));
+  // await delay(2000);
   const { req } = ctx;
 
   return {
