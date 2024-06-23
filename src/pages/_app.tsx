@@ -78,6 +78,8 @@ const App = ({
             global={{ authentication, menuState, setMenuState }}
           />
           {/* {showLoader && <Loader />} */}
+          <div id="root-modal"></div>
+          <div id="root-tooltip"></div>
           <ToastContainer
             position="top-right"
             stacked
