@@ -1,7 +1,7 @@
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
-import { Button, Icon, Modal } from "@/components";
+import { Button, Icon, Input, Modal } from "@/components";
 import { Content } from "@/theme/styled";
 
 const Components = ({ global }: GlobalPageProps) => {
@@ -20,6 +20,9 @@ const Components = ({ global }: GlobalPageProps) => {
         <hr />
         <h2>Icon</h2>
         <Icon name="zoom" size="45" />
+        <hr />
+        <h2>Input</h2>
+        <Input placeholder="Input example" topPlaceholder="Nome" name="name" />
         <hr />
         <h2>Modal</h2>
         <Modal
