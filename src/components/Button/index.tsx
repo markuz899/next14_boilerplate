@@ -1,4 +1,5 @@
 import React, { Children } from "react";
+import PropTypes from "prop-types";
 import { StyledButton, A, availableKinds, KIND } from "./styled";
 import Icon from "../Icon";
 import { availableIcons } from "../Icon/icons";
@@ -108,10 +109,9 @@ const Button: React.FC<ButtonProps> = ({
     <StyledButton
       {...rest}
       kind={buttonKind}
-      reverse={reverse}
-      round={round}
-      fluid={fluid}
-      hasLabel={label !== "" || children !== undefined}
+      reverse={reverse || undefined}
+      round={round || undefined}
+      fluid={fluid || undefined}
       size={buttonSize}
       className={className}
     >
@@ -129,7 +129,6 @@ const Button: React.FC<ButtonProps> = ({
         kind={buttonKind}
         reverse={reverse}
         round={round}
-        hasLabel={label !== "" || children !== undefined}
         size={buttonSize}
       >
         {inner}
@@ -138,6 +137,22 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return button;
+};
+
+Button.propTypes = {
+  kind: PropTypes.any,
+  icon: PropTypes.oneOf(availableIcons),
+  size: PropTypes.any,
+  iconSize: PropTypes.string,
+  label: PropTypes.string,
+  children: PropTypes.node,
+  href: PropTypes.string,
+  onClick: PropTypes.func,
+  reverse: PropTypes.bool,
+  round: PropTypes.bool,
+  fluid: PropTypes.bool,
+  loading: PropTypes.bool,
+  loadingColor: PropTypes.string,
 };
 
 export default Button;

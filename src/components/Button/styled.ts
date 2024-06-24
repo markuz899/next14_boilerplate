@@ -136,7 +136,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   width: ${(props) => props.fluid && "100%"};
   cursor: pointer;
   transition: all ${extra.transition};
-  ${(props) => props.reverse && `flex-direction: row-reverse;`};
+  ${(props) => (props.reverse ? `flex-direction: row-reverse;` : null)};
   .iconAfter {
     width: ${theme.spaces.space2};
     margin-left: ${theme.spaces.space1};
@@ -150,9 +150,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     align-items: center;
     justify-content: center;
     margin: ${(props) =>
-      props.reverse
-        ? `0 0 0 1rem;`
-        : `0 ${props.round || !props.hasLabel ? "0" : "1rem"} 0 0;`};
+      props.reverse ? `0 0 0 1rem;` : `0 ${props.round ? "0" : "1rem"} 0 0;`};
   }
   ${(props) =>
     props.round
@@ -160,7 +158,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
       : `
     border-radius: 8px;
     `};
-  padding: 0 ${(props) => (props.hasLabel ? spaces.space4 : "0")};
+  padding: 0 ${spaces.space4};
   &:disabled {
     background: ${colors.greyIcon};
     color: ${colors.white};

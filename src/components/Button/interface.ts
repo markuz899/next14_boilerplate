@@ -26,6 +26,5 @@ export interface StyledButtonProps {
   fluid?: boolean;
   reverse?: boolean;
   round?: boolean;
-  hasLabel?: boolean;
   kind: KindKeys;
 }

@@ -5,6 +5,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import Icon from "../Icon";
 import { InputProps, InputRef } from "./interface";
@@ -114,9 +115,9 @@ const Input = forwardRef<InputRef, InputProps>(
     return (
       type !== "hidden" && (
         <Box
-          isError={isError}
+          isError={isError || undefined}
           className={className}
-          focus={focus}
+          focus={focus.toString()}
           withFilter={withFilter}
           labelBgColor={labelBgColor}
         >
@@ -158,9 +159,30 @@ const Input = forwardRef<InputRef, InputProps>(
 
 export default React.memo(Input);
 
+Input.propTypes = {
+  placeholder: PropTypes.string,
+  value: PropTypes.any,
+  onChange: PropTypes.func,
+  isError: PropTypes.bool,
+  message: PropTypes.string,
+  icon: PropTypes.any,
+  iconBefore: PropTypes.string,
+  showPasswordIcon: PropTypes.bool,
+  name: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  enableControlledInput: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  uppercase: PropTypes.bool,
+  type: PropTypes.string,
+  withFilter: PropTypes.bool,
+  labelBgColor: PropTypes.string,
+};
+
 const Box = styled.div<{
-  isError: boolean;
-  focus: boolean;
+  isError: any;
+  focus: any;
   withFilter?: boolean;
   labelBgColor?: string;
 }>`
@@ -187,9 +209,9 @@ const Box = styled.div<{
     background: transparent;
     width: 100%;
     border: 0;
-    color: ${({ theme }) => theme.text};
-    color: ${({ isError, theme }) =>
-      isError ? theme.colors.error : theme.text};
+    color: ${theme.colors.white};
+    color: ${({ isError }) =>
+      isError ? theme.colors.error : theme.colors.white};
     min-height: ${theme.spaces.space7};
     padding: 0;
     font-weight: ${theme.font.weight.medium};
