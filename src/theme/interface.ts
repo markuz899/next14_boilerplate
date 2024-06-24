@@ -26,7 +26,9 @@ export interface ITheme {
     success: string;
     lightSuccess: string;
     error: string;
+    errorLight: string;
     warning: string;
+    warningLight: string;
     lightInfo: string;
     cardLight: string;
     cardGrey: string;

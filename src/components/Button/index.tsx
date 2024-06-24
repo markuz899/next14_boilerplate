@@ -1,0 +1,143 @@
+import React, { Children } from "react";
+import { StyledButton, A, availableKinds, KIND } from "./styled";
+import Icon from "../Icon";
+import { availableIcons } from "../Icon/icons";
+import { ButtonProps } from "./interface";
+import theme from "@/theme";
+
+const Button: React.FC<ButtonProps> = ({
+  label = "",
+  children,
+  kind = "primary",
+  href,
+  icon,
+  iconSize = "1rem",
+  reverse = false,
+  round = false,
+  size = "md",
+  fluid = false,
+  className,
+  loading = false,
+  loadingColor,
+  ...rest
+}) => {
+  type KindKeys = keyof typeof KIND;
+  type HeightKeys = keyof typeof theme.height;
+  let buttonKind: KindKeys = kind;
+  let buttonSize: HeightKeys = size;
+
+  if (kind && !availableKinds.includes(kind)) buttonKind = "primary";
+
+  let inner: React.ReactNode[] | string | any = children
+    ? Children.toArray(children)
+    : label;
+
+  if (icon && availableIcons.includes(icon)) {
+    inner = (
+      <>
+        <span>
+          <Icon size={iconSize} name={icon} />
+        </span>
+        {label}
+      </>
+    );
+  }
+
+  if (loading) {
+    inner = (
+      <div className="loader">
+        <svg
+          version="1.1"
+          id="L4"
+          x="0px"
+          y="0px"
+          viewBox="0 0 100 100"
+          enableBackground="new 0 0 0 0"
+        >
+          <circle
+            fill={loadingColor ? loadingColor : "#fff"}
+            stroke="none"
+            cx="30"
+            cy="50"
+            r="6"
+          >
+            <animate
+              attributeName="opacity"
+              dur="1s"
+              values="0;1;0"
+              repeatCount="indefinite"
+              begin="0.1"
+            />
+          </circle>
+          <circle
+            fill={loadingColor ? loadingColor : "#fff"}
+            stroke="none"
+            cx="50"
+            cy="50"
+            r="6"
+          >
+            <animate
+              attributeName="opacity"
+              dur="1s"
+              values="0;1;0"
+              repeatCount="indefinite"
+              begin="0.2"
+            />
+          </circle>
+          <circle
+            fill={loadingColor ? loadingColor : "#fff"}
+            stroke="none"
+            cx="70"
+            cy="50"
+            r="6"
+          >
+            <animate
+              attributeName="opacity"
+              dur="1s"
+              values="0;1;0"
+              repeatCount="indefinite"
+              begin="0.3"
+            />
+          </circle>
+        </svg>
+      </div>
+    );
+  }
+
+  let button = (
+    <StyledButton
+      {...rest}
+      kind={buttonKind}
+      reverse={reverse}
+      round={round}
+      fluid={fluid}
+      hasLabel={label !== "" || children !== undefined}
+      size={buttonSize}
+      className={className}
+    >
+      {inner}
+    </StyledButton>
+  );
+
+  if (href) {
+    button = (
+      <A
+        {...rest}
+        className={className}
+        fluid={fluid}
+        href={href}
+        kind={buttonKind}
+        reverse={reverse}
+        round={round}
+        hasLabel={label !== "" || children !== undefined}
+        size={buttonSize}
+      >
+        {inner}
+      </A>
+    );
+  }
+
+  return button;
+};
+
+export default Button;
