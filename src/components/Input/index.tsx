@@ -11,141 +11,153 @@ import Icon from "../Icon";
 import { InputProps, InputRef } from "./interface";
 import theme from "@/theme";
 
-const Input: React.FC<InputProps> = ({
-  type = "text",
-  placeholder,
-  topPlaceholder,
-  value,
-  defaultValue,
-  name,
-  isError = false,
-  onChange,
-  message,
-  showPasswordIcon,
-  icon,
-  iconBefore,
-  className,
-  disabled,
-  readOnly,
-  required,
-  enableControlledInput,
-  uppercase,
-  withFilter,
-  autoComplete,
-  inputSelectAction,
-  labelBgColor,
-  ...rest
-}) => {
-  const initialValue = defaultValue || value || "";
-  const inputRef = useRef<HTMLInputElement>(null);
-  const valueRef = useRef<string | undefined>(defaultValue);
-  const [hasValue, setHasValue] = useState<boolean>(!!initialValue);
-  const [state, setState] = useState<string>(initialValue);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [focus, setFocus] = useState<boolean>(false);
+const Input = forwardRef<InputRef, InputProps>(
+  (
+    {
+      type = "text",
+      placeholder,
+      topPlaceholder,
+      value,
+      defaultValue,
+      name,
+      isError = false,
+      onChange,
+      message,
+      showPasswordIcon,
+      icon,
+      iconBefore,
+      className,
+      disabled,
+      readOnly,
+      required,
+      enableControlledInput,
+      uppercase,
+      withFilter,
+      autoComplete,
+      inputSelectAction,
+      labelBgColor,
+      ...rest
+    },
+    ref
+  ) => {
+    const initialValue = defaultValue || value || "";
+    const inputRef = useRef<HTMLInputElement>(null);
+    const valueRef = useRef<string | undefined>(defaultValue);
+    const [hasValue, setHasValue] = useState<boolean>(!!initialValue);
+    const [state, setState] = useState<string>(initialValue);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [focus, setFocus] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (defaultValue !== valueRef.current) {
-      setState(defaultValue || "");
-      setHasValue(!!defaultValue);
+    useEffect(() => {
+      if (defaultValue !== valueRef.current) {
+        setState(defaultValue || "");
+        setHasValue(!!defaultValue);
+      }
+    }, [defaultValue]);
+
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      },
+    }));
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      let v = e.target.value;
+      if (uppercase) v = v.toUpperCase();
+      if (!enableControlledInput) {
+        setHasValue(!!v);
+        setState(v);
+      }
+      if (onChange) {
+        onChange(e);
+      }
+    };
+
+    const toggleSelectAction = () => {
+      const { visible, show, close } = inputSelectAction!;
+      if (visible) return close();
+      show();
+    };
+
+    let after = icon && (
+      <After onClick={inputSelectAction ? toggleSelectAction : undefined}>
+        <Icon
+          name={icon}
+          size={theme.font.size.mini}
+          color={theme.colors.primary}
+        />
+      </After>
+    );
+
+    let errorTooltip = null;
+    let errorMessage = null;
+
+    if (showPasswordIcon) {
+      after = (
+        <span
+          className="pointer"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "NASCONDI" : "MOSTRA"}
+        </span>
+      );
     }
-  }, [defaultValue]);
 
-  // useImperativeHandle(ref, () => ({
-  //   focus: () => {
-  //     if (inputRef.current) {
-  //       inputRef.current.focus();
-  //     }
-  //   },
-  // }));
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let v = e.target.value;
-    if (uppercase) v = v.toUpperCase();
-    if (!enableControlledInput) {
-      setHasValue(!!v);
-      setState(v);
+    if (isError && message) {
+      errorTooltip = (
+        <Icon name="warning-circular" color={theme.colors.error} />
+      );
+      errorMessage = <p className="error-msg text-error">*{message}</p>;
     }
-    if (onChange) {
-      onChange(e);
-    }
-  };
 
-  const toggleSelectAction = () => {
-    const { visible, show, close } = inputSelectAction!;
-    if (visible) return close();
-    show();
-  };
-
-  let after = icon && (
-    <After onClick={inputSelectAction ? toggleSelectAction : undefined}>
-      <Icon
-        name={icon}
-        size={theme.font.size.mini}
-        color={theme.colors.primary}
-      />
-    </After>
-  );
-
-  let errorTooltip = null;
-  let errorMessage = null;
-
-  if (showPasswordIcon) {
-    after = (
-      <span className="pointer" onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "NASCONDI" : "MOSTRA"}
-      </span>
+    return (
+      type !== "hidden" && (
+        <Box
+          isError={isError || undefined}
+          className={className}
+          focus={focus.toString()}
+          withFilter={withFilter}
+          labelBgColor={labelBgColor}
+        >
+          {iconBefore && (
+            <Before>
+              <Icon name={iconBefore} />
+            </Before>
+          )}
+          <Container>
+            <input
+              ref={inputRef}
+              type={showPassword ? "text" : type}
+              onChange={handleChange}
+              value={!enableControlledInput ? state : value || ""}
+              data-value={!enableControlledInput ? hasValue : !!value}
+              name={name}
+              autoComplete={autoComplete || name}
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              disabled={disabled}
+              required={required}
+              readOnly={readOnly}
+              placeholder={placeholder}
+              {...rest}
+            />
+            <Label iconBefore={iconBefore}>
+              {topPlaceholder && topPlaceholder}{" "}
+              {required && <span className="asterisk">*</span>}
+            </Label>
+          </Container>
+          {errorTooltip}
+          {errorMessage}
+          {after}
+        </Box>
+      )
     );
   }
+);
 
-  if (isError && message) {
-    errorTooltip = <Icon name="warning-circular" color={theme.colors.error} />;
-    errorMessage = <p className="error-msg text-error">*{message}</p>;
-  }
-
-  return (
-    type !== "hidden" && (
-      <Box
-        isError={isError || undefined}
-        className={className}
-        focus={focus.toString()}
-        withFilter={withFilter}
-        labelBgColor={labelBgColor}
-      >
-        {iconBefore && (
-          <Before>
-            <Icon name={iconBefore} />
-          </Before>
-        )}
-        <Container>
-          <input
-            ref={inputRef}
-            type={showPassword ? "text" : type}
-            onChange={handleChange}
-            value={!enableControlledInput ? state : value || ""}
-            data-value={!enableControlledInput ? hasValue : !!value}
-            name={name}
-            autoComplete={autoComplete || name}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-            disabled={disabled}
-            required={required}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            {...rest}
-          />
-          <Label iconBefore={iconBefore}>
-            {topPlaceholder && topPlaceholder}{" "}
-            {required && <span className="asterisk">*</span>}
-          </Label>
-        </Container>
-        {errorTooltip}
-        {errorMessage}
-        {after}
-      </Box>
-    )
-  );
-};
+Input.displayName = "Input";
 
 export default React.memo(Input);
 
