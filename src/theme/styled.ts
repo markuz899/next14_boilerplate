@@ -68,3 +68,33 @@ export const Content = styled(Container)`
     margin: 0;
   }
 `;
+
+export const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate(0px, -30px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(0px, -20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+`;
+
+export const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(0px, -20px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0px, -30px);
+  }
+`;

@@ -4,15 +4,43 @@ import { Layout } from "@/containers";
 import {
   Button,
   Checkbox,
+  Dropdown,
   Icon,
   Input,
   Modal,
   Radio,
+  Select,
   Textarea,
+  Toggle,
+  Tooltip,
 } from "@/components";
 import { Content } from "@/theme/styled";
 
 const Components = ({ global }: GlobalPageProps) => {
+  const renderTarget = ({ show, close, visible }: any) => {
+    const handleShow = () => {
+      if (visible) return close();
+      if (!visible) return show();
+    };
+    return (
+      <div onClick={handleShow}>
+        <p>Lorem ipsum</p>
+      </div>
+    );
+  };
+
+  const renderDropdown = ({ show, close, visible }: any) => {
+    const handleShow = () => {
+      if (visible) return close();
+      if (!visible) return show();
+    };
+    return (
+      <div onClick={handleShow}>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+      </div>
+    );
+  };
+
   return (
     <Layout global={global}>
       <Content>
@@ -56,6 +84,33 @@ const Components = ({ global }: GlobalPageProps) => {
         <hr />
         <h2>Textarea</h2>
         <Textarea placeholder="Testo di test" topPlaceholder="Note"></Textarea>
+        <hr />
+        <h2>Tooltip</h2>
+        <Tooltip content="Lorem ipsum">Lorem</Tooltip>
+        <hr />
+        <h2>Toggle</h2>
+        <Toggle name="theme" />
+        <hr />
+        <h2>Dropdown</h2>
+        <Dropdown
+          includeTarget={true}
+          showArrow={false}
+          renderTarget={renderTarget}
+          renderDropdown={renderDropdown}
+        />
+        <hr />
+        <h2>Select</h2>
+        <Select
+          name="city"
+          multiselect
+          onChange={() => {}}
+          topPlaceholder="Seleziona città"
+          placeholder="Città"
+          options={[
+            { label: "Roma", value: "1" },
+            { label: "Milano", value: "2" },
+          ]}
+        />
       </Content>
     </Layout>
   );

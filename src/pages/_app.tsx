@@ -75,12 +75,12 @@ const App = ({
     <React.StrictMode>
       <Provider store={reduxStore}>
         <AuthProvider isAuth={authentication.isAuth}>
-          <StyleSheetManager shouldForwardProp={isPropValid}>
-            <Component
-              {...pageProps}
-              global={{ authentication, menuState, setMenuState }}
-            />
-          </StyleSheetManager>
+          {/* <StyleSheetManager shouldForwardProp={isPropValid}> */}
+          <Component
+            {...pageProps}
+            global={{ authentication, menuState, setMenuState }}
+          />
+          {/* </StyleSheetManager> */}
           {/* {showLoader && <Loader />} */}
           <div id="root-modal"></div>
           <div id="root-tooltip"></div>
