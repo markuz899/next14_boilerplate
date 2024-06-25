@@ -1,7 +1,15 @@
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
-import { Button, Icon, Input, Modal } from "@/components";
+import {
+  Button,
+  Checkbox,
+  Icon,
+  Input,
+  Modal,
+  Radio,
+  Textarea,
+} from "@/components";
 import { Content } from "@/theme/styled";
 
 const Components = ({ global }: GlobalPageProps) => {
@@ -32,6 +40,22 @@ const Components = ({ global }: GlobalPageProps) => {
         >
           <Icon name="zoom" size="45" />
         </Modal>
+        <hr />
+        <h2>Chcekbox</h2>
+        <Checkbox label="Test label checkbox" />
+        <hr />
+        <h2>Radio</h2>
+        <Radio
+          name={""}
+          options={[
+            { label: "First", value: 1 },
+            { label: "Second", value: 2 },
+          ]}
+          onChange={() => {}}
+        />
+        <hr />
+        <h2>Textarea</h2>
+        <Textarea placeholder="Testo di test" topPlaceholder="Note"></Textarea>
       </Content>
     </Layout>
   );
