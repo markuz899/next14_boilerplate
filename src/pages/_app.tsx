@@ -9,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
+import { StyleSheetManager } from "styled-components";
+import isPropValid from "@emotion/is-prop-valid";
 // import { Loader } from "@/components";
 
 const App = ({
@@ -73,10 +75,12 @@ const App = ({
     <React.StrictMode>
       <Provider store={reduxStore}>
         <AuthProvider isAuth={authentication.isAuth}>
-          <Component
-            {...pageProps}
-            global={{ authentication, menuState, setMenuState }}
-          />
+          <StyleSheetManager shouldForwardProp={isPropValid}>
+            <Component
+              {...pageProps}
+              global={{ authentication, menuState, setMenuState }}
+            />
+          </StyleSheetManager>
           {/* {showLoader && <Loader />} */}
           <div id="root-modal"></div>
           <div id="root-tooltip"></div>
