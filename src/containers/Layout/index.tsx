@@ -60,7 +60,6 @@ const Body = styled.div<StyledDivProps>`
   flex: 1;
   transition: 1s;
   width: 100%;
-  height: 100%;
   margin: 0;
 `;
 const Main = styled.div`

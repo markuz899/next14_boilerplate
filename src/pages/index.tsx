@@ -10,7 +10,7 @@ const inter = Montserrat({ subsets: ["latin"] });
 
 const Home = ({ global }: GlobalPageProps) => {
   return (
-    <Layout global={global}>
+    <Layout global={global} title="Homepage">
       <main
         className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
       >

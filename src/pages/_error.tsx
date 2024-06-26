@@ -6,7 +6,7 @@ import theme from "@/theme";
 
 const NotFound = ({ global }: any) => {
   return (
-    <Layout global={global} title="404">
+    <Layout global={global} title="404 - Not found page">
       <Page>
         <div className="agency">
           <div className="logo">

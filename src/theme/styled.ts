@@ -33,6 +33,7 @@ export const Container = styled.div`
 
 export const Content = styled(Container)`
   text-align: center;
+  margin: 0 auto;
   h2 {
     font-size: ${theme.font.size.big};
     font-family: "Montserrat-Regular";

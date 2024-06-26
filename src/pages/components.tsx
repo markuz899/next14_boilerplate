@@ -15,6 +15,8 @@ import {
   Tooltip,
 } from "@/components";
 import { Content } from "@/theme/styled";
+import styled from "styled-components";
+import { ReactNode } from "react";
 
 const Components = ({ global }: GlobalPageProps) => {
   const renderTarget = ({ show, close, visible }: any) => {
@@ -41,79 +43,120 @@ const Components = ({ global }: GlobalPageProps) => {
     );
   };
 
+  const Section = ({
+    title,
+    children,
+  }: {
+    title: string;
+    children: React.ReactNode;
+  }) => {
+    return (
+      <Compose>
+        <hr />
+        <h2>{title}</h2>
+        {children}
+      </Compose>
+    );
+  };
+
   return (
-    <Layout global={global}>
+    <Layout global={global} title="Components">
       <Content>
-        <h2>Components</h2>
-        <hr />
-        <h2>Button</h2>
-        <div className="flex justify-between">
-          <Button kind="primary">Click me</Button>
-          <Button kind="success">Click me</Button>
-          <Button kind="error">Click me</Button>
-          <Button kind="warning">Click me</Button>
-        </div>
-        <hr />
-        <h2>Icon</h2>
-        <Icon name="zoom" size="45" />
-        <hr />
-        <h2>Input</h2>
-        <Input placeholder="Input example" topPlaceholder="Nome" name="name" />
-        <hr />
-        <h2>Modal</h2>
-        <Modal
-          onClickOther
-          title="Test modal"
-          render={({ close }) => <div>Modal test</div>}
-        >
+        <h3>Components</h3>
+        <Section title="Buttons">
+          <div className="flex justify-between">
+            <Button kind="primary">Click me</Button>
+            <Button kind="success">Click me</Button>
+            <Button kind="error">Click me</Button>
+            <Button kind="warning">Click me</Button>
+          </div>
+        </Section>
+        <Section title="Icon">
           <Icon name="zoom" size="45" />
-        </Modal>
-        <hr />
-        <h2>Chcekbox</h2>
-        <Checkbox label="Test label checkbox" />
-        <hr />
-        <h2>Radio</h2>
-        <Radio
-          name={""}
-          options={[
-            { label: "First", value: 1 },
-            { label: "Second", value: 2 },
-          ]}
-          onChange={() => {}}
-        />
-        <hr />
-        <h2>Textarea</h2>
-        <Textarea placeholder="Testo di test" topPlaceholder="Note"></Textarea>
-        <hr />
-        <h2>Tooltip</h2>
-        <Tooltip content="Lorem ipsum">Lorem</Tooltip>
-        <hr />
-        <h2>Toggle</h2>
-        <Toggle name="theme" />
-        <hr />
-        <h2>Dropdown</h2>
-        <Dropdown
-          includeTarget={true}
-          showArrow={false}
-          renderTarget={renderTarget}
-          renderDropdown={renderDropdown}
-        />
-        <hr />
-        <h2>Select</h2>
-        <Select
-          name="city"
-          multiselect
-          onChange={() => {}}
-          topPlaceholder="Seleziona città"
-          placeholder="Città"
-          options={[
-            { label: "Roma", value: "1" },
-            { label: "Milano", value: "2" },
-          ]}
-        />
+        </Section>
+        <Section title="Input">
+          <Input
+            placeholder="Input example"
+            topPlaceholder="Nome"
+            name="name"
+          />
+        </Section>
+        <Section title="Modal">
+          <Modal
+            onClickOther
+            title="Test modal"
+            render={({ close }) => (
+              <div style={{ color: theme.colors.dark }}>Modal test</div>
+            )}
+          >
+            <Icon name="zoom" size="45" />
+          </Modal>
+        </Section>
+        <Section title="Chcekbox">
+          <Checkbox label="Test label checkbox" />
+        </Section>
+        <Section title="Radio">
+          <Radio
+            name={""}
+            options={[
+              { label: "First", value: 1 },
+              { label: "Second", value: 2 },
+            ]}
+            onChange={() => {}}
+          />
+        </Section>
+        <Section title="Textarea">
+          <Textarea
+            placeholder="Testo di test"
+            topPlaceholder="Note"
+          ></Textarea>
+        </Section>
+        <Section title="Tooltip">
+          <Tooltip content="Lorem ipsum">Lorem</Tooltip>
+        </Section>
+        <Section title="Toogle">
+          <Toggle name="theme" />
+        </Section>
+        <Section title="Dropdown">
+          <Dropdown
+            includeTarget={true}
+            showArrow={false}
+            renderTarget={renderTarget}
+            renderDropdown={renderDropdown}
+          />
+        </Section>
+        <Section title="Select">
+          <Select
+            name="city"
+            onChange={() => {}}
+            topPlaceholder="Seleziona città"
+            placeholder="Città"
+            options={[
+              { label: "Roma", value: "1" },
+              { label: "Milano", value: "2" },
+            ]}
+          />
+        </Section>
+        <Section title="Select - multiselect">
+          <Select
+            name="city"
+            multiselect
+            onChange={() => {}}
+            topPlaceholder="Seleziona città"
+            placeholder="Città"
+            options={[
+              { label: "Roma", value: "1" },
+              { label: "Milano", value: "2" },
+            ]}
+          />
+        </Section>
       </Content>
     </Layout>
   );
 };
 
 export default Components;
+
+const Compose = styled.div`
+  margin: ${theme.spaces.space4} 0;
+`;
