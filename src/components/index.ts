@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+const Accordion = dynamic(() => import("./Accordion"));
 const Button = dynamic(() => import("./Button"));
 const Checkbox = dynamic(() => import("./Checkbox"));
 const Dropdown = dynamic(() => import("./Dropdown"));
@@ -14,6 +15,7 @@ const Toggle = dynamic(() => import("./Toggle"));
 const Tooltip = dynamic(() => import("./Tooltip"));
 
 export {
+  Accordion,
   Button,
   Checkbox,
   Dropdown,

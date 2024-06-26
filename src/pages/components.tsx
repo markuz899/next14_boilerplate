@@ -2,6 +2,7 @@ import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
 import {
+  Accordion,
   Button,
   Checkbox,
   Dropdown,
@@ -63,6 +64,22 @@ const Components = ({ global }: GlobalPageProps) => {
     <Layout global={global} title="Components">
       <Content>
         <h3>Components</h3>
+        <Section title="Accordion">
+          <Accordion
+            options={[
+              {
+                question: "Lorem Ipsum is simply dummy text?",
+                answer:
+                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
+              },
+              {
+                question: "Lorem Ipsum is simply dummy text?",
+                answer:
+                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
+              },
+            ]}
+          />
+        </Section>
         <Section title="Buttons">
           <div className="flex justify-between">
             <Button kind="primary">Click me</Button>
