@@ -19,6 +19,7 @@ import { Content } from "@/theme/styled";
 import styled from "styled-components";
 import { ReactNode } from "react";
 import React from "react";
+import { WithAuth } from "@/hoc";
 
 const Components = ({ global }: GlobalPageProps) => {
   const renderTarget = ({ show, close, visible }: any) => {
@@ -181,7 +182,7 @@ const Components = ({ global }: GlobalPageProps) => {
 };
 
 // export default Components;
-export default React.memo(Components);
+export default WithAuth(React.memo(Components));
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;

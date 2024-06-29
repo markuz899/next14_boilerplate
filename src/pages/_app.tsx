@@ -9,8 +9,6 @@ import { ToastContainer } from "react-toastify";
 import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
-import { StyleSheetManager } from "styled-components";
-import isPropValid from "@emotion/is-prop-valid";
 // import { Loader } from "@/components";
 
 const App = ({
@@ -19,13 +17,8 @@ const App = ({
   authentication,
   reduxStore,
 }: AppGlobalProps) => {
-  const [isRender, setIsRender] = useState(false);
   const [menuState, setMenuState] = useState(false);
   // const [showLoader, setShowLoader] = useState(false);
-
-  useEffect(() => {
-    setIsRender(true);
-  }, []);
 
   useEffect(() => {
     if (pageProps?.toast?.isError) {
@@ -80,15 +73,10 @@ const App = ({
     <React.StrictMode>
       <Provider store={reduxStore}>
         <AuthProvider isAuth={authentication.isAuth}>
-          {/* <StyleSheetManager shouldForwardProp={isPropValid}> */}
-          {isRender && (
-            <Component
-              {...pageProps}
-              global={{ authentication, menuState, setMenuState }}
-            />
-          )}
-          {/* </StyleSheetManager> */}
-          {/* {showLoader && <Loader />} */}
+          <Component
+            {...pageProps}
+            global={{ authentication, menuState, setMenuState }}
+          />
           <div id="root-modal"></div>
           <div id="root-tooltip"></div>
           <ToastContainer

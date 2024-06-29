@@ -7,8 +7,10 @@ type WithAuthProps<P> = P & {};
 
 const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
   const AuthComponent: React.FC<WithAuthProps<P>> = (props) => {
+    const { global }: any = props;
+    const { authentication } = global;
     const Router = useRouter();
-    const [verified, setVerified] = useState(false);
+    const [verified, setVerified] = useState(authentication?.isAuth);
 
     useEffect(() => {
       const accessToken = CookieManager.get(AUTH_KEY);
