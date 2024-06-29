@@ -19,6 +19,8 @@ export interface ButtonProps {
   className?: string;
   loading?: boolean;
   loadingColor?: string;
+  disabled?: boolean;
+  type?: any;
 }
 
 export interface StyledButtonProps {

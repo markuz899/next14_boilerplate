@@ -20,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   loading = false,
   loadingColor,
+  type,
   ...rest
 }) => {
   type KindKeys = keyof typeof KIND;
@@ -108,6 +109,7 @@ const Button: React.FC<ButtonProps> = ({
   let button = (
     <StyledButton
       {...rest}
+      type={type}
       kind={buttonKind}
       reverse={reverse || undefined}
       round={round || undefined}

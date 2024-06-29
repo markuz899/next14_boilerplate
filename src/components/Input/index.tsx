@@ -119,7 +119,7 @@ const Input = forwardRef<InputRef, InputProps>(
           className={className}
           focus={focus.toString()}
           withFilter={withFilter}
-          labelBgColor={labelBgColor}
+          $labelBgColor={labelBgColor}
         >
           {iconBefore && (
             <Before>
@@ -186,7 +186,7 @@ const Box = styled.div<{
   isError: any;
   focus: any;
   withFilter?: boolean;
-  labelBgColor?: string;
+  $labelBgColor?: string;
 }>`
   position: relative;
   margin-top: ${theme.spaces.space3};
@@ -241,7 +241,7 @@ const Box = styled.div<{
   input + label,
   input:not([data-value="false"]) + label {
     transform: translateY(-25px) scale(0.9);
-    background: ${({ labelBgColor }) => labelBgColor};
+    background: ${({ $labelBgColor }) => $labelBgColor};
     padding: 0 ${theme.spaces.space1};
   }
   input:-webkit-autofill,
