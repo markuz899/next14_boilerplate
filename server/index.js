@@ -1,6 +1,7 @@
 require("dotenv").config();
 const fastify = require("fastify")();
 const fastifyStatic = require("@fastify/static");
+const fastifyCookie = require("@fastify/cookie");
 const path = require("path");
 const next = require("next");
 const { Signale } = require("signale");
@@ -27,6 +28,16 @@ const signale = new Signale(options);
       root: path.join(__dirname, "..", "public", "static"),
       prefix: "/static/",
     });
+
+    // Register fastify-cookie plugin
+    fastify.register(fastifyCookie, {
+      secret: "my-secret", // for cookies signature
+      parseOptions: {}, // options for parsing cookies
+    });
+
+    // Register routes
+    const logRoutes = require("./routes/log");
+    fastify.register(logRoutes, { prefix: "/api" });
 
     // Handle all other requests with Next.js
     fastify.all("/*", (req, reply) => {
