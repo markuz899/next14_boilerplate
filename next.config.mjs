@@ -7,6 +7,7 @@ const nextConfig = {
   images: {
     domains: [],
   },
+  swcMinify: true,
 };
 
 export default nextConfig;

@@ -18,6 +18,7 @@ import {
 import { Content } from "@/theme/styled";
 import styled from "styled-components";
 import { ReactNode } from "react";
+import React from "react";
 
 const Components = ({ global }: GlobalPageProps) => {
   const renderTarget = ({ show, close, visible }: any) => {
@@ -179,7 +180,8 @@ const Components = ({ global }: GlobalPageProps) => {
   );
 };
 
-export default Components;
+// export default Components;
+export default React.memo(Components);
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;

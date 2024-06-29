@@ -5,6 +5,7 @@ import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
+import React from "react";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -95,4 +96,4 @@ export async function getServerSideProps(ctx: { req: any }) {
   };
 }
 
-export default WithAuth(Home);
+export default WithAuth(React.memo(Home));
