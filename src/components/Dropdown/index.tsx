@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import theme from "@/theme";
 import { fadeIn, fadeOut } from "@/theme/styled";
@@ -93,7 +92,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <Box className={className} $fluid={fluid} ref={target}>
-      {renderTarget({ show, close, visible })}
+      <div className="target">{renderTarget({ show, close, visible })}</div>
       {renderDropdown && (
         <RenderDrop $visible={visible} $fluid={fluid}>
           {showArrow && <Arrow top={topPosition} />}
@@ -120,12 +119,10 @@ const RenderDrop = styled.div<{ $visible: boolean; $fluid: boolean }>`
 
 const Box = styled.div<{ $fluid: boolean }>`
   position: relative;
-  cursor: pointer;
   ${(props) => (props.$fluid ? "width: 100%" : "width: fit-content")};
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-  -webkit-tap-highlight-color: transparent;
+  .target {
+    cursor: pointer;
+  }
 `;
 
 const Drop = styled.div<{

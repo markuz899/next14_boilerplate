@@ -38,7 +38,14 @@ const Components = ({ global }: GlobalPageProps) => {
       if (!visible) return show();
     };
     return (
-      <div onClick={handleShow}>
+      <div>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
+        <p style={{ color: "#000" }}>Lorem ipsum</p>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
       </div>
     );
