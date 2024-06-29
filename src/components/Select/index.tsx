@@ -293,20 +293,22 @@ export const Option = styled.li<{
   padding: ${theme.spaces.space1} ${theme.spaces.space1} ${theme.spaces.space1}
     0;
   list-style-type: none;
-  background: ${(p) =>
-    p.selected
-      ? theme.colors.primary
-      : p.$hover
-      ? theme.colors.primary
-      : "transparent"};
   color: ${(p) =>
     p.selected && p.$hover
-      ? theme.colors.white
-      : p.selected
-      ? theme.colors.white
+      ? theme.colors.primary
+      : p.selected || p.$active
+      ? theme.colors.primary
       : p.$hover
       ? theme.colors.primary
       : theme.colors.black};
+  font-weight: ${(p) =>
+    p.selected && p.$hover
+      ? "bold"
+      : p.selected || p.$active
+      ? "bold"
+      : p.$hover
+      ? "bold"
+      : "null"};
   font-size: ${theme.font.size.tiny};
   padding: 5px 10px;
   &:last-child {
