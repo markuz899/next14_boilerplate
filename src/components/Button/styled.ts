@@ -133,7 +133,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   min-width: ${(props) => height[props.size]};
   min-height: ${(props) => height[props.size]};
   user-select: none;
-  width: ${(props) => props.fluid && "100%"};
+  width: ${(props) => props.$fluid && "100%"};
   cursor: pointer;
   transition: all ${extra.transition};
   ${(props) => (props.reverse ? `flex-direction: row-reverse;` : null)};

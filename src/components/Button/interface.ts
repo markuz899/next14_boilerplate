@@ -25,7 +25,7 @@ export interface ButtonProps {
 
 export interface StyledButtonProps {
   size: HeightKeys;
-  fluid?: boolean;
+  $fluid?: boolean;
   reverse?: boolean;
   round?: boolean;
   kind: KindKeys;

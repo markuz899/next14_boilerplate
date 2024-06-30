@@ -113,7 +113,7 @@ const Button: React.FC<ButtonProps> = ({
       kind={buttonKind}
       reverse={reverse || undefined}
       round={round || undefined}
-      fluid={fluid || undefined}
+      $fluid={fluid || undefined}
       size={buttonSize}
       className={className}
     >
@@ -126,7 +126,7 @@ const Button: React.FC<ButtonProps> = ({
       <A
         {...rest}
         className={className}
-        fluid={fluid}
+        $fluid={fluid}
         href={href}
         kind={buttonKind}
         reverse={reverse}

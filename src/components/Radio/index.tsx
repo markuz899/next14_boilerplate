@@ -32,9 +32,9 @@ const Radio: React.FC<RadioProps> = ({
   };
 
   return (
-    <RadioGroup inline={inline ? 1 : 0}>
+    <RadioGroup $inline={inline ? 1 : 0}>
       {label && <Placeholder>{label}</Placeholder>}
-      <Options inline={inline ? 1 : 0} $isError={isError}>
+      <Options $inline={inline ? 1 : 0} $isError={isError}>
         {options.map((option) => (
           <label key={`${option.label}`}>
             <input type="radio" name={name} value={option.value} />
@@ -64,18 +64,18 @@ Radio.displayName = "Radio";
 export default Radio;
 
 /* eslint-disable */
-const RadioGroup = styled.div<{ inline: any }>`
+const RadioGroup = styled.div<{ $inline: any }>`
   display: flex;
-  flex-direction: ${(props) => (props.inline == 1 ? "row" : "column")};
+  flex-direction: ${(props) => (props.$inline == 1 ? "row" : "column")};
 `;
 
 const Placeholder = styled.span`
   font-weight: bold;
 `;
 
-const Options = styled.div<{ inline: any; $isError: boolean | undefined }>`
+const Options = styled.div<{ $inline: any; $isError: boolean | undefined }>`
   display: flex;
-  flex-direction: ${(props) => (props.inline == 1 ? "row" : "column")};
+  flex-direction: ${(props) => (props.$inline == 1 ? "row" : "column")};
   color: ${(props) => (props.$isError ? theme.colors.error : "inherit")};
   input {
     position: absolute;
@@ -83,7 +83,7 @@ const Options = styled.div<{ inline: any; $isError: boolean | undefined }>`
     z-index: -1;
   }
   label {
-    margin: ${(props) => (props.inline ? "0 5px" : "5px 0")};
+    margin: ${(props) => (props.$inline ? "0 5px" : "5px 0")};
   }
 `;
 
