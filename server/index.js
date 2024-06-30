@@ -36,7 +36,9 @@ const signale = new Signale(options);
     });
 
     // Register routes
+    const manifestRoutes = require("./manifest");
     const logRoutes = require("./routes/log");
+    fastify.register(manifestRoutes);
     fastify.register(logRoutes, { prefix: "/api" });
 
     // Handle all other requests with Next.js

@@ -1,14 +1,17 @@
 import "@/styles/globals.css";
-import React, { useEffect, useState } from "react";
-import { GlobalStyle } from "@/theme/global-styles";
+import React, { useCallback, useEffect, useState } from "react";
+import { GlobalStyle, darkTheme, lightTheme } from "@/theme/global-styles";
 import { AppWrapper } from "@/hoc";
 import { AuthProvider } from "@/context";
+import { useDarkMode, usePwa } from "@/hooks";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
 import { AppGlobalProps } from "@/utils/interface";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
+import Head from "next/head";
 // import { Loader } from "@/components";
 
 const App = ({
@@ -17,8 +20,18 @@ const App = ({
   authentication,
   reduxStore,
 }: AppGlobalProps) => {
+  const [themes, setTheme] = useDarkMode();
+  const { installPrompt, isInstalled, isStandalone, isOffline, canInstall } =
+    usePwa();
   const [menuState, setMenuState] = useState(false);
+  const themeMode = themes === "light" ? lightTheme : darkTheme;
   // const [showLoader, setShowLoader] = useState(false);
+
+  const handleInstallPrompt = useCallback(() => {
+    if (canInstall) {
+      installPrompt();
+    }
+  }, [canInstall, installPrompt]);
 
   useEffect(() => {
     if (pageProps?.toast?.isError) {
@@ -71,27 +84,51 @@ const App = ({
 
   return (
     <React.StrictMode>
+      <Head>
+        <title>{process.env.NEXT_PUBLIC_SITE_NAME}</title>
+        <link rel="icon" href={`/favicon.ico`}></link>
+        <link
+          rel="manifest"
+          href="/manifest.json"
+          crossOrigin="use-credentials"
+        />
+      </Head>
       <Provider store={reduxStore}>
-        <AuthProvider isAuth={authentication.isAuth}>
-          <Component
-            {...pageProps}
-            global={{ authentication, menuState, setMenuState }}
-          />
-          <div id="root-modal"></div>
-          <div id="root-tooltip"></div>
-          <ToastContainer
-            position="top-right"
-            stacked
-            limit={3}
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            draggable={false}
-            closeOnClick
-            pauseOnHover
-          />
-          <GlobalStyle />
-        </AuthProvider>
+        <ThemeProvider theme={themeMode}>
+          <AuthProvider isAuth={authentication.isAuth}>
+            <Component
+              {...pageProps}
+              global={{
+                authentication,
+                menuState,
+                setMenuState,
+                theme: { themes, setTheme },
+                pwa: {
+                  installPrompt,
+                  isInstalled,
+                  isStandalone,
+                  isOffline,
+                  canInstall,
+                  handleInstallPrompt,
+                },
+              }}
+            />
+            <div id="root-modal"></div>
+            <div id="root-tooltip"></div>
+            <ToastContainer
+              position="top-right"
+              stacked
+              limit={3}
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              draggable={false}
+              closeOnClick
+              pauseOnHover
+            />
+            <GlobalStyle />
+          </AuthProvider>
+        </ThemeProvider>
       </Provider>
     </React.StrictMode>
   );

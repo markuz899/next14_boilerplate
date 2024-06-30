@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
+import withPWA from "next-pwa";
+
+const nextPWAConfig = withPWA({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+});
+
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
@@ -10,4 +17,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-export default nextConfig;
+export default nextPWAConfig(nextConfig);
