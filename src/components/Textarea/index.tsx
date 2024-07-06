@@ -202,7 +202,6 @@ const Box = styled.div<{
         : theme.colors.borderComponent};
   border-radius: ${theme.extra.radiusBig};
   textarea {
-    font-family: "Raleway-Medium";
     box-sizing: border-box;
     background: transparent;
     width: 100%;
@@ -234,7 +233,7 @@ const Box = styled.div<{
   }
   textarea + label,
   textarea:not([data-value="false"]) + label {
-    transform: translateY(-18px) scale(0.9);
+    transform: translateY(-20px) scale(0.9);
     background: ${(p) => p.$labelBgColor};
     padding: 0 ${theme.spaces.space1} 0 ${theme.spaces.space1};
   }
@@ -247,7 +246,7 @@ const Box = styled.div<{
   }
   textarea:-webkit-autofill + label,
   textarea:-webkit-autofill:focus + label {
-    transform: translateY(-18px) scale(0.9);
+    transform: translateY(-20px) scale(0.9);
   }
   textarea:disabled {
     cursor: default;

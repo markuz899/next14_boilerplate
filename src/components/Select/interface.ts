@@ -4,6 +4,7 @@ export interface SelectProps {
   onInputChange?: (data: { value: string }) => void;
   placeholder?: string;
   topPlaceholder?: string;
+  labelBgColor?: string;
   name?: string;
   showArrow?: boolean;
   enableInput?: boolean;

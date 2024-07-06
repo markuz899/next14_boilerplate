@@ -12,6 +12,7 @@ const Select: React.FC<SelectProps> = ({
   onInputChange,
   placeholder = "Select...",
   topPlaceholder,
+  labelBgColor,
   name,
   showArrow = true,
   enableInput = false,
@@ -198,6 +199,7 @@ const Select: React.FC<SelectProps> = ({
         autoComplete="off"
         placeholder={placeholder}
         topPlaceholder={topPlaceholder}
+        labelBgColor={labelBgColor}
         value={state as string}
         name={name || ""}
         onChange={(data: any) => handleOnChange(data, visible, show)}

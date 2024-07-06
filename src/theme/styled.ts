@@ -36,7 +36,6 @@ export const Content = styled(Container)`
   margin: 0 auto;
   h2 {
     font-size: ${theme.font.size.big};
-    font-family: "Montserrat-Regular";
     margin: ${theme.spaces.space4} 0;
   }
   .show-more {

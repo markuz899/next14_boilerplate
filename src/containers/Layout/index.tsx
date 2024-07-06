@@ -5,7 +5,11 @@ import theme from "../../theme";
 import LayoutContext from "./Context";
 import Head from "next/head";
 import { LayoutProps } from "@/utils/interface";
-import { Header } from "..";
+import { Header, Sidebar } from "..";
+import { useBreakpoints } from "@/hooks";
+import { Montserrat } from "next/font/google";
+
+const inter = Montserrat({ subsets: ["latin"] });
 
 export const Layout = ({
   children,
@@ -15,6 +19,7 @@ export const Layout = ({
   className,
 }: LayoutProps) => {
   const { menuState, setMenuState } = global;
+  const { isSmall, isMedium } = useBreakpoints();
 
   useEffect(() => {
     setMenuState(false);
@@ -27,11 +32,26 @@ export const Layout = ({
         <title>{title || "Fake title"}</title>
       </Head>
       <Flex>
-        <Main className={`${className} bodys`}>
-          <Header />
-          <Body background={background}>{children}</Body>
-          FOOTER
-        </Main>
+        {(isSmall || isMedium) && (
+          <Sidebar
+            state={menuState}
+            setState={setMenuState}
+            isMobile={isSmall}
+            global={global}
+          />
+        )}
+        <Page>
+          <Main className={`bodys ${inter.className}`}>
+            <Header
+              global={global}
+              isSmall={isSmall || isMedium}
+              state={menuState}
+              setState={setMenuState}
+            />
+            <Body background={background}>{children}</Body>
+            FOOTER
+          </Main>
+        </Page>
       </Flex>
     </LayoutContext.Provider>
   );
@@ -52,14 +72,20 @@ const Flex = styled.div`
   height: 100%;
   min-width: ${theme.breakpoints.first};
 `;
+const Page = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 const Body = styled.div<StyledDivProps>`
-  background: ${(p) => (p.background ? p.background : "inherit")};
+  background: ${({ background, theme }) =>
+    background ? background : theme.body};
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
   transition: 1s;
   width: 100%;
+  height: 100%;
   margin: 0;
 `;
 const Main = styled.div`

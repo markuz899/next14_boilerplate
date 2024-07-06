@@ -35,7 +35,7 @@ const Input = forwardRef<InputRef, InputProps>(
       withFilter,
       autoComplete,
       inputSelectAction,
-      labelBgColor,
+      labelBgColor = theme.colors.white,
       ...rest
     },
     ref
@@ -143,7 +143,7 @@ const Input = forwardRef<InputRef, InputProps>(
               placeholder={placeholder}
               {...rest}
             />
-            <Label iconBefore={iconBefore}>
+            <Label iconBefore={iconBefore} $labelBgColor={labelBgColor}>
               {topPlaceholder && topPlaceholder}{" "}
               {required && <span className="asterisk">*</span>}
             </Label>
@@ -211,9 +211,8 @@ const Box = styled.div<{
     background: transparent;
     width: 100%;
     border: 0;
-    color: ${theme.colors.white};
-    color: ${({ isError }) =>
-      isError ? theme.colors.error : theme.colors.white};
+    color: ${({ theme }) => theme.text};
+    color: ${(props) => props.isError && theme.colors.error};
     min-height: ${theme.spaces.space7};
     padding: 0;
     font-weight: ${theme.font.weight.medium};
@@ -240,7 +239,7 @@ const Box = styled.div<{
   }
   input + label,
   input:not([data-value="false"]) + label {
-    transform: translateY(-25px) scale(0.9);
+    transform: translateY(-24px) scale(0.9);
     background: ${({ $labelBgColor }) => $labelBgColor};
     padding: 0 ${theme.spaces.space1};
   }
@@ -253,7 +252,7 @@ const Box = styled.div<{
   }
   input:-webkit-autofill + label,
   input:-webkit-autofill:focus + label {
-    transform: translateY(-25px) scale(0.9);
+    transform: translateY(-24px) scale(0.9);
   }
   input:disabled {
     cursor: default;
@@ -285,7 +284,7 @@ const Before = styled.div`
   margin-right: ${theme.spaces.space2};
 `;
 
-const Label = styled.label<{ iconBefore?: string }>`
+const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
   background: ${theme.colors.body};
   position: absolute;
   top: 0px;
@@ -298,7 +297,8 @@ const Label = styled.label<{ iconBefore?: string }>`
   pointer-events: none;
   padding: 0;
   font-size: ${theme.font.size.mini};
-  color: ${theme.colors.white};
+  color: ${theme.colors.grey};
+  background: ${(p) => p.$labelBgColor};
   span {
     color: ${theme.colors.error};
   }

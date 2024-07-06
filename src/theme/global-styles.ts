@@ -23,8 +23,9 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     margin: 0;
-    color: ${theme.colors.white};
-    background: ${theme.colors.body};
+    background: ${({ theme }) => theme.body};
+    transition: all 0.5s linear;
+    color: ${({ theme }) => theme.text};
     height: 100%;
     width: 100%;
     -webkit-font-smoothing: antialiased;
@@ -39,16 +40,16 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
-    color: ${theme.colors.white};
+    color: ${({ theme }) => theme.text};
   }
   h1 {
     font-weight: ${theme.font.weight.bold};
-    color: ${theme.colors.white};
+    color: ${({ theme }) => theme.text};
     font-size: ${theme.font.size.large};
   }
   h2 {
     font-weight: ${theme.font.weight.regular};
-    color: ${theme.colors.white};
+    color: ${({ theme }) => theme.text};
     font-size: ${theme.font.size.large};
   }
   a {
@@ -65,7 +66,7 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
     line-height: 1.1;
-    color: ${theme.colors.white};
+    color: ${({ theme }) => theme.text};
   }
   b, strong {
     ${theme.font.weight.bold}
@@ -229,7 +230,7 @@ export const GlobalStyle = createGlobalStyle`
 export const lightTheme = {
   navbar: theme.colors.navbar,
   body: theme.colors.white,
-  text: theme.colors.body,
+  text: theme.colors.dark,
   cardBody: theme.colors.greyIcon,
   cardText: theme.colors.dark,
   cardTextHover: theme.colors.lightDark,
@@ -241,7 +242,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   navbar: theme.colors.navbar,
-  body: theme.colors.body,
+  body: theme.colors.dark,
   text: theme.colors.white,
   cardBody: theme.colors.dark,
   cardText: theme.colors.white,

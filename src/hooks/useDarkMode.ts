@@ -23,7 +23,7 @@ export const useDarkMode = () => {
     if (localTheme) {
       setTheme(localTheme);
     } else {
-      setMode("dark");
+      setMode("light");
     }
     setComponentMounted(true);
   }, []);
