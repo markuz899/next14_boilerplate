@@ -5,6 +5,8 @@ import { AppWrapper } from "@/hoc";
 import { AuthProvider } from "@/context";
 import { useDarkMode, usePwa } from "@/hooks";
 import { Provider } from "react-redux";
+import { CacheProvider } from "@emotion/core";
+import { cache } from "emotion";
 import { ThemeProvider } from "styled-components";
 import { AppGlobalProps } from "@/utils/interface";
 import { ToastContainer } from "react-toastify";
@@ -94,41 +96,43 @@ const App = ({
         />
       </Head>
       <Provider store={reduxStore}>
-        <ThemeProvider theme={themeMode}>
-          <AuthProvider isAuth={authentication.isAuth}>
-            <Component
-              {...pageProps}
-              global={{
-                authentication,
-                menuState,
-                setMenuState,
-                theme: { themes, setTheme },
-                pwa: {
-                  installPrompt,
-                  isInstalled,
-                  isStandalone,
-                  isOffline,
-                  canInstall,
-                  handleInstallPrompt,
-                },
-              }}
-            />
-            <div id="root-modal"></div>
-            <div id="root-tooltip"></div>
-            <ToastContainer
-              position="top-right"
-              stacked
-              limit={3}
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              draggable={false}
-              closeOnClick
-              pauseOnHover
-            />
-            <GlobalStyle />
-          </AuthProvider>
-        </ThemeProvider>
+        <CacheProvider value={cache}>
+          <ThemeProvider theme={themeMode}>
+            <AuthProvider isAuth={authentication.isAuth}>
+              <Component
+                {...pageProps}
+                global={{
+                  authentication,
+                  menuState,
+                  setMenuState,
+                  theme: { themes, setTheme },
+                  pwa: {
+                    installPrompt,
+                    isInstalled,
+                    isStandalone,
+                    isOffline,
+                    canInstall,
+                    handleInstallPrompt,
+                  },
+                }}
+              />
+              <div id="root-modal"></div>
+              <div id="root-tooltip"></div>
+              <ToastContainer
+                position="top-right"
+                stacked
+                limit={3}
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                draggable={false}
+                closeOnClick
+                pauseOnHover
+              />
+              <GlobalStyle />
+            </AuthProvider>
+          </ThemeProvider>
+        </CacheProvider>
       </Provider>
     </React.StrictMode>
   );

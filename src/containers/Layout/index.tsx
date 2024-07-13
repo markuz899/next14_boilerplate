@@ -77,8 +77,7 @@ const Page = styled.div`
   height: 100%;
 `;
 const Body = styled.div<StyledDivProps>`
-  background: ${({ background, theme }) =>
-    background ? background : theme.body};
+  background: ${(p) => (p.background ? p.background : "inherit")};
   position: relative;
   display: flex;
   flex-direction: column;
