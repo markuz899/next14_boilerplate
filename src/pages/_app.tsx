@@ -14,7 +14,10 @@ import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { Montserrat } from "next/font/google";
 // import { Loader } from "@/components";
+
+const inter = Montserrat({ subsets: ["latin"] });
 
 const App = ({
   Component,
@@ -100,23 +103,25 @@ const App = ({
           <ThemeProvider theme={themeMode}>
             <AuthProvider isAuth={authentication.isAuth}>
               {componentMounted && (
-                <Component
-                  {...pageProps}
-                  global={{
-                    authentication,
-                    menuState,
-                    setMenuState,
-                    theme: { themes, setTheme },
-                    pwa: {
-                      installPrompt,
-                      isInstalled,
-                      isStandalone,
-                      isOffline,
-                      canInstall,
-                      handleInstallPrompt,
-                    },
-                  }}
-                />
+                <main style={{ height: "100%" }} className={inter.className}>
+                  <Component
+                    {...pageProps}
+                    global={{
+                      authentication,
+                      menuState,
+                      setMenuState,
+                      theme: { themes, setTheme },
+                      pwa: {
+                        installPrompt,
+                        isInstalled,
+                        isStandalone,
+                        isOffline,
+                        canInstall,
+                        handleInstallPrompt,
+                      },
+                    }}
+                  />
+                </main>
               )}
               <div id="root-modal"></div>
               <div id="root-tooltip"></div>

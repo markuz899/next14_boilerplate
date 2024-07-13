@@ -102,6 +102,7 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Input">
           <Input
+            labelBgColor={theme.colors.greyIcon}
             placeholder="Input example"
             topPlaceholder="Nome"
             name="name"
@@ -134,6 +135,7 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Textarea">
           <Textarea
             placeholder="Testo di test"
+            labelBgColor={theme.colors.greyIcon}
             topPlaceholder="Note"
           ></Textarea>
         </Section>
@@ -156,6 +158,7 @@ const Components = ({ global }: GlobalPageProps) => {
             name="city"
             onChange={() => {}}
             topPlaceholder="Seleziona città"
+            labelBgColor={theme.colors.greyIcon}
             placeholder="Città"
             options={[
               { label: "Roma", value: "1" },
@@ -169,6 +172,7 @@ const Components = ({ global }: GlobalPageProps) => {
             multiselect
             onChange={() => {}}
             topPlaceholder="Seleziona città"
+            labelBgColor={theme.colors.greyIcon}
             placeholder="Città"
             options={[
               { label: "Roma", value: "1" },

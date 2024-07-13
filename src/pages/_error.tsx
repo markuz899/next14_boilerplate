@@ -52,12 +52,8 @@ const Page = styled.div`
     }
     .title {
       margin-left: ${theme.spaces.space4};
-      a {
-        color: ${theme.colors.white};
-      }
       h2 {
         font-size: ${theme.font.size.big};
-        color: white;
       }
       ul {
         list-style: circle;

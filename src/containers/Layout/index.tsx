@@ -5,11 +5,8 @@ import theme from "../../theme";
 import LayoutContext from "./Context";
 import Head from "next/head";
 import { LayoutProps } from "@/utils/interface";
-import { Header, Sidebar } from "..";
+import { Header, Sidebar, Footer } from "..";
 import { useBreakpoints } from "@/hooks";
-import { Montserrat } from "next/font/google";
-
-const inter = Montserrat({ subsets: ["latin"] });
 
 export const Layout = ({
   children,
@@ -41,7 +38,7 @@ export const Layout = ({
           />
         )}
         <Page>
-          <Main className={`bodys ${inter.className}`}>
+          <Main className={`bodys`}>
             <Header
               global={global}
               isSmall={isSmall || isMedium}
@@ -49,7 +46,7 @@ export const Layout = ({
               setState={setMenuState}
             />
             <Body background={background}>{children}</Body>
-            FOOTER
+            <Footer />
           </Main>
         </Page>
       </Flex>
@@ -79,11 +76,12 @@ const Page = styled.div`
   overflow-y: scroll;
 `;
 const Body = styled.div<StyledDivProps>`
-  background: ${(p) => (p.background ? p.background : "inherit")};
+  background: ${({ background, theme }) =>
+    background ? background : theme.bg};
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: auto;
   transition: 1s;
   width: 100%;
   height: 100%;
@@ -95,4 +93,8 @@ const Main = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  .footer {
+    background: pink;
+    height: 80px;
+  }
 `;

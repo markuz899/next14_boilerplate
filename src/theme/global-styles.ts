@@ -36,22 +36,21 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
     color: ${({ theme }) => theme.text};
   }
   h1 {
     font-weight: ${theme.font.weight.bold};
-    color: ${({ theme }) => theme.text};
     font-size: ${theme.font.size.large};
   }
   h2 {
     font-weight: ${theme.font.weight.regular};
-    color: ${({ theme }) => theme.text};
     font-size: ${theme.font.size.large};
   }
   a {
+    color: ${theme.colors.darkGrey};
     text-decoration: none;
     &:hover {
       color: ${theme.colors.lightGrey};
@@ -65,7 +64,6 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
     line-height: 1.1;
-    color: ${({ theme }) => theme.text};
   }
   b, strong {
     ${theme.font.weight.bold}

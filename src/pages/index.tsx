@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
@@ -7,13 +6,11 @@ import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 import React from "react";
 
-const inter = Montserrat({ subsets: ["latin"] });
-
 const Home = ({ global }: GlobalPageProps) => {
   return (
     <Layout global={global} title="Homepage">
       <main
-        className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+        className={`flex min-h-screen flex-col items-center justify-between p-24`}
       >
         <Counter />
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
