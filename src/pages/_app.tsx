@@ -22,7 +22,7 @@ const App = ({
   authentication,
   reduxStore,
 }: AppGlobalProps) => {
-  const [themes, setTheme] = useDarkMode();
+  const [themes, setTheme, componentMounted] = useDarkMode();
   const { installPrompt, isInstalled, isStandalone, isOffline, canInstall } =
     usePwa();
   const [menuState, setMenuState] = useState(false);
@@ -99,23 +99,25 @@ const App = ({
         <CacheProvider value={cache}>
           <ThemeProvider theme={themeMode}>
             <AuthProvider isAuth={authentication.isAuth}>
-              <Component
-                {...pageProps}
-                global={{
-                  authentication,
-                  menuState,
-                  setMenuState,
-                  theme: { themes, setTheme },
-                  pwa: {
-                    installPrompt,
-                    isInstalled,
-                    isStandalone,
-                    isOffline,
-                    canInstall,
-                    handleInstallPrompt,
-                  },
-                }}
-              />
+              {componentMounted && (
+                <Component
+                  {...pageProps}
+                  global={{
+                    authentication,
+                    menuState,
+                    setMenuState,
+                    theme: { themes, setTheme },
+                    pwa: {
+                      installPrompt,
+                      isInstalled,
+                      isStandalone,
+                      isOffline,
+                      canInstall,
+                      handleInstallPrompt,
+                    },
+                  }}
+                />
+              )}
               <div id="root-modal"></div>
               <div id="root-tooltip"></div>
               <ToastContainer

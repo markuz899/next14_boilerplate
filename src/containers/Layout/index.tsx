@@ -75,6 +75,8 @@ const Flex = styled.div`
 const Page = styled.div`
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 const Body = styled.div<StyledDivProps>`
   background: ${(p) => (p.background ? p.background : "inherit")};

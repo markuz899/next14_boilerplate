@@ -23,8 +23,7 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     margin: 0;
-    background: ${({ theme }) => theme.body};
-    transition: all 0.5s linear;
+    background: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text};
     height: 100%;
     width: 100%;
@@ -228,6 +227,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const lightTheme = {
+  bg: theme.colors.greyIcon,
   navbar: theme.colors.navbar,
   body: theme.colors.white,
   text: theme.colors.dark,
@@ -241,6 +241,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
+  bg: theme.colors.dark,
   navbar: theme.colors.navbar,
   body: theme.colors.dark,
   text: theme.colors.white,
