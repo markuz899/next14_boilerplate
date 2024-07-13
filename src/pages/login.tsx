@@ -17,8 +17,12 @@ export default function Login({ global }: GlobalPageProps) {
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-    await login({ username: email, password });
-    Toast({ type: "success", message: "Login success" });
+    const loginService = await login({ username: email, password });
+    if (loginService.error) {
+      Toast({ type: "error", message: loginService.detail.name });
+    } else {
+      Toast({ type: "success", message: "Login success" });
+    }
     setPending(false);
   }
 
@@ -27,7 +31,7 @@ export default function Login({ global }: GlobalPageProps) {
       <Container>
         <section>
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <Modal
                   onClickOther
@@ -53,7 +57,6 @@ export default function Login({ global }: GlobalPageProps) {
                 >
                   <div>
                     <Input
-                      labelBgColor="#1f2937"
                       defaultValue="emilys"
                       type="text"
                       name="email"
@@ -64,7 +67,6 @@ export default function Login({ global }: GlobalPageProps) {
                   </div>
                   <div>
                     <Input
-                      labelBgColor="#1f2937"
                       defaultValue="emilyspass"
                       type="password"
                       name="password"

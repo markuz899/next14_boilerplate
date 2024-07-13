@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Session } from "../utils/storage";
+import { Storage } from "../utils/storage";
 
 export const useDarkMode = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const [componentMounted, setComponentMounted] = useState(false);
 
   const setMode = (mode: string) => {
-    Session.set("theme", mode);
+    Storage.set("theme", mode);
     setTheme(mode);
   };
 
@@ -19,7 +19,7 @@ export const useDarkMode = () => {
   };
 
   useEffect(() => {
-    const localTheme = Session.get("theme");
+    const localTheme = Storage.get("theme");
     if (localTheme) {
       setTheme(localTheme);
     } else {
