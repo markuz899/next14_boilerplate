@@ -120,4 +120,9 @@ const Option = styled.div<{ active: any }>`
     display: inline-block;
     font-size: ${theme.font.size.tiny};
   }
+  &:hover {
+    .selector {
+      border: 2px solid ${theme.colors.primary};
+    }
+  }
 `;

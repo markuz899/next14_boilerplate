@@ -53,7 +53,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         onClick={handleChange}
         isError={isError}
       >
-        <Check checked={isChecked} disabled={disabled}>
+        <Check className="check-box" checked={isChecked} disabled={disabled}>
           <input
             ref={refer}
             name={name}
@@ -118,6 +118,11 @@ const Box = styled.div<{
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     label {
       max-width: 80%;
+    }
+  }
+  &:hover {
+    .check-box {
+      border: 2px solid ${theme.colors.primary};
     }
   }
 `;

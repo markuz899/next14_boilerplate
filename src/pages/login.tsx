@@ -79,7 +79,7 @@ export default function Login({ global }: GlobalPageProps) {
 
                   <Button
                     fluid={true}
-                    kind="success"
+                    kind="inverse-success"
                     disabled={pending}
                     type="submit"
                   >

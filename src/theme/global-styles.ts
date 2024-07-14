@@ -225,17 +225,14 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const lightTheme = {
-  bg: theme.colors.lightWhite,
+  bg: theme.colors.softWhite,
   navbar: theme.colors.navbar,
   body: theme.colors.white,
   text: theme.colors.dark,
   cardBody: theme.colors.greyIcon,
   cardText: theme.colors.dark,
   cardTextHover: theme.colors.lightDark,
-  badgeBody: theme.colors.greyIcon,
   badgeText: theme.colors.dark,
-  shadow: theme.extra.shadowDark,
-  bodyLight: theme.colors.whiteLight,
 };
 
 export const darkTheme = {
@@ -246,8 +243,5 @@ export const darkTheme = {
   cardBody: theme.colors.dark,
   cardText: theme.colors.white,
   cardTextHover: theme.colors.lightGrey,
-  badgeBody: theme.colors.cardLight,
   badgeText: theme.colors.dark,
-  shadow: theme.extra.shadowLight,
-  bodyLight: theme.colors.bodyLight,
 };

@@ -90,11 +90,18 @@ const Components = ({ global }: GlobalPageProps) => {
           />
         </Section>
         <Section title="Buttons">
-          <div className="flex justify-between">
-            <Button kind="primary">Click me</Button>
-            <Button kind="success">Click me</Button>
-            <Button kind="error">Click me</Button>
-            <Button kind="warning">Click me</Button>
+          <div className="flex flex-wrap gap-3">
+            <Button kind="primary">Primary</Button>
+            <Button kind="success">Success</Button>
+            <Button kind="error">Error</Button>
+            <Button kind="warning">Warning</Button>
+            <Button kind="inverse-primary">Inverse primary</Button>
+            <Button kind="inverse-success">Inverse Success</Button>
+            <Button kind="inverse-error">Inverse Error</Button>
+            <Button kind="inverse-warning">Inverse Warning</Button>
+            <Button kind="ghost">Ghost</Button>
+            <Button kind="minimal">Minimal</Button>
+            <Button kind="action">Action</Button>
           </div>
         </Section>
         <Section title="Icon">
@@ -102,7 +109,7 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Input">
           <Input
-            labelBgColor={theme.colors.lightWhite}
+            labelBgColor={theme.colors.softWhite}
             placeholder="Input example"
             name="name"
           />
@@ -134,7 +141,7 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Textarea">
           <Textarea
             placeholder="Testo di test"
-            labelBgColor={theme.colors.lightWhite}
+            labelBgColor={theme.colors.softWhite}
             topPlaceholder="Note"
           ></Textarea>
         </Section>
@@ -157,7 +164,7 @@ const Components = ({ global }: GlobalPageProps) => {
             name="city"
             onChange={() => {}}
             topPlaceholder="Seleziona città"
-            labelBgColor={theme.colors.lightWhite}
+            labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             options={[
               { label: "Roma", value: "1" },
@@ -171,7 +178,7 @@ const Components = ({ global }: GlobalPageProps) => {
             multiselect
             onChange={() => {}}
             topPlaceholder="Seleziona città"
-            labelBgColor={theme.colors.lightWhite}
+            labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             options={[
               { label: "Roma", value: "1" },

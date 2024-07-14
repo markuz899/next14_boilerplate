@@ -8,6 +8,7 @@ export const KIND = {
   primary: css`
     background: ${colors.primary};
     color: ${colors.white};
+    border: 2px solid ${colors.primary};
     &:hover {
       background: ${colors.primaryDark};
     }
@@ -18,18 +19,40 @@ export const KIND = {
   success: css`
     background: ${colors.success};
     color: ${colors.white};
-    border: 1px solid ${colors.success};
+    border: 2px solid ${colors.success};
     &:hover {
-      background: ${colors.lightSuccess};
+      background: ${colors.successDark};
     }
     svg {
       fill: ${colors.white};
     }
   `,
-  inverse: css`
+  error: css`
+    background: ${colors.error};
+    color: ${colors.white};
+    border: 2px solid ${colors.error};
+    &:hover {
+      background: ${colors.errorDark};
+    }
+    svg {
+      color: ${colors.white};
+    }
+  `,
+  warning: css`
+    background: ${colors.warning};
+    color: ${colors.white};
+    border: 2px solid ${colors.warning};
+    &:hover {
+      background: ${colors.warningDark};
+    }
+    svg {
+      color: ${colors.white};
+    }
+  `,
+  "inverse-primary": css`
     background: ${colors.white};
     color: ${colors.primary};
-    border: 1px solid ${colors.primary};
+    border: 2px solid ${colors.primary};
     svg {
       fill: ${colors.primary};
     }
@@ -38,12 +61,48 @@ export const KIND = {
       background: ${colors.primary};
     }
   `,
+  "inverse-success": css`
+    background: ${colors.white};
+    color: ${colors.success};
+    border: 2px solid ${colors.success};
+    svg {
+      fill: ${colors.success};
+    }
+    &:hover {
+      color: ${theme.colors.white};
+      background: ${colors.success};
+    }
+  `,
+  "inverse-warning": css`
+    background: ${colors.white};
+    color: ${colors.warning};
+    border: 2px solid ${colors.warning};
+    svg {
+      fill: ${colors.warning};
+    }
+    &:hover {
+      color: ${theme.colors.white};
+      background: ${colors.warning};
+    }
+  `,
+  "inverse-error": css`
+    background: ${colors.white};
+    color: ${colors.error};
+    border: 2px solid ${colors.error};
+    svg {
+      fill: ${colors.error};
+    }
+    &:hover {
+      color: ${theme.colors.white};
+      background: ${colors.error};
+    }
+  `,
   ghost: css`
     background: transparent;
     color: ${colors.dark};
-    border: 1px solid ${colors.grey};
+    border: 2px solid ${colors.grey};
     &:hover {
-      border: 1px solid ${colors.darkGrey};
+      border: 2px solid ${colors.darkGrey};
     }
     svg {
       fill: ${colors.dark};
@@ -55,7 +114,7 @@ export const KIND = {
     border: 0px;
     padding: 0;
     &:hover {
-      color: ${colors.primaryHover};
+      color: ${colors.primaryDark};
     }
     svg {
       fill: ${colors.primary};
@@ -64,57 +123,13 @@ export const KIND = {
   action: css`
     background: ${colors.white};
     color: ${colors.primary};
-    border: 1px solid ${colors.greyIcon};
+    border: 2px solid ${colors.greyIcon};
     transition: ${extra.transition};
     svg {
       color: ${colors.primary};
     }
     &:hover {
-      border: 1px solid ${colors.primary};
-    }
-  `,
-  error: css`
-    background: ${colors.error};
-    color: ${colors.white};
-    border: 1px solid ${colors.error};
-    &:hover {
-      background: ${colors.errorLight};
-    }
-    svg {
-      color: ${colors.white};
-    }
-  `,
-  warning: css`
-    background: ${colors.warning};
-    color: ${colors.white};
-    border: 1px solid ${colors.warning};
-    &:hover {
-      background: ${colors.warningLight};
-    }
-    svg {
-      color: ${colors.white};
-    }
-  `,
-  ligth: css`
-    background: ${colors.primaryLight};
-    color: ${colors.white};
-    border: 1px solid ${colors.primaryLight};
-    &:hover {
-      background: ${colors.primaryLight};
-    }
-    svg {
-      color: ${colors.white};
-    }
-  `,
-  ghostPrimary: css`
-    background: transparent;
-    color: ${colors.dark};
-    border: 1px solid ${colors.greyIcon};
-    &:hover {
-      /* border: 1px solid ${colors.darkGrey}; */
-    }
-    svg {
-      fill: ${colors.primary};
+      border: 2px solid ${colors.primary};
     }
   `,
 };

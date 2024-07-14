@@ -196,7 +196,7 @@ const Box = styled.div<{
         : props.$focus
         ? theme.colors.primary
         : theme.colors.dark};
-  border: 1px solid
+  border: 2px solid
     ${(props) =>
       props.isError
         ? theme.colors.error
@@ -262,6 +262,11 @@ const Box = styled.div<{
   }
   .alertTooltip {
     margin-left: 3px;
+  }
+  &:hover {
+    border: 2px solid
+      ${({ isError, $focus }) =>
+        isError ? theme.colors.error : theme.colors.primary};
   }
 `;
 const Container = styled.div`

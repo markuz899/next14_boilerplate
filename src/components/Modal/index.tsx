@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef, Children } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { createPortal } from "react-dom";
 import { Icon } from "..";
 import theme from "@/theme";
 import { ModalProps, ModalRootProps, ModalContentProps } from "./interface";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Modal: React.FC<ModalProps> = ({
   title = "Default title",
@@ -49,26 +50,33 @@ const Modal: React.FC<ModalProps> = ({
     const ROOT_NODE = document.getElementById(ROOT_ID);
     const handleClickOnOverlay = onClickOther ? closeOnClick : () => {};
     const ROOT = (
-      <Root
-        fullScreen={fullScreen}
-        noTitle={noTitle}
-        onClick={handleClickOnOverlay}
-        ref={overlay}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
       >
-        <Content size={size} noTitle={noTitle} fullScreen={fullScreen}>
-          {!noTitle && (
-            <Header>
-              <h2 className="text-primary">{title}</h2>
-              {!noCloseIcon && (
-                <div className="iconClose" onClick={close}>
-                  <Icon name="close" color={theme.colors.primary} />
-                </div>
-              )}
-            </Header>
-          )}
-          {render && render({ close })}
-        </Content>
-      </Root>
+        <Root
+          fullScreen={fullScreen}
+          noTitle={noTitle}
+          onClick={handleClickOnOverlay}
+          ref={overlay}
+        >
+          <Content size={size} noTitle={noTitle} fullScreen={fullScreen}>
+            {!noTitle && (
+              <Header>
+                <h2 className="text-primary">{title}</h2>
+                {!noCloseIcon && (
+                  <div className="iconClose" onClick={close}>
+                    <Icon name="close" color={theme.colors.primary} />
+                  </div>
+                )}
+              </Header>
+            )}
+            {render && render({ close })}
+          </Content>
+        </Root>
+      </motion.div>
     );
     return ROOT_NODE ? createPortal(ROOT, ROOT_NODE) : null;
   };
@@ -78,7 +86,19 @@ const Modal: React.FC<ModalProps> = ({
       <Destiny className={className} onClick={open}>
         {Children.toArray(children)}
       </Destiny>
-      {visible && renderModal()}
+      <AnimatePresence initial={false} mode="wait">
+        {visible && (
+          <motion.div
+            key="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {renderModal()}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

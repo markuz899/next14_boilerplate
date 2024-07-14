@@ -304,33 +304,3 @@ const MenuContent = styled.div`
     }
   }
 `;
-const ContactStyleModal = styled.div`
-  text-align: center;
-  p {
-    color: ${theme.colors.primaryDark};
-  }
-  .action {
-    padding: 0 ${theme.spaces.space6};
-    margin-top: ${theme.spaces.space8};
-    display: flex;
-    justify-content: space-between;
-    .box {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      .column {
-        margin-left: ${theme.spaces.space3};
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        p {
-          font-size: ${theme.font.size.mini};
-          color: ${theme.colors.lightGrey};
-        }
-        a {
-          font-size: ${theme.font.size.normal};
-        }
-      }
-    }
-  }
-`;

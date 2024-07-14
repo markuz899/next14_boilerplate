@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
     "@emotion/is-prop-valid": "^1.2.2",
+    "@emotion/styled": "^10.0.27",
     "@fastify/cookie": "^9.3.1",
     "@fastify/static": "^7.0.4",
     "dayjs": "^1.11.11",
@@ -24,6 +24,7 @@
     "emotion-server": "^10.0.27",
     "fastify": "^4.28.1",
     "fastify-env": "^2.2.0",
+    "framer-motion": "^11.3.2",
     "hoist-non-react-statics": "^3.3.2",
     "invariant": "^2.2.4",
     "lodash": "^4.17.19",

@@ -251,8 +251,12 @@ const Box = styled.div<{
   }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    -webkit-background-clip: text;
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: ${({ theme }) => theme.text} !important;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -263,9 +267,30 @@ const Box = styled.div<{
   input:disabled {
     cursor: default;
   }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 1em;
+    width: 1em;
+    border-radius: 50em;
+    background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg)
+      no-repeat 50% 50%;
+    background-size: contain;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  input[type="search"]:focus::-webkit-search-cancel-button {
+    opacity: 0.3;
+    pointer-events: all;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    filter: invert(1);
+  }
   .error-msg {
     position: absolute;
-    bottom: -18px;
+    bottom: -22px;
     left: 0;
     font-size: ${theme.font.size.mini};
   }
@@ -273,6 +298,11 @@ const Box = styled.div<{
     cursor: pointer;
     font-size: ${theme.font.size.mini};
     color: ${theme.colors.lightGrey};
+  }
+  &:hover {
+    border: 2px solid
+      ${({ isError, $focus }) =>
+        isError ? theme.colors.error : theme.colors.primary};
   }
 `;
 

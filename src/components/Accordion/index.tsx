@@ -81,7 +81,7 @@ const ContentAccordion = styled.ul`
       color: ${theme.colors.dark};
       text-transform: uppercase;
       text-align: left;
-      border: 1px solid ${theme.colors.dark};
+      border: 2px solid ${theme.colors.dark};
       border-radius: ${theme.extra.radius};
       background: ${({ theme }) => theme.body};
       display: flex;
@@ -89,6 +89,7 @@ const ContentAccordion = styled.ul`
       justify-content: space-between;
       padding: ${theme.spaces.space5} ${theme.spaces.space6};
       z-index: 2;
+      transition: all 0.5s;
       cursor: pointer;
       p {
         width: 100%;
@@ -105,14 +106,14 @@ const ContentAccordion = styled.ul`
     }
 
     .answer_wrapper {
-      margin-top: -2px;
+      margin-top: -4px;
       position: relative;
       height: 0;
       overflow: hidden;
       transition: height ease 0.2s;
       text-align: left;
       z-index: 1;
-      border: 1px solid ${theme.colors.dark};
+      border: 2px solid ${theme.colors.dark};
       border-bottom-left-radius: ${theme.extra.radius};
       border-bottom-right-radius: ${theme.extra.radius};
     }
