@@ -131,7 +131,7 @@ const Check = styled.div<{ checked: boolean; disabled: boolean }>`
   width: ${theme.spaces.space4};
   height: ${theme.spaces.space4};
   border-radius: 4px;
-  border: 1px solid
+  border: 2px solid
     ${(p) => (p.checked ? theme.colors.primary : theme.colors.borderComponent)};
   background-color: ${(props) =>
     props.disabled

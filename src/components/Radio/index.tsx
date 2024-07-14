@@ -99,7 +99,7 @@ const Option = styled.div<{ active: any }>`
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    border: 1px solid
+    border: 2px solid
       ${(props) =>
         props.active ? theme.colors.primary : theme.colors.greyIcon};
     &:hover {
@@ -115,7 +115,7 @@ const Option = styled.div<{ active: any }>`
     }
   }
   span {
-    font-weight: ${(props) => (props.active ? "bold" : "normal")};
+    color: ${(props) => (props.active ? theme.colors.primary : "inherit")};
     margin: 0 ${theme.spaces.space4} 0 ${theme.spaces.space3};
     display: inline-block;
     font-size: ${theme.font.size.tiny};
