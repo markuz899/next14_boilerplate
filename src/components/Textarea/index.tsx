@@ -102,8 +102,9 @@ const Textarea = forwardRef<TextareaRef, TextareaProps>(
       <Box
         isError={isError || undefined}
         className={className}
-        focus={focus.toString()}
+        $focus={focus}
         $labelBgColor={labelBgColor}
+        $topPlaceholder={topPlaceholder}
       >
         {iconBefore && (
           <Before>
@@ -115,6 +116,7 @@ const Textarea = forwardRef<TextareaRef, TextareaProps>(
           <textarea
             ref={inputRef}
             onChange={handleChange}
+            placeholder={placeholder}
             value={text}
             data-value={dataValue}
             name={name}
@@ -174,8 +176,9 @@ export default React.memo(Textarea);
 /* eslint-disable */
 const Box = styled.div<{
   isError: boolean;
-  focus: boolean;
+  $focus: boolean;
   $labelBgColor: string;
+  $topPlaceholder: any;
 }>`
   margin-top: 15px;
   border-radius: 0;
@@ -186,18 +189,18 @@ const Box = styled.div<{
   background: transparent;
   width: 100%;
   padding: 0 ${theme.spaces.space2};
-  border: 1px solid
+  border: 2px solid
     ${(props) =>
       props.isError
         ? theme.colors.error
-        : props.focus
+        : props.$focus
         ? theme.colors.primary
         : theme.colors.dark};
   border: 1px solid
     ${(props) =>
       props.isError
         ? theme.colors.error
-        : props.focus
+        : props.$focus
         ? theme.colors.primary
         : theme.colors.borderComponent};
   border-radius: ${theme.extra.radiusBig};
@@ -214,12 +217,13 @@ const Box = styled.div<{
     color: ${({ theme }) => theme.text};
     color: ${(props) => props.isError && theme.colors.error};
     margin-top: 4px;
-    padding-top: ${theme.spaces.space3};
+    padding-top: ${({ $topPlaceholder }) =>
+      $topPlaceholder ? theme.spaces.space3 : 0};
     &:focus {
       outline: none;
     }
     &::placeholder {
-      color: ${({ theme }) => theme.text};
+      color: ${theme.colors.lightGrey};
       font-size: ${theme.font.size.tiny};
     }
     &:-ms-textarea-placeholder {

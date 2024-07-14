@@ -100,7 +100,11 @@ const Input = forwardRef<InputRef, InputProps>(
           className="pointer"
           onClick={() => setShowPassword(!showPassword)}
         >
-          {showPassword ? "NASCONDI" : "MOSTRA"}
+          {showPassword ? (
+            <Icon name="eye-not" color={theme.colors.borderComponent} />
+          ) : (
+            <Icon name="eye" color={theme.colors.borderComponent} />
+          )}
         </span>
       );
     }
@@ -117,7 +121,7 @@ const Input = forwardRef<InputRef, InputProps>(
         <Box
           isError={isError || undefined}
           className={className}
-          focus={focus.toString()}
+          $focus={focus}
           withFilter={withFilter}
           $labelBgColor={labelBgColor}
         >
@@ -143,10 +147,12 @@ const Input = forwardRef<InputRef, InputProps>(
               placeholder={placeholder}
               {...rest}
             />
-            <Label iconBefore={iconBefore} $labelBgColor={labelBgColor}>
-              {topPlaceholder && topPlaceholder}{" "}
-              {required && <span className="asterisk">*</span>}
-            </Label>
+            {topPlaceholder && (
+              <Label iconBefore={iconBefore} $labelBgColor={labelBgColor}>
+                {topPlaceholder && topPlaceholder}{" "}
+                {required && <span className="asterisk">*</span>}
+              </Label>
+            )}
           </Container>
           {errorTooltip}
           {errorMessage}
@@ -184,7 +190,7 @@ Input.propTypes = {
 
 const Box = styled.div<{
   isError: any;
-  focus: any;
+  $focus: any;
   withFilter?: boolean;
   $labelBgColor?: string;
 }>`
@@ -198,11 +204,11 @@ const Box = styled.div<{
   background: transparent;
   width: 100%;
   padding: 0 ${theme.spaces.space2};
-  border: 1px solid
-    ${({ isError, focus }) =>
+  border: 2px solid
+    ${({ isError, $focus }) =>
       isError
         ? theme.colors.error
-        : focus
+        : $focus
         ? theme.colors.primary
         : theme.colors.borderComponent};
   border-radius: ${theme.extra.radiusBig};

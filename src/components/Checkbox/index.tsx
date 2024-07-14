@@ -67,7 +67,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
               name="check"
               margin="5px 0 0 3px"
               size="15px"
-              color={theme.colors.primary}
+              color={theme.colors.white}
             />
           )}
         </Check>
@@ -128,12 +128,17 @@ const Check = styled.div<{ checked: boolean; disabled: boolean }>`
   align-items: center;
   position: relative;
   margin-right: 9px;
-  width: ${theme.spaces.space3};
-  height: ${theme.spaces.space3};
+  width: ${theme.spaces.space4};
+  height: ${theme.spaces.space4};
   border-radius: 4px;
   border: 1px solid
     ${(p) => (p.checked ? theme.colors.primary : theme.colors.borderComponent)};
-  background-color: ${(props) => (props.disabled ? "#d4d4d4b8" : "none")};
+  background-color: ${(props) =>
+    props.disabled
+      ? "#d4d4d4b8"
+      : props.checked
+      ? theme.colors.primary
+      : "none"};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   input {
     position: absolute;

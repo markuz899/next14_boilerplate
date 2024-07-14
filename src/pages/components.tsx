@@ -104,7 +104,6 @@ const Components = ({ global }: GlobalPageProps) => {
           <Input
             labelBgColor={theme.colors.lightWhite}
             placeholder="Input example"
-            topPlaceholder="Nome"
             name="name"
           />
         </Section>
