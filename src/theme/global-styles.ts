@@ -225,7 +225,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const lightTheme = {
-  bg: theme.colors.greyIcon,
+  bg: theme.colors.lightWhite,
   navbar: theme.colors.navbar,
   body: theme.colors.white,
   text: theme.colors.dark,
