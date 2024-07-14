@@ -10,7 +10,7 @@ const Toggle: React.FC<ToggleProps> = ({
   onChange,
   onClick,
   className,
-  colorBg = theme.colors.success,
+  colorBg = theme.colors.primary,
   label,
 }) => {
   return (
