@@ -12,6 +12,10 @@ export const KIND = {
     &:hover {
       background: ${colors.primaryDark};
     }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.primary}60;
+    }
     svg {
       fill: ${colors.white};
     }
@@ -22,6 +26,10 @@ export const KIND = {
     border: 2px solid ${colors.success};
     &:hover {
       background: ${colors.successDark};
+    }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.success}60;
     }
     svg {
       fill: ${colors.white};
@@ -34,6 +42,10 @@ export const KIND = {
     &:hover {
       background: ${colors.errorDark};
     }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.error}60;
+    }
     svg {
       color: ${colors.white};
     }
@@ -45,6 +57,10 @@ export const KIND = {
     &:hover {
       background: ${colors.warningDark};
     }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.warning}60;
+    }
     svg {
       color: ${colors.white};
     }
@@ -55,6 +71,10 @@ export const KIND = {
     border: 2px solid ${colors.primary};
     svg {
       fill: ${colors.primary};
+    }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.primary}60;
     }
     &:hover {
       color: ${theme.colors.white};
@@ -68,6 +88,10 @@ export const KIND = {
     svg {
       fill: ${colors.success};
     }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.success}60;
+    }
     &:hover {
       color: ${theme.colors.white};
       background: ${colors.success};
@@ -79,6 +103,10 @@ export const KIND = {
     border: 2px solid ${colors.warning};
     svg {
       fill: ${colors.warning};
+    }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.warning}60;
     }
     &:hover {
       color: ${theme.colors.white};
@@ -92,6 +120,10 @@ export const KIND = {
     svg {
       fill: ${colors.error};
     }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.error}60;
+    }
     &:hover {
       color: ${theme.colors.white};
       background: ${colors.error};
@@ -103,6 +135,10 @@ export const KIND = {
     border: 2px solid ${colors.grey};
     &:hover {
       border: 2px solid ${colors.darkGrey};
+    }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.grey}60;
     }
     svg {
       fill: ${colors.dark};
@@ -163,6 +199,10 @@ export const KIND = {
     transition: ${extra.transition};
     svg {
       color: ${colors.primary};
+    }
+    &.clicked {
+      transition: none;
+      box-shadow: 0 0 0 3px ${colors.primary}60;
     }
     &:hover {
       border: 2px solid ${colors.primary};

@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useState } from "react";
 import PropTypes from "prop-types";
 import { StyledButton, A, availableKinds, KIND } from "./styled";
 import Icon from "../Icon";
@@ -23,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   type,
   ...rest
 }) => {
+  const [isClicked, setIsClicked] = useState<boolean>(false);
   type KindKeys = keyof typeof KIND;
   type HeightKeys = keyof typeof theme.height;
   let buttonKind: KindKeys = kind;
@@ -106,6 +107,18 @@ const Button: React.FC<ButtonProps> = ({
     );
   }
 
+  const handleMouseDown = () => {
+    setIsClicked(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsClicked(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsClicked(false);
+  };
+
   let button = (
     <StyledButton
       {...rest}
@@ -115,7 +128,10 @@ const Button: React.FC<ButtonProps> = ({
       round={round || undefined}
       $fluid={fluid || undefined}
       size={buttonSize}
-      className={className}
+      className={`${className ? className : ""} ${isClicked ? "clicked" : ""}`}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
     >
       {inner}
     </StyledButton>
