@@ -134,6 +134,9 @@ const List = styled.div`
     text-decoration: none;
     color: ${theme.colors.greyIcon};
     text-transform: uppercase;
+    p {
+      color: ${theme.colors.navbarText};
+    }
     div {
       white-space: nowrap;
     }

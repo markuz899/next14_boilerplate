@@ -10,7 +10,7 @@ const Toggle: React.FC<ToggleProps> = ({
   onChange,
   onClick,
   className,
-  colorBg = theme.colors.black,
+  colorBg = theme.colors.success,
   label,
 }) => {
   return (
@@ -44,9 +44,8 @@ const Wrapper = styled.div`
 const Slider = styled.label`
   position: relative;
   display: inline-block;
-  width: ${theme.spaces.space7};
-  height: ${theme.spaces.space4};
-
+  width: ${theme.spaces.space10};
+  height: ${theme.spaces.space5};
   > input {
     opacity: 0;
     width: 0;
@@ -62,7 +61,7 @@ const SliderInput = styled.input<{ $colorBg?: string }>`
   &:checked + .sliderBg {
     background-color: ${(props) => props.$colorBg};
     &:before {
-      transform: translateX(${theme.spaces.space3});
+      transform: translateX(${theme.spaces.space5});
       background-color: ${theme.colors.white};
     }
   }
@@ -75,15 +74,15 @@ const SliderSpan = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${theme.colors.error};
+  background-color: ${theme.colors.borderComponent};
   transition: 0.4s;
-  border-radius: ${theme.spaces.space2};
+  border-radius: ${theme.spaces.space3};
   opacity: 1;
   &:before {
     position: absolute;
     content: "";
-    height: 14px;
-    width: 15px;
+    height: 19px;
+    width: 19px;
     left: 3px;
     bottom: 3px;
     background-color: ${theme.colors.white};
