@@ -70,9 +70,7 @@ const Input = forwardRef<InputRef, InputProps>(
         setHasValue(!!v);
         setState(v);
       }
-      if (onChange) {
-        onChange(e);
-      }
+      onChange && onChange({ value: v, name, type }, e);
     };
 
     const toggleSelectAction = () => {
