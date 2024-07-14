@@ -3,14 +3,18 @@ import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
 import {
   Accordion,
+  Badge,
+  Banner,
   Button,
   Checkbox,
+  Collapse,
   Dropdown,
   Icon,
   Input,
   Modal,
   Radio,
   Select,
+  Tabs,
   Textarea,
   Toggle,
   Tooltip,
@@ -88,6 +92,52 @@ const Components = ({ global }: GlobalPageProps) => {
               },
             ]}
           />
+        </Section>
+        <Section title="Collapse">
+          <Tabs
+            title="Click to collapse element"
+            isOpen={false}
+            renderContent={() => <Collapse text={"Collapsable"} />}
+          />
+        </Section>
+        <Section title="Badge">
+          <Badge
+            label={"Badge no close"}
+            iconClose={false}
+            kind="ghost"
+            onClick={() => {}}
+          />
+          <Badge
+            label={"Badge standard"}
+            kind="ghost"
+            onClick={() => alert("Close click")}
+          />
+          <Badge
+            label={"Badge success"}
+            kind="success"
+            onClick={() => alert("Close click")}
+          />
+          <Badge
+            label={"Badge warning"}
+            kind="warning"
+            onClick={() => alert("Close click")}
+          />
+          <Badge
+            label={"Badge error"}
+            kind="error"
+            onClick={() => alert("Close click")}
+          />
+          <Badge
+            label={"Badge info"}
+            kind="info"
+            onClick={() => alert("Close click")}
+          />
+        </Section>
+        <Section title="Banner">
+          <Banner active={true} kind={"info"} title={"Info banner"} />
+          <Banner active={true} kind={"success"} title={"Success banner"} />
+          <Banner active={true} kind={"warning"} title={"Warning banner"} />
+          <Banner active={true} kind={"error"} title={"Error banner"} />
         </Section>
         <Section title="Buttons">
           <div className="flex flex-wrap gap-3">
