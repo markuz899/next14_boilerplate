@@ -120,6 +120,42 @@ export const KIND = {
       fill: ${colors.primary};
     }
   `,
+  "minimal-error": css`
+    background: transparent;
+    color: ${colors.error};
+    border: 0px;
+    padding: 0;
+    &:hover {
+      color: ${colors.errorDark};
+    }
+    svg {
+      fill: ${colors.error};
+    }
+  `,
+  "minimal-warning": css`
+    background: transparent;
+    color: ${colors.warning};
+    border: 0px;
+    padding: 0;
+    &:hover {
+      color: ${colors.warningDark};
+    }
+    svg {
+      fill: ${colors.warning};
+    }
+  `,
+  "minimal-success": css`
+    background: transparent;
+    color: ${colors.success};
+    border: 0px;
+    padding: 0;
+    &:hover {
+      color: ${colors.successDark};
+    }
+    svg {
+      fill: ${colors.success};
+    }
+  `,
   action: css`
     background: ${colors.white};
     color: ${colors.primary};

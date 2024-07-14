@@ -140,18 +140,29 @@ const Components = ({ global }: GlobalPageProps) => {
           <Banner active={true} kind={"error"} title={"Error banner"} />
         </Section>
         <Section title="Buttons">
-          <div className="flex flex-wrap gap-3">
-            <Button kind="primary">Primary</Button>
-            <Button kind="success">Success</Button>
-            <Button kind="error">Error</Button>
-            <Button kind="warning">Warning</Button>
-            <Button kind="inverse-primary">Inverse primary</Button>
-            <Button kind="inverse-success">Inverse Success</Button>
-            <Button kind="inverse-error">Inverse Error</Button>
-            <Button kind="inverse-warning">Inverse Warning</Button>
-            <Button kind="ghost">Ghost</Button>
-            <Button kind="minimal">Minimal</Button>
-            <Button kind="action">Action</Button>
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap gap-3">
+              <Button kind="primary">Default</Button>
+              <Button kind="success">Success</Button>
+              <Button kind="error">Error</Button>
+              <Button kind="warning">Warning</Button>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button kind="inverse-primary">Inverse</Button>
+              <Button kind="inverse-success">Success</Button>
+              <Button kind="inverse-error">Error</Button>
+              <Button kind="inverse-warning">Warning</Button>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button kind="minimal">Minimal</Button>
+              <Button kind="minimal-success">Success</Button>
+              <Button kind="minimal-error">Error</Button>
+              <Button kind="minimal-warning">Warning</Button>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button kind="ghost">Ghost</Button>
+              <Button kind="action">Action</Button>
+            </div>
           </div>
         </Section>
         <Section title="Icon">
