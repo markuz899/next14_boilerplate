@@ -24,7 +24,7 @@ const Toggle: React.FC<ToggleProps> = ({
           onChange={(e) => onChange && onChange(e.target.checked)}
           onClick={onClick}
         />
-        <SliderSpan className="sliderBg" />
+        <SliderSpan className="sliderBg" $colorBg={colorBg} />
       </Slider>
       {label && <Label>{label}</Label>}
     </Wrapper>
@@ -61,13 +61,13 @@ const SliderInput = styled.input<{ $colorBg?: string }>`
   &:checked + .sliderBg {
     background-color: ${(props) => props.$colorBg};
     &:before {
-      transform: translateX(${theme.spaces.space5});
+      transform: translateX(24px);
       background-color: ${theme.colors.white};
     }
   }
 `;
 
-const SliderSpan = styled.span`
+const SliderSpan = styled.span<{ $colorBg?: string }>`
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -75,19 +75,23 @@ const SliderSpan = styled.span`
   right: 0;
   bottom: 0;
   background-color: ${theme.colors.borderComponent};
+  border: 2px solid transparent;
   transition: 0.4s;
   border-radius: ${theme.spaces.space3};
   opacity: 1;
   &:before {
     position: absolute;
     content: "";
-    height: 19px;
-    width: 19px;
+    height: 17px;
+    width: 17px;
     left: 3px;
-    bottom: 3px;
+    bottom: 2px;
     background-color: ${theme.colors.white};
     transition: 0.4s;
     border-radius: 50%;
+  }
+  &:hover {
+    border-color: ${({ $colorBg }) => $colorBg};
   }
 `;
 
