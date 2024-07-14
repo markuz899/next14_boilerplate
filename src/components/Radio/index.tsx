@@ -14,6 +14,7 @@ const Radio: React.FC<RadioProps> = ({
   defaultValue = null,
   isError = false,
   message,
+  disabled = false,
 }) => {
   const [state, setState] = useState<any>(defaultValue);
 
@@ -25,9 +26,11 @@ const Radio: React.FC<RadioProps> = ({
     e: React.MouseEvent<HTMLDivElement>,
     newValue: any
   ) => {
-    if (newValue !== state) {
-      setState(newValue);
-      onChange({ label: name, value: newValue, name }, e);
+    if (!disabled) {
+      if (newValue !== state) {
+        setState(newValue);
+        onChange({ label: name, value: newValue, name }, e);
+      }
     }
   };
 
@@ -41,6 +44,7 @@ const Radio: React.FC<RadioProps> = ({
             <Option
               onClick={(e) => handleOnClick(e, option.value)}
               active={state === option.value ? "si" : undefined}
+              disabled={disabled}
             >
               <div className="selector" />
               <span>{option.label}</span>
@@ -87,11 +91,13 @@ const Options = styled.div<{ $inline: any; $isError: boolean | undefined }>`
   }
 `;
 
-const Option = styled.div<{ active: any }>`
+const Option = styled.div<{ active: any; disabled: boolean }>`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   .selector {
+    background: ${({ disabled }) =>
+      disabled ? theme.colors.greyIcon : "transparent"};
     border: 1px solid ${theme.colors.primary};
     display: flex;
     justify-content: center;

@@ -13,7 +13,7 @@ export interface SelectProps {
   message?: string;
   value?: string | string[];
   multiselect?: boolean;
-  defaultValues?: string[];
+  defaultValues?: any;
   readOnly?: boolean;
   className?: string;
   withFilter?: boolean;

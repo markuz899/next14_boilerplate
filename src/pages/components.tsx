@@ -146,12 +146,18 @@ const Components = ({ global }: GlobalPageProps) => {
               <Button kind="success">Success</Button>
               <Button kind="error">Error</Button>
               <Button kind="warning">Warning</Button>
+              <Button kind="primary" disabled>
+                Disabled
+              </Button>
             </div>
             <div className="flex flex-wrap gap-3">
               <Button kind="inverse-primary">Inverse</Button>
               <Button kind="inverse-success">Success</Button>
               <Button kind="inverse-error">Error</Button>
               <Button kind="inverse-warning">Warning</Button>
+              <Button kind="inverse-primary" disabled>
+                Disabled
+              </Button>
             </div>
             <div className="flex flex-wrap gap-3">
               <Button kind="minimal">Minimal</Button>
@@ -227,9 +233,11 @@ const Components = ({ global }: GlobalPageProps) => {
             topPlaceholder="Seleziona città"
             labelBgColor={theme.colors.softWhite}
             placeholder="Città"
+            defaultValues={"1"}
             options={[
               { label: "Roma", value: "1" },
-              { label: "Milano", value: "2" },
+              { label: "Ancora", value: "2" },
+              { label: "Milano", value: "3" },
             ]}
           />
         </Section>
@@ -241,9 +249,11 @@ const Components = ({ global }: GlobalPageProps) => {
             topPlaceholder="Seleziona città"
             labelBgColor={theme.colors.softWhite}
             placeholder="Città"
+            defaultValues={["2"]}
             options={[
               { label: "Roma", value: "1" },
-              { label: "Milano", value: "2" },
+              { label: "New York", value: "2" },
+              { label: "Milano", value: "3" },
             ]}
           />
         </Section>

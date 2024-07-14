@@ -63,9 +63,9 @@ const Select: React.FC<SelectProps> = ({
       }
     } else {
       if (defaultValues) {
-        let target = options?.find((item: any) => item.label === defaultValues);
+        let target = options?.find((item: any) => item.value === defaultValues);
         if (target) {
-          setState(defaultValues);
+          setState(target.label);
           if (disabled) {
             setDisable(disabled || false);
           }
@@ -230,7 +230,7 @@ const Select: React.FC<SelectProps> = ({
             <Option
               onClick={() => onSelect(option, close)}
               selected={state === option.label}
-              $active={values.includes(option.value)}
+              $active={multiselect ? values.includes(option.value) : false}
               $hover={hover === i}
               onMouseEnter={() => setHover(i)}
               onMouseLeave={() => setHover(-1)}

@@ -15,4 +15,5 @@ export interface RadioProps {
   defaultValue?: any;
   isError?: boolean;
   message?: string;
+  disabled?: boolean;
 }

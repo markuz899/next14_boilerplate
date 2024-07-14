@@ -80,6 +80,11 @@ export const KIND = {
       color: ${theme.colors.white};
       background: ${colors.primary};
     }
+    &:disabled {
+      background: ${colors.white};
+      color: ${colors.greyIcon};
+      border: 2px solid ${colors.greyIcon};
+    }
   `,
   "inverse-success": css`
     background: ${colors.white};
