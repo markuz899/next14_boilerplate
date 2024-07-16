@@ -122,6 +122,7 @@ const Box = styled.div<{
   }
   &:hover {
     .check-box {
+      transition: all ${theme.extra.transition};
       border: 2px solid ${theme.colors.primary};
     }
   }

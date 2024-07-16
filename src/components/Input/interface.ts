@@ -6,7 +6,7 @@ export interface InputProps {
   defaultValue?: string;
   name?: string;
   isError?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: any;
   message?: string;
   showPasswordIcon?: boolean;
   icon?: string;

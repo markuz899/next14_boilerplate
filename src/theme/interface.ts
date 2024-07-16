@@ -38,7 +38,6 @@ export interface ITheme {
   };
   font: {
     size: {
-      xsmall: string;
       small: string;
       mini: string;
       minor: string;
@@ -50,7 +49,6 @@ export interface ITheme {
       xBig: string;
       extraLarge: string;
       max: string;
-      super: string;
     };
     weight: {
       regular: string;

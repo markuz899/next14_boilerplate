@@ -13,6 +13,7 @@ import {
   Input,
   Modal,
   Radio,
+  Rating,
   Select,
   Tabs,
   Textarea,
@@ -44,7 +45,7 @@ const Components = ({ global }: GlobalPageProps) => {
       if (!visible) return show();
     };
     return (
-      <div>
+      <RenderDrop>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
@@ -53,7 +54,7 @@ const Components = ({ global }: GlobalPageProps) => {
         <p style={{ color: "#000" }}>Lorem ipsum</p>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
-      </div>
+      </RenderDrop>
     );
   };
 
@@ -257,6 +258,9 @@ const Components = ({ global }: GlobalPageProps) => {
             ]}
           />
         </Section>
+        <Section title="Rating">
+          <Rating onChange={(data: number) => alert(`Select: ${data} star`)} />
+        </Section>
       </Content>
     </Layout>
   );
@@ -267,4 +271,14 @@ export default WithAuth(React.memo(Components));
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;
+`;
+
+const RenderDrop = styled.div`
+  padding: ${theme.spaces.space4};
+  p {
+    margin-bottom: ${theme.spaces.space2};
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 `;

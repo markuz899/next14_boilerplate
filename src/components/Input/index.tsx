@@ -70,9 +70,7 @@ const Input = forwardRef<InputRef, InputProps>(
         setHasValue(!!v);
         setState(v);
       }
-      if (onChange) {
-        onChange(e);
-      }
+      onChange && onChange({ value: v, name, type }, e);
     };
 
     const toggleSelectAction = () => {
@@ -300,6 +298,7 @@ const Box = styled.div<{
     color: ${theme.colors.lightGrey};
   }
   &:hover {
+    transition: all ${theme.extra.transition};
     border: 2px solid
       ${({ isError, $focus }) =>
         isError ? theme.colors.error : theme.colors.primary};

@@ -264,6 +264,7 @@ const Box = styled.div<{
     margin-left: 3px;
   }
   &:hover {
+    transition: all ${theme.extra.transition};
     border: 2px solid
       ${({ isError, $focus }) =>
         isError ? theme.colors.error : theme.colors.primary};
