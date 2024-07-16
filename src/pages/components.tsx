@@ -13,6 +13,7 @@ import {
   Input,
   Modal,
   Radio,
+  Rating,
   Select,
   Tabs,
   Textarea,
@@ -256,6 +257,9 @@ const Components = ({ global }: GlobalPageProps) => {
               { label: "Milano", value: "3" },
             ]}
           />
+        </Section>
+        <Section title="Rating">
+          <Rating onChange={(data: number) => alert(`Select: ${data} star`)} />
         </Section>
       </Content>
     </Layout>
