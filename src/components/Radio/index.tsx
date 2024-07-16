@@ -128,6 +128,7 @@ const Option = styled.div<{ active: any; disabled: boolean }>`
   }
   &:hover {
     .selector {
+      transition: all ${theme.extra.transition};
       border: 2px solid ${theme.colors.primary};
     }
   }
