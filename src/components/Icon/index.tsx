@@ -2,16 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import icons from "./icons";
 import { IconProps } from "./interface";
+import theme from "@/theme";
 
 const Icon: React.FC<IconProps> = ({
   name,
   color = "#DADEE1",
-  size = "1rem",
+  size = theme.font.size.tiny,
   margin = "0",
   className,
   rotate,
 }) => {
-  const { d, width, group } = icons[name] || icons.default;
+  const { d, width, height = "512", group } = icons[name] || icons.default;
   return (
     <Svg
       color={color}
@@ -21,7 +22,7 @@ const Icon: React.FC<IconProps> = ({
       className={className}
       x="0px"
       y="0px"
-      viewBox={`0 0 ${width} 512`}
+      viewBox={`0 0 ${width} ${height ? height : "512"}`}
     >
       {group || <path d={d} />}
     </Svg>

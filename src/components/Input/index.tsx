@@ -35,7 +35,7 @@ const Input = forwardRef<InputRef, InputProps>(
       withFilter,
       autoComplete,
       inputSelectAction,
-      labelBgColor = theme.colors.white,
+      labelBgColor,
       ...rest
     },
     ref
@@ -83,7 +83,7 @@ const Input = forwardRef<InputRef, InputProps>(
       <After onClick={inputSelectAction ? toggleSelectAction : undefined}>
         <Icon
           name={icon}
-          size={theme.font.size.mini}
+          size={theme.font.size.normal}
           color={theme.colors.primary}
         />
       </After>
@@ -117,7 +117,7 @@ const Input = forwardRef<InputRef, InputProps>(
     return (
       type !== "hidden" && (
         <Box
-          isError={isError || undefined}
+          $isError={isError || undefined}
           className={className}
           $focus={focus}
           withFilter={withFilter}
@@ -125,7 +125,11 @@ const Input = forwardRef<InputRef, InputProps>(
         >
           {iconBefore && (
             <Before>
-              <Icon name={iconBefore} />
+              <Icon
+                name={iconBefore}
+                color={theme.colors.primary}
+                size={theme.font.size.normal}
+              />
             </Before>
           )}
           <Container>
@@ -142,11 +146,11 @@ const Input = forwardRef<InputRef, InputProps>(
               disabled={disabled}
               required={required}
               readOnly={readOnly}
-              placeholder={placeholder}
+              placeholder={`${placeholder} ${required ? "*" : ""}`}
               {...rest}
             />
             {topPlaceholder && (
-              <Label iconBefore={iconBefore} $labelBgColor={labelBgColor}>
+              <Label $iconBefore={iconBefore} $labelBgColor={labelBgColor}>
                 {topPlaceholder && topPlaceholder}{" "}
                 {required && <span className="asterisk">*</span>}
               </Label>
@@ -187,7 +191,7 @@ Input.propTypes = {
 };
 
 const Box = styled.div<{
-  isError: any;
+  $isError: any;
   $focus: any;
   withFilter?: boolean;
   $labelBgColor?: string;
@@ -203,8 +207,8 @@ const Box = styled.div<{
   width: 100%;
   padding: 0 ${theme.spaces.space2};
   border: 2px solid
-    ${({ isError, $focus }) =>
-      isError
+    ${({ $isError, $focus }) =>
+      $isError
         ? theme.colors.error
         : $focus
         ? theme.colors.primary
@@ -216,7 +220,7 @@ const Box = styled.div<{
     width: 100%;
     border: 0;
     color: ${({ theme }) => theme.text};
-    color: ${(props) => props.isError && theme.colors.error};
+    color: ${(props) => props.$isError && theme.colors.error};
     min-height: ${theme.spaces.space7};
     padding: 0;
     font-weight: ${theme.font.weight.medium};
@@ -244,7 +248,7 @@ const Box = styled.div<{
   input + label,
   input:not([data-value="false"]) + label {
     transform: translateY(-24px) scale(0.9);
-    background: ${({ $labelBgColor }) => $labelBgColor};
+    background: ${({ $labelBgColor, theme }) => $labelBgColor || theme.bg};
     padding: 0 ${theme.spaces.space1};
   }
   input:-webkit-autofill,
@@ -300,13 +304,12 @@ const Box = styled.div<{
   &:hover {
     transition: all ${theme.extra.transition};
     border: 2px solid
-      ${({ isError, $focus }) =>
-        isError ? theme.colors.error : theme.colors.primary};
+      ${({ $isError, $focus }) =>
+        $isError ? theme.colors.error : theme.colors.primary};
   }
 `;
 
 const Container = styled.div`
-  position: relative;
   flex-grow: 1;
   width: 100%;
 `;
@@ -319,11 +322,10 @@ const Before = styled.div`
   margin-right: ${theme.spaces.space2};
 `;
 
-const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
-  background: ${theme.colors.body};
+const Label = styled.label<{ $iconBefore?: string; $labelBgColor?: string }>`
   position: absolute;
-  top: 0px;
-  left: 0;
+  top: 3px;
+  left: 6px;
   right: auto;
   max-width: 100%;
   transform-origin: top left;
@@ -331,9 +333,9 @@ const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
   transition: ${theme.extra.transitionFluid};
   pointer-events: none;
   padding: 0;
-  font-size: ${theme.font.size.mini};
+  font-size: ${theme.font.size.normal};
   color: ${theme.colors.grey};
-  background: ${(p) => p.$labelBgColor};
+  background: ${({ $labelBgColor, theme }) => $labelBgColor || theme.bg};
   span {
     color: ${theme.colors.error};
   }

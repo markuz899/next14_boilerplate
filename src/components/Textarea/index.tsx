@@ -180,6 +180,7 @@ const Box = styled.div<{
   $labelBgColor: string;
   $topPlaceholder: any;
 }>`
+  position: relative;
   margin-top: 15px;
   border-radius: 0;
   box-sizing: border-box;
@@ -271,7 +272,6 @@ const Box = styled.div<{
   }
 `;
 const Container = styled.div`
-  position: relative;
   flex-grow: 1;
   width: 100%;
 `;
@@ -284,7 +284,7 @@ const Before = styled.div`
 const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
   position: absolute;
   top: 0px;
-  left: 0;
+  left: 6px;
   right: auto;
   max-width: 100%;
   transform-origin: top left;
@@ -292,7 +292,7 @@ const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
   transition: ${theme.extra.transitionFluid};
   pointer-events: none;
   padding: 0;
-  font-size: ${theme.font.size.mini};
+  font-size: ${theme.font.size.normal};
   color: ${theme.colors.grey};
   background: ${(p) => p.$labelBgColor};
   span {

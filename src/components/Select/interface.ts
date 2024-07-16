@@ -7,6 +7,7 @@ export interface SelectProps {
   labelBgColor?: string;
   name?: string;
   showArrow?: boolean;
+  iconBefore?: string;
   enableInput?: boolean;
   onClose?: () => void;
   isError?: boolean;
