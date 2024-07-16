@@ -22,7 +22,7 @@ export const KIND = {
   `,
   success: css`
     background: ${colors.success};
-    color: ${colors.white};
+    color: ${colors.dark};
     border: 2px solid ${colors.success};
     &:hover {
       background: ${colors.successDark};
@@ -47,12 +47,12 @@ export const KIND = {
       box-shadow: 0 0 0 3px ${colors.error}60;
     }
     svg {
-      color: ${colors.white};
+      fill: ${colors.white};
     }
   `,
   warning: css`
     background: ${colors.warning};
-    color: ${colors.white};
+    color: ${colors.dark};
     border: 2px solid ${colors.warning};
     &:hover {
       background: ${colors.warningDark};
@@ -62,7 +62,7 @@ export const KIND = {
       box-shadow: 0 0 0 3px ${colors.warning}60;
     }
     svg {
-      color: ${colors.white};
+      fill: ${colors.white};
     }
   `,
   "inverse-primary": css`
@@ -85,10 +85,13 @@ export const KIND = {
       color: ${colors.greyIcon};
       border: 2px solid ${colors.greyIcon};
     }
+    &:disabled {
+      color: ${theme.colors.dark};
+    }
   `,
   "inverse-success": css`
     background: ${colors.white};
-    color: ${colors.success};
+    color: ${colors.dark};
     border: 2px solid ${colors.success};
     svg {
       fill: ${colors.success};
@@ -98,13 +101,12 @@ export const KIND = {
       box-shadow: 0 0 0 3px ${colors.success}60;
     }
     &:hover {
-      color: ${theme.colors.white};
       background: ${colors.success};
     }
   `,
   "inverse-warning": css`
     background: ${colors.white};
-    color: ${colors.warning};
+    color: ${colors.dark};
     border: 2px solid ${colors.warning};
     svg {
       fill: ${colors.warning};
@@ -257,9 +259,12 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding: 0 ${spaces.space4};
   &:disabled {
     background: ${colors.greyIcon};
-    color: ${colors.white};
+    color: ${colors.dark};
     border: 1px solid ${colors.greyIcon};
     cursor: not-allowed;
+    &:hover {
+      background: ${theme.colors.darkGrey};
+    }
   }
   .loader {
     display: flex;

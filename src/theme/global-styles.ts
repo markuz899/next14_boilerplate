@@ -166,7 +166,6 @@ export const GlobalStyle = createGlobalStyle`
   .color-svg-primary{
     fill: ${theme.colors.primary}!important;
   }
-
   .mlr-20 {
     margin: 0 20px!important;
   }
@@ -194,7 +193,6 @@ export const GlobalStyle = createGlobalStyle`
   .mr-10{
     margin-right: 10px;
   }
-
   .pt-40{
     padding-top: 40px!important;
   }
@@ -221,6 +219,14 @@ export const GlobalStyle = createGlobalStyle`
     .pt-40{
       padding-top: 0px!important;
     }
+  }
+  &::-moz-selection {
+    color: ${theme.colors.white};
+    background: ${theme.colors.grey};
+  }
+  &::selection {
+      color: ${theme.colors.white};
+      background: ${theme.colors.grey};
   }
 `;
 

@@ -1,7 +1,8 @@
 import React, { useState, Children, ReactNode } from "react";
 import styled, { css } from "styled-components";
-import theme from "@/theme";
+import theme, { BASE_COLOR } from "@/theme";
 import { BannerProps } from "./interface";
+import { colorBasedOnBg } from "@/utils/utils";
 
 const { colors } = theme;
 
@@ -89,7 +90,8 @@ const Msg = styled.div<MsgProps>`
   margin-top: ${theme.spaces.space2};
   margin-bottom: ${theme.spaces.space2};
   .title {
-    color: ${colors.dark};
+    color: ${(props) =>
+      colorBasedOnBg(BASE_COLOR[props.$kind] || theme.colors.white)};
     font-size: ${theme.font.size.minor};
     font-family: Helvetica;
     font-weight: ${theme.font.weight.bold};
@@ -98,6 +100,7 @@ const Msg = styled.div<MsgProps>`
     justify-content: space-between;
     text-align: left;
     .closebtn {
+      margin-top: -3px;
       font-size: 26px;
       font-weight: ${theme.font.weight.regular};
       line-height: 16px;
@@ -110,7 +113,8 @@ const Msg = styled.div<MsgProps>`
     }
   }
   .content {
-    color: ${colors.dark};
+    color: ${(props) =>
+      colorBasedOnBg(BASE_COLOR[props.$kind] || theme.colors.white)};
     font-size: ${theme.font.size.tiny};
     font-family: Helvetica;
     line-height: 1.2;

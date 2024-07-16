@@ -1,8 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Icon from "../Icon";
-import theme from "@/theme";
+import theme, { BASE_COLOR } from "@/theme";
 import { BadgeProps } from "./interface";
+import { colorBasedOnBg } from "@/utils/utils";
 
 const COLOR_ICON = {
   ghost: theme.colors.primary,
@@ -93,8 +94,9 @@ const StyledBadge = styled.div<Props>`
   margin-bottom: ${theme.spaces.space2};
   ${(props) => COLORS[props.$kind]};
   .text {
-    color: ${theme.colors.white};
-    font-size: ${theme.font.size.xsmall};
+    color: ${(props) =>
+      colorBasedOnBg(BASE_COLOR[props.$kind] || theme.colors.white)};
+    font-size: ${theme.font.size.small};
     font-weight: bold;
   }
   .icon {

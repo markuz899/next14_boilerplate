@@ -134,8 +134,8 @@ const Drop = styled.div<{
   position: absolute;
   box-shadow: 0px 2px 4px #393e4629;
   background: white;
-  margin: 15px 0;
-  font-size: 12px;
+  margin: ${theme.spaces.space3} 0;
+  font-size: ${theme.font.size.tiny};
   min-width: 100%;
   ${(props) => props.$fluid && "width: 100%;"}
   &::-webkit-scrollbar {
