@@ -15,6 +15,7 @@ const Select: React.FC<SelectProps> = ({
   labelBgColor,
   name,
   showArrow = true,
+  iconBefore,
   enableInput = false,
   onClose,
   isError,
@@ -204,6 +205,7 @@ const Select: React.FC<SelectProps> = ({
         name={name || ""}
         onChange={(data: any) => handleOnChange(data, visible, show)}
         inputSelectAction={{ visible, show, close }}
+        iconBefore={iconBefore}
         icon={showArrow && (visible ? "angle-top" : "angle-down")}
         enableControlledInput
         isError={isError}

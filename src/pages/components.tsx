@@ -143,6 +143,7 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Buttons">
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-3">
+              <Button kind="primary" icon="search" label="Default" />
               <Button kind="primary">Default</Button>
               <Button kind="success">Success</Button>
               <Button kind="error">Error</Button>
@@ -152,6 +153,7 @@ const Components = ({ global }: GlobalPageProps) => {
               </Button>
             </div>
             <div className="flex flex-wrap gap-3">
+              <Button kind="inverse-primary" icon="search" label="Default" />
               <Button kind="inverse-primary">Inverse</Button>
               <Button kind="inverse-success">Success</Button>
               <Button kind="inverse-error">Error</Button>
@@ -177,7 +179,36 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Input">
           <Input
+            className="mb-6"
+            icon="search"
             labelBgColor={theme.colors.softWhite}
+            placeholder="Input example"
+            name="name"
+          />
+          <Input
+            className="mb-6"
+            iconBefore="search"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Input example"
+            name="name"
+          />
+          <Input
+            className="mb-6"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Input example"
+            name="name"
+            isError={true}
+            message="Field error"
+          />
+          <Input
+            className="mb-6"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Input example"
+            name="name"
+          />
+          <Input
+            className="mb-6"
+            topPlaceholder="Address"
             placeholder="Input example"
             name="name"
           />
@@ -208,6 +239,7 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Textarea">
           <Textarea
+            maxLength={300}
             placeholder="Testo di test"
             labelBgColor={theme.colors.softWhite}
             topPlaceholder="Note"
@@ -231,6 +263,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Select
             name="city"
             onChange={() => {}}
+            iconBefore="search"
             topPlaceholder="Seleziona città"
             labelBgColor={theme.colors.softWhite}
             placeholder="Città"

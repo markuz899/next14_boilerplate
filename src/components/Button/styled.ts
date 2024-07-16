@@ -79,6 +79,10 @@ export const KIND = {
     &:hover {
       color: ${theme.colors.white};
       background: ${colors.primary};
+      svg {
+        transition: all ${extra.transition};
+        fill: ${colors.white};
+      }
     }
     &:disabled {
       background: ${colors.white};
@@ -102,6 +106,10 @@ export const KIND = {
     }
     &:hover {
       background: ${colors.success};
+      svg {
+        transition: all ${extra.transition};
+        fill: ${colors.white};
+      }
     }
   `,
   "inverse-warning": css`
@@ -116,8 +124,12 @@ export const KIND = {
       box-shadow: 0 0 0 3px ${colors.warning}60;
     }
     &:hover {
-      color: ${theme.colors.white};
+      color: ${theme.colors.dark};
       background: ${colors.warning};
+      svg {
+        transition: all ${extra.transition};
+        fill: ${colors.white};
+      }
     }
   `,
   "inverse-error": css`
@@ -134,6 +146,10 @@ export const KIND = {
     &:hover {
       color: ${theme.colors.white};
       background: ${colors.error};
+      svg {
+        transition: all ${extra.transition};
+        fill: ${colors.white};
+      }
     }
   `,
   ghost: css`

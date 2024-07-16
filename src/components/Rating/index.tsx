@@ -47,6 +47,7 @@ const Rating = ({ rate, disable, numberStar = 5, onChange }: RatingProps) => {
               <Icon
                 className="star"
                 name="star"
+                size={theme.spaces.space6}
                 color={
                   currentRating <= (hover || rating)
                     ? theme.colors.warning
