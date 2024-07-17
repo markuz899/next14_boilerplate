@@ -33,9 +33,9 @@ const Components = ({ global }: GlobalPageProps) => {
       if (!visible) return show();
     };
     return (
-      <div onClick={handleShow}>
-        <p>Lorem ipsum</p>
-      </div>
+      <Button kind="action" onClick={handleShow}>
+        Action
+      </Button>
     );
   };
 
@@ -142,6 +142,17 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Buttons">
           <div className="flex flex-col gap-3">
+            <div className="text-left">
+              <Button className="mr-3" size="sm" kind="primary">
+                Default
+              </Button>
+              <Button className="mr-3" kind="primary">
+                Default
+              </Button>
+              <Button className="mr-3" size="lg" kind="primary">
+                Default
+              </Button>
+            </div>
             <div className="flex flex-wrap gap-3">
               <Button kind="primary" icon="search" label="Default" />
               <Button kind="primary">Default</Button>

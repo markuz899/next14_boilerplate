@@ -9,7 +9,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   renderDropdown,
   showArrow = true,
   width = 200,
-  fluid = true,
+  fluid = false,
   onClose = () => {},
   includeTarget = false,
   includeIcon = false,
@@ -94,7 +94,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     <Box className={className} $fluid={fluid} ref={target}>
       <div className="target">{renderTarget({ show, close, visible })}</div>
       {renderDropdown && (
-        <RenderDrop $visible={visible} $fluid={fluid}>
+        <RenderDrop $visible={visible} $width={width} $fluid={fluid}>
           {showArrow && <Arrow top={topPosition} />}
           <Drop ref={dropdown} position={position} size={width} $fluid={fluid}>
             {renderDropdown({ show, close, visible })}
@@ -107,13 +107,22 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 export default React.memo(Dropdown);
 
-const RenderDrop = styled.div<{ $visible: boolean; $fluid: boolean }>`
+const RenderDrop = styled.div<{
+  $visible: boolean;
+  $width: number;
+  $fluid: boolean;
+}>`
   position: absolute;
   visibility: ${(props) => (props.$visible ? "visible" : "hidden")};
   animation: ${(props) => (props.$visible ? fadeIn : fadeOut)} 300ms linear;
   transition: visibility 300ms linear;
   z-index: 1090;
-  ${(props) => (props.$fluid ? "width: 100%" : "width: fit-content")};
+  ${(props) => (p) =>
+    p.$width
+      ? `width: ${p.$width}px`
+      : props.$fluid
+      ? "width: 100%"
+      : "width: fit-content"};
   height: 100%;
 `;
 
