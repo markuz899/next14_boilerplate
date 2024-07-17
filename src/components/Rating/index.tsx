@@ -68,7 +68,6 @@ const ContentRating = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  height: ${theme.spaces.space7};
   input[type="radio"] {
     display: none;
   }
@@ -76,9 +75,5 @@ const ContentRating = styled.div`
     display: block;
     cursor: pointer;
     font-size: 2rem;
-    margin: 5px;
-  }
-  label {
-    width: ${theme.spaces.space7};
   }
 `;
