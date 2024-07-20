@@ -190,6 +190,13 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Input">
           <Input
+            type="search"
+            className="mb-6"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Input search"
+            name="name"
+          />
+          <Input
             className="mb-6"
             icon="search"
             labelBgColor={theme.colors.softWhite}

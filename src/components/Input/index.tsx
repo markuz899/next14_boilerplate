@@ -36,6 +36,7 @@ const Input = forwardRef<InputRef, InputProps>(
       autoComplete,
       inputSelectAction,
       labelBgColor,
+      rounded = false,
       ...rest
     },
     ref
@@ -79,6 +80,14 @@ const Input = forwardRef<InputRef, InputProps>(
       show();
     };
 
+    const clearInput = () => {
+      if (!enableControlledInput) {
+        setHasValue(false);
+        setState("");
+      }
+      onChange && onChange({ value: "", name, type });
+    };
+
     let after = icon && (
       <After onClick={inputSelectAction ? toggleSelectAction : undefined}>
         <Icon
@@ -107,6 +116,18 @@ const Input = forwardRef<InputRef, InputProps>(
       );
     }
 
+    if (type == "search" && state.length) {
+      after = (
+        <After className="cursor-pointer" onClick={clearInput}>
+          <Icon
+            name={"close-circular"}
+            size={theme.font.size.normal}
+            color={theme.colors.primary}
+          />
+        </After>
+      );
+    }
+
     if (isError && message) {
       errorTooltip = (
         <Icon name="warning-circular" color={theme.colors.error} />
@@ -117,6 +138,7 @@ const Input = forwardRef<InputRef, InputProps>(
     return (
       type !== "hidden" && (
         <Box
+          $rounded={rounded}
           $isError={isError || undefined}
           className={className}
           $focus={focus}
@@ -191,6 +213,7 @@ Input.propTypes = {
 };
 
 const Box = styled.div<{
+  $rounded: boolean;
   $isError: any;
   $focus: any;
   withFilter?: boolean;
@@ -213,7 +236,8 @@ const Box = styled.div<{
         : $focus
         ? theme.colors.primary
         : theme.colors.borderComponent};
-  border-radius: ${theme.extra.radiusBig};
+  border-radius: ${({ $rounded }) =>
+    $rounded ? theme.extra.radiusRound : theme.extra.radiusBig};
   input {
     box-sizing: border-box;
     background: transparent;
@@ -283,12 +307,13 @@ const Box = styled.div<{
   }
 
   input[type="search"]:focus::-webkit-search-cancel-button {
-    opacity: 0.3;
+    opacity: 1;
     pointer-events: all;
   }
 
   input[type="search"]::-webkit-search-cancel-button {
-    filter: invert(1);
+    cursor: pointer;
+    display: none;
   }
   .error-msg {
     position: absolute;

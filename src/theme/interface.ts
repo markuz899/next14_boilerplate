@@ -92,6 +92,7 @@ export interface ITheme {
     logo: string;
     radius: string;
     radiusBig: string;
+    radiusRound: string;
     transition: string;
     transitionFluid: string;
     shadow: string;

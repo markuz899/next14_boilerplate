@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { HeaderProps } from "./interface";
-import { Icon, Modal } from "@/components";
+import { Icon, Input } from "@/components";
 import { CDN_PATH, navItems } from "@/utils/constants";
 
 const Header: React.FC<HeaderProps> = ({
@@ -31,64 +31,80 @@ const Header: React.FC<HeaderProps> = ({
           )}
           <Link href="/">
             <div className="agency">
-              <Icon name="404" />
+              <Icon
+                name="404"
+                color={theme.colors.primary}
+                size={theme.spaces.space5}
+              />
             </div>
           </Link>
         </div>
         {!isSmall && (
-          <div className="flex">
-            <div className="link">
-              <div className="navigator">
-                <div className="section-link">
-                  {navItems?.map((item) => {
-                    return (
-                      <Link legacyBehavior key={item?.path} href={item?.path}>
-                        <a
-                          className={`text-uppercase ${
-                            router.asPath === item?.path ? "active" : ""
+          <>
+            <div className="flex nopadd">
+              <Input
+                type="search"
+                labelBgColor={theme.colors.softWhite}
+                placeholder="Input search"
+                iconBefore="search"
+                name="name"
+                rounded={true}
+              />
+            </div>
+            <div className="flex">
+              <div className="link">
+                <div className="navigator">
+                  <div className="section-link">
+                    {navItems?.map((item) => {
+                      return (
+                        <Link legacyBehavior key={item?.path} href={item?.path}>
+                          <a
+                            className={`text-uppercase ${
+                              router.asPath === item?.path ? "active" : ""
+                            }`}
+                          >
+                            {item?.text}
+                          </a>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                  <div className="section-icon">
+                    <div className="icon">
+                      <Link href={global.isAuth ? "/wishlist" : "/login"}>
+                        <div
+                          className={`icon-container mr-3 ${
+                            path.includes("/wishlist") ? "active" : ""
                           }`}
                         >
-                          {item?.text}
-                        </a>
+                          <Icon
+                            name="heart"
+                            color={theme.colors.primary}
+                            size={theme.spaces.space5}
+                          />
+                        </div>
                       </Link>
-                    );
-                  })}
-                </div>
-                <div className="section-icon">
-                  <div className="icon">
-                    <Link href={global.isAuth ? "/wishlist" : "/login"}>
-                      <div
-                        className={`icon-container mr-3 ${
-                          path.includes("/wishlist") ? "active" : ""
-                        }`}
-                      >
-                        <Icon
-                          name="heart"
-                          color={theme.colors.white}
-                          size={theme.spaces.space5}
-                        />
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="icon">
-                    <Link href={global.isAuth ? "/profilo" : "/login"}>
-                      <div
-                        className={`icon-container ${
-                          path.includes("/profilo") ? "active" : ""
-                        }`}
-                      >
-                        <Icon
-                          name="user"
-                          color={theme.colors.white}
-                          size={theme.spaces.space5}
-                        />
-                      </div>
-                    </Link>
+                    </div>
+                    <div className="icon">
+                      <Link href={global.isAuth ? "/profilo" : "/login"}>
+                        <div
+                          className={`icon-container ${
+                            path.includes("/profilo") ? "active" : ""
+                          }`}
+                        >
+                          <Icon
+                            name="user"
+                            color={theme.colors.primary}
+                            size={theme.spaces.space5}
+                          />
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
       </MenuContent>
     </Head>
@@ -105,6 +121,7 @@ const Head = styled.div<{ $isSmall: boolean; isOpen?: boolean }>`
   background: ${({ theme }) => theme.navbar};
   left: ${(props) => (props.isOpen ? "270px" : "0")};
   right: 0;
+  border-bottom: 1px solid ${theme.colors.greyIcon};
   /* min-width: ${theme.breakpoints.first}; */
   ${(p) =>
     p.$isSmall && `padding: ${theme.spaces.space2} ${theme.spaces.space3};`}
@@ -124,7 +141,7 @@ const MenuContent = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
-    color: ${theme.colors.white};
+    color: ${theme.colors.navbarText};
     a {
       margin-left: ${theme.spaces.space2};
       font-size: ${theme.font.size.large};
@@ -151,8 +168,14 @@ const MenuContent = styled.div`
     }
   }
   .flex {
-    padding: ${theme.spaces.space4} ${theme.spaces.space6};
-    display: flex;
+    padding: ${theme.spaces.space5} ${theme.spaces.space6};
+    &.nopadd {
+      flex: 1;
+      padding: 0;
+      > div {
+        margin-top: 0;
+      }
+    }
     &.d-none {
       display: none;
     }
@@ -176,7 +199,7 @@ const MenuContent = styled.div`
                 content: "";
                 display: block;
                 position: absolute;
-                top: -28px;
+                top: -31px;
                 width: 100%;
                 height: 4px;
                 background: ${theme.colors.error};
@@ -195,7 +218,7 @@ const MenuContent = styled.div`
                 content: "";
                 display: block;
                 position: absolute;
-                top: -26px;
+                top: -31px;
                 width: 100%;
                 height: 4px;
                 background: ${theme.colors.error};
@@ -234,7 +257,7 @@ const MenuContent = styled.div`
                   content: "";
                   display: block;
                   position: absolute;
-                  top: -20px;
+                  top: -25px;
                   width: 100%;
                   height: 4px;
                   background: ${theme.colors.error};
@@ -248,7 +271,7 @@ const MenuContent = styled.div`
                   content: "";
                   display: block;
                   position: absolute;
-                  top: -20px;
+                  top: -25px;
                   width: 100%;
                   height: 4px;
                   background: ${theme.colors.error};
@@ -266,7 +289,6 @@ const MenuContent = styled.div`
           display: inline-block;
         }
         svg {
-          fill: ${theme.colors.navbarText};
         }
         & > * {
           padding: 0 ${theme.spaces.space3};

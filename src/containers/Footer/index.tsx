@@ -35,6 +35,7 @@ const Foot = styled.div`
   align-items: center;
   justify-content: center;
   padding: ${theme.spaces.space6} ${theme.spaces.space15};
+  border-top: 1px solid ${theme.colors.greyIcon};
   .row {
     width: 100%;
     display: flex;
@@ -42,7 +43,7 @@ const Foot = styled.div`
     align-items: center;
     h3,
     p {
-      color: ${theme.colors.white};
+      color: ${theme.colors.navbarText};
     }
   }
   @media only screen and (max-width: ${theme.breakpoints.tablet}) {
