@@ -223,7 +223,6 @@ const MenuContent = styled.div`
         }
         .section-icon {
           display: flex;
-          margin-left: 20px;
           a {
             margin-right: 20px;
             &:last-child {
