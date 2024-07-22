@@ -32,10 +32,12 @@ const Header: React.FC<HeaderProps> = ({
           <Link href="/">
             <div className="agency">
               <Icon
-                name="404"
+                name="map"
                 color={theme.colors.primary}
                 size={theme.spaces.space5}
+                margin="0 10px 0 0"
               />
+              <p>Nearme</p>
             </div>
           </Link>
         </div>
@@ -70,21 +72,6 @@ const Header: React.FC<HeaderProps> = ({
                     })}
                   </div>
                   <div className="section-icon">
-                    <div className="icon">
-                      <Link href={global.isAuth ? "/wishlist" : "/login"}>
-                        <div
-                          className={`icon-container mr-3 ${
-                            path.includes("/wishlist") ? "active" : ""
-                          }`}
-                        >
-                          <Icon
-                            name="heart"
-                            color={theme.colors.primary}
-                            size={theme.spaces.space5}
-                          />
-                        </div>
-                      </Link>
-                    </div>
                     <div className="icon">
                       <Link href={global.isAuth ? "/profilo" : "/login"}>
                         <div
@@ -202,7 +189,7 @@ const MenuContent = styled.div`
                 top: -31px;
                 width: 100%;
                 height: 4px;
-                background: ${theme.colors.error};
+                background: ${theme.colors.primary};
                 border-radius: ${theme.extra.radiusBig};
                 border-top-left-radius: 0px;
                 border-top-right-radius: 0px;
@@ -221,7 +208,7 @@ const MenuContent = styled.div`
                 top: -31px;
                 width: 100%;
                 height: 4px;
-                background: ${theme.colors.error};
+                background: ${theme.colors.primary};
                 border-radius: ${theme.extra.radiusBig};
                 border-top-left-radius: 0px;
                 border-top-right-radius: 0px;
@@ -260,7 +247,7 @@ const MenuContent = styled.div`
                   top: -25px;
                   width: 100%;
                   height: 4px;
-                  background: ${theme.colors.error};
+                  background: ${theme.colors.primary};
                   border-radius: ${theme.extra.radiusBig};
                   border-top-left-radius: 0px;
                   border-top-right-radius: 0px;
@@ -274,7 +261,7 @@ const MenuContent = styled.div`
                   top: -25px;
                   width: 100%;
                   height: 4px;
-                  background: ${theme.colors.error};
+                  background: ${theme.colors.primary};
                   border-radius: ${theme.extra.radiusBig};
                   border-top-left-radius: 0px;
                   border-top-right-radius: 0px;
