@@ -11,6 +11,7 @@ const Icon = dynamic(() => import("./Icon"), { loading: () => null });
 const Input = dynamic(() => import("./Input"), { loading: () => null });
 const Loader = dynamic(() => import("./Loader"), { loading: () => null });
 const Modal = dynamic(() => import("./Modal"), { loading: () => null });
+const QuantitySelect = dynamic(() => import("./QuantitySelect"), { loading: () => null });
 const Radio = dynamic(() => import("./Radio"), { loading: () => null });
 const RadioButton = dynamic(() => import("./RadioButton"), { loading: () => null });
 const Rating = dynamic(() => import("./Rating"), { loading: () => null });
@@ -33,6 +34,7 @@ export {
   Input,
   Loader,
   Modal,
+  QuantitySelect,
   Radio,
   RadioButton,
   Rating,

@@ -13,6 +13,7 @@ import {
   Icon,
   Input,
   Modal,
+  QuantitySelect,
   Radio,
   RadioButton,
   Rating,
@@ -335,6 +336,9 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Rating">
           <Rating onChange={(data: number) => alert(`Select: ${data} star`)} />
+        </Section>
+        <Section title="Quantity select">
+          <QuantitySelect />
         </Section>
       </Content>
     </Layout>

@@ -12,7 +12,7 @@ export interface ButtonProps {
   label?: string;
   children?: React.ReactNode;
   href?: string;
-  onClick?: () => void;
+  onClick?: any;
   reverse?: boolean;
   round?: boolean;
   fluid?: boolean;

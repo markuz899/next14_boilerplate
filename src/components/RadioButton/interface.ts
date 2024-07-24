@@ -1,5 +1,5 @@
 export interface OptionProps {
-  label: string;
+  label: any;
   value: any;
   checked?: boolean;
   disabled?: boolean;
