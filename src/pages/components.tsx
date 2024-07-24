@@ -1,3 +1,4 @@
+import React from "react";
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
@@ -22,11 +23,11 @@ import {
 } from "@/components";
 import { Content } from "@/theme/styled";
 import styled from "styled-components";
-import { ReactNode } from "react";
-import React from "react";
 import { WithAuth } from "@/hoc";
+import icons from "@/components/Icon/icons";
 
 const Components = ({ global }: GlobalPageProps) => {
+  let allIcon = Object.keys(icons);
   const renderTarget = ({ show, close, visible }: any) => {
     const handleShow = () => {
       if (visible) return close();
@@ -186,7 +187,15 @@ const Components = ({ global }: GlobalPageProps) => {
           </div>
         </Section>
         <Section title="Icon">
-          <Icon name="zoom" size="45" />
+          <div className="flex gap-2 flex-wrap icon-wrap">
+            {allIcon.map((el) => (
+              <Icon
+                name={el}
+                size={theme.spaces.space3}
+                color={theme.colors.primary}
+              />
+            ))}
+          </div>
         </Section>
         <Section title="Input">
           <Input
@@ -322,6 +331,13 @@ export default WithAuth(React.memo(Components));
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;
+  .icon-wrap {
+    svg {
+      &:hover {
+        height: 30px;
+      }
+    }
+  }
 `;
 
 const RenderDrop = styled.div`

@@ -32,12 +32,11 @@ const Header: React.FC<HeaderProps> = ({
           <Link href="/">
             <div className="agency">
               <Icon
-                name="map"
+                name="home"
                 color={theme.colors.primary}
                 size={theme.spaces.space5}
                 margin="0 10px 0 0"
               />
-              <p>Nearme</p>
             </div>
           </Link>
         </div>
