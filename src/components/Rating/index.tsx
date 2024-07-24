@@ -68,6 +68,7 @@ const ContentRating = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
+  gap: ${theme.spaces.space1};
   input[type="radio"] {
     display: none;
   }

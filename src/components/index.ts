@@ -12,7 +12,9 @@ const Input = dynamic(() => import("./Input"), { loading: () => null });
 const Loader = dynamic(() => import("./Loader"), { loading: () => null });
 const Modal = dynamic(() => import("./Modal"), { loading: () => null });
 const Radio = dynamic(() => import("./Radio"), { loading: () => null });
+const RadioButton = dynamic(() => import("./RadioButton"), { loading: () => null });
 const Rating = dynamic(() => import("./Rating"), { loading: () => null });
+const ScrollToTop = dynamic(() => import("./ScrollToTop"), { loading: () => null });
 const Select = dynamic(() => import("./Select"), { loading: () => null });
 const Tabs = dynamic(() => import("./Tabs/intex"), { loading: () => null });
 const Textarea = dynamic(() => import("./Textarea"), { loading: () => null });
@@ -32,7 +34,9 @@ export {
   Loader,
   Modal,
   Radio,
+  RadioButton,
   Rating,
+  ScrollToTop,
   Select,
   Tabs,
   Textarea,

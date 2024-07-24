@@ -5,7 +5,10 @@ export const GlobalStyle = createGlobalStyle`
   :root{
     --toastify-color-dark: ${theme.colors.dark};
     --toastify-toast-min-height: 50px;
+    background-color: #FAFAFA!important;
+    color: #231F20!important;
   }
+
   @keyframes scroll-text {
     0% {
       transform: translateX(0%);

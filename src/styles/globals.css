@@ -8,6 +8,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+:root, [data-theme] {
+  background-color: #FAFAFA!important;
+  color: #231F20!important;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

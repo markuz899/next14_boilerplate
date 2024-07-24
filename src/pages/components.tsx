@@ -1,3 +1,4 @@
+import React from "react";
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
@@ -13,6 +14,7 @@ import {
   Input,
   Modal,
   Radio,
+  RadioButton,
   Rating,
   Select,
   Tabs,
@@ -22,18 +24,18 @@ import {
 } from "@/components";
 import { Content } from "@/theme/styled";
 import styled from "styled-components";
-import { ReactNode } from "react";
-import React from "react";
 import { WithAuth } from "@/hoc";
+import icons from "@/components/Icon/icons";
 
 const Components = ({ global }: GlobalPageProps) => {
+  let allIcon = Object.keys(icons);
   const renderTarget = ({ show, close, visible }: any) => {
     const handleShow = () => {
       if (visible) return close();
       if (!visible) return show();
     };
     return (
-      <Button kind="action" onClick={handleShow}>
+      <Button kind={visible ? "primary" : "action"} onClick={handleShow}>
         Action
       </Button>
     );
@@ -186,9 +188,26 @@ const Components = ({ global }: GlobalPageProps) => {
           </div>
         </Section>
         <Section title="Icon">
-          <Icon name="zoom" size="45" />
+          <div className="flex gap-5 flex-wrap icon-wrap">
+            {allIcon.map((el) => (
+              <Tooltip key={el} content={el}>
+                <Icon
+                  name={el}
+                  size={theme.spaces.space3}
+                  color={theme.colors.primary}
+                />
+              </Tooltip>
+            ))}
+          </div>
         </Section>
         <Section title="Input">
+          <Input
+            type="search"
+            className="mb-6"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Input search"
+            name="name"
+          />
           <Input
             className="mb-6"
             icon="search"
@@ -232,7 +251,7 @@ const Components = ({ global }: GlobalPageProps) => {
               <div style={{ color: theme.colors.dark }}>Modal test</div>
             )}
           >
-            <Icon name="zoom" size="45" />
+            <Icon name="grid" size="45" color={theme.colors.primary} />
           </Modal>
         </Section>
         <Section title="Chcekbox">
@@ -242,8 +261,20 @@ const Components = ({ global }: GlobalPageProps) => {
           <Radio
             name={""}
             options={[
-              { label: "First", value: 1 },
-              { label: "Second", value: 2 },
+              { label: "One", value: 1 },
+              { label: "Two", value: 2 },
+              { label: "Three", value: 3 },
+            ]}
+            onChange={() => {}}
+          />
+        </Section>
+        <Section title="Radio button">
+          <RadioButton
+            name={""}
+            options={[
+              { label: "One", value: 1 },
+              { label: "Two", value: 2 },
+              { label: "Three", value: 3 },
             ]}
             onChange={() => {}}
           />
@@ -315,6 +346,14 @@ export default WithAuth(React.memo(Components));
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;
+  .icon-wrap {
+    svg {
+      &:hover {
+        transition: all 0.5s;
+        transform: scale(2);
+      }
+    }
+  }
 `;
 
 const RenderDrop = styled.div`
