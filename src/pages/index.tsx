@@ -87,7 +87,7 @@ export async function getServerSideProps(ctx: { req: any }) {
   // const delay = (s: number) => new Promise((resolve) => setTimeout(resolve, s));
   // await delay(2000);
   const { req } = ctx;
-
+  // const customVariable = req.headers["x-custom-variable"];
   return {
     props: {},
   };

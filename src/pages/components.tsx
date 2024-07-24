@@ -415,7 +415,7 @@ const Components = ({ global }: GlobalPageProps) => {
 };
 
 // export default Components;
-export default WithAuth(React.memo(Components));
+export default React.memo(Components);
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;
