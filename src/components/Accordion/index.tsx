@@ -1,11 +1,16 @@
-import React, { useState, useRef } from "react";
-import styled from "styled-components";
+import React, { useState, useRef, useCallback } from "react";
+import styled, { css } from "styled-components";
 import Icon from "../Icon";
 import { AccordionProps, AccordionItemProps } from "./interface";
 import theme from "@/theme";
 
-const Accordion: React.FC<AccordionProps> = ({ options }) => {
+const Accordion: React.FC<AccordionProps> = ({
+  options,
+  inline = false,
+  multipleOpen = false,
+}) => {
   const [clicked, setClicked] = useState<number | null>(null);
+  const [clickeds, setClickeds] = useState<number[]>([]);
 
   const handleToggle = (index: number) => {
     if (clicked === index) {
@@ -14,12 +19,35 @@ const Accordion: React.FC<AccordionProps> = ({ options }) => {
     setClicked(index);
   };
 
+  const handleMultiToggle = (index: number) => {
+    if (clickeds.includes(index)) {
+      const updatedClickeds: number[] = clickeds.filter((el) => el !== index);
+      setClickeds(updatedClickeds);
+    } else {
+      const updatedClickeds: number[] = [...clickeds, index];
+      setClickeds(updatedClickeds);
+    }
+  };
+
+  const isActive = useCallback(
+    (index: number) => {
+      if (!multipleOpen) {
+        return clicked === index;
+      } else {
+        return clickeds.includes(index);
+      }
+    },
+    [clicked, clickeds, multipleOpen]
+  );
+
   return (
-    <ContentAccordion>
-      {options?.map((faq, index) => (
+    <ContentAccordion $inline={inline}>
+      {options?.map((faq, index: number) => (
         <AccordionItem
-          onToggle={() => handleToggle(index)}
-          active={clicked === index}
+          onToggle={() =>
+            !multipleOpen ? handleToggle(index) : handleMultiToggle(index)
+          }
+          active={isActive(index)}
           key={index}
           faq={faq}
         />
@@ -66,9 +94,10 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   );
 };
 
-const ContentAccordion = styled.ul`
+const ContentAccordion = styled.ul<{ $inline: boolean }>`
   width: 100%;
   list-style: none;
+  ${(props) => props.$inline && InlineStyle}
   .accordion_item {
     margin-bottom: 10px;
     &:last-child {
@@ -117,5 +146,14 @@ const ContentAccordion = styled.ul`
       border-bottom-left-radius: ${theme.extra.radius};
       border-bottom-right-radius: ${theme.extra.radius};
     }
+  }
+`;
+
+const InlineStyle = css`
+  display: flex;
+  gap: ${theme.spaces.space2};
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    flex-direction: column;
+    gap: 0;
   }
 `;

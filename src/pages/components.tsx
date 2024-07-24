@@ -32,6 +32,8 @@ const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
   const [column, setColumn] = useState(true);
   const [inline, setInline] = useState(true);
+  const [inlineAcc, setInlineAcc] = useState(true);
+  const [multipleAcc, setMultipleAcc] = useState(false);
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -41,6 +43,16 @@ const Components = ({ global }: GlobalPageProps) => {
   const handleInline = (data: any) => {
     const { value } = data;
     setInline(value);
+  };
+
+  const handleInlineAcc = (data: any) => {
+    const { value } = data;
+    setInlineAcc(value);
+  };
+
+  const handleMultipleAcc = (data: any) => {
+    const { value } = data;
+    setMultipleAcc(value);
   };
 
   const renderTarget = ({ show, close, visible }: any) => {
@@ -95,7 +107,21 @@ const Components = ({ global }: GlobalPageProps) => {
       <Content>
         <h3>Components</h3>
         <Section title="Accordion">
+          <div className="flex gap-2 justify-center mb-2">
+            <Checkbox
+              label="In linea"
+              checked={inlineAcc}
+              onChange={handleInlineAcc}
+            />
+            <Checkbox
+              label="Multi open"
+              checked={multipleAcc}
+              onChange={handleMultipleAcc}
+            />
+          </div>
           <Accordion
+            multipleOpen={multipleAcc}
+            inline={inlineAcc}
             options={[
               {
                 question: "Lorem Ipsum is simply dummy text?",
@@ -381,7 +407,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Rating onChange={(data: number) => alert(`Select: ${data} star`)} />
         </Section>
         <Section title="Quantity select">
-          <QuantitySelect />
+          <QuantitySelect value={5} />
         </Section>
       </Content>
     </Layout>
