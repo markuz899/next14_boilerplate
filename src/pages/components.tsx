@@ -14,6 +14,7 @@ import {
   Input,
   Modal,
   Radio,
+  RadioButton,
   Rating,
   Select,
   Tabs,
@@ -34,7 +35,7 @@ const Components = ({ global }: GlobalPageProps) => {
       if (!visible) return show();
     };
     return (
-      <Button kind="action" onClick={handleShow}>
+      <Button kind={visible ? "primary" : "action"} onClick={handleShow}>
         Action
       </Button>
     );
@@ -187,13 +188,15 @@ const Components = ({ global }: GlobalPageProps) => {
           </div>
         </Section>
         <Section title="Icon">
-          <div className="flex gap-2 flex-wrap icon-wrap">
+          <div className="flex gap-5 flex-wrap icon-wrap">
             {allIcon.map((el) => (
-              <Icon
-                name={el}
-                size={theme.spaces.space3}
-                color={theme.colors.primary}
-              />
+              <Tooltip key={el} content={el}>
+                <Icon
+                  name={el}
+                  size={theme.spaces.space3}
+                  color={theme.colors.primary}
+                />
+              </Tooltip>
             ))}
           </div>
         </Section>
@@ -248,7 +251,7 @@ const Components = ({ global }: GlobalPageProps) => {
               <div style={{ color: theme.colors.dark }}>Modal test</div>
             )}
           >
-            <Icon name="zoom" size="45" />
+            <Icon name="grid" size="45" color={theme.colors.primary} />
           </Modal>
         </Section>
         <Section title="Chcekbox">
@@ -258,8 +261,20 @@ const Components = ({ global }: GlobalPageProps) => {
           <Radio
             name={""}
             options={[
-              { label: "First", value: 1 },
-              { label: "Second", value: 2 },
+              { label: "One", value: 1 },
+              { label: "Two", value: 2 },
+              { label: "Three", value: 3 },
+            ]}
+            onChange={() => {}}
+          />
+        </Section>
+        <Section title="Radio button">
+          <RadioButton
+            name={""}
+            options={[
+              { label: "One", value: 1 },
+              { label: "Two", value: 2 },
+              { label: "Three", value: 3 },
             ]}
             onChange={() => {}}
           />
@@ -334,7 +349,8 @@ const Compose = styled.div`
   .icon-wrap {
     svg {
       &:hover {
-        height: 30px;
+        transition: all 0.5s;
+        transform: scale(2);
       }
     }
   }

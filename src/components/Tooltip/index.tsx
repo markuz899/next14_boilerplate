@@ -16,6 +16,10 @@ const Tooltip: React.FC<TooltipProps> & {
 
   const [visible, setState] = useState(false);
 
+  const toggleVisibility = () => {
+    setState(false);
+  };
+
   useEffect(() => {
     if (tip.current && target.current) {
       const rect = target.current.getBoundingClientRect();
@@ -51,6 +55,8 @@ const Tooltip: React.FC<TooltipProps> & {
 
       Object.assign(tip.current.style, position);
     }
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
   });
 
   const show = () => {
