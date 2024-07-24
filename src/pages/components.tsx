@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
@@ -30,6 +30,19 @@ import icons from "@/components/Icon/icons";
 
 const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
+  const [column, setColumn] = useState(true);
+  const [inline, setInline] = useState(true);
+
+  const handleColumn = (data: any) => {
+    const { value } = data;
+    setColumn(value);
+  };
+
+  const handleInline = (data: any) => {
+    const { value } = data;
+    setInline(value);
+  };
+
   const renderTarget = ({ show, close, visible }: any) => {
     const handleShow = () => {
       if (visible) return close();
@@ -259,8 +272,10 @@ const Components = ({ global }: GlobalPageProps) => {
           <Checkbox label="Test label checkbox" />
         </Section>
         <Section title="Radio">
+          <Checkbox label="In linea" checked={inline} onChange={handleInline} />
           <Radio
             name={""}
+            inline={inline}
             options={[
               { label: "One", value: 1 },
               { label: "Two", value: 2 },
@@ -270,8 +285,10 @@ const Components = ({ global }: GlobalPageProps) => {
           />
         </Section>
         <Section title="Radio button">
+          <Checkbox label="In linea" checked={column} onChange={handleColumn} />
           <RadioButton
             name={""}
+            inline={column}
             options={[
               { label: "One", value: 1 },
               { label: "Two", value: 2 },
@@ -317,6 +334,19 @@ const Components = ({ global }: GlobalPageProps) => {
               { label: "Milano", value: "3" },
             ]}
           />
+          <Select
+            name="city"
+            onChange={() => {}}
+            iconBefore="search"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Città"
+            defaultValues={"1"}
+            options={[
+              { label: "Roma", value: "1" },
+              { label: "Ancora", value: "2" },
+              { label: "Milano", value: "3" },
+            ]}
+          />
         </Section>
         <Section title="Select - multiselect">
           <Select
@@ -324,6 +354,19 @@ const Components = ({ global }: GlobalPageProps) => {
             multiselect
             onChange={() => {}}
             topPlaceholder="Seleziona città"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Città"
+            defaultValues={["2"]}
+            options={[
+              { label: "Roma", value: "1" },
+              { label: "New York", value: "2" },
+              { label: "Milano", value: "3" },
+            ]}
+          />
+          <Select
+            name="city"
+            multiselect
+            onChange={() => {}}
             labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             defaultValues={["2"]}
@@ -362,6 +405,10 @@ const Compose = styled.div`
 
 const RenderDrop = styled.div`
   padding: ${theme.spaces.space4};
+  overflow: hidden;
+  overflow-y: scroll;
+  border-radius: ${theme.extra.radiusBig};
+  background: ${theme.colors.white};
   p {
     margin-bottom: ${theme.spaces.space2};
     &:last-child {

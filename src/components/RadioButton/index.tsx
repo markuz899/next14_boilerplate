@@ -9,6 +9,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   onChange = () => {},
   className,
   name = "radio-button",
+  inline = true,
 }) => {
   const initialValue = options.find((item) => item.checked) || options[0];
   const [selected, setValue] = useState<OptionProps>(initialValue);
@@ -19,7 +20,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   };
 
   return (
-    <Wrapper className={className}>
+    <Wrapper $inline={inline} className={className}>
       <div className="content">
         {options.map((option, index) => (
           <Button
@@ -39,13 +40,16 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 
 export default RadioButton;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $inline: boolean }>`
   width: 100%;
   .content {
     margin: 0 auto;
     width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: ${(props) => (props.$inline ? "row" : "column")};
     gap: ${theme.spaces.space2};
+    button {
+      min-width: 80px;
+    }
   }
 `;

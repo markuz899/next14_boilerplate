@@ -10,4 +10,5 @@ export interface RadioButtonProps {
   className?: string;
   onChange?: (option: OptionProps & { name: string; value: any }) => void;
   name?: string;
+  inline?: boolean;
 }
