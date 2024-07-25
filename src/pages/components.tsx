@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   Collapse,
+  DatePicker,
   Dropdown,
   Icon,
   Input,
@@ -258,6 +259,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Input
             className="mb-6"
             iconBefore="search"
+            defaultValue="Ciccio"
             labelBgColor={theme.colors.softWhite}
             placeholder="Input example"
             name="name"
@@ -282,6 +284,10 @@ const Components = ({ global }: GlobalPageProps) => {
             placeholder="Input example"
             name="name"
           />
+        </Section>
+        <Section title="Datepicker">
+          <DatePicker />
+          <DatePicker topPlaceholder="With label" />
         </Section>
         <Section title="Modal">
           <Modal

@@ -6,6 +6,7 @@ const Banner = dynamic(() => import("./Banner"), { loading: () => null });
 const Button = dynamic(() => import("./Button"), { loading: () => null });
 const Checkbox = dynamic(() => import("./Checkbox"), { loading: () => null });
 const Collapse = dynamic(() => import("./Tabs/collapse"), { loading: () => null });
+const DatePicker = dynamic(() => import("./DatePicker"), { loading: () => null });
 const Dropdown = dynamic(() => import("./Dropdown"), { loading: () => null });
 const Icon = dynamic(() => import("./Icon"), { loading: () => null });
 const Input = dynamic(() => import("./Input"), { loading: () => null });
@@ -29,6 +30,7 @@ export {
   Button,
   Checkbox,
   Collapse,
+  DatePicker,
   Dropdown,
   Icon,
   Input,
