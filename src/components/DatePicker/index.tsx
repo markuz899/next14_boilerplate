@@ -29,10 +29,12 @@ const DatePicker: React.FC<DatePickerProps> = ({
   excludeDates,
   includeDateIntervals,
   excludeDateIntervals,
+  selectsMultiple = false,
 }) => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [isWarning, setWarning] = useState<any>(false);
+  const [selectedDates, setSelectedDates] = useState([]);
 
   useEffect(() => {
     if (range) {
@@ -88,6 +90,16 @@ const DatePicker: React.FC<DatePickerProps> = ({
     }
   };
 
+  const onChangeSelection = (dates: any) => {
+    setSelectedDates(dates);
+    const many = dates.map((el: any) => formatDate(el, false, false));
+    onChange &&
+      onChange({
+        name,
+        value: many,
+      });
+  };
+
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
     { show, close }: { show: () => void; close: () => void }
@@ -102,6 +114,14 @@ const DatePicker: React.FC<DatePickerProps> = ({
       const e = endDate ? formatDate(endDate, false, showTimeSelect) : "";
       if (!s && !e) return "";
       return `${s} - ${e}`;
+    } else if (selectsMultiple) {
+      const many = selectedDates?.map((el: any) =>
+        formatDate(el, false, false)
+      );
+      if (many[0]) {
+        return `${many[0]} +${many.length}`;
+      }
+      return "";
     } else {
       const s = startDate ? formatDate(startDate, false, showTimeSelect) : "";
       return s;
@@ -177,7 +197,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
         startDate={startDate}
         selected={startDate}
         endDate={endDate}
-        onChange={(value: any) => select(value, close)}
+        selectsMultiple={selectsMultiple || undefined}
+        selectedDates={selectsMultiple ? selectedDates : []}
+        onChange={(value: any) =>
+          selectsMultiple ? onChangeSelection(value) : select(value, close)
+        }
         inline
         maxDate={maxDate}
         minDate={minDate}

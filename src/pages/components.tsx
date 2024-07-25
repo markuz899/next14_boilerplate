@@ -292,6 +292,11 @@ const Components = ({ global }: GlobalPageProps) => {
             onChange={(d: any) => console.log(d)}
             topPlaceholder="With range"
           />
+          <DatePicker
+            onChange={(d: any) => console.log(d)}
+            topPlaceholder="With selection"
+            selectsMultiple
+          />
         </Section>
         <Section title="Modal">
           <Modal
