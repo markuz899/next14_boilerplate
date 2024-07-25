@@ -163,6 +163,12 @@ const CalendarContainerStyled = styled(CalendarContainer)`
       }
     }
   }
+  .react-datepicker__month-read-view--selected-month {
+    color: ${theme.colors.white};
+  }
+  .react-datepicker__year-read-view--selected-year {
+    color: ${theme.colors.white};
+  }
   .react-datepicker-time__header {
     color: ${theme.colors.white};
   }
