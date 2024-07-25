@@ -288,7 +288,6 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Datepicker">
           <DatePicker className="mb-6" onChange={(d: any) => console.log(d)} />
           <DatePicker
-            label="testing"
             className="mb-6"
             range
             onChange={(d: any) => console.log(d)}
