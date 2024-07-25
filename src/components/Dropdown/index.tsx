@@ -64,7 +64,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     onClose();
   };
 
-  const hide = (e: MouseEvent) => {
+  const hide = (e: any) => {
     if (includeIcon) {
       if (
         (e.target as HTMLElement).tagName === "svg" ||
@@ -72,8 +72,18 @@ const Dropdown: React.FC<DropdownProps> = ({
       )
         return;
     }
-    if (dropdown.current && !dropdown.current.contains(e.target as Node)) {
-      if (includeTarget && target.current?.contains(e.target as Node)) return;
+    if (dropdown.current && !dropdown.current.contains(e.target)) {
+      if (includeTarget) {
+        if (target.current.contains(e.target)) return;
+        let classList = [...e.target.classList];
+        if (
+          classList.includes("react-datepicker__navigation") ||
+          classList.includes("react-datepicker__navigation-icon") ||
+          classList.includes("react-datepicker__month-option") ||
+          classList.includes("react-datepicker__year-option")
+        )
+          return;
+      }
       setVisible(false);
     }
     if (!dropdown.current) {

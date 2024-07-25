@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
@@ -9,10 +9,12 @@ import {
   Button,
   Checkbox,
   Collapse,
+  DatePicker,
   Dropdown,
   Icon,
   Input,
   Modal,
+  QuantitySelect,
   Radio,
   RadioButton,
   Rating,
@@ -29,6 +31,31 @@ import icons from "@/components/Icon/icons";
 
 const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
+  const [column, setColumn] = useState(true);
+  const [inline, setInline] = useState(true);
+  const [inlineAcc, setInlineAcc] = useState(true);
+  const [multipleAcc, setMultipleAcc] = useState(false);
+
+  const handleColumn = (data: any) => {
+    const { value } = data;
+    setColumn(value);
+  };
+
+  const handleInline = (data: any) => {
+    const { value } = data;
+    setInline(value);
+  };
+
+  const handleInlineAcc = (data: any) => {
+    const { value } = data;
+    setInlineAcc(value);
+  };
+
+  const handleMultipleAcc = (data: any) => {
+    const { value } = data;
+    setMultipleAcc(value);
+  };
+
   const renderTarget = ({ show, close, visible }: any) => {
     const handleShow = () => {
       if (visible) return close();
@@ -81,7 +108,21 @@ const Components = ({ global }: GlobalPageProps) => {
       <Content>
         <h3>Components</h3>
         <Section title="Accordion">
+          <div className="flex gap-2 justify-center mb-2">
+            <Checkbox
+              label="In linea"
+              checked={inlineAcc}
+              onChange={handleInlineAcc}
+            />
+            <Checkbox
+              label="Multi open"
+              checked={multipleAcc}
+              onChange={handleMultipleAcc}
+            />
+          </div>
           <Accordion
+            multipleOpen={multipleAcc}
+            inline={inlineAcc}
             options={[
               {
                 question: "Lorem Ipsum is simply dummy text?",
@@ -218,6 +259,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Input
             className="mb-6"
             iconBefore="search"
+            defaultValue="Ciccio"
             labelBgColor={theme.colors.softWhite}
             placeholder="Input example"
             name="name"
@@ -243,6 +285,10 @@ const Components = ({ global }: GlobalPageProps) => {
             name="name"
           />
         </Section>
+        <Section title="Datepicker">
+          <DatePicker />
+          <DatePicker topPlaceholder="With label" />
+        </Section>
         <Section title="Modal">
           <Modal
             onClickOther
@@ -258,8 +304,10 @@ const Components = ({ global }: GlobalPageProps) => {
           <Checkbox label="Test label checkbox" />
         </Section>
         <Section title="Radio">
+          <Checkbox label="In linea" checked={inline} onChange={handleInline} />
           <Radio
             name={""}
+            inline={inline}
             options={[
               { label: "One", value: 1 },
               { label: "Two", value: 2 },
@@ -269,8 +317,10 @@ const Components = ({ global }: GlobalPageProps) => {
           />
         </Section>
         <Section title="Radio button">
+          <Checkbox label="In linea" checked={column} onChange={handleColumn} />
           <RadioButton
             name={""}
+            inline={column}
             options={[
               { label: "One", value: 1 },
               { label: "Two", value: 2 },
@@ -316,6 +366,19 @@ const Components = ({ global }: GlobalPageProps) => {
               { label: "Milano", value: "3" },
             ]}
           />
+          <Select
+            name="city"
+            onChange={() => {}}
+            iconBefore="search"
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Città"
+            defaultValues={"1"}
+            options={[
+              { label: "Roma", value: "1" },
+              { label: "Ancora", value: "2" },
+              { label: "Milano", value: "3" },
+            ]}
+          />
         </Section>
         <Section title="Select - multiselect">
           <Select
@@ -332,9 +395,25 @@ const Components = ({ global }: GlobalPageProps) => {
               { label: "Milano", value: "3" },
             ]}
           />
+          <Select
+            name="city"
+            multiselect
+            onChange={() => {}}
+            labelBgColor={theme.colors.softWhite}
+            placeholder="Città"
+            defaultValues={["2"]}
+            options={[
+              { label: "Roma", value: "1" },
+              { label: "New York", value: "2" },
+              { label: "Milano", value: "3" },
+            ]}
+          />
         </Section>
         <Section title="Rating">
           <Rating onChange={(data: number) => alert(`Select: ${data} star`)} />
+        </Section>
+        <Section title="Quantity select">
+          <QuantitySelect value={5} />
         </Section>
       </Content>
     </Layout>
@@ -342,7 +421,7 @@ const Components = ({ global }: GlobalPageProps) => {
 };
 
 // export default Components;
-export default WithAuth(React.memo(Components));
+export default React.memo(Components);
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;
@@ -358,6 +437,10 @@ const Compose = styled.div`
 
 const RenderDrop = styled.div`
   padding: ${theme.spaces.space4};
+  overflow: hidden;
+  overflow-y: scroll;
+  border-radius: ${theme.extra.radiusBig};
+  background: ${theme.colors.white};
   p {
     margin-bottom: ${theme.spaces.space2};
     &:last-child {

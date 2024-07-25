@@ -19,6 +19,7 @@ const Input = forwardRef<InputRef, InputProps>(
       topPlaceholder,
       value,
       defaultValue,
+      importantDefault,
       name,
       isError = false,
       onChange,
@@ -63,6 +64,13 @@ const Input = forwardRef<InputRef, InputProps>(
         }
       },
     }));
+
+    const text = importantDefault
+      ? defaultValue
+      : !enableControlledInput
+      ? state
+      : value;
+    const dataValue = !enableControlledInput ? hasValue : !!value;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       let v = e.target.value;
@@ -159,8 +167,8 @@ const Input = forwardRef<InputRef, InputProps>(
               ref={inputRef}
               type={showPassword ? "text" : type}
               onChange={handleChange}
-              value={!enableControlledInput ? state : value || ""}
-              data-value={!enableControlledInput ? hasValue : !!value}
+              value={text || ""}
+              data-value={dataValue}
               name={name}
               autoComplete={autoComplete || name}
               onFocus={() => setFocus(true)}

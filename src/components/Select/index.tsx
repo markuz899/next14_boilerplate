@@ -272,6 +272,7 @@ export const Options = styled.div`
   overflow-y: scroll;
   border-radius: ${theme.extra.radiusBig};
   background: ${theme.colors.white};
+  color: ${({ theme }) => theme.text};
   &::-webkit-scrollbar {
     display: none;
   }
@@ -329,7 +330,6 @@ const Target = styled.div<{ isError?: boolean }>`
 
 const StyledDropdown = styled(Dropdown)<any>`
   width: 100%;
-  z-index: 100;
   &:focus {
     outline: 0;
   }

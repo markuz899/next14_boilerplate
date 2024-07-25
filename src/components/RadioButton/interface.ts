@@ -1,5 +1,5 @@
 export interface OptionProps {
-  label: string;
+  label: any;
   value: any;
   checked?: boolean;
   disabled?: boolean;
@@ -10,4 +10,5 @@ export interface RadioButtonProps {
   className?: string;
   onChange?: (option: OptionProps & { name: string; value: any }) => void;
   name?: string;
+  inline?: boolean;
 }

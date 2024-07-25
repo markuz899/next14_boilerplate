@@ -5,6 +5,8 @@ export interface FaqItem {
 
 export interface AccordionProps {
   options: FaqItem[];
+  inline?: boolean;
+  multipleOpen?: boolean;
 }
 
 export interface AccordionItemProps {

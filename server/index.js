@@ -4,6 +4,7 @@ const fastifyStatic = require("@fastify/static");
 const fastifyCookie = require("@fastify/cookie");
 const path = require("path");
 const next = require("next");
+const session = require("@fastify/session");
 const { Signale } = require("signale");
 const info = require("../package.json");
 
@@ -35,6 +36,10 @@ const signale = new Signale(options);
       parseOptions: {}, // options for parsing cookies
     });
 
+    fastify.register(session, {
+      secret: process.env.SESSION_SECRET,
+    });
+
     // Register routes
     const manifestRoutes = require("./manifest");
     const logRoutes = require("./routes/log");
@@ -43,6 +48,10 @@ const signale = new Signale(options);
 
     // Handle all other requests with Next.js
     fastify.all("/*", (req, reply) => {
+      // if (!req.session.customData) {
+      //   req.session.customData = "some-value";
+      // }
+      // req.headers["x-custom-variable"] = req.session.customData;
       reply.hijack();
       handle(req.raw, reply.raw)
         .then(() => {
