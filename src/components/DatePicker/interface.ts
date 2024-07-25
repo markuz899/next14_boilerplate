@@ -14,4 +14,9 @@ export interface DatePickerProps {
   range?: any;
   start?: string;
   end?: string;
+  disabled?: boolean;
+  includeDates?: any[];
+  excludeDates?: any[];
+  includeDateIntervals?: any[];
+  excludeDateIntervals?: any[];
 }

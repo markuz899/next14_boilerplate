@@ -165,7 +165,7 @@ const Drop = styled.div<{
 const Arrow = styled.div<{ top?: number }>`
   box-sizing: border-box;
   position: absolute;
-  bottom: ${(props) => (props.top ? `${-18 - props.top}px` : "10px")};
+  bottom: ${(props) => (props.top ? `${-38 - props.top}px` : "10px")};
   left: calc(50% - 6px);
   width: 12px;
   height: 12px;

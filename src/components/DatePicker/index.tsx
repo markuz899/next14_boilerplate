@@ -24,6 +24,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
   range = false,
   name = range ? "datepicker-range" : "datepicker",
   end,
+  disabled = false,
+  includeDates,
+  excludeDates,
+  includeDateIntervals,
+  excludeDateIntervals,
 }) => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
@@ -110,9 +115,13 @@ const DatePicker: React.FC<DatePickerProps> = ({
     show: () => void;
     close: () => void;
   }) => (
-    <Target onClick={show} onKeyDown={(e) => handleKeyDown(e, { show, close })}>
+    <Target
+      className={className}
+      onClick={show}
+      onKeyDown={(e) => handleKeyDown(e, { show, close })}
+    >
       <Input
-        className={className}
+        disabled={disabled}
         importantDefault
         onChange={(data: any) => select(data.value as Date)}
         readOnly={true}
@@ -127,7 +136,6 @@ const DatePicker: React.FC<DatePickerProps> = ({
         isError={isError}
         isWarning={isWarning}
         message={message}
-        isClearable={true}
         autoComplete="off"
       />
     </Target>
@@ -153,7 +161,12 @@ const DatePicker: React.FC<DatePickerProps> = ({
   }) => {
     return (
       <ReactDatePicker
+        disabled={disabled}
         locale={it}
+        includeDates={includeDates}
+        excludeDates={excludeDates}
+        excludeDateIntervals={excludeDateIntervals}
+        includeDateIntervals={includeDateIntervals}
         calendarContainer={ContainerPicker}
         showTimeSelect={showTimeSelect}
         showMonthDropdown={visible ? true : false}
@@ -206,6 +219,26 @@ const CalendarContainerStyled = styled(CalendarContainer)`
       & > div {
         color: ${theme.colors.white};
       }
+    }
+  }
+  .react-datepicker__day--today {
+    color: ${theme.colors.dark};
+    border: 1px solid ${theme.colors.primary};
+    border-radius: ${theme.extra.radiusBig};
+    &.react-datepicker__day--selected {
+      color: ${theme.colors.white};
+    }
+  }
+  .react-datepicker__day--in-range {
+    &.react-datepicker__day--today {
+      color: ${theme.colors.white};
+      font-weight: bold;
+    }
+  }
+  .react-datepicker__day--keyboard-selected {
+    color: ${theme.colors.dark};
+    &:hover {
+      color: ${theme.colors.white};
     }
   }
   .react-datepicker__month-read-view--selected-month {
