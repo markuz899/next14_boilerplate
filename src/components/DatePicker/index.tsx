@@ -10,40 +10,77 @@ import { DatePickerProps } from "./interface";
 import { formatDate } from "@/utils/utils";
 
 const DatePicker: React.FC<DatePickerProps> = ({
-  value,
+  start,
   label,
   placeholder = "Seleziona data",
   topPlaceholder,
   onChange,
-  name = "datepicker",
   isError,
   message,
   showTimeSelect = false,
   className,
   maxDate,
   minDate,
+  range = false,
+  name = range ? "datepicker-range" : "datepicker",
+  end,
 }) => {
-  const [date, setDate] = useState<Date | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+  const [isWarning, setWarning] = useState<any>(false);
 
   useEffect(() => {
-    if (value) {
-      const [day, month, year] = value.split("/");
-      const data = new Date(`${month}/${day}/${year}`);
-      setDate(data);
-      setStartDate(data);
+    if (range) {
+      if (start && end) {
+        const [day, month, year] = start.split("/");
+        const [dayEnd, monthEnd, yearEnd] = end.split("/");
+        const dataStart = new Date(`${month}/${day}/${year}`);
+        const dataEnd = new Date(`${monthEnd}/${dayEnd}/${yearEnd}`);
+        setStartDate(dataStart);
+        setEndDate(dataEnd);
+      } else {
+        setStartDate(null);
+        setEndDate(null);
+      }
     } else {
-      setDate(null);
-      setStartDate(null);
+      if (start) {
+        const [day, month, year] = start.split("/");
+        const data = new Date(`${month}/${day}/${year}`);
+        setStartDate(data);
+      } else {
+        setStartDate(null);
+      }
     }
-  }, [value]);
+  }, [start, end]);
 
-  const select = (value: Date | null, callback?: () => void) => {
-    setDate(value);
-    onChange &&
-      onChange({ name, value: value ? formatDate(value, false, false) : null });
-    setStartDate(value);
-    if (callback) callback();
+  const select = (value: any, callback?: () => void) => {
+    if (onChange) {
+      if (range) {
+        const [start, end] = value;
+        setStartDate(start);
+        setEndDate(end);
+        if (start && end) {
+          onChange({
+            name,
+            value: {
+              start: formatDate(start, false, false),
+              end: formatDate(end, false, false),
+            },
+          });
+          setWarning(false);
+          if (callback) callback();
+        } else {
+          setWarning(true);
+        }
+      } else {
+        onChange({
+          name,
+          value: value ? formatDate(value, false, false) : null,
+        });
+        setStartDate(value);
+        if (callback) callback();
+      }
+    }
   };
 
   const handleKeyDown = (
@@ -54,6 +91,18 @@ const DatePicker: React.FC<DatePickerProps> = ({
     if (e.key === "ArrowUp" || e.key === "ArrowDown") show();
   };
 
+  const renderValue = () => {
+    if (range) {
+      const s = startDate ? formatDate(startDate, false, showTimeSelect) : "";
+      const e = endDate ? formatDate(endDate, false, showTimeSelect) : "";
+      if (!s && !e) return "";
+      return `${s} - ${e}`;
+    } else {
+      const s = startDate ? formatDate(startDate, false, showTimeSelect) : "";
+      return s;
+    }
+  };
+
   const renderTarget = ({
     show,
     close,
@@ -61,11 +110,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
     show: () => void;
     close: () => void;
   }) => (
-    <Target
-      onClick={show}
-      onKeyDown={(e) => handleKeyDown(e, { show, close })}
-      isError={isError}
-    >
+    <Target onClick={show} onKeyDown={(e) => handleKeyDown(e, { show, close })}>
       <Input
         className={className}
         importantDefault
@@ -75,13 +120,12 @@ const DatePicker: React.FC<DatePickerProps> = ({
         type="text"
         name={name}
         placeholder={placeholder}
-        defaultValue={
-          startDate ? formatDate(startDate, false, showTimeSelect) : ""
-        }
+        defaultValue={renderValue() || ""}
         icon={"calendar"}
         iconSize={theme.font.size.medium}
         enableControlledInput
         isError={isError}
+        isWarning={isWarning}
         message={message}
         isClearable={true}
         autoComplete="off"
@@ -116,8 +160,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
         showYearDropdown={visible ? true : false}
         scrollableYearDropdown={visible ? true : false}
         yearDropdownItemNumber={100}
+        selectsRange={range}
+        startDate={startDate}
         selected={startDate}
-        onChange={(value: Date | null) => select(value, close)}
+        endDate={endDate}
+        onChange={(value: any) => select(value, close)}
         inline
         maxDate={maxDate}
         minDate={minDate}
@@ -132,7 +179,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         renderTarget={renderTarget}
         renderDropdown={renderDropdown}
         showArrow={false}
-        fluid={false}
+        fluid={true}
         includeTarget
         leftPosition={0}
       />
@@ -142,13 +189,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
 export default DatePicker;
 
-const Target = styled.div<{ isError?: boolean }>`
+const Target = styled.div`
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
   outline: unset;
-  border: ${({ isError }) =>
-    isError ? `1px solid ${theme.colors.error}` : "none"};
 `;
 
 const CalendarContainerStyled = styled(CalendarContainer)`

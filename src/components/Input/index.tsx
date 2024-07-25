@@ -22,6 +22,7 @@ const Input = forwardRef<InputRef, InputProps>(
       importantDefault,
       name,
       isError = false,
+      isWarning = false,
       onChange,
       message,
       showPasswordIcon,
@@ -148,6 +149,7 @@ const Input = forwardRef<InputRef, InputProps>(
         <Box
           $rounded={rounded}
           $isError={isError || undefined}
+          $isWarning={isWarning || undefined}
           className={className}
           $focus={focus}
           withFilter={withFilter}
@@ -223,6 +225,7 @@ Input.propTypes = {
 const Box = styled.div<{
   $rounded: boolean;
   $isError: any;
+  $isWarning: any;
   $focus: any;
   withFilter?: boolean;
   $labelBgColor?: string;
@@ -238,8 +241,10 @@ const Box = styled.div<{
   width: 100%;
   padding: 0 ${theme.spaces.space2};
   border: 2px solid
-    ${({ $isError, $focus }) =>
-      $isError
+    ${({ $isError, $isWarning, $focus }) =>
+      $isWarning
+        ? theme.colors.warning
+        : $isError
         ? theme.colors.error
         : $focus
         ? theme.colors.primary
@@ -252,6 +257,7 @@ const Box = styled.div<{
     width: 100%;
     border: 0;
     color: ${({ theme }) => theme.text};
+    color: ${(props) => props.$isWarning && theme.colors.warningDark};
     color: ${(props) => props.$isError && theme.colors.error};
     min-height: ${theme.spaces.space7};
     padding: 0;

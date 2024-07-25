@@ -286,8 +286,14 @@ const Components = ({ global }: GlobalPageProps) => {
           />
         </Section>
         <Section title="Datepicker">
-          <DatePicker />
-          <DatePicker topPlaceholder="With label" />
+          <DatePicker className="mb-6" onChange={(d: any) => console.log(d)} />
+          <DatePicker
+            label="testing"
+            className="mb-6"
+            range
+            onChange={(d: any) => console.log(d)}
+            topPlaceholder="With range"
+          />
         </Section>
         <Section title="Modal">
           <Modal

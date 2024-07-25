@@ -1,6 +1,5 @@
 // DatePicker.interface.ts
 export interface DatePickerProps {
-  value?: string;
   label?: string;
   placeholder?: string;
   topPlaceholder?: string;
@@ -12,4 +11,7 @@ export interface DatePickerProps {
   className?: string;
   maxDate?: Date;
   minDate?: Date;
+  range?: any;
+  start?: string;
+  end?: string;
 }

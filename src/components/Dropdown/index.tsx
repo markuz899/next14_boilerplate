@@ -80,7 +80,8 @@ const Dropdown: React.FC<DropdownProps> = ({
           classList.includes("react-datepicker__navigation") ||
           classList.includes("react-datepicker__navigation-icon") ||
           classList.includes("react-datepicker__month-option") ||
-          classList.includes("react-datepicker__year-option")
+          classList.includes("react-datepicker__year-option") ||
+          classList.includes("react-datepicker__day")
         )
           return;
       }
@@ -156,7 +157,6 @@ const Drop = styled.div<{
   margin: ${theme.spaces.space3} 0;
   font-size: ${theme.font.size.tiny};
   min-width: 100%;
-  ${(props) => props.$fluid && "width: 100%;"}
   &::-webkit-scrollbar {
     display: none;
   }
