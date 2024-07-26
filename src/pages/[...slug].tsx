@@ -20,11 +20,27 @@ const Slug = ({ global, pageName }: DinamicProps) => {
 
 export async function getServerSideProps(ctx: {
   req: any;
+  resolvedUrl: string;
   params: { slug: string[] };
 }) {
   const { slug } = ctx.params;
+  const path = ctx.resolvedUrl;
 
-  console.log(slug);
+  const routes = [
+    { path: "/", sections: [], shield: false },
+    { path: "/contact", sections: [], shield: false },
+    { path: "/dinamic/contact", sections: [], shield: false },
+    { path: "/user/profile", sections: [], shield: false },
+  ];
+
+  const route = routes.find((route) => route.path === path);
+
+  if (!route) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       pageName: slug,
