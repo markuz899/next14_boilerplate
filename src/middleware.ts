@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
       pathname.split("/").length === route.path.split("/").length
     );
   });
-  console.log(isValidRoute);
+
   if (!isValidRoute) {
     return NextResponse.rewrite(new URL("/404", request.url));
   }
