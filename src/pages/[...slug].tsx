@@ -26,20 +26,20 @@ export async function getServerSideProps(ctx: {
   const { slug } = ctx.params;
   const path = ctx.resolvedUrl;
 
-  const routes = [
-    { path: "/", sections: [], shield: false },
-    { path: "/contact", sections: [], shield: false },
-    { path: "/dinamic/contact", sections: [], shield: false },
-    { path: "/user/profile", sections: [], shield: false },
-  ];
+  // const routes = [
+  //   { path: "/", sections: [], shield: false },
+  //   { path: "/contact", sections: [], shield: false },
+  //   { path: "/dinamic/contact", sections: [], shield: false },
+  //   { path: "/user/profile", sections: [], shield: false },
+  // ];
 
-  const route = routes.find((route) => route.path === path);
+  // const route = routes.find((route) => route.path === path);
 
-  if (!route) {
-    return {
-      notFound: true,
-    };
-  }
+  // if (!route) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
   return {
     props: {

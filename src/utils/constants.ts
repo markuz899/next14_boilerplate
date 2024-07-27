@@ -4,6 +4,61 @@ export const CDN_PATH = process.env.NEXT_PUBLIC_CDN_PATH;
 export const AUTH_KEY = "application_auth";
 export const USER_KEY = "application_user";
 
+export const routes: any = [
+  {
+    path: "/",
+    component: "Home",
+    sections: [
+      { sectionName: "sectionA" },
+      { sectionName: "sectionB" },
+      { sectionName: "sectionC" },
+    ],
+  },
+  {
+    path: "/contact",
+    component: "Contact",
+    sections: [{ sectionName: "sectionA" }, { sectionName: "sectionD" }],
+  },
+  {
+    path: "/contact/:id",
+    component: "ContactDetail",
+    shield: true,
+  },
+  {
+    path: "/login",
+    component: "Login",
+    sections: [{ sectionName: "loginForm" }],
+  },
+  {
+    path: "/components",
+    component: "Components",
+    sections: [
+      { sectionName: "sectionA" },
+      { sectionName: "sectionB" },
+      { sectionName: "sectionC" },
+    ],
+  },
+];
+
+export const tenantInfo = {
+  name: "Tenant 1",
+  route: routes,
+  sections: [
+    {
+      sectionName: "sectionA",
+      kentico: {},
+    },
+    {
+      sectionName: "sectionB",
+      kentico: {},
+    },
+    {
+      sectionName: "sectionC",
+      kentico: {},
+    },
+  ],
+};
+
 export const navItems = [
   { id: 1, path: "/", text: "Home" },
   { id: 2, path: "/login", text: "Login" },
