@@ -7,10 +7,14 @@ type WithAuthProps<P> = P & {};
 
 const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
   const AuthComponent: React.FC<WithAuthProps<P>> = (props) => {
-    const { global }: any = props;
+    const { global, infoPage }: any = props;
     const { authentication } = global;
     const Router = useRouter();
     const [verified, setVerified] = useState(authentication?.isAuth);
+
+    if (!infoPage?.shield) {
+      return <WrappedComponent {...props} />;
+    }
 
     useEffect(() => {
       const accessToken = CookieManager.get(AUTH_KEY);
@@ -22,7 +26,9 @@ const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
           setVerified(true);
         }
       };
-      checkUser();
+      if (infoPage?.shield) {
+        checkUser();
+      }
       // eslint-disable-next-line
     }, []);
     if (verified) {

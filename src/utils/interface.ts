@@ -34,4 +34,5 @@ export interface GlobalPageProps {
       handleInstallPrompt: () => void;
     };
   };
+  info?: any;
 }

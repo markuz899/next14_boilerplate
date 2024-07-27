@@ -7,6 +7,7 @@ const next = require("next");
 const session = require("@fastify/session");
 const { Signale } = require("signale");
 const info = require("../package.json");
+const routes = require("./routesMok");
 
 const dev = process.env.NODE_ENV !== "production";
 const host = process.env.HOST || "localhost";
@@ -61,6 +62,8 @@ const signale = new Signale(options);
       //     { sectionName: "sectionC" },
       //   ],
       // };
+      // get routes from req.tenant and pass routes
+      req.raw.headers["routes"] = JSON.stringify(routes);
       reply.hijack();
       handle(req.raw, reply.raw)
         .then(() => {

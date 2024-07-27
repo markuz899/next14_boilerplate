@@ -5,14 +5,18 @@ import React from "react";
 
 interface DinamicProps extends GlobalPageProps {
   pageName?: string[];
+  infoPage?: any;
 }
 
-const Slug = ({ global, pageName }: DinamicProps) => {
+const Slug = ({ global, pageName, infoPage }: DinamicProps) => {
   return (
     <Layout global={global} title="Homepage">
       SLUG{" "}
       {pageName?.map((el: any) => (
         <div key={el}>{el}</div>
+      ))}
+      {infoPage.sections?.map((sec: any) => (
+        <div key={sec.sectionName}>{sec.sectionName}</div>
       ))}
     </Layout>
   );
@@ -23,9 +27,10 @@ export async function getServerSideProps(ctx: {
   resolvedUrl: string;
   params: { slug: string[] };
 }) {
-  const { slug } = ctx.params;
+  const { req, params } = ctx;
+  const { slug } = params;
   const path = ctx.resolvedUrl;
-
+  const infoPage = req.headers["route"];
   // const routes = [
   //   { path: "/", sections: [], shield: false },
   //   { path: "/contact", sections: [], shield: false },
@@ -44,6 +49,7 @@ export async function getServerSideProps(ctx: {
   return {
     props: {
       pageName: slug,
+      infoPage: JSON.parse(infoPage),
     },
   };
 }

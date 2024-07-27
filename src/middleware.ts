@@ -1,6 +1,5 @@
 // middleware.ts (o .js se non usi TypeScript)
 import { NextRequest, NextResponse } from "next/server";
-import { routes } from "./utils/constants";
 
 function pathToRegex(path: string) {
   const escapedPath = path.replace(/\//g, "\\/").replace(/:\w+/g, "([^\\/]+)");
@@ -12,9 +11,11 @@ export const config = {
   matcher: ["/((?!api|static|.*\\..*|_next).*)"],
 };
 
-export function middleware(request: any, response: NextResponse) {
+export function middleware(request: NextRequest, response: NextResponse) {
   const url = request.nextUrl;
   const pathname = url.pathname;
+  const routesData: any = request.headers.get("routes");
+  const routes = routesData ? JSON.parse(routesData) : [];
 
   const isValidRoute = routes.find((route: any) => {
     // Check static route
@@ -36,8 +37,11 @@ export function middleware(request: any, response: NextResponse) {
     return NextResponse.rewrite(new URL("/404", request.url));
   }
 
+  const res = NextResponse.next();
+  // get target route and send to page
+  res.headers.set("route", JSON.stringify(isValidRoute));
   // if (request.nextUrl.pathname.startsWith("/about")) {
   //   return NextResponse.redirect(new URL("/", request.url));
   // }
-  return NextResponse.next();
+  return res;
 }
