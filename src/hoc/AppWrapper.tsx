@@ -57,6 +57,8 @@ const AppWrapper = (App: any) => {
       const req = ctx.req as CustomNextPageContext["req"];
       const res = ctx.res;
 
+      // TODO: add rest service to get tenant and store it inside req.tenant
+
       appContext.ctx.reduxStore = reduxStore;
       let appProps: AppInitialProps = { pageProps: {} };
       let isAuth: any = null;

@@ -12,27 +12,30 @@ export const config = {
   matcher: ["/((?!api|static|.*\\..*|_next).*)"],
 };
 
-export function middleware(request: NextRequest) {
+export function middleware(request: any, response: NextResponse) {
   const url = request.nextUrl;
   const pathname = url.pathname;
 
-  const isValidRoute = routes.some((route: any) => {
+  const isValidRoute = routes.find((route: any) => {
     // Check static route
     if (route.path === pathname) {
       return true;
     }
 
-    // Check dinamic route
+    // Check dynamic route
     const dynamicPathRegex = pathToRegex(route.path);
-    return (
+    if (
       dynamicPathRegex.test(pathname) &&
       pathname.split("/").length === route.path.split("/").length
-    );
+    ) {
+      return route;
+    }
   });
 
   if (!isValidRoute) {
     return NextResponse.rewrite(new URL("/404", request.url));
   }
+
   // if (request.nextUrl.pathname.startsWith("/about")) {
   //   return NextResponse.redirect(new URL("/", request.url));
   // }

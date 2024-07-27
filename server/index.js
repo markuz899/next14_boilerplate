@@ -52,6 +52,15 @@ const signale = new Signale(options);
       //   req.session.customData = "some-value";
       // }
       // req.headers["x-custom-variable"] = req.session.customData;
+      // req.raw.custom = {
+      //   path: "/",
+      //   component: "Home",
+      //   sections: [
+      //     { sectionName: "sectionA" },
+      //     { sectionName: "sectionB" },
+      //     { sectionName: "sectionC" },
+      //   ],
+      // };
       reply.hijack();
       handle(req.raw, reply.raw)
         .then(() => {
