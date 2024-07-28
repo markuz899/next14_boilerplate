@@ -26,7 +26,7 @@ export async function getServerSideProps(ctx: { req: any }) {
   // console.log(req.user);
   const info = req.headers["route"];
   return {
-    props: { info: JSON.parse(info) },
+    props: { info: info ? JSON.parse(info) : {} },
   };
 }
 

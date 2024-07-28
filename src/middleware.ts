@@ -14,10 +14,10 @@ export const config = {
 export function middleware(request: NextRequest, response: NextResponse) {
   const url = request.nextUrl;
   const pathname = url.pathname;
-  const routesData: any = request.headers.get("routes");
-  const routes = routesData ? JSON.parse(routesData) : [];
+  const tenantInfo: any = request.headers.get("tenantInfo");
+  const tenant = tenantInfo ? JSON.parse(tenantInfo) : {};
 
-  const isValidRoute = routes.find((route: any) => {
+  const isValidRoute = tenant?.route?.find((route: any) => {
     // Check static route
     if (route.path === pathname) {
       return true;

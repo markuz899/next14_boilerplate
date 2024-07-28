@@ -49,7 +49,7 @@ export async function getServerSideProps(ctx: {
   return {
     props: {
       pageName: slug,
-      infoPage: JSON.parse(infoPage),
+      infoPage: infoPage ? JSON.parse(infoPage) : {},
     },
   };
 }

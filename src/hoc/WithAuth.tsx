@@ -12,10 +12,6 @@ const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
     const Router = useRouter();
     const [verified, setVerified] = useState(authentication?.isAuth);
 
-    if (!infoPage?.shield) {
-      return <WrappedComponent {...props} />;
-    }
-
     useEffect(() => {
       const accessToken = CookieManager.get(AUTH_KEY);
       const checkUser = async () => {
@@ -31,6 +27,11 @@ const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
       }
       // eslint-disable-next-line
     }, []);
+
+    if (!infoPage?.shield) {
+      return <WrappedComponent {...props} />;
+    }
+
     if (verified) {
       return <WrappedComponent {...props} />;
     } else {
