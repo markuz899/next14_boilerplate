@@ -5,7 +5,7 @@
   "author": "ITNLab",
   "scripts": {
     "dev-next": "next dev",
-    "dev": "node server/index.js",
+    "dev": "nodemon server/index.js",
     "prod": "cross-env NODE_ENV=production node ./server/index.js",
     "build": "next build",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
@@ -32,6 +32,7 @@
     "next": "^14.2.4",
     "next-pwa": "^5.6.0",
     "next-sitemap": "^4.2.3",
+    "nodemon": "^3.1.4",
     "prop-types": "^15.8.1",
     "react": "^18",
     "react-datepicker": "^7.3.0",

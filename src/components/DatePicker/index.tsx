@@ -58,6 +58,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         setStartDate(null);
       }
     }
+    // eslint-disable-next-line
   }, [start, end]);
 
   const select = (value: any, callback?: () => void) => {
@@ -151,7 +152,6 @@ const DatePicker: React.FC<DatePickerProps> = ({
         placeholder={placeholder}
         defaultValue={renderValue() || ""}
         icon={"calendar"}
-        iconSize={theme.font.size.medium}
         enableControlledInput
         isError={isError}
         isWarning={isWarning}

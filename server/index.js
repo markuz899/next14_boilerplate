@@ -69,15 +69,36 @@ const handleRequest = async (req, reply) => {
 const handlingTenantRoute = async (req, reply) => {
   const parsedUrl = parse(req.url, true);
   const { pathname, query } = parsedUrl;
+  const tenantInfo = req.raw.tenantInfo;
 
-  if (pathname === "/") {
-    await app.render(req.raw, reply.raw, "/", query);
-  } else if (pathname === "/componenti") {
-    await app.render(req.raw, reply.raw, "/components", query);
+  function pathToRegex(path) {
+    const escapedPath = path
+      .replace(/\//g, "\\/")
+      .replace(/:\w+/g, "([^\\/]+)");
+    return new RegExp(`^${escapedPath}(\\/)?$`);
+  }
+
+  // Check if pathname equal to tenantInfo
+  const matchedRoute = tenantInfo.route.find((route) => {
+    const regex = pathToRegex(route.path);
+    const static = new RegExp("^/(?!api|static|.*\\..*|_next).*");
+    return regex.test(pathname) && !static.test(static);
+  });
+  if (matchedRoute) {
+    await app.render(req.raw, reply.raw, pathname, query);
   } else {
     await handle(req.raw, reply.raw);
   }
+
   reply.hijack();
+  // if (pathname === "/") {
+  //   await app.render(req.raw, reply.raw, "/", query);
+  // } else if (pathname === "/componenti") {
+  //   await app.render(req.raw, reply.raw, "/components", query);
+  // } else {
+  //   await handle(req.raw, reply.raw);
+  // }
+  // reply.hijack();
 };
 
 const handleNextRequest = (req, reply) => {

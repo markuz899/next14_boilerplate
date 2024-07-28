@@ -182,6 +182,7 @@ export function useIntersectionObserver({
       prevRef.current = state.entry.target;
       setState({ isIntersecting: initialIsIntersecting, entry: undefined });
     }
+    // eslint-disable-next-line
   }, []);
 
   const result = [
