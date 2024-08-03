@@ -1,7 +1,14 @@
 import React from "react";
 import theme from "@/theme";
 import styled from "styled-components";
-import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
+import {
+  LayersControl,
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  Tooltip,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -25,10 +32,18 @@ const Map = ({
       scrollWheelZoom={false}
       style={{ height, width: "100%" }}
     >
-      <TileLayer
+      <LayersControl>
+        <LayersControl.BaseLayer checked name="Google Map">
+          <TileLayer
+            attribution="Google Maps"
+            url="https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
+          />
+        </LayersControl.BaseLayer>
+      </LayersControl>
+      {/* <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url={colorMap.light}
-      />
+      /> */}
       {children && children}
     </MapContainerStyle>
   );
