@@ -124,7 +124,9 @@ const ContentAccordion = styled.ul<{ $inline: boolean }>`
         width: 100%;
       }
       &.active {
-        color: ${theme.colors.primary};
+        p {
+          color: ${theme.colors.primary};
+        }
       }
     }
     .answer {

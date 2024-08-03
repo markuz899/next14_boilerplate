@@ -128,7 +128,9 @@ const ContentAccordion = styled.ul<{ $inline: boolean }>`
       transition: all 0.5s;
       cursor: pointer;
       &.active {
-        color: ${theme.colors.primary};
+        p {
+          color: ${theme.colors.primary};
+        }
       }
     }
     .answer {
