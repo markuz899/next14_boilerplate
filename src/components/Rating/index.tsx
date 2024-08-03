@@ -8,9 +8,16 @@ export interface RatingProps {
   disable?: boolean;
   numberStar?: number;
   onChange?: any;
+  size?: string;
 }
 
-const Rating = ({ rate, disable, numberStar = 5, onChange }: RatingProps) => {
+const Rating = ({
+  rate,
+  disable,
+  numberStar = 5,
+  onChange,
+  size = theme.spaces.space6,
+}: RatingProps) => {
   const [totalStars, setTotalStars] = useState<number>(numberStar);
   const [rating, setRating] = useState<any>(rate);
   const [hover, setHover] = useState<boolean>(false);
@@ -47,7 +54,7 @@ const Rating = ({ rate, disable, numberStar = 5, onChange }: RatingProps) => {
               <Icon
                 className="star"
                 name="star"
-                size={theme.spaces.space6}
+                size={size}
                 color={
                   currentRating <= (hover || rating)
                     ? theme.colors.warning

@@ -4,10 +4,11 @@ import Icon from "../Icon";
 import { AccordionProps, AccordionItemProps } from "./interface";
 import theme from "@/theme";
 
-const Accordion: React.FC<AccordionProps> = ({
+const AccordionBox: React.FC<AccordionProps> = ({
   options,
   inline = false,
   multipleOpen = false,
+  withTruncate = false,
 }) => {
   const [clicked, setClicked] = useState<number | null>(null);
   const [clickeds, setClickeds] = useState<number[]>([]);
@@ -44,6 +45,7 @@ const Accordion: React.FC<AccordionProps> = ({
     <ContentAccordion $inline={inline}>
       {options?.map((faq, index: number) => (
         <AccordionItem
+          $withTruncate={withTruncate}
           onToggle={() =>
             !multipleOpen ? handleToggle(index) : handleMultiToggle(index)
           }
@@ -56,12 +58,13 @@ const Accordion: React.FC<AccordionProps> = ({
   );
 };
 
-export default Accordion;
+export default AccordionBox;
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
   faq,
   active,
   onToggle,
+  $withTruncate,
 }) => {
   const { question, answer } = faq;
   const contentEl = useRef<HTMLDivElement>(null);
@@ -69,12 +72,16 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   return (
     <li className={`accordion_item ${active ? "active" : ""}`}>
       <button className={`button ${active ? "active" : ""}`} onClick={onToggle}>
-        <p>{question}</p>
-        <Icon
-          name={active ? "angle-top" : "angle-down"}
-          size={theme.spaces.space4}
-          color={theme.colors.primary}
-        />
+        <p className={$withTruncate ? "truncate" : "w-100"}>{question}</p>
+        {faq?.renderIcon ? (
+          faq?.renderIcon
+        ) : (
+          <Icon
+            name={active ? "angle-top" : "angle-down"}
+            size={theme.spaces.space4}
+            color={theme.colors.primary}
+          />
+        )}
       </button>
       <div
         ref={contentEl}
@@ -97,11 +104,13 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 const ContentAccordion = styled.ul<{ $inline: boolean }>`
   width: 100%;
   list-style: none;
+  overflow-y: hidden;
+  border: 2px solid ${theme.colors.dark};
+  border-radius: ${theme.extra.radiusBig};
   ${(props) => props.$inline && InlineStyle}
   .accordion_item {
-    margin-bottom: 10px;
+    border-radius: ${theme.extra.radius};
     &:last-child {
-      margin-bottom: 0;
     }
     .button {
       position: relative;
@@ -110,8 +119,6 @@ const ContentAccordion = styled.ul<{ $inline: boolean }>`
       color: ${theme.colors.dark};
       text-transform: uppercase;
       text-align: left;
-      border: 2px solid ${theme.colors.dark};
-      border-radius: ${theme.extra.radius};
       background: ${({ theme }) => theme.body};
       display: flex;
       align-items: center;
@@ -120,9 +127,6 @@ const ContentAccordion = styled.ul<{ $inline: boolean }>`
       z-index: 2;
       transition: all 0.5s;
       cursor: pointer;
-      p {
-        width: 100%;
-      }
       &.active {
         color: ${theme.colors.primary};
       }
@@ -135,16 +139,23 @@ const ContentAccordion = styled.ul<{ $inline: boolean }>`
     }
 
     .answer_wrapper {
-      margin-top: -4px;
+      /* margin-top: -4px; */
+      border-bottom: ${(props) =>
+        props.$inline ? "none" : `2px solid ${theme.colors.dark}`};
       position: relative;
       height: 0;
       overflow: hidden;
       transition: height ease 0.2s;
       text-align: left;
       z-index: 1;
-      border: 2px solid ${theme.colors.dark};
-      border-bottom-left-radius: ${theme.extra.radius};
-      border-bottom-right-radius: ${theme.extra.radius};
+    }
+    &:last-child {
+      button {
+        border-bottom: none;
+      }
+      .answer_wrapper {
+        border-bottom: none;
+      }
     }
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {

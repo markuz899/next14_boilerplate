@@ -90,7 +90,6 @@ const StyledBadge = styled.div<Props>`
   border: 1px solid ${theme.colors.primary};
   border-radius: 8px;
   text-transform: uppercase;
-  margin-right: ${theme.spaces.space2};
   margin-bottom: ${theme.spaces.space2};
   ${(props) => COLORS[props.$kind]};
   .text {

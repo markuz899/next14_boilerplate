@@ -4,6 +4,7 @@ import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
 import {
   Accordion,
+  AccordionBox,
   Badge,
   Banner,
   Button,
@@ -33,7 +34,7 @@ const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
   const [column, setColumn] = useState(true);
   const [inline, setInline] = useState(true);
-  const [inlineAcc, setInlineAcc] = useState(true);
+  const [inlineAcc, setInlineAcc] = useState(false);
   const [multipleAcc, setMultipleAcc] = useState(false);
 
   const handleColumn = (data: any) => {
@@ -130,6 +131,59 @@ const Components = ({ global }: GlobalPageProps) => {
                   "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
               },
               {
+                question: "Lorem Ipsum is simply dummy text?",
+                answer:
+                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
+              },
+            ]}
+          />
+        </Section>
+        <Section title="Accordion Box">
+          <div className="flex gap-2 justify-center mb-2">
+            <Checkbox
+              label="In linea"
+              checked={inlineAcc}
+              onChange={handleInlineAcc}
+            />
+            <Checkbox
+              label="Multi open"
+              checked={multipleAcc}
+              onChange={handleMultipleAcc}
+            />
+          </div>
+          <AccordionBox
+            multipleOpen={multipleAcc}
+            inline={inlineAcc}
+            withTruncate={false}
+            options={[
+              {
+                renderIcon: (
+                  <Rating rate={4} disable size={theme.spaces.space3} />
+                ),
+                question: "Lorem Ipsum is simply dummy text?",
+                answer:
+                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
+              },
+              {
+                renderIcon: (
+                  <Rating rate={3} disable size={theme.spaces.space3} />
+                ),
+                question: "Lorem Ipsum is simply dummy text?",
+                answer:
+                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
+              },
+              {
+                renderIcon: (
+                  <Rating rate={5} disable size={theme.spaces.space3} />
+                ),
+                question: "Lorem Ipsum is simply dummy text?",
+                answer:
+                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",
+              },
+              {
+                renderIcon: (
+                  <Rating rate={2} disable size={theme.spaces.space3} />
+                ),
                 question: "Lorem Ipsum is simply dummy text?",
                 answer:
                   "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution",

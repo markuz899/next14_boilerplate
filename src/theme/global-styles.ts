@@ -211,6 +211,9 @@ export const GlobalStyle = createGlobalStyle`
   .pr-0{
     padding-right: 0;
   }
+  .w-100{
+    width: 100%;
+  }
 
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     h2{
@@ -221,6 +224,9 @@ export const GlobalStyle = createGlobalStyle`
     }
     .pt-40{
       padding-top: 0px!important;
+    }
+    .truncate{
+      width: 200px;
     }
   }
   &::-moz-selection {

@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 
 const Accordion = dynamic(() => import("./Accordion"), { loading: () => null });
+const AccordionBox = dynamic(() => import("./AccordionBox"), { loading: () => null });
 const Badge = dynamic(() => import("./Badge"), { loading: () => null });
 const Banner = dynamic(() => import("./Banner"), { loading: () => null });
 const Button = dynamic(() => import("./Button"), { loading: () => null });
@@ -25,6 +26,7 @@ const Tooltip = dynamic(() => import("./Tooltip"), { loading: () => null });
 
 export {
   Accordion,
+  AccordionBox,
   Badge,
   Banner,
   Button,
