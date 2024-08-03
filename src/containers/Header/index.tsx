@@ -102,7 +102,7 @@ export default React.memo(Header);
 const Head = styled.div<{ $isSmall: boolean; isOpen?: boolean }>`
   position: sticky;
   top: 0;
-  z-index: ${theme.zIndex.zIndex1};
+  z-index: 1100;
   transition: ${theme.extra.transitionFluid};
   background: ${({ theme }) => theme.navbar};
   left: ${(props) => (props.isOpen ? "270px" : "0")};

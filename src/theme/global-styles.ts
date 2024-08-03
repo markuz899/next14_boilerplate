@@ -169,6 +169,9 @@ export const GlobalStyle = createGlobalStyle`
   .color-svg-primary{
     fill: ${theme.colors.primary}!important;
   }
+  .m-0 {
+    margin: 0!important;
+  }
   .mlr-20 {
     margin: 0 20px!important;
   }

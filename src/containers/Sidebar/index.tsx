@@ -112,7 +112,7 @@ const HeadRight = styled.div`
 const Container = styled.div`
   box-sizing: border-box;
   flex-shrink: 0;
-  z-index: ${theme.zIndex.zIndex2};
+  z-index: 1900;
   transition: all 0.5s cubic-bezier(0.86, 0, 0.57, 1);
   padding: 0;
   height: 100vh;

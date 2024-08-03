@@ -14,6 +14,8 @@ import {
   Dropdown,
   Icon,
   Input,
+  Map,
+  Markers,
   Modal,
   QuantitySelect,
   Radio,
@@ -36,6 +38,45 @@ const Components = ({ global }: GlobalPageProps) => {
   const [inline, setInline] = useState(true);
   const [inlineAcc, setInlineAcc] = useState(false);
   const [multipleAcc, setMultipleAcc] = useState(false);
+
+  const specialist = [
+    {
+      name: "Carlo",
+      position: [42.16137759041936, 12.339213749209796],
+      range: 20,
+      profession: "Musicista",
+    },
+    {
+      name: "Flavio",
+      position: [42.142287926630516, 12.540400871218557],
+      range: 10,
+      profession: "Meccanico",
+    },
+    {
+      name: "Mario",
+      position: [42.09288262437151, 12.273639107053354],
+      range: 50,
+      profession: "Giardiniere",
+    },
+    {
+      name: "Anna",
+      position: [42.206914985163685, 12.39517535481974],
+      range: 80,
+      profession: "Operaio",
+    },
+    {
+      name: "Claudia",
+      position: [42.0775948359501, 12.449763669494473],
+      range: 10,
+      profession: "Nerd",
+    },
+    {
+      name: "Sole",
+      position: [42.09950618862456, 12.563746817117186],
+      range: 15,
+      profession: "Avvocato",
+    },
+  ];
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -477,6 +518,11 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Quantity select">
           <QuantitySelect value={5} />
+        </Section>
+        <Section title="Map">
+          <Map center={specialist[0].position} zoom={10}>
+            <Markers options={specialist} zoom={14} />
+          </Map>
         </Section>
       </Content>
     </Layout>

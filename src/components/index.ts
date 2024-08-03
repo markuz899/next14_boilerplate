@@ -12,6 +12,8 @@ const Dropdown = dynamic(() => import("./Dropdown"), { loading: () => null });
 const Icon = dynamic(() => import("./Icon"), { loading: () => null });
 const Input = dynamic(() => import("./Input"), { loading: () => null });
 const Loader = dynamic(() => import("./Loader"), { loading: () => null });
+const Map = dynamic(() => import("./Map"), { loading: () => null, ssr:false });
+const Markers = dynamic(() => import("./Map/markers"), { loading: () => null, ssr:false });
 const Modal = dynamic(() => import("./Modal"), { loading: () => null });
 const QuantitySelect = dynamic(() => import("./QuantitySelect"), { loading: () => null });
 const Radio = dynamic(() => import("./Radio"), { loading: () => null });
@@ -37,6 +39,8 @@ export {
   Icon,
   Input,
   Loader,
+  Map,
+  Markers,
   Modal,
   QuantitySelect,
   Radio,
