@@ -33,7 +33,7 @@ const Rating = ({
   };
 
   return (
-    <ContentRating>
+    <ContentRating $disable={disable}>
       {[...Array(totalStars)].map((star, index) => {
         const currentRating: any = index + 1;
 
@@ -71,7 +71,7 @@ const Rating = ({
 
 export default React.memo(Rating);
 
-const ContentRating = styled.div`
+const ContentRating = styled.div<any>`
   display: flex;
   align-items: center;
   text-align: center;
@@ -81,7 +81,7 @@ const ContentRating = styled.div`
   }
   .star {
     display: block;
-    cursor: pointer;
+    cursor: ${(p) => (p.$disable ? "default" : "pointer")};
     font-size: 2rem;
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import theme from "@/theme";
 import { GlobalPageProps } from "@/utils/interface";
 import { Layout } from "@/containers";
@@ -27,10 +27,102 @@ import {
   Toggle,
   Tooltip,
 } from "@/components";
+import icons from "@/components/Icon/icons";
 import { Content } from "@/theme/styled";
 import styled from "styled-components";
 import { WithAuth } from "@/hoc";
-import icons from "@/components/Icon/icons";
+import { useForm } from "react-hook-form";
+
+const Autocomplete = () => {
+  const [provider, setProvider] = useState<any>(null);
+  const [address, setAddress] = useState([]);
+
+  let defaultValues: any = {
+    city: "",
+  };
+  const inputForm: any = {
+    city: "city",
+  };
+  const validationCity: any = {
+    city: {
+      required: "Campo Obbligatorio",
+    },
+  };
+
+  useEffect(() => {
+    const loadProvider = async () => {
+      const { OpenStreetMapProvider } = await import("leaflet-geosearch");
+      setProvider(new OpenStreetMapProvider());
+    };
+
+    loadProvider();
+  }, []);
+
+  const getCityFromService = async (query: string) => {
+    const results = await provider.search({ query });
+    // const results = await User.pingo();
+    // const data = results.map((item: any) => ({
+    //   position: item.userId,
+    //   value: item.id,
+    //   label: item.title,
+    //   raw: item.completed,
+    // }));
+    const data = results.map((item: any) => ({
+      position: [item.y, item.x],
+      value: item.label,
+      label: item.label,
+      raw: item.raw,
+    }));
+    setAddress(data);
+  };
+
+  const handleChangeCity = async (data: any) => {
+    const { name, value } = data;
+    setValue(name, value);
+    if (value.length >= 3) {
+      await getCityFromService(value);
+    }
+    // trigger(name);
+  };
+
+  const {
+    register,
+    setValue,
+    getValues,
+    trigger,
+    unregister,
+    setError,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+  });
+
+  useEffect(() => {
+    Object.keys(inputForm).forEach((k: any) => {
+      register(k, validationCity[k]);
+    });
+    return () => {
+      Object.keys(inputForm).forEach((k: any) => {
+        unregister(k);
+      });
+    };
+  }, []);
+
+  return (
+    <Select
+      enableInput
+      name="city"
+      onChange={handleChangeCity}
+      value={getValues(inputForm.city)}
+      iconBefore="search"
+      placeholder="Seleziona città"
+      options={address || []}
+      isError={!!errors[inputForm.city]}
+      // message={errors[inputForm.city]?.message}
+    />
+  );
+};
 
 const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
@@ -45,42 +137,49 @@ const Components = ({ global }: GlobalPageProps) => {
       position: [42.16137759041936, 12.339213749209796],
       range: 20,
       profession: "Musicista",
+      rating: 1,
     },
     {
       name: "Flavio",
       position: [42.142287926630516, 12.540400871218557],
       range: 10,
       profession: "Meccanico",
+      rating: 2,
     },
     {
       name: "Mario",
       position: [42.09288262437151, 12.273639107053354],
       range: 50,
       profession: "Giardiniere",
+      rating: 3,
     },
     {
       name: "Anna",
       position: [42.206914985163685, 12.39517535481974],
       range: 80,
       profession: "Operaio",
+      rating: 4,
     },
     {
       name: "Claudia",
       position: [42.0775948359501, 12.449763669494473],
       range: 10,
       profession: "Nerd",
+      rating: 5,
     },
     {
       name: "Sole",
       position: [42.09950618862456, 12.563746817117186],
       range: 15,
       profession: "Avvocato",
+      rating: 3,
     },
     {
       name: "Falco",
       position: [42.090681921149525, 12.27409778617536],
       range: 15,
       profession: "Studente",
+      rating: 2,
     },
   ];
 
@@ -469,7 +568,6 @@ const Components = ({ global }: GlobalPageProps) => {
             topPlaceholder="Seleziona città"
             labelBgColor={theme.colors.softWhite}
             placeholder="Città"
-            defaultValues={"1"}
             options={[
               { label: "Roma", value: "1" },
               { label: "Ancora", value: "2" },
@@ -498,7 +596,6 @@ const Components = ({ global }: GlobalPageProps) => {
             topPlaceholder="Seleziona città"
             labelBgColor={theme.colors.softWhite}
             placeholder="Città"
-            defaultValues={["2"]}
             options={[
               { label: "Roma", value: "1" },
               { label: "New York", value: "2" },
@@ -526,7 +623,8 @@ const Components = ({ global }: GlobalPageProps) => {
           <QuantitySelect value={5} />
         </Section>
         <Section title="Map">
-          <Map center={specialist[0].position} zoom={10}>
+          <Autocomplete />
+          <Map center={specialist[0].position} zoom={12}>
             <Markers options={specialist} zoom={14} />
           </Map>
         </Section>

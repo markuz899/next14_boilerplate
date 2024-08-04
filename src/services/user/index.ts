@@ -63,6 +63,19 @@ class User {
       return { error: true };
     }
   }
+  static async pingo() {
+    try {
+      const res = await UserService.pingo();
+      if (!res.ok) throw res;
+      return await res.json();
+    } catch (err: any) {
+      console.error("*err - ping*", err);
+      if (err.status === 401) {
+        console.log("logout");
+      }
+      return { error: true };
+    }
+  }
 }
 
 export default User;

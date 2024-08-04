@@ -26,4 +26,5 @@ export interface DropdownProps {
   leftPosition?: number;
   topPosition?: number;
   className?: string;
+  children?: any;
 }

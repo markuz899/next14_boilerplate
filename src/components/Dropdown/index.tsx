@@ -128,11 +128,11 @@ const RenderDrop = styled.div<{
   animation: ${(props) => (props.$visible ? fadeIn : fadeOut)} 300ms linear;
   transition: visibility 300ms linear;
   z-index: 1090;
-  ${(props) => (p) =>
-    p.$width
-      ? `width: ${p.$width}px`
-      : props.$fluid
+  ${(p) =>
+    p.$fluid
       ? "width: 100%"
+      : p.$width
+      ? `width: ${p.$width}px`
       : "width: fit-content"};
   height: 100%;
 `;

@@ -27,6 +27,8 @@ const Select: React.FC<SelectProps> = ({
   className,
   withFilter = false,
   disabled,
+  fluid = true,
+  width,
 }) => {
   const [disable, setDisable] = useState(disabled || false);
   const [state, setState] = useState<string | string[]>(value);
@@ -254,9 +256,9 @@ const Select: React.FC<SelectProps> = ({
       onClose={onClose || (() => {})}
       includeTarget
       className={className}
-    >
-      {className}
-    </StyledDropdown>
+      fluid={fluid}
+      width={width}
+    />
   );
 };
 
@@ -295,6 +297,7 @@ export const Option = styled.li<{
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  text-align: left;
   padding: ${theme.spaces.space1} ${theme.spaces.space1} ${theme.spaces.space1}
     0;
   list-style-type: none;

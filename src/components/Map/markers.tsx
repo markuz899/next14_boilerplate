@@ -13,6 +13,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import styled from "styled-components";
 import theme from "@/theme";
 import { Button } from "..";
+import Rating from "../Rating";
 
 const Markers = ({ options, zoom }: any) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -77,6 +78,13 @@ const Markers = ({ options, zoom }: any) => {
                 <div className="profile">
                   <div className="registered">
                     <p className="m-0">06/03/2022</p>
+                    {mark?.rating && (
+                      <Rating
+                        rate={mark?.rating}
+                        size={theme.spaces.space3}
+                        disable
+                      />
+                    )}
                   </div>
                   <div className="row">
                     <div className="img">
@@ -133,7 +141,9 @@ const Drop = styled.div`
     flex-direction: column;
     margin-bottom: ${theme.spaces.space2};
     .registered {
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: ${theme.spaces.space2};
     }
     .row {

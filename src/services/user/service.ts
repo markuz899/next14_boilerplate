@@ -57,6 +57,17 @@ class UserService {
     };
     return await ApiRequest.post("/auth/user/reset-password", options);
   }
+
+  static async pingo() {
+    const options = {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    return await fetch("https://jsonplaceholder.typicode.com/todos", options);
+  }
 }
 
 export default UserService;

@@ -1,14 +1,7 @@
 import React from "react";
 import theme from "@/theme";
 import styled from "styled-components";
-import {
-  LayersControl,
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  Tooltip,
-} from "react-leaflet";
+import { LayersControl, MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -26,6 +19,9 @@ const Map = ({
   };
   return (
     <MapContainerStyle
+      zoomAnimation
+      touchZoom
+      markerZoomAnimation
       className={className ? className : ""}
       center={center}
       zoom={zoom}

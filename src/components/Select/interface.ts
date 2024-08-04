@@ -19,4 +19,6 @@ export interface SelectProps {
   className?: string;
   withFilter?: boolean;
   disabled?: boolean;
+  fluid?: boolean;
+  width?: boolean;
 }
