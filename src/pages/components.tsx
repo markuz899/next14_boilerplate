@@ -76,6 +76,12 @@ const Components = ({ global }: GlobalPageProps) => {
       range: 15,
       profession: "Avvocato",
     },
+    {
+      name: "Falco",
+      position: [42.090681921149525, 12.27409778617536],
+      range: 15,
+      profession: "Studente",
+    },
   ];
 
   const handleColumn = (data: any) => {
