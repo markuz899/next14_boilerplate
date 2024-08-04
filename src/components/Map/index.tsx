@@ -33,17 +33,26 @@ const Map = ({
       style={{ height, width: "100%" }}
     >
       <LayersControl>
-        <LayersControl.BaseLayer checked name="Google Map">
+        <LayersControl.BaseLayer checked name="Map">
           <TileLayer
             attribution="Google Maps"
             url="https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
           />
         </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Satellite">
+          <TileLayer
+            attribution="Google Maps Satellite"
+            url="https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}"
+          />
+        </LayersControl.BaseLayer>
+
+        {/* <LayersControl.BaseLayer name="Leaflet">
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url={colorMap.light}
+          />
+        </LayersControl.BaseLayer> */}
       </LayersControl>
-      {/* <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url={colorMap.light}
-      /> */}
       {children && children}
     </MapContainerStyle>
   );

@@ -36,7 +36,6 @@ const Markers = ({ options, zoom }: any) => {
     map.scrollWheelZoom.disable();
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log("e.key", e.key);
       if (e.key === "Control" || e.key === "Meta" || e.key === "Ctrl") {
         map.scrollWheelZoom.enable();
       }
@@ -112,7 +111,7 @@ const Markers = ({ options, zoom }: any) => {
               <Circle
                 center={mark.position}
                 radius={mark.range * 100}
-                pathOptions={{ color: "green", fillColor: "green" }}
+                pathOptions={{ color: "#3388ff", fillColor: "blue" }}
               />
             </LayerGroup>
           )}
