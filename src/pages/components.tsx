@@ -569,22 +569,32 @@ const Components = ({ global }: GlobalPageProps) => {
           </Map>
         </Section>
         <Section title="Card">
+          <motion.div layout className="card-list">
+            <AnimatePresence>
+              {specialist.map((item) => {
+                return <Card key={item.id} option={item} />;
+              })}
+            </AnimatePresence>
+          </motion.div>
+        </Section>
+        <Section title="Divide">
           <Checkbox label="Card / Map" checked={view} onChange={handleView} />
-          {view ? (
-            <motion.div layout className="card-list">
-              <AnimatePresence>
-                {specialist.map((item) => {
-                  return <Card key={item.id} option={item} />;
-                })}
-              </AnimatePresence>
-            </motion.div>
-          ) : (
-            <div className="flex">
+          <ContentMap className="between">
+            <div className="content content-map">
               <Map center={specialist[0]?.position} zoom={12}>
                 <Markers options={specialist} zoom={14} />
               </Map>
             </div>
-          )}
+            <div className="content content-card">
+              <motion.div layout className="card-list">
+                <AnimatePresence>
+                  {specialist.map((item) => {
+                    return <Card key={item.id} option={item} mini />;
+                  })}
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          </ContentMap>
         </Section>
       </Content>
     </Layout>
@@ -593,6 +603,34 @@ const Components = ({ global }: GlobalPageProps) => {
 
 // export default Components;
 export default React.memo(Components);
+
+const ContentMap = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  &.between {
+    justify-content: space-between;
+  }
+  .content {
+    padding: ${theme.spaces.space2};
+    &.content-map {
+      flex: 1 0 70%;
+    }
+    &.content-card {
+      flex: 1 0 30%;
+      max-height: 700px;
+      overflow-y: scroll;
+      .card-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .card {
+          width: 100%;
+        }
+      }
+    }
+  }
+`;
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;

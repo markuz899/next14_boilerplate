@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Circle,
   LayerGroup,
@@ -44,7 +44,7 @@ const fetchIcon = (count: any, size: any) => {
   return icons[count];
 };
 
-const Markers = ({ options, zoom }: any) => {
+const Markers = ({ options, zoom, active }: any) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
@@ -86,6 +86,7 @@ const Markers = ({ options, zoom }: any) => {
   }, [map, updateMap]);
 
   const points = options.map((mark: any) => ({
+    id: mark.id,
     type: "Feature",
     properties: {
       cluster: false,

@@ -5,10 +5,18 @@ import { Button, Rating } from "..";
 
 interface CardProps {
   option: any;
+  mini?: boolean;
   renderFooter?: boolean;
+  onClick?: any;
+  onMouseLeave?: any;
 }
 
-const Card = ({ option, renderFooter = true }: CardProps) => {
+const Card = ({
+  option,
+  mini = false,
+  renderFooter = true,
+  onClick,
+}: CardProps) => {
   return (
     <LazyMotion features={domAnimation}>
       <m.div
@@ -17,8 +25,9 @@ const Card = ({ option, renderFooter = true }: CardProps) => {
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         exit={{ opacity: 0 }}
+        onClick={onClick}
       >
-        <CardStyle>
+        <CardStyle $mini={mini}>
           <div className="content-card">
             <div className="banner">
               <img src="https://t3.ftcdn.net/jpg/02/68/48/86/360_F_268488616_wcoB2JnGbOD2u3bpn2GPmu0KJQ4Ah66T.jpg" />
@@ -41,7 +50,7 @@ const Card = ({ option, renderFooter = true }: CardProps) => {
                 <span className="bold">Professione:</span>
                 <p>{option.profession}</p>
               </div>
-              {renderFooter && (
+              {renderFooter && !mini && (
                 <div className="card-action">
                   <Button kind="primary" fluid className="btn btn-redirect">
                     <b>DETTAGLI</b>
@@ -58,7 +67,7 @@ const Card = ({ option, renderFooter = true }: CardProps) => {
 
 export default Card;
 
-const CardStyle = styled.div`
+const CardStyle = styled.div<{ $mini?: boolean }>`
   .content-card {
     margin: ${theme.spaces.space2};
     overflow: hidden;
@@ -68,6 +77,7 @@ const CardStyle = styled.div`
     display: flex;
     flex-direction: column;
     .banner {
+      display: ${(p) => (p.$mini ? "none" : "block")};
       width: 100%;
       max-height: 100px;
       overflow: hidden;
