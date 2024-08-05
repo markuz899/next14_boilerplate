@@ -20,6 +20,7 @@ export interface DropdownProps {
   showArrow?: boolean;
   width?: number;
   fluid?: boolean;
+  fullWidth?: boolean;
   onClose?: () => void;
   includeTarget?: boolean;
   includeIcon?: boolean;

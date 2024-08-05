@@ -464,6 +464,7 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Dropdown">
           <Dropdown
+            fullWidth={false}
             includeTarget={true}
             showArrow={false}
             renderTarget={renderTarget}

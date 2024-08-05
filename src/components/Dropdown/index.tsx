@@ -10,6 +10,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   showArrow = true,
   width = 200,
   fluid = false,
+  fullWidth = true,
   onClose = () => {},
   includeTarget = false,
   includeIcon = false,
@@ -102,7 +103,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <Box className={className} $fluid={fluid} ref={target}>
+    <Box className={className} $fluid={fullWidth} ref={target}>
       <div className="target">{renderTarget({ show, close, visible })}</div>
       {renderDropdown && (
         <RenderDrop $visible={visible} $width={width} $fluid={fluid}>
@@ -140,7 +141,6 @@ const RenderDrop = styled.div<{
 const Box = styled.div<{ $fluid: boolean }>`
   position: relative;
   ${(props) => (props.$fluid ? "width: 100%" : "width: fit-content")};
-  width: 100%;
   .target {
     cursor: pointer;
   }
