@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Select } from "..";
 import { useForm } from "react-hook-form";
+import Select from "./select";
 
 export interface AutocompleteProps {
   name?: string;

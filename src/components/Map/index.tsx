@@ -29,7 +29,8 @@ const Map = ({
   const customMarker = new Icon({
     iconUrl: `static/pin/redPin.svg`,
     iconSize: [25, 41],
-    iconAnchor: [20, 20],
+    iconAnchor: [10, 30],
+    popupAnchor: [2, -20],
   });
 
   return (
