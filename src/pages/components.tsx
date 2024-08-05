@@ -9,6 +9,7 @@ import {
   Badge,
   Banner,
   Button,
+  Card,
   Checkbox,
   Collapse,
   DatePicker,
@@ -32,9 +33,11 @@ import icons from "@/components/Icon/icons";
 import { Content } from "@/theme/styled";
 import styled from "styled-components";
 import { WithAuth } from "@/hoc";
+import { AnimatePresence, motion } from "framer-motion";
 
 const specialist = [
   {
+    id: 1,
     name: "Carlo",
     position: [42.16137759041936, 12.339213749209796],
     range: 20,
@@ -42,6 +45,7 @@ const specialist = [
     rating: 1,
   },
   {
+    id: 2,
     name: "Flavio",
     position: [42.142287926630516, 12.540400871218557],
     range: 10,
@@ -49,6 +53,7 @@ const specialist = [
     rating: 2,
   },
   {
+    id: 3,
     name: "Mario",
     position: [42.09288262437151, 12.273639107053354],
     range: 50,
@@ -56,6 +61,7 @@ const specialist = [
     rating: 3,
   },
   {
+    id: 4,
     name: "Anna",
     position: [42.206914985163685, 12.39517535481974],
     range: 80,
@@ -63,13 +69,15 @@ const specialist = [
     rating: 4,
   },
   {
+    id: 5,
     name: "Claudia",
-    position: [42.0775948359501, 12.449763669494473],
+    position: [42.0775948359501, 12.4497636694941],
     range: 10,
     profession: "Nerd",
     rating: 5,
   },
   {
+    id: 6,
     name: "Sole",
     position: [42.09950618862456, 12.563746817117186],
     range: 15,
@@ -77,6 +85,7 @@ const specialist = [
     rating: 3,
   },
   {
+    id: 7,
     name: "Falco",
     position: [42.090681921149525, 12.27409778617536],
     range: 15,
@@ -92,6 +101,8 @@ const Components = ({ global }: GlobalPageProps) => {
   const [inlineAcc, setInlineAcc] = useState(false);
   const [multipleAcc, setMultipleAcc] = useState(false);
   const [selectionMap, setSelectionMap] = useState<any>();
+  const [view, setView] = useState<any>(true);
+  const [grid, setGrid] = useState<any>(true);
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -111,6 +122,16 @@ const Components = ({ global }: GlobalPageProps) => {
   const handleMultipleAcc = (data: any) => {
     const { value } = data;
     setMultipleAcc(value);
+  };
+
+  const handleView = (data: any) => {
+    const { value } = data;
+    setView(value);
+  };
+
+  const handleGrid = (data: any) => {
+    const { value } = data;
+    setGrid(value);
   };
 
   const renderTarget = ({ show, close, visible }: any) => {
@@ -535,6 +556,7 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Map">
           <Autocomplete
+            className="mb-3"
             onChange={(data: any) => setSelectionMap(data)}
             value={selectionMap?.label}
           />
@@ -545,6 +567,24 @@ const Components = ({ global }: GlobalPageProps) => {
           >
             <Markers options={specialist} zoom={14} />
           </Map>
+        </Section>
+        <Section title="Card">
+          <Checkbox label="Card / Map" checked={view} onChange={handleView} />
+          {view ? (
+            <motion.div layout className="card-list">
+              <AnimatePresence>
+                {specialist.map((item) => {
+                  return <Card key={item.id} option={item} />;
+                })}
+              </AnimatePresence>
+            </motion.div>
+          ) : (
+            <div className="flex">
+              <Map center={specialist[0]?.position} zoom={12}>
+                <Markers options={specialist} zoom={14} />
+              </Map>
+            </div>
+          )}
         </Section>
       </Content>
     </Layout>

@@ -4,6 +4,8 @@ export interface ITheme {
     body: string;
     borderComponent: string;
     borderTable: string;
+    cardLight: string;
+    cardGrey: string;
     dark: string;
     darkGrey: string;
     error: string;

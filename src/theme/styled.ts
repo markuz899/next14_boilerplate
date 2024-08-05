@@ -41,7 +41,7 @@ export const Content = styled(Container)`
   .show-more {
     margin: ${theme.spaces.space8} 0 ${theme.spaces.space12};
   }
-  .component-list {
+  .card-list {
     display: flex;
     flex-flow: row wrap;
     .card {

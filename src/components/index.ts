@@ -6,6 +6,7 @@ const Autocomplete = dynamic(() => import("./Map/autocomplete"), { loading: () =
 const Badge = dynamic(() => import("./Badge"), { loading: () => null });
 const Banner = dynamic(() => import("./Banner"), { loading: () => null });
 const Button = dynamic(() => import("./Button"), { loading: () => null });
+const Card = dynamic(() => import("./Card"), { loading: () => null });
 const Checkbox = dynamic(() => import("./Checkbox"), { loading: () => null });
 const Collapse = dynamic(() => import("./Tabs/collapse"), { loading: () => null });
 const DatePicker = dynamic(() => import("./DatePicker"), { loading: () => null });
@@ -34,6 +35,7 @@ export {
   Badge,
   Banner,
   Button,
+  Card,
   Checkbox,
   Collapse,
   DatePicker,

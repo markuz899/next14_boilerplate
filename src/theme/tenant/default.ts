@@ -4,6 +4,8 @@ const defaultTheme = {
     body: "#f5f5f5",
     borderComponent: "#D5D8DD",
     borderTable: "#D2D7DA",
+    cardLight: "#F8F8FA",
+    cardGrey: "#EEEFF1",
     dark: "#231F20",
     darkGrey: "#7D7D7D",
     error: "#F76262",

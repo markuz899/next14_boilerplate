@@ -7,6 +7,7 @@ export interface AutocompleteProps {
   onChange?: any;
   placeholder?: string;
   value?: string;
+  className?: string;
 }
 
 const Autocomplete = ({
@@ -14,6 +15,7 @@ const Autocomplete = ({
   placeholder = "Seleziona città",
   onChange,
   value = "",
+  className,
 }: AutocompleteProps) => {
   const [provider, setProvider] = useState<any>(null);
   const [address, setAddress] = useState([]);
@@ -102,6 +104,7 @@ const Autocomplete = ({
 
   return (
     <Select
+      className={className}
       enableInput
       name={name}
       onChange={handleChangeCity}
