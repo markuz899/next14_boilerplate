@@ -48,7 +48,12 @@ const Markers = ({ options, zoom, active }: any) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
+  const [done, setDone] = useState(false);
   const map = useMap();
+
+  useEffect(() => {
+    updateMap();
+  }, [done, active]);
 
   const handleMarkerClick = (mark: any) => {
     setSelectedMarker(mark.name);
@@ -63,7 +68,7 @@ const Markers = ({ options, zoom, active }: any) => {
     },
   });
 
-  const updateMap = useCallback(() => {
+  const updateMap = () => {
     const b = map.getBounds();
     setBounds([
       b.getSouthWest().lng,
@@ -72,11 +77,7 @@ const Markers = ({ options, zoom, active }: any) => {
       b.getNorthEast().lat,
     ]);
     setCurrentZoom(map.getZoom());
-  }, [map]);
-
-  useEffect(() => {
-    updateMap();
-  }, [map, updateMap]);
+  };
 
   useEffect(() => {
     map.on("move", updateMap);
@@ -133,11 +134,11 @@ const Markers = ({ options, zoom, active }: any) => {
       window.removeEventListener("keyup", handleKeyUp);
       map.scrollWheelZoom.enable(); // Ensure the scroll zoom is enabled if component is unmounted
     };
-  }, [map]);
+  }, []);
 
   return (
     <ContentMarker>
-      {clusters.map((cluster) => {
+      {clusters.map((cluster, i) => {
         const [longitude, latitude] = cluster.geometry.coordinates;
         const { cluster: isCluster, point_count: pointCount } =
           cluster.properties;

@@ -103,6 +103,7 @@ const Components = ({ global }: GlobalPageProps) => {
   const [selectionMap, setSelectionMap] = useState<any>();
   const [view, setView] = useState<any>(true);
   const [grid, setGrid] = useState<any>(true);
+  const [activeMarker, setActiveMarker] = useState<any>(null);
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -582,14 +583,21 @@ const Components = ({ global }: GlobalPageProps) => {
           <ContentMap className="between">
             <div className="content content-map">
               <Map center={specialist[0]?.position} zoom={12}>
-                <Markers options={specialist} zoom={14} />
+                <Markers options={specialist} zoom={14} active={activeMarker} />
               </Map>
             </div>
             <div className="content content-card">
               <motion.div layout className="card-list">
                 <AnimatePresence>
                   {specialist.map((item) => {
-                    return <Card key={item.id} option={item} mini />;
+                    return (
+                      <Card
+                        key={item.id}
+                        option={item}
+                        mini
+                        onClick={() => setActiveMarker(item)}
+                      />
+                    );
                   })}
                 </AnimatePresence>
               </motion.div>
