@@ -108,9 +108,9 @@ const Select: React.FC<SelectProps> = ({
       } else if (newSelection.length > 1) {
         setState(`${newSelection.length} selezionati`);
       }
-      onChange({ label, value: selected, name: name || "" });
+      onChange({ ...item, label, value: selected, name: name || "" });
     } else {
-      onChange({ label, value, name: name || "" });
+      onChange({ ...item, label, value, name: name || "" });
       setState(label);
       callback();
     }

@@ -7,7 +7,7 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
-import L from "leaflet";
+import L, { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -165,10 +165,26 @@ const Markers = ({ options, zoom }: any) => {
           );
         }
 
+        const initColor: any = {
+          1: `static/pin/gRed.svg`,
+          2: `static/pin/gRed.svg`,
+          3: `static/pin/gRed.svg`,
+          4: `static/pin/gRed.svg`,
+          5: `static/pin/gRed.svg`,
+        };
+
+        const customMarker = new Icon({
+          iconUrl: initColor[cluster.properties.rating || 0],
+          iconSize: [25, 41],
+          iconAnchor: [10, 40],
+          popupAnchor: [2, -40],
+        });
+
         return (
           <Marker
             key={`marker-${cluster.properties.name}`}
             position={[latitude, longitude]}
+            icon={customMarker}
             eventHandlers={{
               click: () => {
                 handleMarkerClick(cluster.properties);
