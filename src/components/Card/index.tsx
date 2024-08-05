@@ -100,6 +100,18 @@ const CardStyle = styled.div`
       box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
     }
   }
+  button {
+    text-transform: uppercase;
+    height: inherit;
+    &:hover {
+      border-color: inherit;
+    }
+    &:active,
+    &:focus {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     .content-card {
       margin: ${theme.spaces.space2};
