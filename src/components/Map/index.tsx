@@ -59,4 +59,8 @@ export default React.memo(Map);
 const MapContainerStyle = styled(MapContainer)`
   width: 100%;
   height: 700px;
+  .leaflet-div-icon {
+    background: transparent !important;
+    border: none !important;
+  }
 `;

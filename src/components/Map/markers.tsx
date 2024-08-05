@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Circle,
   LayerGroup,
@@ -7,16 +7,47 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import useSupercluster from "use-supercluster";
 import styled from "styled-components";
 import theme from "@/theme";
 import { Button } from "..";
 import Rating from "../Rating";
 
+const icons: any = {};
+const fetchIcon = (count: any, size: any) => {
+  if (!icons[count]) {
+    const markerHTML = `
+      <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: ${size}px;
+        height: ${size}px;
+        border-radius: 50%;
+        background: #3388ff;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0px 0px 0px 10px #3388ff99;
+      ">
+        ${count}
+      </div>
+    `;
+    icons[count] = L.divIcon({
+      html: markerHTML,
+    });
+  }
+  return icons[count];
+};
+
 const Markers = ({ options, zoom }: any) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [bounds, setBounds] = useState<any>(null);
+  const [currentZoom, setCurrentZoom] = useState<any>(zoom);
   const map = useMap();
 
   const handleMarkerClick = (mark: any) => {
@@ -30,6 +61,50 @@ const Markers = ({ options, zoom }: any) => {
     click: () => {
       setSelectedMarker(null);
     },
+  });
+
+  const updateMap = useCallback(() => {
+    const b = map.getBounds();
+    setBounds([
+      b.getSouthWest().lng,
+      b.getSouthWest().lat,
+      b.getNorthEast().lng,
+      b.getNorthEast().lat,
+    ]);
+    setCurrentZoom(map.getZoom());
+  }, [map]);
+
+  useEffect(() => {
+    updateMap();
+  }, [map, updateMap]);
+
+  useEffect(() => {
+    map.on("move", updateMap);
+    return () => {
+      map.off("move", updateMap);
+    };
+  }, [map, updateMap]);
+
+  const points = options.map((mark: any) => ({
+    type: "Feature",
+    properties: {
+      cluster: false,
+      name: mark.name,
+      rating: mark.rating,
+      range: mark.range,
+      profession: mark.profession,
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [parseFloat(mark.position[1]), parseFloat(mark.position[0])],
+    },
+  }));
+
+  const { clusters, supercluster } = useSupercluster({
+    points,
+    bounds,
+    zoom: currentZoom,
+    options: { radius: 75, maxZoom: 17 },
   });
 
   useEffect(() => {
@@ -60,76 +135,109 @@ const Markers = ({ options, zoom }: any) => {
   }, [map]);
 
   return (
-    options.length &&
-    options.map((mark: any) => {
-      return (
-        <Marker
-          key={mark.name}
-          position={mark.position}
-          eventHandlers={{
-            click: () => {
-              handleMarkerClick(mark);
-            },
-          }}
-        >
-          {mark.name && (
-            <Popup>
-              <Drop>
-                <div className="profile">
-                  <div className="registered">
-                    <p className="m-0">06/03/2022</p>
-                    {mark?.rating && (
-                      <Rating
-                        rate={mark?.rating}
-                        size={theme.spaces.space3}
-                        disable
-                      />
-                    )}
-                  </div>
-                  <div className="row">
-                    <div className="img">
-                      <img
-                        src={`https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg`}
-                        alt="img"
-                      />
-                    </div>
-                    <div className="info">
-                      <p>
-                        <span className="bold">Nome:</span> {mark.name}
-                      </p>
-                      <p>
-                        <span className="bold">Raggio:</span> {mark.range}km
-                      </p>
-                      <p>
-                        <span className="bold">Professione:</span>{" "}
-                        {mark.profession}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+    <ContentMarker>
+      {clusters.map((cluster) => {
+        const [longitude, latitude] = cluster.geometry.coordinates;
+        const { cluster: isCluster, point_count: pointCount } =
+          cluster.properties;
 
-                <Button kind="inverse-primary" className="btn" size="sm">
-                  Dettaglio
-                </Button>
-              </Drop>
-            </Popup>
-          )}
-          {mark.range && selectedMarker === mark.name && (
-            <LayerGroup>
-              <Circle
-                center={mark.position}
-                radius={mark.range * 100}
-                pathOptions={{ color: "#3388ff", fillColor: "blue" }}
-              />
-            </LayerGroup>
-          )}
-        </Marker>
-      );
-    })
+        if (isCluster) {
+          return (
+            <Marker
+              key={`cluster-${cluster.id}`}
+              position={[latitude, longitude]}
+              icon={fetchIcon(
+                pointCount,
+                10 + (pointCount / points.length) * 40
+              )}
+              eventHandlers={{
+                click: () => {
+                  const expansionZoom = Math.min(
+                    supercluster.getClusterExpansionZoom(cluster.id),
+                    22
+                  );
+                  map.setView([latitude, longitude], expansionZoom, {
+                    animate: true,
+                  });
+                },
+              }}
+            />
+          );
+        }
+
+        return (
+          <Marker
+            key={`marker-${cluster.properties.name}`}
+            position={[latitude, longitude]}
+            eventHandlers={{
+              click: () => {
+                handleMarkerClick(cluster.properties);
+              },
+            }}
+          >
+            {cluster.properties.name && (
+              <Popup>
+                <Drop>
+                  <div className="profile">
+                    <div className="registered">
+                      <p className="m-0">06/03/2022</p>
+                      {cluster.properties.rating && (
+                        <Rating
+                          rate={cluster.properties.rating}
+                          size={theme.spaces.space3}
+                          disable
+                        />
+                      )}
+                    </div>
+                    <div className="row">
+                      <div className="img">
+                        <img
+                          src={`https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg`}
+                          alt="img"
+                        />
+                      </div>
+                      <div className="info">
+                        <p>
+                          <span className="bold">Nome:</span>{" "}
+                          {cluster.properties.name}
+                        </p>
+                        <p>
+                          <span className="bold">Raggio:</span>{" "}
+                          {cluster.properties.range}km
+                        </p>
+                        <p>
+                          <span className="bold">Professione:</span>{" "}
+                          {cluster.properties.profession}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <Button kind="inverse-primary" className="btn" size="sm">
+                    Dettaglio
+                  </Button>
+                </Drop>
+              </Popup>
+            )}
+            {cluster.properties.range &&
+              selectedMarker === cluster.properties.name && (
+                <LayerGroup>
+                  <Circle
+                    center={[latitude, longitude]}
+                    radius={cluster.properties.range * 100}
+                    pathOptions={{ color: "#3388ff", fillColor: "blue" }}
+                  />
+                </LayerGroup>
+              )}
+          </Marker>
+        );
+      })}
+    </ContentMarker>
   );
 };
 
 export default React.memo(Markers);
+
+const ContentMarker = styled.div``;
 
 const Drop = styled.div`
   display: flex;
