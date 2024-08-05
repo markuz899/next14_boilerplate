@@ -166,11 +166,11 @@ const Markers = ({ options, zoom }: any) => {
         }
 
         const initColor: any = {
-          1: `static/pin/gRed.svg`,
-          2: `static/pin/gRed.svg`,
-          3: `static/pin/gRed.svg`,
-          4: `static/pin/gRed.svg`,
-          5: `static/pin/gRed.svg`,
+          1: `static/pin/gBlue.svg`,
+          2: `static/pin/gBlue.svg`,
+          3: `static/pin/gBlue.svg`,
+          4: `static/pin/gBlue.svg`,
+          5: `static/pin/gBlue.svg`,
         };
 
         const customMarker = new Icon({
