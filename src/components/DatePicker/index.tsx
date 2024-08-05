@@ -216,7 +216,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         renderTarget={renderTarget}
         renderDropdown={renderDropdown}
         showArrow={false}
-        fluid={true}
+        width={200}
         includeTarget
         leftPosition={0}
       />
@@ -234,6 +234,12 @@ const Target = styled.div`
 `;
 
 const CalendarContainerStyled = styled(CalendarContainer)`
+  .react-datepicker {
+    width: 100%;
+    .react-datepicker__month-container {
+      width: 100%;
+    }
+  }
   .react-datepicker__header {
     background: ${theme.colors.primary};
     .react-datepicker__current-month {

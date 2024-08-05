@@ -140,6 +140,7 @@ const RenderDrop = styled.div<{
 const Box = styled.div<{ $fluid: boolean }>`
   position: relative;
   ${(props) => (props.$fluid ? "width: 100%" : "width: fit-content")};
+  width: 100%;
   .target {
     cursor: pointer;
   }
