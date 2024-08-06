@@ -44,8 +44,8 @@ const fetchIcon = (count: any, size: any) => {
   return icons[count];
 };
 
-const Markers = ({ options, zoom, active }: any) => {
-  const [selectedMarker, setSelectedMarker] = useState(null);
+const Markers = ({ options, zoom, active, setActive }: any) => {
+  const [selectedMarker, setSelectedMarker] = useState<any>(null);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
   const [done, setDone] = useState(false);
@@ -53,10 +53,11 @@ const Markers = ({ options, zoom, active }: any) => {
 
   useEffect(() => {
     updateMap();
-  }, [done, active]);
+  }, [done]);
 
   const handleMarkerClick = (mark: any) => {
-    setSelectedMarker(mark.name);
+    setSelectedMarker(mark);
+    setActive && setActive(mark);
     // if (selectedMarker !== mark.name) {
     //   map.setView(mark.position, zoom, { animate: true });
     // }
@@ -90,6 +91,7 @@ const Markers = ({ options, zoom, active }: any) => {
     id: mark.id,
     type: "Feature",
     properties: {
+      id: mark.id,
       cluster: false,
       name: mark.name,
       rating: mark.rating,
@@ -237,7 +239,7 @@ const Markers = ({ options, zoom, active }: any) => {
               </Popup>
             )}
             {cluster.properties.range &&
-              selectedMarker === cluster.properties.name && (
+              selectedMarker?.id === cluster.properties.id && (
                 <LayerGroup>
                   <Circle
                     center={[latitude, longitude]}

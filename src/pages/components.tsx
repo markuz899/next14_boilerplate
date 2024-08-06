@@ -583,21 +583,14 @@ const Components = ({ global }: GlobalPageProps) => {
           <ContentMap className="between">
             <div className="content content-map">
               <Map center={specialist[0]?.position} zoom={12}>
-                <Markers options={specialist} zoom={14} active={activeMarker} />
+                <Markers options={specialist} zoom={14} />
               </Map>
             </div>
             <div className="content content-card">
               <motion.div layout className="card-list">
                 <AnimatePresence>
                   {specialist.map((item) => {
-                    return (
-                      <Card
-                        key={item.id}
-                        option={item}
-                        mini
-                        onClick={() => setActiveMarker(item)}
-                      />
-                    );
+                    return <Card key={item.id} option={item} mini />;
                   })}
                 </AnimatePresence>
               </motion.div>

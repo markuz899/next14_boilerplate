@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import theme from "@/theme";
 import { Button, Rating } from "..";
@@ -8,7 +8,7 @@ interface CardProps {
   mini?: boolean;
   renderFooter?: boolean;
   onClick?: any;
-  onMouseLeave?: any;
+  active?: any;
 }
 
 const Card = ({
@@ -16,6 +16,7 @@ const Card = ({
   mini = false,
   renderFooter = true,
   onClick,
+  active,
 }: CardProps) => {
   return (
     <LazyMotion features={domAnimation}>
@@ -27,7 +28,7 @@ const Card = ({
         exit={{ opacity: 0 }}
         onClick={onClick}
       >
-        <CardStyle $mini={mini}>
+        <CardStyle $active={active} $mini={mini}>
           <div className="content-card">
             <div className="banner">
               <img src="https://t3.ftcdn.net/jpg/02/68/48/86/360_F_268488616_wcoB2JnGbOD2u3bpn2GPmu0KJQ4Ah66T.jpg" />
@@ -67,7 +68,14 @@ const Card = ({
 
 export default Card;
 
-const CardStyle = styled.div<{ $mini?: boolean }>`
+const isActive = css`
+  transition: box-shadow 0.3s ease-in-out;
+  -webkit-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
+`;
+
+const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
   .content-card {
     margin: ${theme.spaces.space2};
     overflow: hidden;
@@ -104,11 +112,9 @@ const CardStyle = styled.div<{ $mini?: boolean }>`
       }
     }
     &:hover {
-      transition: box-shadow 0.3s ease-in-out;
-      -webkit-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
-      -moz-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
-      box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
+      ${isActive}
     }
+    ${(p) => p.$active && isActive}
   }
   button {
     text-transform: uppercase;
