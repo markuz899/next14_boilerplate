@@ -195,7 +195,7 @@ const Select: React.FC<SelectProps> = ({
     <Target
       onClick={() => (disable ? null : handleShowDrop(show, visible, close))}
       onKeyDown={(e) => handleKeyDown(e, { show, visible, close })}
-      isError={isError}
+      $isError={isError}
     >
       <Input
         type="text"
@@ -324,7 +324,7 @@ export const Option = styled.li<{
   }
 `;
 
-const Target = styled.div<{ isError?: boolean }>`
+const Target = styled.div<{ $isError?: boolean }>`
   border-radius: 3px;
   display: flex;
   justify-content: space-between;

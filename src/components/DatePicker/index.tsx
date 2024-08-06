@@ -151,7 +151,6 @@ const DatePicker: React.FC<DatePickerProps> = ({
         placeholder={placeholder}
         defaultValue={renderValue() || ""}
         icon={"calendar"}
-        iconSize={theme.font.size.medium}
         enableControlledInput
         isError={isError}
         isWarning={isWarning}
