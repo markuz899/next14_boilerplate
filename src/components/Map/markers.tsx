@@ -14,7 +14,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import useSupercluster from "use-supercluster";
 import styled from "styled-components";
 import theme from "@/theme";
-import { Button } from "..";
+import Button from "../Button";
 import Rating from "../Rating";
 
 const icons: any = {};
@@ -48,7 +48,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
   const [selectedMarker, setSelectedMarker] = useState<any>(null);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
   const map = useMap();
 
   useEffect(() => {
@@ -56,6 +56,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
   }, [done]);
 
   const handleMarkerClick = (mark: any) => {
+    updateMap();
     setSelectedMarker(mark);
     setActive && setActive(mark);
     // if (selectedMarker !== mark.name) {
@@ -232,9 +233,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                       </div>
                     </div>
                   </div>
-                  <Button kind="inverse-primary" className="btn" size="sm">
-                    Dettaglio
-                  </Button>
+                  <button className="buttons">Dettaglio</button>
                 </Drop>
               </Popup>
             )}
@@ -299,10 +298,14 @@ const Drop = styled.div`
     }
   }
   button {
+    border: 2px solid ${theme.colors.primary};
+    padding: ${theme.spaces.space2};
+    border-radius: ${theme.extra.radiusBig};
     text-transform: uppercase;
     height: inherit;
     &:hover {
-      border-color: inherit;
+      background: ${theme.colors.primary};
+      color: ${theme.colors.white};
     }
     &:active,
     &:focus {
