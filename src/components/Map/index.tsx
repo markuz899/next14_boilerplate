@@ -38,10 +38,11 @@ const Map = ({
       zoomAnimation
       touchZoom
       markerZoomAnimation
+      fadeAnimation
+      scrollWheelZoom={false}
       className={className ? className : ""}
       center={selection ? selection.position : center}
       zoom={zoom}
-      scrollWheelZoom={false}
       style={{ height, width: "100%" }}
     >
       <LayersControl>
