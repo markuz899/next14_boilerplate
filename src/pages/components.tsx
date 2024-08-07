@@ -22,6 +22,7 @@ import {
   QuantitySelect,
   Radio,
   RadioButton,
+  RangeSlider,
   Rating,
   Select,
   Tabs,
@@ -554,6 +555,9 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Quantity select">
           <QuantitySelect value={5} />
+        </Section>
+        <Section title="Range slider">
+          <RangeSlider />
         </Section>
         <Section title="Map">
           <Autocomplete

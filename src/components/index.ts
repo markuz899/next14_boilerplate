@@ -20,6 +20,7 @@ const Modal = dynamic(() => import("./Modal"), { loading: () => null });
 const QuantitySelect = dynamic(() => import("./QuantitySelect"), { loading: () => null });
 const Radio = dynamic(() => import("./Radio"), { loading: () => null });
 const RadioButton = dynamic(() => import("./RadioButton"), { loading: () => null });
+const RangeSlider = dynamic(() => import("./RangeSlider"), { loading: () => null });
 const Rating = dynamic(() => import("./Rating"), { loading: () => null });
 const ScrollToTop = dynamic(() => import("./ScrollToTop"), { loading: () => null });
 const Select = dynamic(() => import("./Select"), { loading: () => null });
@@ -49,6 +50,7 @@ export {
   QuantitySelect,
   Radio,
   RadioButton,
+  RangeSlider,
   Rating,
   ScrollToTop,
   Select,

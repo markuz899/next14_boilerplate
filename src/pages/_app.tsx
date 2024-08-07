@@ -15,6 +15,7 @@ import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 // import { Loader } from "@/components";
 
 const inter = Montserrat({ subsets: ["latin"] });
@@ -98,6 +99,7 @@ const App = ({
           crossOrigin="use-credentials"
         />
       </Head>
+      <Script src="/static/resource/slider.js" strategy="beforeInteractive" />
       <Provider store={reduxStore}>
         <CacheProvider value={cache}>
           <ThemeProvider theme={themeMode}>
