@@ -1,3 +1,4 @@
+import theme from "@/theme";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -17,6 +18,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   onChange,
 }) => {
   const [value, setValue] = useState<number>(defaultValue || min);
+  const [style, setStyle] = useState<any>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value, 10);
@@ -52,7 +54,35 @@ const SliderContainer = styled.div`
   margin: 0 auto;
 
   input[type="range"] {
+    -webkit-appearance: none;
     width: 100%;
+    height: ${theme.spaces.space4};
+    background: ${theme.colors.greyIcon};
+    outline: none;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-radius: ${theme.extra.radiusBig};
+    overflow: hidden;
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      border-radius: 50px;
+      appearance: none;
+      width: ${theme.spaces.space4};
+      height: ${theme.spaces.space4};
+      background: ${theme.colors.primary};
+      border: 2px solid ${theme.colors.primaryLight};
+      cursor: pointer;
+      position: relative;
+      box-shadow: -407px 0 0 400px ${theme.colors.primary}60;
+    }
+    &::-moz-range-thumb {
+      background: ${theme.colors.primary};
+      cursor: pointer;
+    }
+    &::-webkit-slider-runnable-track {
+      background: ${theme.colors.greyIcon};
+      height: ${theme.spaces.space4};
+    }
   }
 `;
 
