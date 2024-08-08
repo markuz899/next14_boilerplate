@@ -105,6 +105,8 @@ const Components = ({ global }: GlobalPageProps) => {
   const [view, setView] = useState<any>(true);
   const [grid, setGrid] = useState<any>(true);
   const [activeMarker, setActiveMarker] = useState<any>(null);
+  const [mapZoom, setMapZoom] = useState<any>(12);
+  const [mapRange, setMapRange] = useState<any>(20);
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -565,10 +567,32 @@ const Components = ({ global }: GlobalPageProps) => {
             onChange={(data: any) => setSelectionMap(data)}
             value={selectionMap?.label}
           />
+          <p className="mb-1">Zoom</p>
+          <RangeSlider
+            min={1}
+            max={20}
+            defaultValue={mapZoom}
+            className="mb-3"
+            onChange={(data: any) => {
+              setMapZoom(data.value);
+            }}
+          />
+          <p className="mb-1">Raggio</p>
+          <RangeSlider
+            min={1}
+            max={100}
+            defaultValue={mapRange}
+            className="mb-3"
+            onChange={(data: any) => {
+              setMapRange(data.value);
+            }}
+          />
           <Map
             center={specialist[0]?.position}
             selection={selectionMap}
-            zoom={12}
+            zoom={mapZoom}
+            withRadius={true}
+            radius={mapRange}
           >
             <Markers options={specialist} zoom={14} />
           </Map>

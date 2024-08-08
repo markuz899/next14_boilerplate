@@ -7,6 +7,8 @@ import {
   Marker,
   Popup,
   TileLayer,
+  LayerGroup,
+  Circle,
 } from "react-leaflet";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -20,6 +22,8 @@ const Map = ({
   children,
   className,
   selection,
+  withRadius = false,
+  radius,
 }: any) => {
   const colorMap = {
     light: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -32,7 +36,6 @@ const Map = ({
     iconAnchor: [10, 30],
     popupAnchor: [2, -20],
   });
-
   return (
     <MapContainerStyle
       zoomAnimation
@@ -71,6 +74,15 @@ const Map = ({
         <Marker position={selection.position} icon={customMarker}>
           <Popup>{selection.label}</Popup>
         </Marker>
+      )}
+      {withRadius && selection?.position && (
+        <LayerGroup>
+          <Circle
+            center={selection.position}
+            radius={(radius || 20) * 100}
+            pathOptions={{ color: "#3388ff", fillColor: "blue" }}
+          />
+        </LayerGroup>
       )}
     </MapContainerStyle>
   );

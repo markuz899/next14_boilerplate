@@ -3,42 +3,47 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 interface RangeSliderProps {
+  name?: string;
+  className?: string;
   min?: number;
   max?: number;
   step?: number;
   defaultValue?: number;
-  onChange?: (value: number) => void;
+  value?: number;
+  onChange?: any;
 }
 
 const RangeSlider: React.FC<RangeSliderProps> = ({
+  name = "range",
+  className,
   min = 1,
   max = 10,
   step = 1,
   defaultValue,
+  value,
   onChange,
 }) => {
-  const [value, setValue] = useState<number>(defaultValue || min);
-  const [style, setStyle] = useState<any>();
+  const [state, setState] = useState<number>(value || defaultValue || min);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value, 10);
-    setValue(newValue);
+    setState(newValue);
     if (onChange) {
-      onChange(newValue);
+      onChange({ name, value: newValue });
     }
   };
 
   return (
-    <SliderContainer>
+    <SliderContainer className={className}>
       <input
         type="range"
         min={min}
         max={max}
         step={step}
-        value={value}
+        value={state}
+        defaultValue={defaultValue}
         onChange={handleChange}
       />
-      <ValueDisplay>{value}</ValueDisplay>
     </SliderContainer>
   );
 };
@@ -51,7 +56,8 @@ const SliderContainer = styled.div`
   align-items: center;
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 
   input[type="range"] {
     -webkit-appearance: none;
