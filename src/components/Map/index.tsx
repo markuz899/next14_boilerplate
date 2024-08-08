@@ -1,5 +1,4 @@
-import React from "react";
-import theme from "@/theme";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import {
   LayersControl,
@@ -9,11 +8,38 @@ import {
   TileLayer,
   LayerGroup,
   Circle,
+  useMap,
 } from "react-leaflet";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+
+const DEFAULTZOOM = 12;
+
+const UpdateMapView = ({
+  selection,
+  zoom,
+}: {
+  selection: any;
+  zoom: number;
+}) => {
+  const map = useMap();
+
+  useEffect(() => {
+    // if (map && center) {
+    //   map.setView(center, zoom, { animate: true });
+    // }
+    if (map && zoom) {
+      map.setZoom(zoom, { animate: true });
+    }
+    if (map && selection && selection.position) {
+      map.flyTo(selection.position, zoom, { animate: true });
+    }
+  }, [zoom, selection, map]);
+
+  return null;
+};
 
 const Map = ({
   height = "700px",
@@ -26,34 +52,36 @@ const Map = ({
   radius,
 }: any) => {
   const colorMap = {
-    light: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    light: "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
     dark: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
   };
 
-  const customMarker = new Icon({
-    iconUrl: `static/pin/redPin.svg`,
-    iconSize: [25, 41],
-    iconAnchor: [10, 30],
-    popupAnchor: [2, -20],
-  });
+  const customMarker = useMemo(
+    () =>
+      new Icon({
+        iconUrl: `static/pin/redPin.svg`,
+        iconSize: [25, 41],
+        iconAnchor: [10, 30],
+        popupAnchor: [2, -20],
+      }),
+    []
+  );
   return (
     <MapContainerStyle
+      center={center}
+      zoom={DEFAULTZOOM}
       zoomAnimation
       touchZoom
       markerZoomAnimation
       fadeAnimation
       scrollWheelZoom={false}
       className={className ? className : ""}
-      center={selection ? selection.position : center}
-      zoom={zoom}
       style={{ height, width: "100%" }}
     >
+      <UpdateMapView selection={selection} zoom={zoom} />
       <LayersControl>
         <LayersControl.BaseLayer checked name="Map">
-          <TileLayer
-            attribution="Google Maps"
-            url="https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
-          />
+          <TileLayer attribution="Google Maps" url={colorMap.light} />
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name="Satellite">
           <TileLayer

@@ -45,28 +45,42 @@ const fetchIcon = (count: any, size: any) => {
 };
 
 const Markers = ({ options, zoom, active, setActive }: any) => {
-  const [selectedMarker, setSelectedMarker] = useState<any>(null);
+  const [selectedMarker, setSelectedMarker] = useState<any>(active);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
   const [done, setDone] = useState(true);
+  const markerRef: any = useRef({});
   const map = useMap();
 
   useEffect(() => {
     updateMap();
   }, [done]);
 
+  useEffect(() => {
+    if (active) {
+      if (!active?.isInternal) {
+        map.flyTo(active.position, 15, { animate: true });
+        map.on("zoomend", function () {
+          markerRef.current[active.id]?.openPopup();
+        });
+      }
+      setSelectedMarker(active);
+    }
+    return () => {
+      map.off("zoomend");
+    };
+  }, [active]);
+
   const handleMarkerClick = (mark: any) => {
     updateMap();
     setSelectedMarker(mark);
     setActive && setActive(mark);
-    // if (selectedMarker !== mark.name) {
-    //   map.setView(mark.position, zoom, { animate: true });
-    // }
   };
 
   useMapEvents({
     click: () => {
       setSelectedMarker(null);
+      setActive && setActive(null);
     },
   });
 
@@ -188,16 +202,23 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
         return (
           <Marker
             key={`marker-${cluster.properties.name}`}
+            ref={(mark) => {
+              markerRef.current[cluster.properties.id] = mark;
+            }}
             position={[latitude, longitude]}
             icon={customMarker}
             eventHandlers={{
               click: () => {
-                handleMarkerClick(cluster.properties);
+                handleMarkerClick({
+                  ...cluster.properties,
+                  position: [latitude, longitude],
+                  isInternal: true,
+                });
               },
             }}
           >
             {cluster.properties.name && (
-              <Popup>
+              <Popup autoClose>
                 <Drop>
                   <div className="profile">
                     <div className="registered">

@@ -68,11 +68,14 @@ const Card = ({
 
 export default Card;
 
-const isActive = css`
+const isHover = css`
   transition: box-shadow 0.3s ease-in-out;
   -webkit-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75);
+`;
+const isActive = css`
+  border: 2px solid ${theme.colors.success};
 `;
 
 const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
@@ -81,7 +84,7 @@ const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
     overflow: hidden;
     background: ${theme.colors.cardLight};
     border-radius: ${theme.spaces.space5};
-    border: 1px solid ${theme.colors.primary};
+    border: 2px solid ${theme.colors.primary};
     display: flex;
     flex-direction: column;
     .banner {
@@ -112,7 +115,7 @@ const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
       }
     }
     &:hover {
-      ${isActive}
+      ${isHover}
     }
     ${(p) => p.$active && isActive}
   }

@@ -101,12 +101,9 @@ const Components = ({ global }: GlobalPageProps) => {
   const [inline, setInline] = useState(true);
   const [inlineAcc, setInlineAcc] = useState(false);
   const [multipleAcc, setMultipleAcc] = useState(false);
-  const [selectionMap, setSelectionMap] = useState<any>();
   const [view, setView] = useState<any>(true);
   const [grid, setGrid] = useState<any>(true);
   const [activeMarker, setActiveMarker] = useState<any>(null);
-  const [mapZoom, setMapZoom] = useState<any>(12);
-  const [mapRange, setMapRange] = useState<any>(20);
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -166,22 +163,6 @@ const Components = ({ global }: GlobalPageProps) => {
         <p style={{ color: "#000" }}>Lorem ipsum</p>
         <p style={{ color: "#000" }}>Lorem ipsum</p>
       </RenderDrop>
-    );
-  };
-
-  const Section = ({
-    title,
-    children,
-  }: {
-    title: string;
-    children: React.ReactNode;
-  }) => {
-    return (
-      <Compose>
-        <hr />
-        <h2>{title}</h2>
-        {children}
-      </Compose>
     );
   };
 
@@ -561,42 +542,7 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Range slider">
           <RangeSlider />
         </Section>
-        <Section title="Map">
-          <Autocomplete
-            className="mb-3"
-            onChange={(data: any) => setSelectionMap(data)}
-            value={selectionMap?.label}
-          />
-          <p className="mb-1">Zoom</p>
-          <RangeSlider
-            min={1}
-            max={20}
-            defaultValue={mapZoom}
-            className="mb-3"
-            onChange={(data: any) => {
-              setMapZoom(data.value);
-            }}
-          />
-          <p className="mb-1">Raggio</p>
-          <RangeSlider
-            min={1}
-            max={100}
-            defaultValue={mapRange}
-            className="mb-3"
-            onChange={(data: any) => {
-              setMapRange(data.value);
-            }}
-          />
-          <Map
-            center={specialist[0]?.position}
-            selection={selectionMap}
-            zoom={mapZoom}
-            withRadius={true}
-            radius={mapRange}
-          >
-            <Markers options={specialist} zoom={14} />
-          </Map>
-        </Section>
+        <ContentMapper specialist={specialist} />
         <Section title="Card">
           <motion.div layout className="card-list">
             <AnimatePresence>
@@ -611,14 +557,29 @@ const Components = ({ global }: GlobalPageProps) => {
           <ContentMap className="between">
             <div className="content content-map">
               <Map center={specialist[0]?.position} zoom={12}>
-                <Markers options={specialist} zoom={14} />
+                <Markers
+                  options={specialist}
+                  zoom={14}
+                  setActive={setActiveMarker}
+                  active={activeMarker}
+                />
               </Map>
             </div>
             <div className="content content-card">
               <motion.div layout className="card-list">
                 <AnimatePresence>
                   {specialist.map((item) => {
-                    return <Card key={item.id} option={item} mini />;
+                    return (
+                      <Card
+                        key={item.id}
+                        option={item}
+                        mini
+                        active={activeMarker?.id == item?.id}
+                        onClick={() => {
+                          setActiveMarker(item);
+                        }}
+                      />
+                    );
                   })}
                 </AnimatePresence>
               </motion.div>
@@ -632,6 +593,75 @@ const Components = ({ global }: GlobalPageProps) => {
 
 // export default Components;
 export default React.memo(Components);
+
+const Section = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => {
+  return (
+    <Compose>
+      <hr />
+      <h2>{title}</h2>
+      {children}
+    </Compose>
+  );
+};
+
+const ContentMapper = ({ specialist }: any) => {
+  const [selectionMap, setSelectionMap] = useState<any>();
+  const [mapZoom, setMapZoom] = useState<any>(12);
+  const [mapRange, setMapRange] = useState<any>(20);
+
+  const handleSelection = (data: any) => {
+    setSelectionMap(data);
+  };
+
+  const handleZoom = (data: any) => {
+    setMapZoom(data.value);
+  };
+
+  const handleRange = (data: any) => {
+    setMapRange(data.value);
+  };
+
+  return (
+    <Section title="Map">
+      <Autocomplete
+        className="mb-3"
+        onChange={handleSelection}
+        value={selectionMap?.label}
+      />
+      <p className="mb-1">Zoom</p>
+      <RangeSlider
+        min={4}
+        max={18}
+        defaultValue={mapZoom}
+        className="mb-3"
+        onChange={handleZoom}
+      />
+      <p className="mb-1">Raggio</p>
+      <RangeSlider
+        min={1}
+        max={500}
+        defaultValue={mapRange}
+        className="mb-3"
+        onChange={handleRange}
+      />
+      <Map
+        withRadius
+        center={specialist[0]?.position}
+        selection={selectionMap}
+        zoom={mapZoom}
+        radius={mapRange}
+      >
+        <Markers options={specialist} zoom={14} />
+      </Map>
+    </Section>
+  );
+};
 
 const ContentMap = styled.div`
   width: 100%;
