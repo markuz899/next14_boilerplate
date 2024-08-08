@@ -30,6 +30,7 @@ import {
   Toggle,
   Tooltip,
 } from "@/components";
+import QRCode from "react-qr-code";
 import icons from "@/components/Icon/icons";
 import { Content } from "@/theme/styled";
 import styled from "styled-components";
@@ -585,6 +586,9 @@ const Components = ({ global }: GlobalPageProps) => {
               </motion.div>
             </div>
           </ContentMap>
+        </Section>
+        <Section title="QR Code">
+          <QRCode value="https;//marameo.com" fgColor={theme.colors.primary} />
         </Section>
       </Content>
     </Layout>
