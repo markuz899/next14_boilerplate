@@ -50,6 +50,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
   const [done, setDone] = useState(true);
   const markerRef: any = useRef({});
+  const popupRef: any = useRef({});
   const map = useMap();
 
   useEffect(() => {
@@ -84,7 +85,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
     },
   });
 
-  const updateMap = () => {
+  const updateMap = (e?: any) => {
     const b = map.getBounds();
     setBounds([
       b.getSouthWest().lng,
@@ -93,6 +94,20 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
       b.getNorthEast().lat,
     ]);
     setCurrentZoom(map.getZoom());
+    // handling close selection when move
+    // if (e && e.type == "move" && e.originalEvent) {
+    //   if (selectedMarker && markerRef?.current) {
+    //     const markerPosition = selectedMarker.position;
+    //     // Check if the marker is within the current map bounds
+    //     if (!b.contains(markerPosition)) {
+    //       // If the marker is out of bounds, close the popup
+    //       Object.keys(markerRef.current).forEach((el: any) => {
+    //         markerRef.current[el]?.closePopup();
+    //       });
+    //       setSelectedMarker(null);
+    //     }
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -218,7 +233,13 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
             }}
           >
             {cluster.properties.name && (
-              <Popup autoClose>
+              <Popup
+                autoClose
+                closeOnEscapeKey
+                ref={(pop) => {
+                  popupRef.current[cluster.properties.id] = pop;
+                }}
+              >
                 <Drop>
                   <div className="profile">
                     <div className="registered">
