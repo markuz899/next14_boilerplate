@@ -202,10 +202,18 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
           3: `static/pin/gBlue.svg`,
           4: `static/pin/gBlue.svg`,
           5: `static/pin/gBlue.svg`,
+          active: `static/pin/gRed.svg`,
         };
 
-        const customMarker = new Icon({
+        const customMarkers = new Icon({
           iconUrl: initColor[cluster.properties.rating || 0],
+          iconSize: [25, 41],
+          iconAnchor: [10, 40],
+          popupAnchor: [2, -40],
+        });
+
+        const selectedMarkers = new Icon({
+          iconUrl: initColor.active,
           iconSize: [25, 41],
           iconAnchor: [10, 40],
           popupAnchor: [2, -40],
@@ -218,7 +226,11 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
               markerRef.current[cluster.properties.id] = mark;
             }}
             position={[latitude, longitude]}
-            icon={customMarker}
+            icon={
+              selectedMarker?.id === cluster.properties.id
+                ? selectedMarkers
+                : customMarkers
+            }
             eventHandlers={{
               click: () => {
                 handleMarkerClick({
