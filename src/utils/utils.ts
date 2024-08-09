@@ -204,3 +204,32 @@ export const getFirstLetter = (str: string) => {
     return "";
   }
 };
+
+export const getRandomCoordinates = (
+  [latitude, longitude]: any,
+  radius = 0.01
+) => {
+  const randomLatitude = latitude + (Math.random() - 0.5) * radius;
+  const randomLongitude = longitude + (Math.random() - 0.5) * radius;
+  return [randomLatitude, randomLongitude];
+};
+
+export const moveMarkerLinearly = (
+  [startLat, startLng]: any,
+  [endLat, endLng]: any,
+  step = 0.001
+) => {
+  const distanceLat = endLat - startLat;
+  const distanceLng = endLng - startLng;
+
+  const magnitude = Math.sqrt(
+    distanceLat * distanceLat + distanceLng * distanceLng
+  );
+  const unitLat = distanceLat / magnitude;
+  const unitLng = distanceLng / magnitude;
+
+  const newLat = startLat + unitLat * step;
+  const newLng = startLng + unitLng * step;
+
+  return [newLat, newLng];
+};

@@ -37,6 +37,7 @@ import styled from "styled-components";
 import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGeolocation } from "@/hooks";
+import { getRandomCoordinates, moveMarkerLinearly } from "@/utils/utils";
 
 const specialist = [
   {
@@ -96,6 +97,29 @@ const specialist = [
     rating: 2,
   },
 ];
+
+const special = [
+  {
+    id: 101,
+    name: "Carlo",
+    position: [42.16137759041936, 12.339213749209796],
+    range: 10,
+    profession: "Musicista",
+    rating: 1,
+  },
+];
+
+const user = {
+  id: 100,
+  name: "Anna",
+  position: [42.206914985163685, 12.39517535481974],
+  profession: "Operaio",
+  rating: 4,
+  label: "Tu sei qui",
+};
+
+const startPosition = [42.16137759041936, 12.339213749209796];
+const endPosition = [42.17137759041936, 12.349213749209796];
 
 const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
@@ -607,6 +631,11 @@ const Components = ({ global }: GlobalPageProps) => {
             </div>
           </ContentMap>
         </Section>
+        <ContentAppointment
+          options={special}
+          center={special[0].position}
+          selection={user}
+        />
         <Section title="QR Code">
           <QRCode value="https;//marameo.com" fgColor={theme.colors.primary} />
         </Section>
@@ -682,6 +711,35 @@ const ContentMapper = ({ center, specialist }: any) => {
         radius={mapRange}
       >
         <Markers options={specialist} zoom={14} />
+      </Map>
+    </Section>
+  );
+};
+
+const ContentAppointment = ({ options, center, selection }: any) => {
+  const [markerUserPosition, setMarkerUserPosition] = useState<any>(selection);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMarkerUserPosition((prevUser: any) => {
+        const newPosition = moveMarkerLinearly(
+          prevUser.position,
+          specialist[0].position
+        );
+        return {
+          ...prevUser,
+          position: newPosition,
+        };
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Section title="Map appuntamento">
+      <Map dinamic center={center} selection={markerUserPosition} zoom={18}>
+        <Markers options={options} zoom={14} />
       </Map>
     </Section>
   );

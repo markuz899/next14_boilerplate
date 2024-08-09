@@ -22,11 +22,13 @@ const UpdateMapView = ({
   zoom,
   withRadius = false,
   radius,
+  dinamic,
 }: {
   selection?: any;
   zoom?: number;
   withRadius?: boolean;
   radius?: number;
+  dinamic?: boolean;
 }) => {
   const [circleRadius, setCircleRadius] = useState((radius || 20) * 100);
   const map = useMap();
@@ -35,10 +37,10 @@ const UpdateMapView = ({
     // if (map && center) {
     //   map.setView(center, zoom, { animate: true });
     // }
-    if (map && zoom) {
+    if (map && zoom && !dinamic) {
       map.setZoom(zoom, { animate: true });
     }
-    if (map && selection && selection.position) {
+    if (map && selection && selection.position && !dinamic) {
       map.flyTo(selection.position, zoom, { animate: true });
     }
   }, [zoom, selection, map]);
@@ -75,6 +77,7 @@ const Map = ({
   selection,
   withRadius = false,
   radius,
+  dinamic,
 }: any) => {
   const colorMap = {
     light: "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
@@ -105,6 +108,7 @@ const Map = ({
       height={height}
     >
       <UpdateMapView
+        dinamic={dinamic}
         selection={selection}
         zoom={zoom}
         withRadius={withRadius}
