@@ -36,6 +36,7 @@ import { Content } from "@/theme/styled";
 import styled from "styled-components";
 import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
+import { useGeolocation } from "@/hooks";
 
 const specialist = [
   {
@@ -105,6 +106,17 @@ const Components = ({ global }: GlobalPageProps) => {
   const [view, setView] = useState<any>(true);
   const [grid, setGrid] = useState<any>(true);
   const [activeMarker, setActiveMarker] = useState<any>(null);
+  const [centerMap, setCenterMap] = useState(specialist[0]?.position);
+  const { loading, error, data } = useGeolocation();
+
+  const handleCenter = () => {
+    if (data?.latitude && data?.longitude) {
+      const pos = [data?.latitude, data?.longitude];
+      setCenterMap(pos);
+    } else {
+      alert("Posizione non abilitata");
+    }
+  };
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -543,7 +555,15 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Range slider">
           <RangeSlider />
         </Section>
-        <ContentMapper specialist={specialist} />
+        <Section title="Posizione">
+          <p>
+            Latitudine: <span>{data?.latitude}</span>
+          </p>
+          <p>
+            Longitudine: <span>{data?.longitude}</span>
+          </p>
+        </Section>
+        <ContentMapper center={centerMap} specialist={specialist} />
         <Section title="Card">
           <motion.div layout className="card-list">
             <AnimatePresence>
@@ -557,7 +577,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Checkbox label="Card / Map" checked={view} onChange={handleView} />
           <ContentMap className="between">
             <div className="content content-map">
-              <Map center={specialist[0]?.position} zoom={12}>
+              <Map center={centerMap} zoom={12}>
                 <Markers
                   options={specialist}
                   zoom={14}
@@ -614,7 +634,7 @@ const Section = ({
   );
 };
 
-const ContentMapper = ({ specialist }: any) => {
+const ContentMapper = ({ center, specialist }: any) => {
   const [selectionMap, setSelectionMap] = useState<any>();
   const [mapZoom, setMapZoom] = useState<any>(12);
   const [mapRange, setMapRange] = useState<any>(20);
@@ -656,7 +676,7 @@ const ContentMapper = ({ specialist }: any) => {
       />
       <Map
         withRadius
-        center={specialist[0]?.position}
+        center={center}
         selection={selectionMap}
         zoom={mapZoom}
         radius={mapRange}

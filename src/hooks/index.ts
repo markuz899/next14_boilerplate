@@ -6,6 +6,8 @@ import useResize from "./useResize";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 import { useDarkMode } from "./useDarkMode";
+import { useDebounce } from "./useDobounce";
+import useGeolocation from "./useGeolocation";
 
 export {
   useBreakpoints,
@@ -16,4 +18,6 @@ export {
   useCopyToClipboard,
   useIntersectionObserver,
   useDarkMode,
+  useDebounce,
+  useGeolocation,
 };
