@@ -23,8 +23,8 @@ const UpdateMapView = ({
   withRadius = false,
   radius,
 }: {
-  selection: any;
-  zoom: number;
+  selection?: any;
+  zoom?: number;
   withRadius?: boolean;
   radius?: number;
 }) => {
@@ -102,7 +102,7 @@ const Map = ({
       fadeAnimation
       scrollWheelZoom={false}
       className={className ? className : ""}
-      style={{ height, width: "100%" }}
+      height={height}
     >
       <UpdateMapView
         selection={selection}
@@ -140,9 +140,9 @@ const Map = ({
 
 export default React.memo(Map);
 
-const MapContainerStyle = styled(MapContainer)`
+const MapContainerStyle = styled(MapContainer)<{ height: string }>`
   width: 100%;
-  height: 700px;
+  height: ${(p) => p.height};
   .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
