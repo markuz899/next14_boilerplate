@@ -38,6 +38,7 @@ import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGeolocation } from "@/hooks";
 import { getRandomCoordinates, moveMarkerLinearly } from "@/utils/utils";
+import MarkersSeller from "@/components/Map/markersSeller";
 
 const specialist = [
   {
@@ -720,26 +721,34 @@ const ContentAppointment = ({ options, center, selection }: any) => {
   const [markerUserPosition, setMarkerUserPosition] = useState<any>(selection);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setMarkerUserPosition((prevUser: any) => {
-        const newPosition = moveMarkerLinearly(
-          prevUser.position,
-          specialist[0].position
-        );
-        return {
-          ...prevUser,
-          position: newPosition,
-        };
-      });
-    }, 3000);
+    if (selection) {
+      const interval = setInterval(() => {
+        setMarkerUserPosition((prevUser: any) => {
+          const newPosition = moveMarkerLinearly(
+            prevUser.position,
+            specialist[0].position
+          );
+          return {
+            ...prevUser,
+            position: newPosition,
+          };
+        });
+      }, 3000);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, []);
 
   return (
     <Section title="Map appuntamento">
-      <Map dinamic center={center} selection={markerUserPosition} zoom={18}>
-        <Markers options={options} zoom={14} />
+      <Map
+        height={"300px"}
+        dinamic
+        center={center}
+        selection={markerUserPosition}
+        zoom={18}
+      >
+        <MarkersSeller options={options} zoom={14} />
       </Map>
     </Section>
   );
