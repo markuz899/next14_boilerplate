@@ -331,7 +331,7 @@ const Drop = styled.div`
       .img {
         width: 80px;
         box-shadow: ${theme.extra.shadow};
-        border-radius: 50px;
+        border-radius: ${theme.extra.radiusRound};
         overflow: hidden;
       }
       .info {

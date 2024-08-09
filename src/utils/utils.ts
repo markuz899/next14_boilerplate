@@ -196,3 +196,11 @@ export const parseDateString = (dateString: string): any => {
     return isNaN(date.getTime()) ? null : date;
   }
 };
+
+export const getFirstLetter = (str: string) => {
+  if (str && str.length > 0) {
+    return str[0];
+  } else {
+    return "";
+  }
+};
