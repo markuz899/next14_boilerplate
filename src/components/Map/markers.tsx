@@ -95,19 +95,16 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
     ]);
     setCurrentZoom(map.getZoom());
     // handling close selection when move
-    // if (e && e.type == "move" && e.originalEvent) {
-    //   if (selectedMarker && markerRef?.current) {
-    //     const markerPosition = selectedMarker.position;
-    //     // Check if the marker is within the current map bounds
-    //     if (!b.contains(markerPosition)) {
-    //       // If the marker is out of bounds, close the popup
-    //       Object.keys(markerRef.current).forEach((el: any) => {
-    //         markerRef.current[el]?.closePopup();
-    //       });
-    //       setSelectedMarker(null);
-    //     }
-    //   }
-    // }
+    if (e && e.type == "move" && e.originalEvent) {
+      if (selectedMarker && markerRef?.current) {
+        const markerPosition = selectedMarker.position;
+        // Check if the marker is within the current map bounds
+        Object.keys(markerRef.current).forEach((el: any) => {
+          markerRef.current[el]?.closePopup();
+        });
+        setSelectedMarker(null);
+      }
+    }
   };
 
   useEffect(() => {
