@@ -41,7 +41,6 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
         max={max}
         step={step}
         value={state}
-        defaultValue={defaultValue}
         onChange={handleChange}
       />
     </SliderContainer>
