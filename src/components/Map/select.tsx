@@ -334,6 +334,7 @@ export const Options = styled.div`
 `;
 
 export const Row = styled.div<{ $multiselect: any }>`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-start;

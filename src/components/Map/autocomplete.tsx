@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "./select";
 
@@ -19,6 +19,7 @@ const Autocomplete = ({
 }: AutocompleteProps) => {
   const [provider, setProvider] = useState<any>(null);
   const [address, setAddress] = useState<any>([]);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   let defaultValues: any = {
     city: value,
@@ -65,17 +66,29 @@ const Autocomplete = ({
       label: item.label,
       raw: item.raw,
     }));
-    setAddress(data);
+    if (!results?.length) {
+      setAddress([{ label: "Nessun risultato...", value: "", disabled: true }]);
+    } else {
+      setAddress(data);
+    }
   };
 
   const handleChangeCity = async (data: any) => {
     const { name, value } = data;
     setValue(name, value);
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(async () => {
+      if (value.length >= 3) {
+        await getCityFromService(value);
+      }
+    }, 500);
+
     if (data.position) {
       onChange && onChange(data);
-    }
-    if (value.length >= 3) {
-      await getCityFromService(value);
     }
     // trigger(name);
   };
