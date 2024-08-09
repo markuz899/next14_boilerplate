@@ -20,10 +20,15 @@ const DEFAULTZOOM = 12;
 const UpdateMapView = ({
   selection,
   zoom,
+  withRadius = false,
+  radius,
 }: {
   selection: any;
   zoom: number;
+  withRadius?: boolean;
+  radius?: number;
 }) => {
+  const [circleRadius, setCircleRadius] = useState((radius || 20) * 100);
   const map = useMap();
 
   useEffect(() => {
@@ -38,7 +43,27 @@ const UpdateMapView = ({
     }
   }, [zoom, selection, map]);
 
-  return null;
+  useEffect(() => {
+    if (map) {
+      // Logica per adattare il raggio in base al livello di zoom
+      const newRadius = radius ? radius * 100 : 200;
+      setCircleRadius(newRadius);
+    }
+  }, [zoom, radius, map]);
+
+  return (
+    <>
+      {withRadius && selection?.position && (
+        <LayerGroup>
+          <Circle
+            center={selection.position}
+            radius={circleRadius}
+            pathOptions={{ color: "#3388ff", fillColor: "blue" }}
+          />
+        </LayerGroup>
+      )}
+    </>
+  );
 };
 
 const Map = ({
@@ -66,6 +91,7 @@ const Map = ({
       }),
     []
   );
+
   return (
     <MapContainerStyle
       center={center}
@@ -78,7 +104,12 @@ const Map = ({
       className={className ? className : ""}
       style={{ height, width: "100%" }}
     >
-      <UpdateMapView selection={selection} zoom={zoom} />
+      <UpdateMapView
+        selection={selection}
+        zoom={zoom}
+        withRadius={withRadius}
+        radius={radius}
+      />
       <LayersControl>
         <LayersControl.BaseLayer checked name="Map">
           <TileLayer attribution="Google Maps" url={colorMap.light} />
@@ -102,15 +133,6 @@ const Map = ({
         <Marker position={selection.position} icon={customMarker}>
           <Popup>{selection.label}</Popup>
         </Marker>
-      )}
-      {withRadius && selection?.position && (
-        <LayerGroup>
-          <Circle
-            center={selection.position}
-            radius={(radius || 20) * 100}
-            pathOptions={{ color: "#3388ff", fillColor: "blue" }}
-          />
-        </LayerGroup>
       )}
     </MapContainerStyle>
   );

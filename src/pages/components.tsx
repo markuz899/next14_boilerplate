@@ -649,7 +649,7 @@ const ContentMapper = ({ specialist }: any) => {
       <p className="mb-1">Raggio</p>
       <RangeSlider
         min={1}
-        max={500}
+        max={300}
         defaultValue={mapRange}
         className="mb-3"
         onChange={handleRange}
