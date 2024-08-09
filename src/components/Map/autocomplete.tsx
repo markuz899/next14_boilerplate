@@ -18,7 +18,7 @@ const Autocomplete = ({
   className,
 }: AutocompleteProps) => {
   const [provider, setProvider] = useState<any>(null);
-  const [address, setAddress] = useState([]);
+  const [address, setAddress] = useState<any>([]);
 
   let defaultValues: any = {
     city: value,
@@ -35,7 +35,14 @@ const Autocomplete = ({
   useEffect(() => {
     const loadProvider = async () => {
       const { OpenStreetMapProvider } = await import("leaflet-geosearch");
-      setProvider(new OpenStreetMapProvider());
+      setProvider(
+        new OpenStreetMapProvider({
+          params: {
+            "accept-language": "it",
+            countrycodes: "it",
+          },
+        })
+      );
     };
 
     loadProvider();
@@ -43,6 +50,7 @@ const Autocomplete = ({
   }, []);
 
   const getCityFromService = async (query: string) => {
+    setAddress([{ label: "Loading...", value: "", disabled: true }]);
     const results = await provider.search({ query });
     // const results = await User.pingo();
     // const data = results.map((item: any) => ({

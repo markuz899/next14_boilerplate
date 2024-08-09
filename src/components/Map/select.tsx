@@ -82,10 +82,11 @@ const Select: React.FC<SelectProps> = ({
   }, []);
 
   const onSelect = (
-    item: { label: string; value: string },
+    item: { label: string; value: string; disabled?: boolean },
     callback: () => void
   ) => {
     const { label, value } = item;
+    if (disable) return false;
     if (multiselect) {
       let selected = [...values];
       if (!selected.includes(value)) {
