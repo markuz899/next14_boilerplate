@@ -9,6 +9,7 @@ import {
   Badge,
   Banner,
   Button,
+  Calendar,
   Card,
   Checkbox,
   Collapse,
@@ -128,6 +129,26 @@ const seller = {
   rating: 1,
   label: "Posizione venditore",
 };
+
+const appointment = [
+  {
+    id: 0,
+    title: "Appuntamento con Giacomo",
+    label: "Appuntamento con Giacomo",
+    allDay: true,
+    start: new Date(),
+    end: new Date(),
+    position: [42.16137759041936, 12.339213749209796],
+  },
+  {
+    id: 1,
+    title: "Appuntamento con Antonio",
+    label: "Appuntamento con Antonio",
+    start: new Date("2024/08/16 15:30"),
+    end: new Date("2024/08/16 15:30"),
+    position: [42.206914985163685, 12.39517535481974],
+  },
+];
 
 const startPosition = [42.16137759041936, 12.339213749209796];
 const endPosition = [42.17137759041936, 12.349213749209796];
@@ -650,6 +671,9 @@ const Components = ({ global }: GlobalPageProps) => {
         />
         <Section title="QR Code">
           <QRCode value="https;//marameo.com" fgColor={theme.colors.primary} />
+        </Section>
+        <Section title="Calendario appuntamenti">
+          <Calendar appointment={appointment} />
         </Section>
       </Content>
     </Layout>

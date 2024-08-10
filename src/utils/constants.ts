@@ -1,5 +1,6 @@
 export const API_HOST = process.env.NEXT_PUBLIC_API_URL;
 export const CDN_PATH = process.env.NEXT_PUBLIC_CDN_PATH;
+export const FORMAT_DATA = process.env.NEXT_PUBLIC_FORMAT_DATA;
 
 export const AUTH_KEY = "application_auth";
 export const USER_KEY = "application_user";

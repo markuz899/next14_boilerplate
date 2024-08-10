@@ -7,6 +7,7 @@ const Badge = dynamic(() => import("./Badge"), { loading: () => null });
 const Banner = dynamic(() => import("./Banner"), { loading: () => null });
 const Button = dynamic(() => import("./Button"), { loading: () => null });
 const Card = dynamic(() => import("./Card"), { loading: () => null });
+const Calendar = dynamic(() => import("./Calendar"), { loading: () => null });
 const Checkbox = dynamic(() => import("./Checkbox"), { loading: () => null });
 const Collapse = dynamic(() => import("./Tabs/collapse"), { loading: () => null });
 const DatePicker = dynamic(() => import("./DatePicker"), { loading: () => null });
@@ -38,6 +39,7 @@ export {
   Banner,
   Button,
   Card,
+  Calendar,
   Checkbox,
   Collapse,
   DatePicker,
