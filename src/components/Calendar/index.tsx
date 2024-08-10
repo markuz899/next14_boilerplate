@@ -98,6 +98,15 @@ export default React.memo(Calendar);
 
 const RenderModalAppointment = ({ close, state }: any) => {
   const { selected } = state;
+
+  const navigate = () => {
+    const uri = {
+      google: `https://www.google.com/maps/dir/?api=1&destination=${selected?.position[0]}, ${selected?.position[1]}`,
+      maps: `https://maps.apple.com/?daddr=${selected?.position[0]},${selected?.position[1]}`,
+    };
+    window.open(uri.google, "_blank");
+  };
+
   return (
     <ModalAppointment>
       <div className="content-info">
@@ -130,8 +139,8 @@ const RenderModalAppointment = ({ close, state }: any) => {
         <Button fluid onClick={close} kind="warning">
           ANNULLA
         </Button>
-        <Button fluid kind="primary">
-          CONFERMA
+        <Button fluid kind="primary" onClick={navigate}>
+          NAVIGA
         </Button>
       </div>
     </ModalAppointment>
