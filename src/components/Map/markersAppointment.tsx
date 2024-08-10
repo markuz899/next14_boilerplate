@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Circle,
   LayerGroup,
@@ -14,8 +14,6 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import useSupercluster from "use-supercluster";
 import styled from "styled-components";
 import theme from "@/theme";
-import Button from "../Button";
-import Rating from "../Rating";
 
 const icons: any = {};
 const fetchIcon = (count: any, size: any) => {
@@ -44,7 +42,7 @@ const fetchIcon = (count: any, size: any) => {
   return icons[count];
 };
 
-const Markers = ({ options, zoom, active, setActive }: any) => {
+const MarkersAppointment = ({ options, zoom, active, setActive }: any) => {
   const [selectedMarker, setSelectedMarker] = useState<any>(active);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
@@ -249,7 +247,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                   popupRef.current[cluster.properties.id] = pop;
                 }}
               >
-                VENDITORE
+                APPUNTAMENTO
               </Popup>
             )}
             {selectedMarker?.id === cluster.properties.id && (
@@ -268,7 +266,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
   );
 };
 
-export default React.memo(Markers);
+export default React.memo(MarkersAppointment);
 
 const ContentMarker = styled.div``;
 

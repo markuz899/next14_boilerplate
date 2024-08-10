@@ -19,12 +19,14 @@ const DEFAULTZOOM = 12;
 
 const UpdateMapView = ({
   selection,
+  selectionSeller,
   zoom,
   withRadius = false,
   radius,
   dinamic,
 }: {
   selection?: any;
+  selectionSeller?: any;
   zoom?: number;
   withRadius?: boolean;
   radius?: number;
@@ -43,7 +45,10 @@ const UpdateMapView = ({
     if (map && selection && selection.position && !dinamic) {
       map.flyTo(selection.position, zoom, { animate: true });
     }
-  }, [zoom, selection, map]);
+    if (map && selectionSeller && selectionSeller.position && !dinamic) {
+      map.flyTo(selectionSeller.position, zoom, { animate: true });
+    }
+  }, [zoom, selection, selectionSeller, map]);
 
   useEffect(() => {
     if (map) {
@@ -75,6 +80,7 @@ const Map = ({
   children,
   className,
   selection,
+  selectionSeller,
   withRadius = false,
   radius,
   dinamic,
@@ -88,6 +94,17 @@ const Map = ({
     () =>
       new Icon({
         iconUrl: `static/pin/redPin.svg`,
+        iconSize: [25, 41],
+        iconAnchor: [10, 30],
+        popupAnchor: [2, -20],
+      }),
+    []
+  );
+
+  const customSellerMarker = useMemo(
+    () =>
+      new Icon({
+        iconUrl: `static/pin/greenPin.svg`,
         iconSize: [25, 41],
         iconAnchor: [10, 30],
         popupAnchor: [2, -20],
@@ -110,6 +127,7 @@ const Map = ({
       <UpdateMapView
         dinamic={dinamic}
         selection={selection}
+        selectionSeller={selectionSeller}
         zoom={zoom}
         withRadius={withRadius}
         radius={radius}
@@ -136,6 +154,11 @@ const Map = ({
       {selection?.position && (
         <Marker position={selection.position} icon={customMarker}>
           <Popup>{selection.label}</Popup>
+        </Marker>
+      )}
+      {selectionSeller?.position && (
+        <Marker position={selectionSeller.position} icon={customSellerMarker}>
+          <Popup>{selectionSeller.label}</Popup>
         </Marker>
       )}
     </MapContainerStyle>

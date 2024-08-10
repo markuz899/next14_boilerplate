@@ -18,6 +18,7 @@ import {
   Input,
   Map,
   Markers,
+  MarkersAppointment,
   Modal,
   QuantitySelect,
   Radio,
@@ -38,7 +39,6 @@ import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGeolocation } from "@/hooks";
 import { getRandomCoordinates, moveMarkerLinearly } from "@/utils/utils";
-import MarkersSeller from "@/components/Map/markersSeller";
 
 const specialist = [
   {
@@ -117,6 +117,16 @@ const user = {
   profession: "Operaio",
   rating: 4,
   label: "Tu sei qui",
+};
+
+const seller = {
+  id: 101,
+  name: "Carlo",
+  position: [42.16137759041936, 12.339213749209796],
+  range: 10,
+  profession: "Musicista",
+  rating: 1,
+  label: "Posizione venditore",
 };
 
 const startPosition = [42.16137759041936, 12.339213749209796];
@@ -636,6 +646,7 @@ const Components = ({ global }: GlobalPageProps) => {
           options={special}
           center={special[0].position}
           selection={user}
+          selectionSeller={seller}
         />
         <Section title="QR Code">
           <QRCode value="https;//marameo.com" fgColor={theme.colors.primary} />
@@ -717,22 +728,44 @@ const ContentMapper = ({ center, specialist }: any) => {
   );
 };
 
-const ContentAppointment = ({ options, center, selection }: any) => {
+const ContentAppointment = ({
+  options,
+  center,
+  selection,
+  selectionSeller,
+}: any) => {
   const [markerUserPosition, setMarkerUserPosition] = useState<any>(selection);
+  const [markerSellerPosition, setMarkerSellerPosition] =
+    useState<any>(selectionSeller);
 
   useEffect(() => {
-    if (selection) {
+    if (selection || selectionSeller) {
       const interval = setInterval(() => {
-        setMarkerUserPosition((prevUser: any) => {
-          const newPosition = moveMarkerLinearly(
-            prevUser.position,
-            specialist[0].position
-          );
-          return {
-            ...prevUser,
-            position: newPosition,
-          };
-        });
+        if (selection) {
+          setMarkerUserPosition((prevUser: any) => {
+            const newPosition = moveMarkerLinearly(
+              prevUser.position,
+              specialist[0].position
+            );
+            return {
+              ...prevUser,
+              position: newPosition,
+            };
+          });
+        }
+
+        if (selectionSeller) {
+          setMarkerSellerPosition((prevSeller: any) => {
+            const newPosition = moveMarkerLinearly(
+              prevSeller.position,
+              selection?.position || specialist[3].position
+            );
+            return {
+              ...prevSeller,
+              position: newPosition,
+            };
+          });
+        }
       }, 3000);
 
       return () => clearInterval(interval);
@@ -746,9 +779,10 @@ const ContentAppointment = ({ options, center, selection }: any) => {
         dinamic
         center={center}
         selection={markerUserPosition}
+        selectionSeller={markerSellerPosition}
         zoom={18}
       >
-        <MarkersSeller options={options} zoom={14} />
+        <MarkersAppointment options={options} zoom={14} />
       </Map>
     </Section>
   );

@@ -16,6 +16,7 @@ const Input = dynamic(() => import("./Input"), { loading: () => null });
 const Loader = dynamic(() => import("./Loader"), { loading: () => null });
 const Map = dynamic(() => import("./Map"), { loading: () => null, ssr:false });
 const Markers = dynamic(() => import("./Map/markers"), { loading: () => null, ssr:false });
+const MarkersAppointment = dynamic(() => import("./Map/markersAppointment"), { loading: () => null, ssr:false });
 const Modal = dynamic(() => import("./Modal"), { loading: () => null });
 const QuantitySelect = dynamic(() => import("./QuantitySelect"), { loading: () => null });
 const Radio = dynamic(() => import("./Radio"), { loading: () => null });
@@ -46,6 +47,7 @@ export {
   Loader,
   Map,
   Markers,
+  MarkersAppointment,
   Modal,
   QuantitySelect,
   Radio,
