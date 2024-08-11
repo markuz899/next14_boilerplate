@@ -161,7 +161,12 @@ const Components = ({ global }: GlobalPageProps) => {
   const [activeMarker, setActiveMarker] = useState<any>(null);
   const [centerMap, setCenterMap] = useState(specialist[0]?.position);
   const [currentPosition, setCurrentPosition] = useState<any>(null);
+  const [checkPosition, setCheckPosition] = useState<any>(false);
   const { loading, error, data } = useGeolocation();
+
+  const handleCheckPosition = () => {
+    setCheckPosition(true);
+  };
 
   const handleCurrentPos = () => {
     if (data?.latitude && data?.longitude) {
@@ -174,6 +179,12 @@ const Components = ({ global }: GlobalPageProps) => {
       alert("Posizione non abilitata");
     }
   };
+
+  useEffect(() => {
+    if (checkPosition) {
+      handleCurrentPos();
+    }
+  }, [data, checkPosition]);
 
   const handleColumn = (data: any) => {
     const { value } = data;
@@ -619,7 +630,10 @@ const Components = ({ global }: GlobalPageProps) => {
           <p>
             Longitudine: <span>{data?.longitude}</span>
           </p>
-          <Button onClick={handleCurrentPos}>POSIZIONE CORRENTE</Button>
+          <Button onClick={handleCheckPosition}>POSIZIONE CORRENTE</Button>
+        </Section>
+        <Section title="Current position">
+          <Map center={centerMap} zoom={12} selection={currentPosition} />
         </Section>
         <ContentMapper center={centerMap} specialist={specialist} />
         <Section title="Card">
