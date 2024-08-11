@@ -126,6 +126,7 @@ export const delay = keyframes`
 `;
 export const Target = styled.span`
   display: inline-block;
+  display: flex;
 `;
 export const Tip = styled.div`
   position: absolute;
