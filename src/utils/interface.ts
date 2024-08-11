@@ -25,6 +25,7 @@ export interface GlobalPageProps {
       themes: any[];
       setTheme: (theme: any) => void;
     };
+    geo?: { geolocationDisable: any; setGeolocationDisable: any };
     pwa: {
       installPrompt: () => Promise<void>;
       isInstalled: boolean;

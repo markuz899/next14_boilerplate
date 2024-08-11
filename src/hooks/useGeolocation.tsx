@@ -26,35 +26,50 @@ export default function useGeolocation(
   const [error, setError] = useState<GeolocationPositionError | null>(null);
   const [data, setData] = useState<GeolocationData | null>(null);
 
-  useEffect(() => {
-    // Funzione di successo
-    const successHandler = (position: GeolocationPosition) => {
-      setLoading(false);
-      setError(null);
-      setData({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      });
-    };
+  // Funzione di successo
+  const successHandler = (position: GeolocationPosition) => {
+    setLoading(false);
+    setError(null);
+    setData({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    });
+  };
 
-    // Funzione di errore
-    const errorHandler = (error: GeolocationPositionError) => {
-      setError(error);
-      setLoading(false);
-    };
+  // Funzione di errore
+  const errorHandler = (error: GeolocationPositionError) => {
+    setError(error);
+    setLoading(false);
+    window.location.href = "app-settings:location";
+  };
+
+  useEffect(() => {
+    const mergedOptions = { ...defaultOpt, ...options };
+    // navigator.permissions
+    //   .query({ name: "geolocation" })
+    //   .then((permissionStatus) => {
+    //     if (permissionStatus.state === "denied") {
+    //       window.location.href = "app-settings:location";
+    //     } else {
+    //       navigator.geolocation.getCurrentPosition(
+    //         successHandler,
+    //         errorHandler
+    //       );
+    //     }
+    //   });
 
     // Richiedi la posizione corrente
     navigator.geolocation.getCurrentPosition(
       successHandler,
       errorHandler,
-      options
+      mergedOptions
     );
 
     // Inizia a monitorare la posizione
     const id = navigator.geolocation.watchPosition(
       successHandler,
       errorHandler,
-      options
+      mergedOptions
     );
 
     // Pulizia della watch
