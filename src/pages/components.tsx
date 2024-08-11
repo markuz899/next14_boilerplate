@@ -39,7 +39,7 @@ import styled from "styled-components";
 import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGeolocation } from "@/hooks";
-import { getRandomCoordinates, moveMarkerLinearly } from "@/utils/utils";
+import { moveMarkerLinearly } from "@/utils/utils";
 
 const specialist = [
   {
@@ -149,9 +149,6 @@ const appointment = [
     position: [42.206914985163685, 12.39517535481974],
   },
 ];
-
-const startPosition = [42.16137759041936, 12.339213749209796];
-const endPosition = [42.17137759041936, 12.349213749209796];
 
 const Components = ({ global }: GlobalPageProps) => {
   let allIcon = Object.keys(icons);
