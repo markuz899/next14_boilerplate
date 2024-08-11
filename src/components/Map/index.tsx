@@ -11,7 +11,7 @@ import {
   useMap,
 } from "react-leaflet";
 import L, { Icon } from "leaflet";
-import { Icon as Icona } from "..";
+import { Icon as Icona, Tooltip } from "..";
 import theme from "@/theme";
 import { createRoot } from "react-dom/client";
 import "leaflet/dist/leaflet.css";
@@ -20,15 +20,18 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 
 const DEFAULTZOOM = 12;
 
-const CenterNav = ({ position = "topright", selection, zoom }: any) => {
+const CenterNav = ({
+  position = "topright",
+  selection,
+  zoom,
+  iconName,
+  iconColor = theme.colors.success,
+  onClick,
+  block,
+  withTooltip,
+}: any) => {
   const map = useMap();
   const helpDivRef: any = useRef(null);
-
-  const handleFly = () => {
-    if (map && selection && selection.position) {
-      map.flyTo(selection.position, zoom, { animate: true });
-    }
-  };
 
   useEffect(() => {
     const MapHelp = L.Control.extend({
@@ -42,22 +45,28 @@ const CenterNav = ({ position = "topright", selection, zoom }: any) => {
         iconWrapper.appendChild(iconElement);
 
         const root = createRoot(iconElement);
-        root.render(
-          <Icona
-            name="pin"
-            size={theme.spaces.space6}
-            color={theme.colors.success}
-          />
+        const render = withTooltip ? (
+          <Tooltip content={withTooltip}>
+            <Icona
+              name={iconName}
+              size={theme.spaces.space6}
+              color={iconColor}
+            />
+          </Tooltip>
+        ) : (
+          <Icona name={iconName} size={theme.spaces.space6} color={iconColor} />
         );
 
+        root.render(render);
+
         helpDivRef.current = helpDiv;
-        helpDiv.addEventListener("click", handleFly);
+        helpDiv.addEventListener("click", onClick);
 
         return helpDiv;
       },
       onRemove: () => {
         if (helpDivRef.current) {
-          helpDivRef.current.removeEventListener("click", handleFly);
+          helpDivRef.current.removeEventListener("click", onClick);
         }
       },
     });
@@ -70,7 +79,7 @@ const CenterNav = ({ position = "topright", selection, zoom }: any) => {
         helpDivRef.current.remove();
       }
     };
-  }, [map, selection]);
+  }, [map, block]);
 
   return null;
 };
@@ -143,6 +152,25 @@ const Map = ({
   radius,
   dinamic,
 }: any) => {
+  const [block, setBlock] = useState(false);
+  const map: any = useRef();
+
+  const handleFly = () => {
+    if (map && map?.current && selection && selection.position) {
+      map?.current.flyTo(selection.position, zoom, { animate: true });
+    }
+  };
+
+  const handleBlock = () => {
+    setBlock(!block);
+  };
+
+  useEffect(() => {
+    if (map && map?.current && selection && selection.position && block) {
+      map?.current.flyTo(selection.position, undefined, { animate: true });
+    }
+  }, [map, block, selection]);
+
   const colorMap = {
     light: "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
     dark: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
@@ -172,6 +200,7 @@ const Map = ({
 
   return (
     <MapContainerStyle
+      ref={map}
       center={center}
       zoom={DEFAULTZOOM}
       zoomAnimation
@@ -208,7 +237,26 @@ const Map = ({
           />
         </LayersControl.BaseLayer> */}
       </LayersControl>
-      {selection?.position && <CenterNav zoom={zoom} selection={selection} />}
+      {selection?.position && (
+        <>
+          <CenterNav
+            zoom={zoom}
+            selection={selection}
+            iconName="pin"
+            onClick={handleFly}
+            block={block}
+          />
+          <CenterNav
+            zoom={zoom}
+            selection={selection}
+            iconName={block ? "pinTrakOn" : "pinTrakOff"}
+            iconColor={block ? theme.colors.error : theme.colors.success}
+            onClick={handleBlock}
+            block={block}
+            withTooltip="Segui"
+          />
+        </>
+      )}
       {children && children}
       {selection?.position && (
         <Marker position={selection.position} icon={customMarker}>

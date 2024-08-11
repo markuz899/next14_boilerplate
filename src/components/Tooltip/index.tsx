@@ -56,7 +56,11 @@ const Tooltip: React.FC<TooltipProps> & {
       Object.assign(tip.current.style, position);
     }
     window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    document.addEventListener("click", toggleVisibility);
+    return () => {
+      window.removeEventListener("scroll", toggleVisibility);
+      document.removeEventListener("click", toggleVisibility);
+    };
   });
 
   const show = () => {
