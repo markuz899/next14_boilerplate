@@ -634,7 +634,12 @@ const Components = ({ global }: GlobalPageProps) => {
           <Button onClick={handleCheckPosition}>POSIZIONE CORRENTE</Button>
         </Section>
         <Section title="Current position">
-          <Map center={centerMap} zoom={12} selection={currentPosition} />
+          <Map
+            dinamic
+            center={centerMap}
+            zoom={12}
+            selection={currentPosition}
+          />
         </Section>
         <ContentMapper center={centerMap} specialist={specialist} />
         <Section title="Card">
