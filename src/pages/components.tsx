@@ -160,12 +160,16 @@ const Components = ({ global }: GlobalPageProps) => {
   const [grid, setGrid] = useState<any>(true);
   const [activeMarker, setActiveMarker] = useState<any>(null);
   const [centerMap, setCenterMap] = useState(specialist[0]?.position);
+  const [currentPosition, setCurrentPosition] = useState<any>(null);
   const { loading, error, data } = useGeolocation();
 
-  const handleCenter = () => {
+  const handleCurrentPos = () => {
     if (data?.latitude && data?.longitude) {
-      const pos = [data?.latitude, data?.longitude];
-      setCenterMap(pos);
+      const pos = {
+        label: "TU SEI QUI",
+        position: [data?.latitude, data?.longitude],
+      };
+      setCurrentPosition(pos);
     } else {
       alert("Posizione non abilitata");
     }
@@ -615,6 +619,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <p>
             Longitudine: <span>{data?.longitude}</span>
           </p>
+          <Button onClick={handleCurrentPos}>POSIZIONE CORRENTE</Button>
         </Section>
         <ContentMapper center={centerMap} specialist={specialist} />
         <Section title="Card">
@@ -630,7 +635,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Checkbox label="Card / Map" checked={view} onChange={handleView} />
           <ContentMap className="between">
             <div className="content content-map">
-              <Map center={centerMap} zoom={12}>
+              <Map center={centerMap} zoom={12} selection={currentPosition}>
                 <Markers
                   options={specialist}
                   zoom={14}
