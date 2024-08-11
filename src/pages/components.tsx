@@ -113,6 +113,7 @@ const special = [
 
 const user = {
   id: 100,
+  type: "user",
   name: "Anna",
   position: [42.206914985163685, 12.39517535481974],
   profession: "Operaio",
@@ -649,7 +650,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Checkbox label="Card / Map" checked={view} onChange={handleView} />
           <ContentMap className="between">
             <div className="content content-map">
-              <Map center={centerMap} zoom={12} selection={currentPosition}>
+              <Map center={centerMap} zoom={12}>
                 <Markers
                   options={specialist}
                   zoom={14}

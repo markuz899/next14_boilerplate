@@ -203,23 +203,19 @@ const Select: React.FC<SelectProps> = ({
   };
 
   const success = async (position: any) => {
-    await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setState(`${data.address.road} ${data.address.county}`);
-        onChange({
-          label: `${data.address.road} ${data.address.county}`,
-          value: "actual",
-          name,
-          position: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          },
-        });
+    const data: any = await NavigationService.getPosition(position.coords);
+    if (data) {
+      setState(`${data.address.road} ${data.address.county}`);
+      onChange({
+        label: `${data.address.road} ${data.address.county}`,
+        value: "actual",
+        name,
+        position: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        },
       });
+    }
   };
 
   const error = (err: any) => {
