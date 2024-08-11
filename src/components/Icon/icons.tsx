@@ -49,7 +49,7 @@ const icons: any = {
         />
       </>
     ),
-    width: 512,
+    width: 450,
   },
   download: {
     group: (

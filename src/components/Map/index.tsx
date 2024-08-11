@@ -10,12 +10,70 @@ import {
   Circle,
   useMap,
 } from "react-leaflet";
-import { Icon } from "leaflet";
+import L, { Icon } from "leaflet";
+import { Icon as Icona } from "..";
+import theme from "@/theme";
+import { createRoot } from "react-dom/client";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
 const DEFAULTZOOM = 12;
+
+const CenterNav = ({ position = "topright", selection, zoom }: any) => {
+  const map = useMap();
+  const helpDivRef: any = useRef(null);
+
+  const handleFly = () => {
+    if (map && selection && selection.position) {
+      map.flyTo(selection.position, zoom, { animate: true });
+    }
+  };
+
+  useEffect(() => {
+    const MapHelp = L.Control.extend({
+      onAdd: () => {
+        const helpDiv = L.DomUtil.create("div", "");
+        helpDiv.classList.add("button-redirect");
+
+        const iconWrapper = L.DomUtil.create("div", "icon-wrapper");
+        helpDiv.appendChild(iconWrapper);
+        const iconElement = document.createElement("div");
+        iconWrapper.appendChild(iconElement);
+
+        const root = createRoot(iconElement);
+        root.render(
+          <Icona
+            name="pin"
+            size={theme.spaces.space6}
+            color={theme.colors.success}
+          />
+        );
+
+        helpDivRef.current = helpDiv;
+        helpDiv.addEventListener("click", handleFly);
+
+        return helpDiv;
+      },
+      onRemove: () => {
+        if (helpDivRef.current) {
+          helpDivRef.current.removeEventListener("click", handleFly);
+        }
+      },
+    });
+
+    const control = new MapHelp({ position });
+    control.addTo(map);
+
+    return () => {
+      if (helpDivRef.current) {
+        helpDivRef.current.remove();
+      }
+    };
+  }, [map, selection]);
+
+  return null;
+};
 
 const UpdateMapView = ({
   selection,
@@ -150,6 +208,7 @@ const Map = ({
           />
         </LayersControl.BaseLayer> */}
       </LayersControl>
+      {selection?.position && <CenterNav zoom={zoom} selection={selection} />}
       {children && children}
       {selection?.position && (
         <Marker position={selection.position} icon={customMarker}>
@@ -173,5 +232,15 @@ const MapContainerStyle = styled(MapContainer)<{ height: string }>`
   .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
+  }
+  .button-redirect {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    width: 48px;
+    height: 48px;
+    background: ${theme.colors.white};
+    border-radius: ${theme.spaces.space1};
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
