@@ -1,3 +1,5 @@
+import NavigationService from "./service";
+
 class Navigation {
   static async getPosition(payload: any) {
     try {
@@ -13,3 +15,5 @@ class Navigation {
     }
   }
 }
+
+export default Navigation;

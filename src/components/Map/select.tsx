@@ -6,6 +6,7 @@ import Checkbox from "../Checkbox";
 import { SelectProps } from "../Select/interface";
 import theme from "@/theme";
 import { Icon } from "..";
+import { Navigation } from "@/services";
 
 const Select: React.FC<SelectProps> = ({
   options = [],
@@ -203,7 +204,7 @@ const Select: React.FC<SelectProps> = ({
   };
 
   const success = async (position: any) => {
-    const data: any = await NavigationService.getPosition(position.coords);
+    const data: any = await Navigation.getPosition(position.coords);
     if (data) {
       setState(`${data.address.road} ${data.address.county}`);
       onChange({

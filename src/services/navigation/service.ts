@@ -14,3 +14,5 @@ class NavigationService {
     );
   }
 }
+
+export default NavigationService;
