@@ -11,6 +11,7 @@ import theme from "@/theme";
 import dayjs from "dayjs";
 import { Modal, Map, Button } from "..";
 import { FORMAT_DATA } from "@/utils/constants";
+import { isIosDevice } from "@/utils/utils";
 
 const locales = {
   it: it,
@@ -104,7 +105,8 @@ const RenderModalAppointment = ({ close, state }: any) => {
       google: `https://www.google.com/maps/dir/?api=1&destination=${selected?.position[0]}, ${selected?.position[1]}`,
       maps: `https://maps.apple.com/?daddr=${selected?.position[0]},${selected?.position[1]}`,
     };
-    window.open(uri.google, "_blank");
+    const isApple = isIosDevice();
+    window.open(isApple ? uri.maps : uri.google, "_blank");
   };
 
   return (
