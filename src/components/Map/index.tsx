@@ -48,7 +48,7 @@ const CenterNav = ({
 
         const root = createRoot(iconElement);
         const render = withTooltip ? (
-          <Tooltip content={withTooltip}>
+          <Tooltip content={withTooltip} flex>
             <Icona
               name={iconName}
               size={theme.spaces.space6}

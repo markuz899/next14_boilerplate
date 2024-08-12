@@ -19,6 +19,7 @@ const Map = dynamic(() => import("./Map"), { loading: () => null, ssr:false });
 const Markers = dynamic(() => import("./Map/markers"), { loading: () => null, ssr:false });
 const MarkersAppointment = dynamic(() => import("./Map/markersAppointment"), { loading: () => null, ssr:false });
 const Modal = dynamic(() => import("./Modal"), { loading: () => null });
+const Popover = dynamic(() => import("./Popover"), { loading: () => null });
 const QuantitySelect = dynamic(() => import("./QuantitySelect"), { loading: () => null });
 const Radio = dynamic(() => import("./Radio"), { loading: () => null });
 const RadioButton = dynamic(() => import("./RadioButton"), { loading: () => null });
@@ -51,6 +52,7 @@ export {
   Markers,
   MarkersAppointment,
   Modal,
+  Popover,
   QuantitySelect,
   Radio,
   RadioButton,

@@ -9,7 +9,7 @@ import getDay from "date-fns/getDay";
 import styled from "styled-components";
 import theme from "@/theme";
 import dayjs from "dayjs";
-import { Modal, Map, Button } from "..";
+import { Modal, Map, Button, Popover } from "..";
 import { FORMAT_DATA } from "@/utils/constants";
 import { isIosDevice } from "@/utils/utils";
 
@@ -134,12 +134,51 @@ const RenderModalAppointment = ({ close, state }: any) => {
         <Button fluid onClick={close} kind="warning">
           CHIUDI
         </Button>
-        <Button fluid onClick={close} kind="error">
-          RIFIUTA
-        </Button>
-        <Button fluid kind="success">
-          ACCETTA
-        </Button>
+        <Popover
+          renderContent={({ close: closePop }: any) => {
+            const closing = () => {
+              closePop();
+              close();
+            };
+
+            return (
+              <div>
+                <div className="flex mb-2">Rifiutare l'appuntamento?</div>
+                <div className="flex align-middle justify-center gap-2">
+                  <Button size="sm" kind="error" onClick={closePop}>
+                    NO
+                  </Button>
+                  <Button size="sm" onClick={closing}>
+                    SI
+                  </Button>
+                </div>
+              </div>
+            );
+          }}
+        >
+          <Button fluid kind="error">
+            RIFIUTA
+          </Button>
+        </Popover>
+        <Popover
+          renderContent={({ close }: any) => {
+            return (
+              <div>
+                <div className="flex mb-2">Sicuro di voler accettare?</div>
+                <div className="flex align-middle justify-center gap-2">
+                  <Button size="sm" kind="error" onClick={close}>
+                    NO
+                  </Button>
+                  <Button size="sm">SI</Button>
+                </div>
+              </div>
+            );
+          }}
+        >
+          <Button fluid kind="success">
+            ACCETTA
+          </Button>
+        </Popover>
       </>
     ),
   };

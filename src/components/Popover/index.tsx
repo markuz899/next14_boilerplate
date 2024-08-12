@@ -1,16 +1,16 @@
 import React, { Children, useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import styled, { keyframes } from "styled-components";
-import { TooltipProps } from "./interface";
+import { PopoverProps } from "./interface";
 import theme from "@/theme";
 
 /* eslint-disable */
 let ROOT_ID = "root-tooltip";
 
-const Tooltip: React.FC<TooltipProps> & {
+const Popover: React.FC<PopoverProps> & {
   setRoot: (APP_NODE: HTMLElement, id: string) => void;
-} = ({ content, children, className, flex = false }) => {
-  const target = useRef<HTMLSpanElement>(null);
+} = ({ children, className, flex = false, renderContent }) => {
+  const target = useRef<any>(null);
   const tip = useRef<HTMLDivElement>(null);
   const arrow = useRef<HTMLDivElement>(null);
 
@@ -29,7 +29,7 @@ const Tooltip: React.FC<TooltipProps> & {
 
   useEffect(() => {
     if (tip.current && target.current) {
-      const rect = target.current.getBoundingClientRect();
+      const rect = target.current?.firstElementChild.getBoundingClientRect();
       const { innerHeight, innerWidth, scrollY } = window;
       const { width, height } = tip.current.getBoundingClientRect();
       const right = innerWidth - (rect.x + rect.width);
@@ -74,8 +74,12 @@ const Tooltip: React.FC<TooltipProps> & {
     setState(true);
   };
 
-  const hide = () => {
+  const close = () => {
     setState(false);
+  };
+
+  const toggle = () => {
+    setState(!visible);
   };
 
   const renderTooltip = () => {
@@ -83,7 +87,7 @@ const Tooltip: React.FC<TooltipProps> & {
     return ROOT_NODE
       ? createPortal(
           <Tip ref={tip}>
-            {content}
+            {renderContent && renderContent({ close })}
             <Arrow ref={arrow} />
           </Tip>,
           ROOT_NODE
@@ -93,15 +97,7 @@ const Tooltip: React.FC<TooltipProps> & {
 
   return (
     <>
-      <Target
-        $flex={flex}
-        onMouseEnter={show}
-        onMouseLeave={hide}
-        onFocus={show}
-        onBlur={hide}
-        ref={target}
-        className={className}
-      >
+      <Target $flex={flex} onClick={toggle} ref={target} className={className}>
         {Children.toArray(children)}
       </Target>
       {visible && renderTooltip()}
@@ -109,7 +105,7 @@ const Tooltip: React.FC<TooltipProps> & {
   );
 };
 
-Tooltip.setRoot = (APP_NODE: HTMLElement, id: string) => {
+Popover.setRoot = (APP_NODE: HTMLElement, id: string) => {
   ROOT_ID = id;
   let node = document.getElementById(ROOT_ID);
   if (!node) {
@@ -119,27 +115,15 @@ Tooltip.setRoot = (APP_NODE: HTMLElement, id: string) => {
   }
 };
 
-export default Tooltip;
+export default Popover;
 
-export const delay = keyframes`
-    0% {
-        opacity: 0;
-    }
-    75% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-`;
 export const Target = styled.span<{ $flex: boolean }>`
-  display: ${(p) => (p.$flex ? "flex" : "inline-block")};
+  display: contents;
 `;
 export const Tip = styled.div`
   position: absolute;
   padding: 9px;
   left: -800px;
-  animation: 0.3s ${delay} ease;
   font-size: 16px;
   max-height: 150px;
   max-width: 300px;
@@ -149,7 +133,7 @@ export const Tip = styled.div`
   color: ${theme.colors.black};
   box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  z-index: 1000;
+  z-index: 2000;
 `;
 
 const Arrow = styled.div`

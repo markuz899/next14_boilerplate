@@ -21,6 +21,7 @@ import {
   Markers,
   MarkersAppointment,
   Modal,
+  Popover,
   QuantitySelect,
   Radio,
   RadioButton,
@@ -547,7 +548,26 @@ const Components = ({ global }: GlobalPageProps) => {
           ></Textarea>
         </Section>
         <Section title="Tooltip">
-          <Tooltip content="Lorem ipsum">Lorem</Tooltip>
+          <Tooltip content="Lorem ipsum">TOOLTIP</Tooltip>
+        </Section>
+        <Section title="Popover">
+          <Popover
+            renderContent={({ close }: any) => {
+              return (
+                <div>
+                  <div className="flex mb-2">Sicuro di voler accettare?</div>
+                  <div className="flex align-middle justify-center gap-2">
+                    <Button size="sm" kind="error" onClick={close}>
+                      NO
+                    </Button>
+                    <Button size="sm">SI</Button>
+                  </div>
+                </div>
+              );
+            }}
+          >
+            <Button kind="action">Action</Button>
+          </Popover>
         </Section>
         <Section title="Toogle">
           <Toggle name="theme" />
