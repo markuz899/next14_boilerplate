@@ -143,7 +143,7 @@ const RenderModalAppointment = ({ close, state }: any) => {
 
             return (
               <div>
-                <div className="flex mb-2">Rifiutare l'appuntamento?</div>
+                <div className="flex mb-2">Rifiutare appuntamento?</div>
                 <div className="flex align-middle justify-center gap-2">
                   <Button size="sm" kind="error" onClick={closePop}>
                     NO
