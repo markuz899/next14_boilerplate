@@ -29,12 +29,18 @@ const messages = {
   // showMore: (total:any) => `+${total} piu`,
 };
 
+const typeLabel: any = {
+  appointment: "Appuntamento",
+  request: "Richiesta",
+};
+
 interface AppointmentProps {
   id?: number;
   title?: string;
   allDay?: boolean;
   start: Date;
   end?: Date;
+  type?: string;
 }
 
 interface CalendarProps {
@@ -44,7 +50,7 @@ interface CalendarProps {
 
 const Calendar = ({ appointment, onSelected }: CalendarProps) => {
   const [appoint, setAppoint] = useState(appointment);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<any>(null);
   const localizer = dateFnsLocalizer({
     format,
     parse,
@@ -82,7 +88,7 @@ const Calendar = ({ appointment, onSelected }: CalendarProps) => {
       <Modal
         isVisible={selected || false}
         onClickOther
-        title="Appointment modal"
+        title={typeLabel[selected?.type]}
         onClose={handleCloseModal}
         render={({ close }) => (
           <RenderModalAppointment
@@ -109,12 +115,43 @@ const RenderModalAppointment = ({ close, state }: any) => {
     window.open(isApple ? uri.maps : uri.google, "_blank");
   };
 
+  const type: any = {
+    appointment: (
+      <>
+        <Button fluid onClick={close} kind="warning">
+          CHIUDI
+        </Button>
+        <Button fluid onClick={close} kind="error">
+          ANNULLA
+        </Button>
+        <Button fluid kind="primary" onClick={navigate}>
+          NAVIGA
+        </Button>
+      </>
+    ),
+    request: (
+      <>
+        <Button fluid onClick={close} kind="warning">
+          CHIUDI
+        </Button>
+        <Button fluid onClick={close} kind="error">
+          RIFIUTA
+        </Button>
+        <Button fluid kind="success">
+          ACCETTA
+        </Button>
+      </>
+    ),
+  };
+
   return (
     <ModalAppointment>
       <div className="content-info">
         <div className="row">
           <p className="bold">Nome:</p>
-          <span>{selected?.title}</span>
+          <span>
+            {typeLabel[selected?.type]} {selected?.title}
+          </span>
         </div>
         <div className="row">
           <p className="bold">Ora di inizio:</p>
@@ -134,17 +171,7 @@ const RenderModalAppointment = ({ close, state }: any) => {
           />
         </div>
       </div>
-      <div className="content-action">
-        <Button fluid onClick={close} kind="error">
-          CHIUDI
-        </Button>
-        <Button fluid onClick={close} kind="warning">
-          ANNULLA
-        </Button>
-        <Button fluid kind="primary" onClick={navigate}>
-          NAVIGA
-        </Button>
-      </div>
+      <div className="content-action">{type[selected?.type]}</div>
     </ModalAppointment>
   );
 };

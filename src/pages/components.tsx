@@ -134,8 +134,9 @@ const seller = {
 const appointment = [
   {
     id: 0,
-    title: "Appuntamento con Giacomo",
-    label: "Appuntamento con Giacomo",
+    type: "request",
+    title: "Giacomo",
+    label: "Giacomo",
     allDay: true,
     start: new Date(),
     end: new Date(),
@@ -143,8 +144,9 @@ const appointment = [
   },
   {
     id: 1,
-    title: "Appuntamento con Antonio",
-    label: "Appuntamento con Antonio",
+    type: "appointment",
+    title: "Antonio",
+    label: "Antonio",
     start: new Date("2024/08/16 15:30"),
     end: new Date("2024/08/16 15:30"),
     position: [42.206914985163685, 12.39517535481974],
