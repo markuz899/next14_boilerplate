@@ -171,6 +171,33 @@ const Map = ({
     }
   }, [map, block, selection]);
 
+  useEffect(() => {
+    // Disabilita lo scroll zoom di default
+    map?.current?.scrollWheelZoom.disable();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Control" || e.key === "Meta" || e.key === "Ctrl") {
+        map?.current?.scrollWheelZoom.enable();
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Control" || e.key === "Meta" || e.key === "Ctrl") {
+        map?.current?.scrollWheelZoom.disable();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+      map?.current?.scrollWheelZoom.enable(); // Ensure the scroll zoom is enabled if component is unmounted
+    };
+  }, []);
+
   const colorMap = {
     light: "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
     dark: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",

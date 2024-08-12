@@ -138,33 +138,6 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
     options: { radius: 75, maxZoom: 17 },
   });
 
-  useEffect(() => {
-    // Disabilita lo scroll zoom di default
-    map.scrollWheelZoom.disable();
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Control" || e.key === "Meta" || e.key === "Ctrl") {
-        map.scrollWheelZoom.enable();
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key === "Control" || e.key === "Meta" || e.key === "Ctrl") {
-        map.scrollWheelZoom.disable();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    // Cleanup event listeners on component unmount
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-      map.scrollWheelZoom.enable(); // Ensure the scroll zoom is enabled if component is unmounted
-    };
-  }, []);
-
   return (
     <ContentMarker>
       {clusters.map((cluster, i) => {
