@@ -30,11 +30,19 @@ const Popover: React.FC<PopoverProps> & {
   useEffect(() => {
     if (tip.current && target.current) {
       const rect = target.current?.firstElementChild.getBoundingClientRect();
-      const { innerHeight, innerWidth, scrollY } = window;
+      const { innerWidth, scrollY } = window;
       const { width, height } = tip.current.getBoundingClientRect();
       const right = innerWidth - (rect.x + rect.width);
+
+      const isMobile = innerWidth <= 768;
+
       const position = {
-        bottom: `${innerHeight - rect.top - scrollY + 12}px`,
+        bottom: `${
+          window.screen.availHeight -
+          rect.top -
+          scrollY -
+          (isMobile ? 160 : 110)
+        }px`,
         left: `${rect.left + rect.width / 2 - width / 2}px`,
       };
 
@@ -52,7 +60,13 @@ const Popover: React.FC<PopoverProps> & {
       }
 
       if (rect.y < height) {
-        const b = innerHeight - rect.top - scrollY - height - rect.height - 8;
+        const b =
+          window.screen.availHeight -
+          rect.top -
+          scrollY -
+          height -
+          rect.height -
+          8;
         position.bottom = `${b}px`;
         if (arrow.current) {
           arrow.current.style.bottom = `${height - 8}px`;
