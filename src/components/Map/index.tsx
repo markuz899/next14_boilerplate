@@ -232,6 +232,7 @@ const Map = ({
       ref={map}
       center={center}
       zoom={DEFAULTZOOM}
+      dragging={false}
       zoomAnimation
       touchZoom
       markerZoomAnimation
