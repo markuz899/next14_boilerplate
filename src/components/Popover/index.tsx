@@ -28,57 +28,51 @@ const Popover: React.FC<PopoverProps> & {
   };
 
   useEffect(() => {
-    if (tip.current && target.current) {
-      const rect = target.current?.firstElementChild.getBoundingClientRect();
-      const { innerWidth, scrollY } = window;
-      const { width, height } = tip.current.getBoundingClientRect();
-      const right = innerWidth - (rect.x + rect.width);
+    const calculatePosition = () => {
+      if (tip.current && target.current) {
+        const rect = target.current?.firstElementChild.getBoundingClientRect();
+        const { innerWidth, scrollY } = window;
+        const { width, height } = tip.current.getBoundingClientRect();
+        const right = innerWidth - (rect.x + rect.width);
 
-      const isMobile = innerWidth <= 768;
+        const position = {
+          top: `${rect.bottom + scrollY - rect.height * 3 - 10}px`,
+          // bottom: `${window.screen.availHeight - rect.top - scrollY + 12}px`,
+          left: `${rect.left + rect.width / 2 - width / 2}px`,
+        };
 
-      const position = {
-        bottom: `${
-          window.screen.availHeight -
-          rect.top -
-          scrollY -
-          (isMobile ? 160 : 110)
-        }px`,
-        left: `${rect.left + rect.width / 2 - width / 2}px`,
-      };
-
-      if (width / 2 > rect.x + rect.width / 2 && width > rect.width) {
-        position.left = `${rect.left}px`;
-        if (arrow.current) arrow.current.style.left = `${rect.width / 2 - 8}px`;
-      }
-
-      if (right < width / 2) {
-        position.left = `${
-          innerWidth - (innerWidth - rect.x) - width + rect.width
-        }px`;
-        if (arrow.current)
-          arrow.current.style.left = `${width - rect.width / 2 - 8}px`;
-      }
-
-      if (rect.y < height) {
-        const b =
-          window.screen.availHeight -
-          rect.top -
-          scrollY -
-          height -
-          rect.height -
-          8;
-        position.bottom = `${b}px`;
-        if (arrow.current) {
-          arrow.current.style.bottom = `${height - 8}px`;
-          arrow.current.style.transform = "rotate(-135deg)";
+        if (width / 2 > rect.x + rect.width / 2 && width > rect.width) {
+          position.left = `${rect.left}px`;
+          if (arrow.current)
+            arrow.current.style.left = `${rect.width / 2 - 8}px`;
         }
-      }
 
-      Object.assign(tip.current.style, position);
-    }
+        if (right < width / 2) {
+          position.left = `${
+            innerWidth - (innerWidth - rect.x) - width + rect.width
+          }px`;
+          if (arrow.current)
+            arrow.current.style.left = `${width - rect.width / 2 - 8}px`;
+        }
+
+        if (rect.y < height) {
+          if (arrow.current) {
+            arrow.current.style.bottom = `${height - 8}px`;
+            arrow.current.style.transform = "rotate(-135deg)";
+          }
+        }
+
+        Object.assign(tip.current.style, position);
+      }
+    };
+
+    calculatePosition();
+
+    window.addEventListener("resize", calculatePosition);
     window.addEventListener("scroll", toggleVisibility);
     document.addEventListener("click", toggleVisibility);
     return () => {
+      window.removeEventListener("resize", calculatePosition);
       window.removeEventListener("scroll", toggleVisibility);
       document.removeEventListener("click", toggleVisibility);
     };
