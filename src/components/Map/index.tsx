@@ -174,6 +174,8 @@ const Map = ({
   const colorMap = {
     light: "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
     dark: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+    sat: "https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}",
+    hybrid: "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
   };
 
   const customMarker = useMemo(
@@ -224,10 +226,10 @@ const Map = ({
           <TileLayer attribution="Google Maps" url={colorMap.light} />
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name="Satellite">
-          <TileLayer
-            attribution="Google Maps Satellite"
-            url="https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}"
-          />
+          <TileLayer attribution="Google Maps Satellite" url={colorMap.sat} />
+        </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Ibrida">
+          <TileLayer attribution="Google Maps Ibrida" url={colorMap.hybrid} />
         </LayersControl.BaseLayer>
 
         {/* <LayersControl.BaseLayer name="Leaflet">
