@@ -11,12 +11,14 @@ import {
   useMap,
 } from "react-leaflet";
 import L, { Icon } from "leaflet";
+import { GestureHandling } from "leaflet-gesture-handling";
 import { Icon as Icona, Tooltip } from "..";
 import theme from "@/theme";
 import { createRoot } from "react-dom/client";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 
 const DEFAULTZOOM = 12;
 
@@ -140,6 +142,15 @@ const UpdateMapView = ({
   );
 };
 
+const GestureHandlingSetter = () => {
+  /* eslint-disable */
+  const map = useMap() as any;
+  map?.gestureHandling?.enable();
+  map.addHandler("gestureHandling", GestureHandling);
+  /* eslint-enable */
+  return null;
+};
+
 const Map = ({
   height = "700px",
   center = [41.902782, 12.496366],
@@ -232,7 +243,6 @@ const Map = ({
       ref={map}
       center={center}
       zoom={DEFAULTZOOM}
-      dragging={false}
       zoomAnimation
       touchZoom
       markerZoomAnimation
@@ -241,6 +251,7 @@ const Map = ({
       className={className ? className : ""}
       height={height}
     >
+      <GestureHandlingSetter />
       <UpdateMapView
         dinamic={dinamic}
         selection={selection}
