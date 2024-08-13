@@ -18,6 +18,7 @@ const Modal: React.FC<ModalProps> = ({
   noCloseIcon,
   className,
   fullScreen,
+  rightScreen
 }) => {
   const [visible, setVisible] = useState(isVisible);
   const overlay = useRef<HTMLDivElement>(null);
@@ -57,12 +58,13 @@ const Modal: React.FC<ModalProps> = ({
         transition={{ duration: 0 }}
       >
         <Root
+          rightScreen={rightScreen}
           fullScreen={fullScreen}
           noTitle={noTitle}
           onClick={handleClickOnOverlay}
           ref={overlay}
         >
-          <Content size={size} noTitle={noTitle} fullScreen={fullScreen}>
+          <Content size={size} noTitle={noTitle} rightScreen={rightScreen} fullScreen={fullScreen}>
             {!noTitle && (
               <Header>
                 <h2 className="text-primary">{title}</h2>
@@ -119,10 +121,10 @@ const Root = styled.div<ModalRootProps>`
   left: 0;
   right: 0;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh;
   z-index: 1200;
   overflow: scroll;
-  background: ${theme.colors.modalOpacity};
+  background: ${theme.colors.primary}8a;
   box-sizing: border-box;
   flex-wrap: wrap;
   display: flex;
@@ -131,6 +133,21 @@ const Root = styled.div<ModalRootProps>`
   padding: ${(props) => (props.noTitle ? "none" : theme.spaces.space4)};
   height: 100%;
   ${(p) => p.fullScreen && fullRoot};
+  ${(p) => (p.rightScreen ? right : normal)};
+`;
+
+const normal = css`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const right = css`
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 `;
 
 const Header = styled.div`
@@ -174,6 +191,7 @@ const Content = styled.div<ModalContentProps>`
   z-index: ${theme.zIndex.zIndex1};
   overflow: scroll;
   ${(p) => p.fullScreen && fullContent};
+  ${(p) => (p.rightScreen ? rightMode : normalMode)};
   .img {
     width: 100%;
   }
@@ -185,12 +203,24 @@ const Content = styled.div<ModalContentProps>`
   }
 `;
 
+const normalMode = css`
+  box-shadow: ${theme.extra.shadow};
+`;
+
+const rightMode = css`
+  height: 100%;
+  box-shadow: -10px 0px 4px #0000001a;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+`;
+
 const fullRoot = css`
-  height: 100vh;
+  height: 100svh;
   padding: 0;
 `;
 
 const fullContent = css`
+  width: 100%;
   height: 100%;
   box-sizing: border-box;
   border-radius: 0;

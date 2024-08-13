@@ -115,7 +115,7 @@ const Container = styled.div`
   z-index: 1900;
   transition: all 0.5s cubic-bezier(0.86, 0, 0.57, 1);
   padding: 0;
-  height: 100vh;
+  height: 100svh;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -123,7 +123,7 @@ const Container = styled.div`
 `;
 const List = styled.div`
   min-width: 280px;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   margin-top: ${theme.spaces.space2};

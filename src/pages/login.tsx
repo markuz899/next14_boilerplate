@@ -99,5 +99,5 @@ const Container = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 170px);
+  height: calc(100svh - 170px);
 `;
