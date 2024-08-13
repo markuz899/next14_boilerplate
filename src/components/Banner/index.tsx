@@ -93,7 +93,6 @@ const Msg = styled.div<MsgProps>`
     color: ${(props) =>
       colorBasedOnBg(BASE_COLOR[props.$kind] || theme.colors.white)};
     font-size: ${theme.font.size.minor};
-    font-family: Helvetica;
     font-weight: ${theme.font.weight.bold};
     display: flex;
     align-items: flex-start;
