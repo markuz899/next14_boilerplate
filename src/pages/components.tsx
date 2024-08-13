@@ -860,6 +860,7 @@ const ContentMap = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
   &.between {
     justify-content: space-between;
   }
@@ -879,6 +880,14 @@ const ContentMap = styled.div`
         .card {
           width: 100%;
         }
+      }
+    }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    .content {
+      &.content-card {
+        flex: 1 0 100%;
+        max-height: 300px;
       }
     }
   }
