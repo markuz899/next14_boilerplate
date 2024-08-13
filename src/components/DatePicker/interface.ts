@@ -21,4 +21,5 @@ export interface DatePickerProps {
   excludeDateIntervals?: any[];
   selectsMultiple?: boolean;
   withPortal?: boolean;
+  clearable?: boolean;
 }

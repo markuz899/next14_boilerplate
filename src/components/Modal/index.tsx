@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({
   render,
   onClickOther,
   onClose,
-  size = [800, 600],
+  size = [800, null],
   isVisible = false,
   noTitle,
   noCloseIcon,
@@ -189,7 +189,7 @@ const Content = styled.div<ModalContentProps>`
   background: ${theme.colors.white};
   border-radius: ${theme.spaces.space3};
   height: ${(props) => props.size[1]}px;
-  width: ${(props) => props.size[0]}px;
+  width: ${(props) => `${props.size[0]}px` || "auto"};
   box-shadow: ${theme.extra.shadow};
   justify-self: center;
   align-self: center;

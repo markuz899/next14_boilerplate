@@ -4,7 +4,7 @@ export interface ModalProps {
   render?: (props: { close: () => void }) => React.ReactNode;
   onClickOther?: boolean;
   onClose?: () => void;
-  size?: [number, number];
+  size?: [number | null, number | null];
   isVisible?: boolean;
   noTitle?: boolean;
   noCloseIcon?: boolean;
@@ -21,7 +21,7 @@ export interface ModalRootProps {
 }
 
 export interface ModalContentProps {
-  size: [number, number];
+  size: [number | null, number | null];
   $noTitle?: boolean;
   fullScreen?: boolean;
   rightScreen?: boolean;

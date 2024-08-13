@@ -31,6 +31,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   excludeDateIntervals,
   selectsMultiple = false,
   withPortal = false,
+  clearable = true,
 }) => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
@@ -77,6 +78,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
           });
           setWarning(false);
           if (callback) callback();
+        } else if (!start && !end) {
+          onChange({
+            name,
+            value: null,
+          });
         } else {
           setWarning(true);
         }
@@ -86,6 +92,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           value: value ? formatDate(value, false, false) : null,
         });
         setStartDate(value);
+        setSelectedDates([]);
         if (callback) callback();
       }
     }
@@ -157,6 +164,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         isWarning={isWarning}
         message={message}
         autoComplete="off"
+        clearable={clearable}
       />
     </Target>
   );
