@@ -48,29 +48,29 @@ export default Badge;
 const COLORS = {
   warning: css`
     background: ${theme.colors.warning};
-    border: 1px solid ${theme.colors.warningDark};
+    border: 2px solid ${theme.colors.warningDark};
   `,
   success: css`
     background: ${theme.colors.success};
-    border: 1px solid ${theme.colors.successDark};
+    border: 2px solid ${theme.colors.successDark};
   `,
   error: css`
     background: ${theme.colors.error};
-    border: 1px solid ${theme.colors.errorDark};
+    border: 2px solid ${theme.colors.errorDark};
     .text {
       color: ${theme.colors.white}!important;
     }
   `,
   info: css`
     background: ${theme.colors.primary};
-    border: 1px solid ${theme.colors.primaryDark};
+    border: 2px solid ${theme.colors.primaryDark};
     .text {
       color: ${theme.colors.white}!important;
     }
   `,
   ghost: css`
     background: ${theme.colors.greyIcon};
-    border: 1px solid ${theme.colors.lightGrey};
+    border: 2px solid ${theme.colors.lightGrey};
     .text {
       color: ${theme.colors.dark}!important;
     }
@@ -87,7 +87,7 @@ const StyledBadge = styled.div<Props>`
   justify-content: space-between;
   background: ${theme.colors.primary};
   padding: ${theme.spaces.space3} ${theme.spaces.space5};
-  border: 1px solid ${theme.colors.primary};
+  border: 2px solid ${theme.colors.primary};
   border-radius: 8px;
   text-transform: uppercase;
   margin-bottom: ${theme.spaces.space2};

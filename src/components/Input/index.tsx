@@ -149,7 +149,11 @@ const Input = forwardRef<InputRef, InputProps>(
 
     if (isError && message) {
       errorTooltip = (
-        <Icon name="warning-circular" color={theme.colors.error} />
+        <Icon
+          name="warning-circular"
+          color={theme.colors.error}
+          margin="0 0 0 10px"
+        />
       );
       errorMessage = <p className="error-msg text-error">*{message}</p>;
     }

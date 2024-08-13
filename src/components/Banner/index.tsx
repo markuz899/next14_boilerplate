@@ -52,22 +52,22 @@ export default Banner;
 const COLORS = {
   warning: css`
     background: ${colors.warningDark};
-    border: 1px solid ${colors.warning};
+    border: 2px solid ${colors.warning};
   `,
   success: css`
     background: ${colors.successDark};
-    border: 1px solid ${colors.success};
+    border: 2px solid ${colors.success};
   `,
   error: css`
     background: ${colors.errorDark};
-    border: 1px solid ${colors.error};
+    border: 2px solid ${colors.error};
     .title {
       color: ${colors.white}!important;
     }
   `,
   info: css`
     background: ${colors.primaryDark};
-    border: 1px solid ${colors.primary};
+    border: 2px solid ${colors.primary};
     .title {
       color: ${colors.white}!important;
     }
