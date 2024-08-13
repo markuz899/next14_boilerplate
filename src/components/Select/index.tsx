@@ -281,10 +281,16 @@ export const Options = styled.div`
 `;
 
 export const Row = styled.div<{ $multiselect: any }>`
+  cursor: pointer;
+  padding: ${theme.spaces.space2};
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  border-bottom: 1px solid ${theme.colors.greyIcon};
   ${(p) => p.$multiselect && `padding: 0 ${theme.spaces.space2}`}
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const Option = styled.li<{
@@ -298,8 +304,6 @@ export const Option = styled.li<{
   display: flex;
   align-items: center;
   text-align: left;
-  padding: ${theme.spaces.space1} ${theme.spaces.space1} ${theme.spaces.space1}
-    0;
   list-style-type: none;
   color: ${(p) =>
     p.selected && p.$hover
@@ -318,7 +322,6 @@ export const Option = styled.li<{
       ? "bold"
       : "null"};
   font-size: ${theme.font.size.tiny};
-  padding: 5px 10px;
   &:last-child {
     border-bottom: 0;
   }

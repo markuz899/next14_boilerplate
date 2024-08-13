@@ -198,9 +198,9 @@ const Input = forwardRef<InputRef, InputProps>(
               </Label>
             )}
           </Container>
+          {cleared}
           {errorTooltip}
           {errorMessage}
-          {cleared}
           {after}
         </Box>
       )

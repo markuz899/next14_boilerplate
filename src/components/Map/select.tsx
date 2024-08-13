@@ -261,16 +261,18 @@ const Select: React.FC<SelectProps> = ({
 
   const renderDropdown = ({ close }: { close: () => void }) => (
     <Options ref={drop}>
-      <Option
-        onClick={() => getCurrentPosition(close)}
-        selected={state === "actual"}
-        $hover={hover === -1}
-        onMouseEnter={() => setHover(-1)}
-        onMouseLeave={() => setHover(-1)}
-      >
-        <Icon margin="0 10px 0 0" name="map" color={theme.colors.error} />
-        POSIZIONE ATTUALE
-      </Option>
+      <Row $multiselect={!!multiselect}>
+        <Option
+          onClick={() => getCurrentPosition(close)}
+          selected={state === "actual"}
+          $hover={hover === 1001}
+          onMouseEnter={() => setHover(1001)}
+          onMouseLeave={() => setHover(-1)}
+        >
+          <Icon margin="0 10px 0 0" name="map" color={theme.colors.error} />
+          POSIZIONE ATTUALE
+        </Option>
+      </Row>
       {filtered &&
         filtered.map((option, i) => (
           <Row key={`${option.value}-${i}`} $multiselect={!!multiselect}>
@@ -332,10 +334,15 @@ export const Options = styled.div`
 
 export const Row = styled.div<{ $multiselect: any }>`
   cursor: pointer;
+  padding: ${theme.spaces.space2};
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  border-bottom: 1px solid ${theme.colors.greyIcon};
   ${(p) => p.$multiselect && `padding: 0 ${theme.spaces.space2}`}
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const Option = styled.li<{
