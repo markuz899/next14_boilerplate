@@ -498,6 +498,11 @@ const Components = ({ global }: GlobalPageProps) => {
             topPlaceholder="With selection"
             selectsMultiple
           />
+          <DatePicker
+            withPortal
+            topPlaceholder="With portal"
+            onChange={(d: any) => console.log(d)}
+          />
         </Section>
         <Section title="Modal">
           <Modal

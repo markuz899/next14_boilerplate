@@ -18,7 +18,8 @@ const Modal: React.FC<ModalProps> = ({
   noCloseIcon,
   className,
   fullScreen,
-  rightScreen
+  rightScreen,
+  fluid,
 }) => {
   const [visible, setVisible] = useState(isVisible);
   const overlay = useRef<HTMLDivElement>(null);
@@ -60,11 +61,16 @@ const Modal: React.FC<ModalProps> = ({
         <Root
           rightScreen={rightScreen}
           fullScreen={fullScreen}
-          noTitle={noTitle}
+          $noTitle={noTitle}
           onClick={handleClickOnOverlay}
           ref={overlay}
         >
-          <Content size={size} noTitle={noTitle} rightScreen={rightScreen} fullScreen={fullScreen}>
+          <Content
+            size={size}
+            $noTitle={noTitle}
+            rightScreen={rightScreen}
+            fullScreen={fullScreen}
+          >
             {!noTitle && (
               <Header>
                 <h2 className="text-primary">{title}</h2>
@@ -85,7 +91,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <>
-      <Destiny className={className} onClick={open}>
+      <Destiny className={className} onClick={open} $fluid={fluid}>
         {Children.toArray(children)}
       </Destiny>
       <AnimatePresence initial={false} mode="wait">
@@ -107,8 +113,8 @@ const Modal: React.FC<ModalProps> = ({
 
 export default Modal;
 
-const Destiny = styled.div`
-  display: inline-block;
+const Destiny = styled.div<{ $fluid?: boolean }>`
+  display: ${(p) => (p.$fluid ? "block" : "inline-block")};
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
   }
 `;
@@ -130,7 +136,7 @@ const Root = styled.div<ModalRootProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${(props) => (props.noTitle ? "none" : theme.spaces.space4)};
+  padding: ${theme.spaces.space4};
   height: 100%;
   ${(p) => p.fullScreen && fullRoot};
   ${(p) => (p.rightScreen ? right : normal)};
@@ -179,7 +185,7 @@ const Header = styled.div`
 const Content = styled.div<ModalContentProps>`
   position: relative;
   transition: 1s;
-  padding: ${(props) => (props.noTitle ? "none" : theme.spaces.space4)};
+  padding: ${(props) => (props.$noTitle ? "none" : theme.spaces.space4)};
   background: ${theme.colors.white};
   border-radius: ${theme.spaces.space3};
   height: ${(props) => props.size[1]}px;

@@ -8,10 +8,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { it } from "date-fns/locale";
 import { DatePickerProps } from "./interface";
 import { formatDate } from "@/utils/utils";
+import { Modal } from "..";
 
 const DatePicker: React.FC<DatePickerProps> = ({
   start,
-  label,
   placeholder = "Seleziona data",
   topPlaceholder,
   onChange,
@@ -30,6 +30,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   includeDateIntervals,
   excludeDateIntervals,
   selectsMultiple = false,
+  withPortal = false,
 }) => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
@@ -165,7 +166,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
     children,
   }) => {
     return (
-      <CalendarContainerStyled className={className}>
+      <CalendarContainerStyled className={className} $withPortal={withPortal}>
         {children}
       </CalendarContainerStyled>
     );
@@ -210,15 +211,74 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
   return (
     <>
-      {label && <span>{label}</span>}
-      <Dropdown
-        renderTarget={renderTarget}
-        renderDropdown={renderDropdown}
-        showArrow={false}
-        width={200}
-        includeTarget
-        leftPosition={0}
-      />
+      {withPortal ? (
+        <Modal
+          fluid
+          onClickOther
+          noTitle
+          size={[300, 280]}
+          render={({ close }) => (
+            <ReactDatePicker
+              disabled={disabled}
+              locale={it}
+              includeDates={includeDates}
+              excludeDates={excludeDates}
+              excludeDateIntervals={excludeDateIntervals}
+              includeDateIntervals={includeDateIntervals}
+              calendarContainer={ContainerPicker}
+              showTimeSelect={showTimeSelect}
+              showMonthDropdown={true}
+              showYearDropdown={true}
+              scrollableYearDropdown={true}
+              yearDropdownItemNumber={100}
+              selectsRange={range}
+              startDate={startDate}
+              selected={startDate}
+              endDate={endDate}
+              selectsMultiple={selectsMultiple || undefined}
+              selectedDates={selectsMultiple ? selectedDates : []}
+              onChange={(value: any) =>
+                selectsMultiple
+                  ? onChangeSelection(value)
+                  : select(value, close)
+              }
+              inline
+              maxDate={maxDate}
+              minDate={minDate}
+            />
+          )}
+        >
+          <Target className={className}>
+            <Input
+              disabled={disabled}
+              importantDefault
+              onChange={(data: any) => select(data.value as Date)}
+              readOnly={true}
+              topPlaceholder={topPlaceholder}
+              type="text"
+              name={name}
+              placeholder={placeholder}
+              defaultValue={renderValue() || ""}
+              icon={"calendar"}
+              enableControlledInput
+              isError={isError}
+              isWarning={isWarning}
+              message={message}
+              autoComplete="off"
+              clearable
+            />
+          </Target>
+        </Modal>
+      ) : (
+        <Dropdown
+          renderTarget={renderTarget}
+          renderDropdown={renderDropdown}
+          showArrow={false}
+          width={200}
+          includeTarget
+          leftPosition={0}
+        />
+      )}
     </>
   );
 };
@@ -232,12 +292,18 @@ const Target = styled.div`
   outline: unset;
 `;
 
-const CalendarContainerStyled = styled(CalendarContainer)`
-  .react-datepicker {
+const CalendarContainerStyled = styled(CalendarContainer)<{
+  $withPortal?: boolean;
+}>`
+  &.react-datepicker {
     width: 100%;
+    border: ${(p) => (p.$withPortal ? "none" : "inherit")};
     .react-datepicker__month-container {
       width: 100%;
     }
+  }
+  .react-datepicker__month-container {
+    width: 100%;
   }
   .react-datepicker__header {
     background: ${theme.colors.primary};

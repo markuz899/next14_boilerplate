@@ -10,18 +10,19 @@ export interface ModalProps {
   noCloseIcon?: boolean;
   className?: string;
   fullScreen?: boolean;
-  rightScreen?: boolean
+  rightScreen?: boolean;
+  fluid?: boolean;
 }
 
 export interface ModalRootProps {
   fullScreen?: boolean;
-  noTitle?: boolean;
-  rightScreen?: boolean
+  $noTitle?: boolean;
+  rightScreen?: boolean;
 }
 
 export interface ModalContentProps {
   size: [number, number];
-  noTitle?: boolean;
+  $noTitle?: boolean;
   fullScreen?: boolean;
-  rightScreen?: boolean
+  rightScreen?: boolean;
 }

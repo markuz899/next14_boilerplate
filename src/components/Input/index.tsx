@@ -39,6 +39,7 @@ const Input = forwardRef<InputRef, InputProps>(
       inputSelectAction,
       labelBgColor,
       rounded = false,
+      clearable = false,
       ...rest
     },
     ref
@@ -90,10 +91,8 @@ const Input = forwardRef<InputRef, InputProps>(
     };
 
     const clearInput = () => {
-      if (!enableControlledInput) {
-        setHasValue(false);
-        setState("");
-      }
+      setHasValue(false);
+      setState("");
       onChange && onChange({ value: "", name, type });
     };
 
@@ -136,6 +135,17 @@ const Input = forwardRef<InputRef, InputProps>(
         </After>
       );
     }
+
+    let cleared =
+      clearable && state.length ? (
+        <After className="cursor-pointer" onClick={clearInput}>
+          <Icon
+            name={"close-circular"}
+            size={theme.font.size.normal}
+            color={theme.colors.primary}
+          />
+        </After>
+      ) : null;
 
     if (isError && message) {
       errorTooltip = (
@@ -190,6 +200,7 @@ const Input = forwardRef<InputRef, InputProps>(
           </Container>
           {errorTooltip}
           {errorMessage}
+          {cleared}
           {after}
         </Box>
       )

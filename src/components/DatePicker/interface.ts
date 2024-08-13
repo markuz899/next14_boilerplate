@@ -20,4 +20,5 @@ export interface DatePickerProps {
   includeDateIntervals?: any[];
   excludeDateIntervals?: any[];
   selectsMultiple?: boolean;
+  withPortal?: boolean;
 }

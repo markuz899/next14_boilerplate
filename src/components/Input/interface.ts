@@ -26,6 +26,7 @@ export interface InputProps {
     close: () => void;
   };
   labelBgColor?: string;
+  clearable?: boolean;
   [key: string]: any;
 }
 
