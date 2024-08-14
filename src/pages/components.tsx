@@ -22,6 +22,7 @@ import {
   Markers,
   MarkersAppointment,
   Modal,
+  MultirangeSlider,
   Popover,
   QuantitySelect,
   Radio,
@@ -664,6 +665,13 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Range slider">
           <RangeSlider />
+        </Section>
+        <Section title="MultiRange slider">
+          <MultirangeSlider
+            min={1}
+            max={1000}
+            onChange={(data): any => console.log(data)}
+          />
         </Section>
         <Section title="Posizione">
           <p>

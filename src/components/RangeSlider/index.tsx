@@ -80,6 +80,9 @@ const SliderContainer = styled.div`
       position: relative;
       box-shadow: -407px 0 0 400px ${theme.colors.primary}60;
       top: -2px;
+      &:hover {
+        background: ${theme.colors.primaryDark};
+      }
     }
     &::-moz-range-thumb {
       cursor: pointer;
