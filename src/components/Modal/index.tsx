@@ -128,7 +128,7 @@ const Root = styled.div<ModalRootProps>`
   right: 0;
   width: 100%;
   min-height: 100svh;
-  z-index: 1200;
+  z-index: 2100;
   overflow: scroll;
   background: ${theme.colors.primary}8a;
   box-sizing: border-box;

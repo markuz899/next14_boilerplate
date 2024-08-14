@@ -141,7 +141,7 @@ export const Tip = styled.div`
   color: ${theme.colors.black};
   box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  z-index: 2000;
+  z-index: 2200;
 `;
 
 const Arrow = styled.div`
