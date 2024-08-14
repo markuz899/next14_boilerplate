@@ -17,6 +17,7 @@ import {
   Dropdown,
   Icon,
   Input,
+  Loader,
   Map,
   Markers,
   MarkersAppointment,
@@ -167,6 +168,8 @@ const Components = ({ global }: GlobalPageProps) => {
   const [centerMap, setCenterMap] = useState(specialist[0]?.position);
   const [currentPosition, setCurrentPosition] = useState<any>(null);
   const [checkPosition, setCheckPosition] = useState<any>(false);
+  const [loaderActive, setLoaderActive] = useState<any>(false);
+  const [loaderType, setLoaderType] = useState<any>("spin");
   const { loading, error, data } = useGeolocation();
 
   const handleCheckPosition = () => {
@@ -734,6 +737,41 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Calendario appuntamenti">
           <Calendar appointment={appointment} />
+        </Section>
+        <Section title="Loader">
+          <Checkbox
+            label="Attivare loader"
+            checked={loaderActive}
+            onChange={() => {
+              setLoaderActive(!loaderActive);
+            }}
+          />
+          {loaderActive && (
+            <SliderTabs
+              className="mb-5"
+              onChange={(data) => setLoaderType(data.value)}
+              options={[
+                { label: "Default", value: "spin", checked: true },
+                {
+                  label: "Glue",
+                  value: "glue",
+                },
+                {
+                  label: "Three point",
+                  value: "three",
+                },
+                {
+                  label: "Pin",
+                  value: "pin",
+                },
+                {
+                  label: "Qubik",
+                  value: "qubik",
+                },
+              ]}
+            />
+          )}
+          <Loader isActive={loaderActive} type={loaderType} debug />
         </Section>
       </Content>
     </Layout>

@@ -12,6 +12,7 @@ interface Option {
 }
 
 interface TabsProps {
+  className: string;
   options: Option[];
   onChange?: (option: Option) => void;
   children?: React.ReactNode;
@@ -19,6 +20,7 @@ interface TabsProps {
 }
 
 const Tabs: React.FC<TabsProps> = ({
+  className,
   options,
   onChange = () => {},
   children,
@@ -51,7 +53,7 @@ const Tabs: React.FC<TabsProps> = ({
   };
 
   return (
-    <Wrapper>
+    <Wrapper className={className ? className : null}>
       <Flex>
         <Buttons ref={tabRef}>
           <div className="selector" ref={selectorRef} />
@@ -85,7 +87,7 @@ const Tabs: React.FC<TabsProps> = ({
 export default React.memo(Tabs);
 
 // Styled Components
-const Wrapper = styled.div`
+const Wrapper = styled.div<any>`
   position: relative;
 `;
 
