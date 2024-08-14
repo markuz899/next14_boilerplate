@@ -6,4 +6,5 @@ export interface ToggleProps {
   className?: string;
   colorBg?: string;
   label?: string;
+  disabled?: boolean;
 }

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import theme from "@/theme";
 import styled from "styled-components";
 import { ToggleProps } from "./interface";
 import PropTypes from "prop-types";
+import Icon from "../Icon";
 
 const Toggle: React.FC<ToggleProps> = ({
   name,
@@ -12,19 +13,54 @@ const Toggle: React.FC<ToggleProps> = ({
   className,
   colorBg = theme.colors.primary,
   label,
+  disabled = false,
 }) => {
+  const [state, setState] = useState(checked || false);
+
+  useEffect(() => {
+    setState(checked || false);
+  }, [checked]);
+
+  const handleChange = (e: any) => {
+    const data: any = { name, value: e.target.checked };
+    setState(data.value);
+    onChange && onChange(data);
+  };
   return (
     <Wrapper className={className}>
-      <Slider>
+      <Slider $disabled={disabled}>
         <SliderInput
           type="checkbox"
           name={name}
           $colorBg={colorBg}
-          checked={checked}
-          onChange={(e) => onChange && onChange(e.target.checked)}
+          checked={state}
+          onChange={handleChange}
           onClick={onClick}
+          disabled={disabled}
         />
-        <SliderSpan className="sliderBg" $colorBg={colorBg} />
+        <SliderSpan
+          className="sliderBg"
+          $disabled={disabled}
+          $colorBg={colorBg}
+          $checked={state}
+        >
+          <span>
+            {state ? (
+              <Icon
+                name="check"
+                color={theme.colors.success}
+                margin="4px 0 0 10px"
+              />
+            ) : (
+              <Icon
+                name="close"
+                color={theme.colors.error}
+                size={theme.spaces.space2}
+                margin="0px 9px 0 0"
+              />
+            )}
+          </span>
+        </SliderSpan>
       </Slider>
       {label && <Label>{label}</Label>}
     </Wrapper>
@@ -41,7 +77,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Slider = styled.label`
+const Slider = styled.label<{ $disabled: boolean }>`
   position: relative;
   display: inline-block;
   width: ${theme.spaces.space10};
@@ -50,6 +86,9 @@ const Slider = styled.label`
     opacity: 0;
     width: 0;
     height: 0;
+    &:disabled {
+      background: ${theme.colors.greyIcon};
+    }
   }
 `;
 
@@ -60,6 +99,7 @@ const SliderInput = styled.input<{ $colorBg?: string }>`
   }
   &:checked + .sliderBg {
     background-color: ${(props) => props.$colorBg};
+    border: 2px solid ${theme.colors.primaryLight};
     &:before {
       transform: translateX(24px);
       background-color: ${theme.colors.white};
@@ -67,17 +107,25 @@ const SliderInput = styled.input<{ $colorBg?: string }>`
   }
 `;
 
-const SliderSpan = styled.span<{ $colorBg?: string }>`
+const SliderSpan = styled.span<{
+  $colorBg?: string;
+  $checked: boolean;
+  $disabled: boolean;
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: ${(p) => (p.$checked ? "flex-start" : "flex-end")};
   position: absolute;
-  cursor: pointer;
+  cursor: ${(p) => (p.$disabled ? "no-drop" : "pointer")};
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${theme.colors.borderComponent};
-  border: 2px solid transparent;
+  background-color: ${theme.colors.greyIcon};
   transition: 0.4s;
   border-radius: ${theme.spaces.space3};
+  border: 2px solid
+    ${(p) => (p.$disabled ? theme.colors.greyIcon : theme.colors.primaryDark)};
   opacity: 1;
   &:before {
     position: absolute;
@@ -89,6 +137,7 @@ const SliderSpan = styled.span<{ $colorBg?: string }>`
     background-color: ${theme.colors.white};
     transition: 0.4s;
     border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
   }
   &:hover {
     border-color: ${({ $colorBg }) => $colorBg};
