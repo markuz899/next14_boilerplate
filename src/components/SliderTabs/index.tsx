@@ -12,7 +12,7 @@ interface Option {
 }
 
 interface TabsProps {
-  className: string;
+  className?: string;
   options: Option[];
   onChange?: (option: Option) => void;
   children?: React.ReactNode;
