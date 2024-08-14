@@ -28,6 +28,7 @@ import {
   RangeSlider,
   Rating,
   Select,
+  SliderTabs,
   Tabs,
   Textarea,
   Toggle,
@@ -542,6 +543,26 @@ const Components = ({ global }: GlobalPageProps) => {
               { label: "Three", value: 3 },
             ]}
             onChange={() => {}}
+          />
+        </Section>
+        <Section title="Radio slider">
+          <SliderTabs
+            onChange={(data) => console.log(data)}
+            options={[
+              { label: "Cloud", value: 3, icon: "cloud" },
+              {
+                label: "moon",
+                value: 4,
+                icon: "moon",
+                iconColor: theme.colors.warning,
+              },
+              {
+                label: "Sun",
+                value: 5,
+                icon: "sun",
+                iconColor: theme.colors.warning,
+              },
+            ]}
           />
         </Section>
         <Section title="Textarea">

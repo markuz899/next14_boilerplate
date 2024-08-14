@@ -27,6 +27,7 @@ const RangeSlider = dynamic(() => import("./RangeSlider"), { loading: () => null
 const Rating = dynamic(() => import("./Rating"), { loading: () => null });
 const ScrollToTop = dynamic(() => import("./ScrollToTop"), { loading: () => null });
 const Select = dynamic(() => import("./Select"), { loading: () => null });
+const SliderTabs = dynamic(() => import("./SliderTabs"), { loading: () => null });
 const Tabs = dynamic(() => import("./Tabs/intex"), { loading: () => null });
 const Textarea = dynamic(() => import("./Textarea"), { loading: () => null });
 const Toggle = dynamic(() => import("./Toggle"), { loading: () => null });
@@ -60,6 +61,7 @@ export {
   Rating,
   ScrollToTop,
   Select,
+  SliderTabs,
   Tabs,
   Textarea,
   Toggle,
