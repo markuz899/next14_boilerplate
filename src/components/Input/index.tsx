@@ -378,7 +378,7 @@ const Before = styled.div`
 
 const Label = styled.label<{ $iconBefore?: string; $labelBgColor?: string }>`
   position: absolute;
-  top: 3px;
+  top: 4px;
   left: 6px;
   right: auto;
   max-width: 100%;
