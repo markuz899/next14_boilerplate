@@ -569,6 +569,11 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Popover">
           <Popover
+            renderTarget={({ visible }: any) => {
+              return (
+                <Button kind={visible ? "primary" : "action"}>Action</Button>
+              );
+            }}
             renderContent={({ close }: any) => {
               return (
                 <div>
@@ -582,9 +587,7 @@ const Components = ({ global }: GlobalPageProps) => {
                 </div>
               );
             }}
-          >
-            <Button kind="action">Action</Button>
-          </Popover>
+          />
         </Section>
         <Section title="Toogle">
           <Toggle name="theme" />

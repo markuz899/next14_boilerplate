@@ -9,7 +9,7 @@ let ROOT_ID = "root-tooltip";
 
 const Popover: React.FC<PopoverProps> & {
   setRoot: (APP_NODE: HTMLElement, id: string) => void;
-} = ({ children, className, flex = false, renderContent }) => {
+} = ({ children, className, flex = false, renderTarget, renderContent }) => {
   const target = useRef<any>(null);
   const tip = useRef<HTMLDivElement>(null);
   const arrow = useRef<HTMLDivElement>(null);
@@ -106,7 +106,9 @@ const Popover: React.FC<PopoverProps> & {
   return (
     <>
       <Target $flex={flex} onClick={toggle} ref={target} className={className}>
-        {Children.toArray(children)}
+        {children
+          ? Children.toArray(children)
+          : renderTarget && renderTarget({ visible })}
       </Target>
       {visible && renderTooltip()}
     </>
