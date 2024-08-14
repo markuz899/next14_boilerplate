@@ -1,5 +1,5 @@
 import theme from "@/theme";
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 
 interface RangeSliderProps {
@@ -23,11 +23,22 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   value,
   onChange,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [state, setState] = useState<number>(value || defaultValue || min);
+
+  // Aggiorna lo sfondo dello slider quando il valore cambia
+  useEffect(() => {
+    if (inputRef.current) {
+      const el = inputRef.current;
+      const percentage = ((state - min) / (max - min)) * 100;
+      el.style.background = `linear-gradient(to right, ${theme.colors.primaryLight}61 ${percentage}%, ${theme.colors.white} ${percentage}%)`;
+    }
+  }, [state, min, max]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value, 10);
     setState(newValue);
+
     if (onChange) {
       onChange({ name, value: newValue });
     }
@@ -36,6 +47,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   return (
     <SliderContainer className={className}>
       <input
+        ref={inputRef}
         type="range"
         min={min}
         max={max}
@@ -59,40 +71,29 @@ const SliderContainer = styled.div`
   margin-right: auto;
 
   input[type="range"] {
-    -webkit-appearance: none;
+    background: ${`linear-gradient(to right, ${theme.colors.primaryLight}61 0%, ${theme.colors.white} 0%)`};
     width: 100%;
-    height: ${theme.spaces.space4};
-    background: ${theme.colors.greyIcon};
+    height: ${theme.spaces.space2};
     outline: none;
-    -webkit-transition: 0.2s;
-    transition: opacity 0.2s;
+    transition: background 450ms ease-in;
+    border: 2px solid ${theme.colors.primary};
     border-radius: ${theme.extra.radiusBig};
-    overflow: hidden;
+    -webkit-appearance: none;
     &::-webkit-slider-thumb {
-      -webkit-appearance: none;
       border-radius: 50px;
-      appearance: none;
       width: ${theme.spaces.space4};
       height: ${theme.spaces.space4};
-      background: ${theme.colors.primary};
+      background-color: ${theme.colors.primary};
       border: 2px solid ${theme.colors.primaryLight};
       cursor: pointer;
-      position: relative;
-      box-shadow: -407px 0 0 400px ${theme.colors.primary}60;
-      top: -2px;
+      -webkit-appearance: none;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
       &:hover {
         background: ${theme.colors.primaryDark};
       }
-    }
-    &::-moz-range-thumb {
-      cursor: pointer;
-      background: ${theme.colors.primary};
-    }
-    &::-webkit-slider-runnable-track {
-      border: 2px solid ${theme.colors.primary};
-      background: ${theme.colors.white};
-      height: ${theme.spaces.space4};
-      border-radius: ${theme.extra.radiusBig};
+      &:active {
+        cursor: grab;
+      }
     }
     &:disabled {
       background: ${theme.colors.greyIcon};

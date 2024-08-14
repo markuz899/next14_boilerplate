@@ -664,7 +664,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <QuantitySelect value={5} />
         </Section>
         <Section title="Range slider">
-          <RangeSlider />
+          <RangeSlider min={1} max={100} />
         </Section>
         <Section title="MultiRange slider">
           <MultirangeSlider
