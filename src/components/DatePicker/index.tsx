@@ -150,14 +150,14 @@ const DatePicker: React.FC<DatePickerProps> = ({
     >
       <Input
         disabled={disabled}
-        importantDefault
+        // importantDefault
         onChange={(data: any) => select(data.value as Date)}
         readOnly={true}
         topPlaceholder={topPlaceholder}
         type="text"
         name={name}
         placeholder={placeholder}
-        defaultValue={renderValue() || ""}
+        value={renderValue()}
         icon={"calendar"}
         enableControlledInput
         isError={isError}
@@ -259,14 +259,14 @@ const DatePicker: React.FC<DatePickerProps> = ({
           <Target className={className}>
             <Input
               disabled={disabled}
-              importantDefault
+              // importantDefault
               onChange={(data: any) => select(data.value as Date)}
               readOnly={true}
               topPlaceholder={topPlaceholder}
               type="text"
               name={name}
               placeholder={placeholder}
-              defaultValue={renderValue() || ""}
+              value={renderValue() || ""}
               icon={"calendar"}
               enableControlledInput
               isError={isError}

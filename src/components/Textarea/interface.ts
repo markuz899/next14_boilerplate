@@ -22,6 +22,7 @@ export interface TextareaProps {
   uppercase?: boolean;
   maxLength?: number;
   labelBgColor?: string;
+  inputBgColor?: string;
 }
 
 export interface TextareaRef {

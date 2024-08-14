@@ -38,6 +38,7 @@ const Input = forwardRef<InputRef, InputProps>(
       autoComplete,
       inputSelectAction,
       labelBgColor,
+      inputBgColor = theme.colors.white,
       rounded = false,
       clearable = false,
       ...rest
@@ -168,6 +169,7 @@ const Input = forwardRef<InputRef, InputProps>(
           $focus={focus}
           withFilter={withFilter}
           $labelBgColor={labelBgColor}
+          $inputBgColor={inputBgColor}
         >
           {iconBefore && (
             <Before>
@@ -244,6 +246,7 @@ const Box = styled.div<{
   $focus: any;
   withFilter?: boolean;
   $labelBgColor?: string;
+  $inputBgColor?: string;
 }>`
   position: relative;
   margin-top: ${theme.spaces.space3};
@@ -252,7 +255,7 @@ const Box = styled.div<{
   display: flex;
   align-items: center;
   min-height: ${theme.spaces.space9};
-  background: transparent;
+  background: ${(p) => p.$inputBgColor};
   width: 100%;
   padding: 0 ${theme.spaces.space2};
   border: 2px solid
@@ -376,9 +379,13 @@ const Before = styled.div`
   margin-right: ${theme.spaces.space2};
 `;
 
-const Label = styled.label<{ $iconBefore?: string; $labelBgColor?: string }>`
+const Label = styled.label<{
+  $iconBefore?: string;
+  $labelBgColor?: string;
+  $inputBgColor?: string;
+}>`
   position: absolute;
-  top: 4px;
+  top: 3px;
   left: 6px;
   right: auto;
   max-width: 100%;
@@ -390,11 +397,41 @@ const Label = styled.label<{ $iconBefore?: string; $labelBgColor?: string }>`
   font-size: ${theme.font.size.normal};
   color: ${theme.colors.grey};
   background: ${({ $labelBgColor, theme }) => $labelBgColor || theme.bg};
+  border-radius: ${theme.extra.radiusBig};
   span {
     color: ${theme.colors.error};
   }
   .asterisk {
     color: ${theme.colors.primary};
+  }
+  &::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 50%;
+    right: 0;
+    border-radius: inherit;
+    background-color: ${(p) =>
+      p.$labelBgColor ? p.$labelBgColor : "transparent"};
+  }
+
+  &::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 57%;
+    bottom: 0;
+    right: 0;
+    border-radius: none;
+    background-color: ${(p) =>
+      p.$labelBgColor
+        ? p.$labelBgColor
+        : p.$inputBgColor
+        ? p.$inputBgColor
+        : theme.colors.white};
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     font-size: ${theme.font.size.tiny};

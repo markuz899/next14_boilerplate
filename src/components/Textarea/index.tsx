@@ -36,7 +36,8 @@ const Textarea = forwardRef<TextareaRef, TextareaProps>(
       enableControlledInput = false,
       uppercase = false,
       maxLength,
-      labelBgColor = theme.colors.white,
+      labelBgColor,
+      inputBgColor = theme.colors.white,
       ...rest
     },
     ref
@@ -105,6 +106,7 @@ const Textarea = forwardRef<TextareaRef, TextareaProps>(
         $focus={focus}
         $labelBgColor={labelBgColor}
         $topPlaceholder={topPlaceholder}
+        $inputBgColor={inputBgColor}
       >
         {iconBefore && (
           <Before>
@@ -131,7 +133,7 @@ const Textarea = forwardRef<TextareaRef, TextareaProps>(
           ></textarea>
 
           {topPlaceholder && (
-            <Label iconBefore={iconBefore} $labelBgColor={labelBgColor}>
+            <Label $iconBefore={iconBefore} $labelBgColor={labelBgColor}>
               {topPlaceholder} {required && <span className="asterisk">*</span>}
               {maxLength && (
                 <span className="max">
@@ -177,8 +179,9 @@ export default React.memo(Textarea);
 const Box = styled.div<{
   isError: boolean;
   $focus: boolean;
-  $labelBgColor: string;
   $topPlaceholder: any;
+  $labelBgColor?: string;
+  $inputBgColor?: string;
 }>`
   position: relative;
   margin-top: 15px;
@@ -187,7 +190,7 @@ const Box = styled.div<{
   display: flex;
   align-items: center;
   min-height: ${theme.spaces.space9};
-  background: transparent;
+  background: ${(p) => p.$inputBgColor};
   width: 100%;
   padding: 0 ${theme.spaces.space2};
   border: 2px solid
@@ -281,7 +284,11 @@ const After = styled.div`
 const Before = styled.div`
   margin-right: ${theme.spaces.space2};
 `;
-const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
+const Label = styled.label<{
+  $iconBefore?: string;
+  $labelBgColor?: string;
+  $inputBgColor?: string;
+}>`
   position: absolute;
   top: 0px;
   left: 6px;
@@ -294,12 +301,42 @@ const Label = styled.label<{ iconBefore?: string; $labelBgColor?: string }>`
   padding: 0;
   font-size: ${theme.font.size.normal};
   color: ${theme.colors.grey};
-  background: ${(p) => p.$labelBgColor};
+  background: ${({ $labelBgColor, theme }) => $labelBgColor || theme.bg};
+  border-radius: ${theme.extra.radiusBig};
   span {
     color: ${theme.colors.error};
   }
   .asterisk {
     color: ${theme.colors.primary};
+  }
+  &::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 50%;
+    right: 0;
+    border-radius: inherit;
+    background-color: ${(p) =>
+      p.$labelBgColor ? p.$labelBgColor : "transparent"};
+  }
+
+  &::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 60%;
+    bottom: 0;
+    right: 0;
+    border-radius: inherit;
+    background-color: ${(p) =>
+      p.$labelBgColor
+        ? p.$labelBgColor
+        : p.$inputBgColor
+        ? p.$inputBgColor
+        : theme.colors.white};
   }
   .max {
     margin-left: ${theme.spaces.space2};

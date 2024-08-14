@@ -45,7 +45,6 @@ const Header: React.FC<HeaderProps> = ({
             <div className="flex nopadd">
               <Input
                 type="search"
-                labelBgColor={theme.colors.softWhite}
                 placeholder="Input search"
                 iconBefore="search"
                 name="name"

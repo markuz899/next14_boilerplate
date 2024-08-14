@@ -447,14 +447,12 @@ const Components = ({ global }: GlobalPageProps) => {
           <Input
             type="search"
             className="mb-6"
-            labelBgColor={theme.colors.softWhite}
             placeholder="Input search"
             name="name"
           />
           <Input
             className="mb-6"
             icon="search"
-            labelBgColor={theme.colors.softWhite}
             placeholder="Input example"
             name="name"
           />
@@ -462,24 +460,18 @@ const Components = ({ global }: GlobalPageProps) => {
             className="mb-6"
             iconBefore="search"
             defaultValue="Ciccio"
-            labelBgColor={theme.colors.softWhite}
+            topPlaceholder="Ricerca"
             placeholder="Input example"
             name="name"
           />
           <Input
             className="mb-6"
-            labelBgColor={theme.colors.softWhite}
             placeholder="Input example"
             name="name"
             isError={true}
             message="Field error"
           />
-          <Input
-            className="mb-6"
-            labelBgColor={theme.colors.softWhite}
-            placeholder="Input example"
-            name="name"
-          />
+          <Input className="mb-6" placeholder="Input example" name="name" />
           <Input
             className="mb-6"
             topPlaceholder="Address"
@@ -569,7 +561,6 @@ const Components = ({ global }: GlobalPageProps) => {
           <Textarea
             maxLength={300}
             placeholder="Testo di test"
-            labelBgColor={theme.colors.softWhite}
             topPlaceholder="Note"
           ></Textarea>
         </Section>
@@ -613,7 +604,6 @@ const Components = ({ global }: GlobalPageProps) => {
             onChange={() => {}}
             iconBefore="search"
             topPlaceholder="Seleziona città"
-            labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             options={[
               { label: "Roma", value: "1" },
@@ -625,7 +615,6 @@ const Components = ({ global }: GlobalPageProps) => {
             name="city"
             onChange={() => {}}
             iconBefore="search"
-            labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             defaultValues={"1"}
             options={[
@@ -641,7 +630,6 @@ const Components = ({ global }: GlobalPageProps) => {
             multiselect
             onChange={() => {}}
             topPlaceholder="Seleziona città"
-            labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             options={[
               { label: "Roma", value: "1" },
@@ -653,7 +641,6 @@ const Components = ({ global }: GlobalPageProps) => {
             name="city"
             multiselect
             onChange={() => {}}
-            labelBgColor={theme.colors.softWhite}
             placeholder="Città"
             defaultValues={["2"]}
             options={[
