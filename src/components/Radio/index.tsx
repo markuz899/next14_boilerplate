@@ -97,7 +97,7 @@ const Option = styled.div<{ active: any; disabled: boolean }>`
   cursor: pointer;
   .selector {
     background: ${({ disabled }) =>
-      disabled ? theme.colors.greyIcon : "transparent"};
+      disabled ? theme.colors.greyIcon : theme.colors.white};
     border: 1px solid ${theme.colors.primary};
     display: flex;
     justify-content: center;

@@ -60,12 +60,24 @@ const Autocomplete = ({
     //   label: item.title,
     //   raw: item.completed,
     // }));
-    const data = results.map((item: any) => ({
-      position: [item.y, item.x],
-      value: item.label,
-      label: item.label,
-      raw: item.raw,
-    }));
+    const data = results.reduce((acc: any, item: any) => {
+      const existingItem = acc.find((i: any) => i.label === item.label);
+      if (!existingItem) {
+        acc.push({
+          position: [item.y, item.x],
+          value: item.label,
+          label: item.label,
+          raw: item.raw,
+        });
+      }
+      return acc;
+    }, [] as any[]);
+    // const data = results.map((item: any) => ({
+    //   position: [item.y, item.x],
+    //   value: item.label,
+    //   label: item.label,
+    //   raw: item.raw,
+    // }));
     if (!results?.length) {
       setAddress([{ label: "Nessun risultato...", value: "", disabled: true }]);
     } else {

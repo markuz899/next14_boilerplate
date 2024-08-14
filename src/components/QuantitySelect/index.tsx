@@ -122,9 +122,10 @@ const StyledQuantity = styled.div<StyledQuantityProps>`
       padding: 0;
       flex-grow: 1;
       font-size: ${theme.font.size.normal};
-      background: ${theme.colors.greyIcon};
+      background: ${theme.colors.white};
+      border: 2px solid ${theme.colors.primary};
       &:disabled {
-        background: ${theme.colors.white};
+        background: ${theme.colors.greyIcon};
         color: ${theme.colors.dark};
       }
       &:focus {

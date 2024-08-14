@@ -16,7 +16,6 @@ export interface ITheme {
     greyIcon: string;
     lightDark: string;
     lightGrey: string;
-    modalOpacity: string;
     navbar: string;
     navbarText: string;
     primary: string;

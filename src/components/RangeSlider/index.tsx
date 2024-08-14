@@ -79,14 +79,20 @@ const SliderContainer = styled.div`
       cursor: pointer;
       position: relative;
       box-shadow: -407px 0 0 400px ${theme.colors.primary}60;
+      top: -2px;
     }
     &::-moz-range-thumb {
-      background: ${theme.colors.primary};
       cursor: pointer;
+      background: ${theme.colors.primary};
     }
     &::-webkit-slider-runnable-track {
-      background: ${theme.colors.greyIcon};
+      border: 2px solid ${theme.colors.primary};
+      background: ${theme.colors.white};
       height: ${theme.spaces.space4};
+      border-radius: ${theme.extra.radiusBig};
+    }
+    &:disabled {
+      background: ${theme.colors.greyIcon};
     }
   }
 `;

@@ -141,10 +141,10 @@ const Check = styled.div<{ checked: boolean; disabled: boolean }>`
     ${(p) => (p.checked ? theme.colors.primary : theme.colors.borderComponent)};
   background-color: ${(props) =>
     props.disabled
-      ? "#d4d4d4b8"
+      ? theme.colors.greyIcon
       : props.checked
       ? theme.colors.primary
-      : "none"};
+      : theme.colors.white};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   input {
     position: absolute;
