@@ -3,6 +3,7 @@ import styled from "styled-components";
 import theme from "@/theme";
 import Icon from "../Icon";
 import { CheckboxProps } from "./interface";
+import Button from "../Button";
 
 const Checkbox: React.FC<CheckboxProps> = ({
   refer,
@@ -80,12 +81,19 @@ const Checkbox: React.FC<CheckboxProps> = ({
   }
 
   return (
-    <BtnCheck className={className ? className : ""}>
-      <label>
-        <input onChange={handleChange} type="checkbox" disabled={disabled} />
-        <span>{label}</span>
-      </label>
-    </BtnCheck>
+    <Button
+      onClick={(e: any) => handleChange(e)}
+      kind={isChecked ? "primary" : "inverse-primary"}
+      className={className ? className : ""}
+    >
+      {label}
+    </Button>
+    // <BtnCheck className={className ? className : ""}>
+    //   <label>
+    //     <input onChange={handleChange} type="checkbox" disabled={disabled} />
+    //     <span>{label}</span>
+    //   </label>
+    // </BtnCheck>
   );
 };
 

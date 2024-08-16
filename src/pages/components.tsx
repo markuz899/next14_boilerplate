@@ -519,8 +519,8 @@ const Components = ({ global }: GlobalPageProps) => {
           <Checkbox label="Test label checkbox" />
         </Section>
         <Section title="Checkbox button">
-          <Checkbox className="mb-3" buttonMode label="Test 1" />
-          <Checkbox className="mb-3" buttonMode label="Test 2" />
+          <Checkbox className="mr-3" buttonMode label="Test 1" />
+          <Checkbox className="mr-3" buttonMode label="Test 2" />
           <Checkbox buttonMode label="Test 3" />
         </Section>
         <Section title="Radio">
