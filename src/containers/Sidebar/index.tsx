@@ -275,6 +275,10 @@ const MenuLeft = styled(Container)<{ $wide: boolean; $isMobile: boolean }>`
   background: ${theme.colors.sidebar};
   .padder {
     padding: 20px;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 `;
 

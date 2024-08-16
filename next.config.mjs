@@ -5,6 +5,8 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextPWAConfig = withPWA({
   dest: "public",
+  register: true,
+  skipWaiting: true,
   disable: !isProd,
 });
 
