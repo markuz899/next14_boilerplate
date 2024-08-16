@@ -86,7 +86,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
       kind={isChecked ? "primary" : "action"}
       className={className ? className : ""}
     >
-      {label}
+      {label && <label htmlFor={htmlFor}>{label}</label>}
+      {children && <label htmlFor={htmlFor}>{children}</label>}
     </Button>
     // <BtnCheck className={className ? className : ""}>
     //   <label>
