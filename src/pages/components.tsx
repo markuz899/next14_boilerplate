@@ -484,21 +484,24 @@ const Components = ({ global }: GlobalPageProps) => {
           />
         </Section>
         <Section title="Datepicker">
-          <DatePicker onChange={(d: any) => console.log(d)} />
+          <DatePicker onChange={(d: any) => console.log(d)} clearable />
           <DatePicker
             range
             onChange={(d: any) => console.log(d)}
             topPlaceholder="With range"
+            clearable
           />
           <DatePicker
             onChange={(d: any) => console.log(d)}
             topPlaceholder="With selection"
             selectsMultiple
+            clearable
           />
           <DatePicker
             withPortal
             topPlaceholder="With portal"
             onChange={(d: any) => console.log(d)}
+            clearable
           />
         </Section>
         <Section title="Modal">
