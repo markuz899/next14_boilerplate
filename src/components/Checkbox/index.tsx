@@ -83,7 +83,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   return (
     <Button
       onClick={(e: any) => handleChange(e)}
-      kind={isChecked ? "primary" : "inverse-primary"}
+      kind={isChecked ? "primary" : "action"}
       className={className ? className : ""}
     >
       {label}
