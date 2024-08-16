@@ -80,7 +80,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   }
 
   return (
-    <BtnCheck>
+    <BtnCheck className={className ? className : ""}>
       <label>
         <input onChange={handleChange} type="checkbox" disabled={disabled} />
         <span>{label}</span>
@@ -160,17 +160,22 @@ const BtnCheck = styled.div`
   input {
     display: none;
     &:checked ~ span {
-      border: 1px solid ${theme.colors.primary};
-      color: ${theme.colors.primary};
+      background: ${theme.colors.primary};
+      border: 2px solid ${theme.colors.primaryDark};
+      color: ${theme.colors.white};
     }
   }
+  label {
+    cursor: pointer;
+  }
   span {
+    transition: all ${theme.extra.transition};
     min-height: ${theme.spaces.space9};
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid ${theme.colors.grey};
-    border-radius: 3px;
+    border: 2px solid ${theme.colors.primary};
+    border-radius: ${theme.extra.radiusBig};
     font-size: ${theme.font.size.minor};
   }
 `;

@@ -9,6 +9,7 @@ const Button = dynamic(() => import("./Button"), { loading: () => null });
 const Card = dynamic(() => import("./Card"), { loading: () => null });
 const Calendar = dynamic(() => import("./Calendar"), { loading: () => null });
 const Checkbox = dynamic(() => import("./Checkbox"), { loading: () => null });
+const Clicker = dynamic(() => import("./Clicker"), { loading: () => null });
 const Collapse = dynamic(() => import("./Tabs/collapse"), { loading: () => null });
 const DatePicker = dynamic(() => import("./DatePicker"), { loading: () => null });
 const Dropdown = dynamic(() => import("./Dropdown"), { loading: () => null });
@@ -44,6 +45,7 @@ export {
   Card,
   Calendar,
   Checkbox,
+  Clicker,
   Collapse,
   DatePicker,
   Dropdown,

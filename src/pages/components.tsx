@@ -512,8 +512,13 @@ const Components = ({ global }: GlobalPageProps) => {
             <Icon name="grid" size="45" color={theme.colors.primary} />
           </Modal>
         </Section>
-        <Section title="Chcekbox">
+        <Section title="Checkbox">
           <Checkbox label="Test label checkbox" />
+        </Section>
+        <Section title="Checkbox button">
+          <Checkbox className="mb-3" buttonMode label="Test 1" />
+          <Checkbox className="mb-3" buttonMode label="Test 2" />
+          <Checkbox buttonMode label="Test 3" />
         </Section>
         <Section title="Radio">
           <Checkbox label="In linea" checked={inline} onChange={handleInline} />

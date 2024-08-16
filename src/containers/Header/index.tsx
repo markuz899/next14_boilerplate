@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { HeaderProps } from "./interface";
-import { Icon, Input } from "@/components";
+import { Clicker, Icon, Input } from "@/components";
 import { CDN_PATH, navItems } from "@/utils/constants";
 
 const Header: React.FC<HeaderProps> = ({
@@ -25,9 +25,11 @@ const Header: React.FC<HeaderProps> = ({
       <MenuContent>
         <div className={`menu-icon ${isSmall ? "isSmall" : "notSmall"}`}>
           {isSmall && (
-            <div onClick={toggle}>
-              <Icon name="hamburger" />
-            </div>
+            <Clicker radius>
+              <div onClick={toggle}>
+                <Icon name="hamburger" />
+              </div>
+            </Clicker>
           )}
           <Link href="/">
             <div className="agency">

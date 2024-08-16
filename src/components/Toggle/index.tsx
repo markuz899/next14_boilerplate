@@ -16,6 +16,7 @@ const Toggle: React.FC<ToggleProps> = ({
   disabled = false,
 }) => {
   const [state, setState] = useState(checked || false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   useEffect(() => {
     setState(checked || false);
@@ -26,10 +27,29 @@ const Toggle: React.FC<ToggleProps> = ({
     setState(data.value);
     onChange && onChange(data);
   };
+
+  const handleMouseDown = () => {
+    setIsClicked(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsClicked(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsClicked(false);
+  };
+
   return (
     <Wrapper className={className}>
-      <Slider $disabled={disabled}>
+      <Slider
+        $disabled={disabled}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+      >
         <SliderInput
+          $disabled={disabled}
           type="checkbox"
           name={name}
           $colorBg={colorBg}
@@ -39,7 +59,7 @@ const Toggle: React.FC<ToggleProps> = ({
           disabled={disabled}
         />
         <SliderSpan
-          className="sliderBg"
+          className={`sliderBg ${isClicked ? "clicked" : ""}`}
           $disabled={disabled}
           $colorBg={colorBg}
           $checked={state}
@@ -92,7 +112,7 @@ const Slider = styled.label<{ $disabled: boolean }>`
   }
 `;
 
-const SliderInput = styled.input<{ $colorBg?: string }>`
+const SliderInput = styled.input<{ $colorBg?: string; $disabled: boolean }>`
   display: none;
   &:focus + .sliderBg {
     box-shadow: 0 0 1px #2196f3;
@@ -141,6 +161,10 @@ const SliderSpan = styled.span<{
   }
   &:hover {
     border-color: ${({ $colorBg }) => $colorBg};
+  }
+  &.clicked {
+    transition: none;
+    box-shadow: 0 0 0 3px ${theme.colors.primary}60;
   }
 `;
 
