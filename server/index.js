@@ -69,6 +69,7 @@ const signale = new Signale(options);
     signale.info(`Version: ${info.version}`);
     signale.info(`Author: ${info.author}`);
     signale.info(`Server running at http://${host}:${port}`);
+    signale.info(`Theme: ${process.env.NEXT_PUBLIC_TENANT}`);
 
     if (dev) {
       signale.warn(`isProd: ${!dev}`);
@@ -76,7 +77,7 @@ const signale = new Signale(options);
       signale.success(`isProd: ${!dev}`);
     }
 
-    signale.success(`${process.env.NEXT_PUBLIC_TENANT} ready`);
+    signale.success(`Application: started`);
   } catch (err) {
     signale.fatal(err);
     process.exit(1);

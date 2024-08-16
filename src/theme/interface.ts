@@ -16,6 +16,7 @@ export interface ITheme {
     greyIcon: string;
     lightDark: string;
     lightGrey: string;
+    sidebar: string;
     navbar: string;
     navbarText: string;
     primary: string;

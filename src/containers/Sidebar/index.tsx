@@ -6,6 +6,7 @@ import { CDN_PATH, navItems } from "@/utils/constants";
 import { Icon } from "@/components";
 import theme from "@/theme";
 import Link from "next/link";
+import { useAuth } from "@/context";
 
 const Menu: React.FC<MenuProps> = ({
   state,
@@ -14,9 +15,11 @@ const Menu: React.FC<MenuProps> = ({
   toggleTheme,
   global,
 }) => {
+  const { logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const path = router.pathname;
+  const { isInstalled, canInstall, handleInstallPrompt } = global.pwa;
 
   useEffect(() => {
     setIsMenuOpen(state);
@@ -28,50 +31,88 @@ const Menu: React.FC<MenuProps> = ({
   };
 
   const renderHead = () => (
-    <HeadRight onClick={toggle}>
-      <div className="agency-logo">
-        {global?.agency?.logo?.path && (
-          <img
-            src={`${CDN_PATH}/${global?.agency?.logo?.path}`}
-            alt="Logo svg di sgasgas"
-            width={200}
-            height={100}
-          />
-        )}
+    <Head>
+      <div className="w-100">
+        <div className="agency">
+          <Icon
+            name="home"
+            size={theme.spaces.space6}
+            margin="0 10px 0 0"
+            color={theme.colors.primary}
+          />{" "}
+          <p>{process.env.NEXT_PUBLIC_SITE_NAME}</p>
+        </div>
+        <div onClick={toggle}>
+          <Icon name="close" color={theme.colors.dark} />
+        </div>
       </div>
-      <Icon className="close-icon" name="close" />
-    </HeadRight>
+    </Head>
   );
 
   const renderMenu = () => (
     <List>
-      {navItems?.map((item) => {
-        return (
-          <Link legacyBehavior key={item?.path} href={item?.path}>
-            <a className={router.asPath == item?.path ? "active" : ""}>
-              <p>{item?.text}</p>
+      <div className="content-menu">
+        {navItems?.map((item) => {
+          return (
+            <Link legacyBehavior key={item?.path} href={item?.path}>
+              <a className={router.asPath == item?.path ? "active" : ""}>
+                <p>{item?.text}</p>
+              </a>
+            </Link>
+          );
+        })}
+        <div className="divider"></div>
+
+        {!global.isAuth && (
+          <Link
+            legacyBehavior
+            href={global.isAuth ? "/profile/info" : "/login"}
+          >
+            <a
+              className={
+                path.includes("/profile/info") ||
+                path.includes("/profile/orders")
+                  ? "active"
+                  : ""
+              }
+            >
+              <p>{global.isAuth ? "Profile" : "Login"}</p>
             </a>
           </Link>
-        );
-      })}
-      <Link legacyBehavior href={global.isAuth ? "/wishlist" : "/login"}>
-        <a className={path === "/wishlist" ? "active" : ""}>
-          <p>Wishlist</p>
-        </a>
-      </Link>
-      <Link legacyBehavior href={global.isAuth ? "/profilo" : "/login"}>
-        <a className={path === "/profilo" ? "active" : ""}>
-          <p>Profilo</p>
-        </a>
-      </Link>
+        )}
+      </div>
     </List>
+  );
+
+  const renderFooter = () => (
+    <Footer>
+      <div className="w-100">
+        {global?.isAuth && (
+          <div className="item" onClick={logout}>
+            <p>LOGOUT</p>
+          </div>
+        )}
+        {!isInstalled && canInstall && (
+          <div className="install-prompt" onClick={handleInstallPrompt}>
+            <p>Install pwa</p>
+            <Icon
+              name="download"
+              color={theme.colors.white}
+              margin="0 0 0 10px"
+              size={theme.spaces.space3}
+            />
+          </div>
+        )}
+      </div>
+    </Footer>
   );
 
   return (
     <MenuLeft $wide={isMenuOpen} $isMobile={isMobile}>
       <div className="padder">
-        {renderHead()}
+        {isMobile && renderHead()}
         {renderMenu()}
+        {renderFooter()}
       </div>
     </MenuLeft>
   );
@@ -79,32 +120,52 @@ const Menu: React.FC<MenuProps> = ({
 
 export default React.memo(Menu);
 
-const HeadRight = styled.div`
+const Head = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border-bottom: 1px solid ${theme.colors.borderComponent};
-  padding-bottom: ${theme.spaces.space4};
   cursor: pointer;
-  .agency-logo {
-    img {
+  .w-100 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: ${theme.spaces.space4};
+    .agency {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: auto;
     }
   }
-  .close-icon {
-    position: absolute;
-    right: ${theme.spaces.space4};
-  }
-  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    .agency-logo {
-      img {
-        width: 50px;
+  .info-credits {
+    color: ${theme.colors.lightGrey};
+    font-size: ${theme.font.size.small};
+    &:hover {
+      .credits {
+        color: inherit;
       }
+    }
+  }
+`;
+
+const Footer = styled.div`
+  width: 100%;
+  display: flex;
+  .w-100 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: ${theme.spaces.space4};
+    select {
+      user-select: none;
+      outline: none;
+      background: transparent;
+      color: ${({ theme }) => theme.text};
+      height: 30px;
+      margin: 0 5px;
+    }
+    .install-prompt {
+      display: flex;
+      align-items: center;
     }
   }
 `;
@@ -112,7 +173,7 @@ const HeadRight = styled.div`
 const Container = styled.div`
   box-sizing: border-box;
   flex-shrink: 0;
-  z-index: 1900;
+  z-index: 2101;
   transition: all 0.5s cubic-bezier(0.86, 0, 0.57, 1);
   padding: 0;
   height: 100svh;
@@ -151,7 +212,7 @@ const List = styled.div`
       }
     }
     &.active {
-      color: ${theme.colors.white};
+      color: ${theme.colors.primary};
       p {
         width: fit-content;
         position: relative;
@@ -162,11 +223,11 @@ const List = styled.div`
           bottom: -${theme.spaces.space1};
           width: 100%;
           height: 2px;
-          background: rgb(0, 173, 181);
+          background: ${theme.colors.primary};
           background: linear-gradient(
             90deg,
             ${theme.colors.primary} 0%,
-            ${theme.colors.success} 100%
+            ${theme.colors.error} 100%
           );
         }
       }
@@ -183,11 +244,11 @@ const List = styled.div`
           bottom: -${theme.spaces.space1};
           width: 100%;
           height: 2px;
-          background: rgb(0, 173, 181);
+          background: ${theme.colors.primary};
           background: linear-gradient(
             90deg,
             ${theme.colors.primary} 0%,
-            ${theme.colors.success} 100%
+            ${theme.colors.error} 100%
           );
         }
       }
@@ -199,11 +260,19 @@ const List = styled.div`
     justify-content: center;
     align-items: center;
   }
+  .content-menu {
+    padding: ${theme.spaces.space4};
+    .divider {
+      height: 2px;
+      background: ${theme.colors.primaryLight};
+      width: 100%;
+    }
+  }
 `;
 
 const MenuLeft = styled(Container)<{ $wide: boolean; $isMobile: boolean }>`
   ${(props) => (props.$isMobile ? mobile : desktop)};
-  background: ${theme.colors.navbar};
+  background: ${theme.colors.sidebar};
   .padder {
     padding: 20px;
   }

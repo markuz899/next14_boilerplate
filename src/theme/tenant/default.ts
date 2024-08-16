@@ -16,6 +16,7 @@ const defaultTheme = {
     greyIcon: "#DADEE1",
     lightDark: "#615659",
     lightGrey: "#9DA4AF",
+    sidebar: "#ffffff",
     navbar: "#FAFAFA",
     navbarText: "#231F20",
     primary: "#0077b6",

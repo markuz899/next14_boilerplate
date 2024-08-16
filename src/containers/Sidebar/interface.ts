@@ -10,7 +10,8 @@ export interface GlobalType {
       inHeader: boolean;
     }>;
   };
-  isAuth: boolean;
+  isAuth?: boolean;
+  pwa?: any;
 }
 
 export interface MenuProps {
