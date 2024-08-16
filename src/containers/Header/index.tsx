@@ -106,6 +106,7 @@ const Head = styled.div<{ $isSmall: boolean; isOpen?: boolean }>`
   z-index: 2100;
   transition: ${theme.extra.transitionFluid};
   background: ${({ theme }) => theme.navbar};
+  backdrop-filter: blur(10px);
   left: ${(props) => (props.isOpen ? "270px" : "0")};
   right: 0;
   border-bottom: 1px solid ${theme.colors.greyIcon};

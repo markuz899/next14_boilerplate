@@ -25,8 +25,7 @@ declare global {
 interface MultiRangeSliderProps {
   min: number;
   max: number;
-  onChange?: (value: { name: string; min: number; max: number }) => void;
-  onInput?: (value: {
+  onChange?: (value: {
     name: string;
     value: { min: number; max: number };
   }) => void;
@@ -39,7 +38,6 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
   min = 1,
   max = 100,
   onChange,
-  onInput,
   name = "Range slider",
   defaultMin,
   defaultMax,
@@ -52,12 +50,6 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
     setMinVal(defaultMin || min);
     setMaxVal(defaultMax || max);
   }, [defaultMin, defaultMax, min, max]);
-
-  useEffect(() => {
-    if (onChange) {
-      onChange({ name, min: minVal, max: maxVal });
-    }
-  }, [minVal, maxVal, onChange]);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -85,16 +77,6 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
         }
       `);
 
-      const handleChange = (evt: Event) => {
-        const customEvent = evt as CustomEvent;
-        const min = (customEvent.target as any)?.value1;
-        const max = (customEvent.target as any)?.value2;
-        setMinVal(min);
-        setMaxVal(max);
-        onInput && onInput({ name, value: { min, max } });
-        sliderRef.current?.blur();
-      };
-
       slider.addEventListener("mouseleave", handleChange);
       slider.addEventListener("click", handleChange);
       slider.addEventListener("touchend", handleChange);
@@ -104,7 +86,18 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
         slider.removeEventListener("touchend", handleChange);
       };
     }
-  }, [onInput, name]);
+  }, [name]);
+
+  const handleChange = (evt: Event) => {
+    if (evt.type == "mouseleave") return;
+    const customEvent = evt as CustomEvent;
+    const min = (customEvent.target as any)?.value1;
+    const max = (customEvent.target as any)?.value2;
+    setMinVal(min);
+    setMaxVal(max);
+    onChange && onChange({ name, value: { min, max } });
+    sliderRef.current?.blur();
+  };
 
   return (
     <ContentRange>

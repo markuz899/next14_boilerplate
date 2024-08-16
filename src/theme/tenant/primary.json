@@ -16,7 +16,7 @@
     "greyIcon": "#DADEE1",
     "lightDark": "#615659",
     "lightGrey": "#9DA4AF",
-    "navbar": "#FAFAFA",
+    "navbar": "transparent",
     "navbarText": "#231F20",
     "primary": "#0077b6",
     "primaryDark": "#005D8F",
