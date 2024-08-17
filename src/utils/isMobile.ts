@@ -16,7 +16,6 @@ const isMobile = () => {
 
 const isAppleDevice = () => {
   const userAgent = navigator.userAgent;
-  console.log(userAgent);
 
   return /iPad|iPhone|iPod|Macintosh/.test(userAgent);
 };
