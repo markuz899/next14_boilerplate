@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useResize from "./useResize";
-import isMobile from "@/utils/isMobile";
+import { isMobile } from "@/utils/isMobile";
 
 const useBreakpoints = () => {
   const { width }: any = useResize();

@@ -1,4 +1,4 @@
-import isMobile from "@/utils/isMobile";
+import { isMobile } from "@/utils/isMobile";
 
 const useDevice = () => isMobile();
 

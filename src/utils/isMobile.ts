@@ -14,4 +14,11 @@ const isMobile = () => {
   return isMob;
 };
 
-export default isMobile;
+const isAppleDevice = () => {
+  const userAgent = navigator.userAgent;
+  console.log(userAgent);
+
+  return /iPad|iPhone|iPod|Macintosh/.test(userAgent);
+};
+
+export { isMobile, isAppleDevice };

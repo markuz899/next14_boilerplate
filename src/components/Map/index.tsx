@@ -19,6 +19,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import { isAppleDevice } from "@/utils/isMobile";
 
 const DEFAULTZOOM = 12;
 
@@ -163,6 +164,7 @@ const Map = ({
   radius,
   dinamic,
 }: any) => {
+  const [device, setDevice] = useState<boolean>();
   const [block, setBlock] = useState(false);
   const map: any = useRef();
 
@@ -175,6 +177,11 @@ const Map = ({
   const handleBlock = () => {
     setBlock(!block);
   };
+
+  useEffect(() => {
+    const d = isAppleDevice();
+    setDevice(d);
+  }, []);
 
   useEffect(() => {
     if (map && map?.current && selection && selection.position && block) {
@@ -210,6 +217,7 @@ const Map = ({
   }, []);
 
   const colorMap = {
+    default: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     light: "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
     dark: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
     sat: "https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}",
@@ -262,7 +270,10 @@ const Map = ({
       />
       <LayersControl>
         <LayersControl.BaseLayer checked name="Map">
-          <TileLayer attribution="Google Maps" url={colorMap.light} />
+          <TileLayer
+            attribution="Google Maps"
+            url={device ? colorMap.light : colorMap.default}
+          />
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name="Satellite">
           <TileLayer attribution="Google Maps Satellite" url={colorMap.sat} />
