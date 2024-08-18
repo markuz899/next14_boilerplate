@@ -24,6 +24,10 @@ export const Layout = ({
     // eslint-disable-next-line
   }, []);
 
+  const closeSiderMenu = () => {
+    if (menuState) setMenuState(false);
+  };
+
   return (
     <LayoutContext.Provider value={{ menuState, setMenuState }}>
       <Head>
@@ -38,7 +42,7 @@ export const Layout = ({
             global={global}
           />
         )}
-        <Page>
+        <Page onClick={closeSiderMenu}>
           <Main className={`bodys`}>
             <Header
               global={global}
