@@ -164,6 +164,8 @@ const MenuContent = styled.div<{ $isSmall: boolean }>`
     }
     &.isSmall {
       padding: 0;
+      width: 100%;
+      justify-content: space-between;
       .agency {
         margin-left: 20px;
         img {
