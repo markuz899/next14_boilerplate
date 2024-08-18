@@ -286,6 +286,7 @@ const desktop = css<MenuLeftProps>`
   position: relative;
   overflow-x: hidden;
   overflow-y: hidden;
+  border-right: 1px solid ${theme.colors.greyIcon};
 `;
 
 const mobile = css<MenuLeftProps>`

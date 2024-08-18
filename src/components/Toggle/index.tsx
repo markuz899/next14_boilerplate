@@ -65,7 +65,7 @@ const Toggle: React.FC<ToggleProps> = ({
           $checked={state}
         >
           <span>
-            {state ? (
+            {/* {state ? (
               <Icon
                 name="check"
                 color={theme.colors.success}
@@ -78,7 +78,7 @@ const Toggle: React.FC<ToggleProps> = ({
                 size={theme.spaces.space2}
                 margin="0px 9px 0 0"
               />
-            )}
+            )} */}
           </span>
         </SliderSpan>
       </Slider>
@@ -119,9 +119,9 @@ const SliderInput = styled.input<{ $colorBg?: string; $disabled: boolean }>`
   }
   &:checked + .sliderBg {
     background-color: ${(props) => props.$colorBg};
-    border: 2px solid ${theme.colors.primaryLight};
+    border: 2px solid ${theme.colors.primaryDark};
     &:before {
-      transform: translateX(24px);
+      transform: translateX(25px);
       background-color: ${theme.colors.white};
     }
   }
@@ -145,22 +145,23 @@ const SliderSpan = styled.span<{
   transition: 0.4s;
   border-radius: ${theme.spaces.space3};
   border: 2px solid
-    ${(p) => (p.$disabled ? theme.colors.greyIcon : theme.colors.primaryDark)};
+    ${(p) => (p.$disabled ? theme.colors.greyIcon : theme.colors.greyIcon)};
   opacity: 1;
   &:before {
     position: absolute;
     content: "";
-    height: 17px;
-    width: 17px;
-    left: 3px;
-    bottom: 2px;
+    height: 19px;
+    width: 19px;
+    left: 1px;
+    bottom: 1px;
     background-color: ${theme.colors.white};
     transition: 0.4s;
     border-radius: 50%;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
   }
   &:hover {
-    border-color: ${({ $colorBg }) => $colorBg};
+    border-color: ${({ $colorBg, $disabled }) =>
+      $disabled ? "inherit" : theme.colors.primaryDark};
   }
   &.clicked {
     transition: none;

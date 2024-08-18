@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { HeaderProps } from "./interface";
-import { Clicker, Icon, Input } from "@/components";
+import { Button, Clicker, Icon, Input } from "@/components";
 import { CDN_PATH, navItems } from "@/utils/constants";
 
 const Header: React.FC<HeaderProps> = ({
@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <Head $isSmall={isSmall}>
-      <MenuContent>
+      <MenuContent $isSmall={isSmall}>
         <div className={`menu-icon ${isSmall ? "isSmall" : "notSmall"}`}>
           {isSmall && (
             <Clicker radius>
@@ -66,13 +66,17 @@ const Header: React.FC<HeaderProps> = ({
                     {navItems?.map((item) => {
                       return (
                         <Link legacyBehavior key={item?.path} href={item?.path}>
-                          <a
-                            className={`text-uppercase ${
-                              router.asPath === item?.path ? "active" : ""
-                            }`}
+                          <Button
+                            round
+                            size="sm"
+                            kind={
+                              router.asPath === item?.path
+                                ? "primary"
+                                : "inverse-primary"
+                            }
                           >
                             {item?.text}
-                          </a>
+                          </Button>
                         </Link>
                       );
                     })}
@@ -129,10 +133,11 @@ const Head = styled.div<{ $isSmall: boolean; isOpen?: boolean }>`
     padding: ${theme.spaces.space2} ${theme.spaces.space3};
   }
 `;
-const MenuContent = styled.div`
+const MenuContent = styled.div<{ $isSmall: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: ${({ $isSmall }) => ($isSmall ? 0 : theme.spaces.space2)};
   .menu-icon {
     padding: 0 ${theme.spaces.space6};
     cursor: pointer;
@@ -185,50 +190,12 @@ const MenuContent = styled.div`
         .section-link {
           margin-right: 20px;
           font-size: ${theme.font.size.tiny};
-          a {
+          button {
             cursor: pointer;
             position: relative;
             margin-left: 30px;
             &:first-child {
               margin-left: 0;
-            }
-            &:hover {
-              &:after {
-                content: "";
-                display: block;
-                position: absolute;
-                top: -31px;
-                width: 100%;
-                height: 4px;
-                background: ${theme.colors.primary};
-                border-radius: ${theme.extra.radiusBig};
-                border-top-left-radius: 0px;
-                border-top-right-radius: 0px;
-              }
-              &.warning {
-                &:after {
-                  background: ${theme.colors.warning};
-                }
-              }
-            }
-            &.active {
-              &:after {
-                content: "";
-                display: block;
-                position: absolute;
-                top: -31px;
-                width: 100%;
-                height: 4px;
-                background: ${theme.colors.primary};
-                border-radius: ${theme.extra.radiusBig};
-                border-top-left-radius: 0px;
-                border-top-right-radius: 0px;
-              }
-              &.warning {
-                &:after {
-                  background: ${theme.colors.warning};
-                }
-              }
             }
           }
         }
@@ -248,34 +215,6 @@ const MenuContent = styled.div`
               position: relative;
               &.mr-3 {
                 margin-right: ${theme.spaces.space6};
-              }
-              &:hover {
-                &:after {
-                  content: "";
-                  display: block;
-                  position: absolute;
-                  top: -25px;
-                  width: 100%;
-                  height: 4px;
-                  background: ${theme.colors.primary};
-                  border-radius: ${theme.extra.radiusBig};
-                  border-top-left-radius: 0px;
-                  border-top-right-radius: 0px;
-                }
-              }
-              &.active {
-                &:after {
-                  content: "";
-                  display: block;
-                  position: absolute;
-                  top: -25px;
-                  width: 100%;
-                  height: 4px;
-                  background: ${theme.colors.primary};
-                  border-radius: ${theme.extra.radiusBig};
-                  border-top-left-radius: 0px;
-                  border-top-right-radius: 0px;
-                }
               }
             }
           }
