@@ -67,7 +67,11 @@ const Card = ({
             </div>
             {renderFooter && !mini && (
               <div className="card-action">
-                <Button kind="primary" fluid className="btn btn-redirect">
+                <Button
+                  kind="inverse-primary"
+                  fluid
+                  className="btn btn-redirect"
+                >
                   <b>DETTAGLI</b>
                 </Button>
               </div>
@@ -135,6 +139,7 @@ const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
           margin-bottom: ${theme.spaces.space2};
           &.between {
             justify-content: space-between;
+            flex-wrap: wrap-reverse;
           }
           span {
             margin-right: 5px;
@@ -152,18 +157,6 @@ const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
       ${isHover}
     }
     ${(p) => p.$active && isActive}
-  }
-  button {
-    text-transform: uppercase;
-    height: inherit;
-    &:hover {
-      border-color: inherit;
-    }
-    &:active,
-    &:focus {
-      animation: none !important;
-      transform: none !important;
-    }
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     .content-card {
