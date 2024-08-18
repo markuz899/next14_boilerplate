@@ -256,8 +256,15 @@ const Components = ({ global }: GlobalPageProps) => {
     );
   };
 
+  const handleSelectChange = (data: any, options: any) => {
+    const exists = options.some((cat: any) => cat.value === data?.value);
+    if (exists || data?.value == "") {
+      console.log("select change", data);
+    }
+  };
+
   return (
-    <Layout global={global} title="Components">
+    <Layout global={{ ...global, handleSelectChange }} title="Components">
       <Content>
         <h3>Components</h3>
         <Section title="Accordion">

@@ -1,25 +1,11 @@
-export interface GlobalType {
-  agency?: {
-    logo?: {
-      path?: string;
-    };
-    pages?: Array<{
-      path: string;
-      title: string;
-      isActive: boolean;
-      inHeader: boolean;
-    }>;
-  };
-  isAuth?: boolean;
-  pwa?: any;
-}
+import { Global } from "../Header/interface";
 
 export interface MenuProps {
   state: boolean;
   setState: React.Dispatch<React.SetStateAction<boolean>>;
   isMobile: boolean;
   toggleTheme?: () => void;
-  global: GlobalType;
+  global: Global;
 }
 
 export interface MenuLeftProps {

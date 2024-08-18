@@ -13,10 +13,23 @@ export interface Agency {
 }
 
 export interface Global {
-  agency: Agency;
+  agency?: {
+    logo?: {
+      path?: string;
+    };
+    pages?: Array<{
+      path: string;
+      title: string;
+      isActive: boolean;
+      inHeader: boolean;
+    }>;
+  };
+  isAuth?: boolean;
+  pwa?: any;
   authentication: {
     isAuth: boolean;
   };
+  handleSelectChange?: any;
 }
 
 export interface HeaderProps {

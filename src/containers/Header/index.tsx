@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({
   state,
   setState,
 }) => {
-  const { authentication } = global;
+  const { authentication, handleSelectChange } = global;
   const { isAuth } = authentication;
   const router = useRouter();
   const path = router.pathname;
@@ -55,11 +55,11 @@ const Header: React.FC<HeaderProps> = ({
                 rounded
                 clearable
                 enableInput
-                name="city"
+                name="search"
                 showArrow={false}
-                onChange={() => {}}
+                onChange={handleSelectChange}
                 iconBefore="search"
-                placeholder="Cosa stai cercando?"
+                placeholder="Di cosa hai bisogno?"
                 options={mokCategories}
               />
             </div>

@@ -31,7 +31,7 @@ export const Layout = ({
   return (
     <LayoutContext.Provider value={{ menuState, setMenuState }}>
       <Head>
-        <title>{title || "Fake title"}</title>
+        <title>{`Nearme - ${title}` || "Nearme"}</title>
       </Head>
       <Flex>
         {(isSmall || isMedium) && (

@@ -14,6 +14,7 @@ export interface LayoutProps {
   title?: string;
   background?: string;
   className?: string;
+  handleSelectChange?: any;
 }
 
 export interface GlobalPageProps {

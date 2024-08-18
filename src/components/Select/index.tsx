@@ -110,9 +110,9 @@ const Select: React.FC<SelectProps> = ({
       } else if (newSelection.length > 1) {
         setState(`${newSelection.length} selezionati`);
       }
-      onChange({ ...item, label, value: selected, name: name || "" });
+      onChange({ ...item, label, value: selected, name: name || "" }, options);
     } else {
-      onChange({ ...item, label, value, name: name || "" });
+      onChange({ ...item, label, value, name: name || "" }, options);
       setState(label);
       callback();
     }
@@ -136,7 +136,7 @@ const Select: React.FC<SelectProps> = ({
         );
         if (!visible) show();
       }
-      onChange({ name: name || "", value: data.value });
+      onChange({ name: name || "", value: data.value }, options);
     }
   };
 
@@ -166,7 +166,7 @@ const Select: React.FC<SelectProps> = ({
     if (e.key === "Enter") {
       const { label, value } = filtered[hover];
       setState(label);
-      onChange({ label, value, name: name || "" });
+      onChange({ label, value, name: name || "" }, options);
       close();
     }
     if (e.key === "Tab") close();
@@ -205,7 +205,8 @@ const Select: React.FC<SelectProps> = ({
         placeholder={placeholder}
         topPlaceholder={topPlaceholder}
         labelBgColor={labelBgColor}
-        value={state as string}
+        importantDefault
+        defaultValue={state as string}
         name={name || ""}
         onChange={(data: any) => handleOnChange(data, visible, show)}
         inputSelectAction={{ visible, show, close }}

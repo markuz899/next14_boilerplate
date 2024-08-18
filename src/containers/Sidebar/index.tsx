@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useRouter } from "next/router";
 import { MenuLeftProps, MenuProps } from "./interface";
-import { CDN_PATH, navItems } from "@/utils/constants";
-import { Icon } from "@/components";
+import { CDN_PATH, mokCategories, navItems } from "@/utils/constants";
+import { Icon, Select } from "@/components";
 import theme from "@/theme";
 import Link from "next/link";
 import { useAuth } from "@/context";
@@ -15,11 +15,12 @@ const Menu: React.FC<MenuProps> = ({
   toggleTheme,
   global,
 }) => {
+  const { pwa, handleSelectChange } = global;
   const { logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const path = router.pathname;
-  const { isInstalled, canInstall, handleInstallPrompt } = global.pwa;
+  const { isInstalled, canInstall, handleInstallPrompt } = pwa;
 
   useEffect(() => {
     setIsMenuOpen(state);
@@ -50,6 +51,19 @@ const Menu: React.FC<MenuProps> = ({
 
   const renderMenu = () => (
     <List>
+      <div className="content-input">
+        <Select
+          rounded
+          clearable
+          enableInput
+          name="search"
+          showArrow={false}
+          onChange={handleSelectChange}
+          iconBefore="search"
+          placeholder="Di cosa hai bisogno?"
+          options={mokCategories}
+        />
+      </div>
       <div className="content-menu">
         {navItems?.map((item) => {
           return (
