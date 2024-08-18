@@ -283,7 +283,8 @@ const MenuLeft = styled(Container)<{ $wide: boolean; $isMobile: boolean }>`
 
 const desktop = css<MenuLeftProps>`
   width: ${(props) => (props.$wide ? "320px" : "0")};
-  position: relative;
+  position: fixed;
+  top: 61px;
   overflow-x: hidden;
   overflow-y: hidden;
   border-right: 1px solid ${theme.colors.greyIcon};
