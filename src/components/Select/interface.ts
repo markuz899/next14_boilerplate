@@ -1,5 +1,5 @@
 export interface SelectProps {
-  options: { label: string; value: string }[];
+  options: { label: string; value: string | any; [key: string]: any }[];
   onChange: any;
   onInputChange?: (data: { value: string }) => void;
   placeholder?: string;
@@ -21,4 +21,6 @@ export interface SelectProps {
   disabled?: boolean;
   fluid?: boolean;
   width?: boolean;
+  rounded?: boolean;
+  clearable?: boolean;
 }

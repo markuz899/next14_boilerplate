@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { HeaderProps } from "./interface";
-import { Button, Clicker, Icon, Input } from "@/components";
-import { CDN_PATH, navItems } from "@/utils/constants";
+import { Button, Clicker, Icon, Input, Select } from "@/components";
+import { CDN_PATH, mokCategories, navItems } from "@/utils/constants";
 
 const Header: React.FC<HeaderProps> = ({
   global,
@@ -51,12 +51,16 @@ const Header: React.FC<HeaderProps> = ({
         {!isSmall && (
           <>
             <div className="flex nopadd">
-              <Input
-                type="search"
-                placeholder="Input search"
+              <Select
+                rounded
+                clearable
+                enableInput
+                name="city"
+                showArrow={false}
+                onChange={() => {}}
                 iconBefore="search"
-                name="name"
-                rounded={true}
+                placeholder="Cosa stai cercando?"
+                options={mokCategories}
               />
             </div>
             <div className="flex">
@@ -174,7 +178,7 @@ const MenuContent = styled.div<{ $isSmall: boolean }>`
     &.nopadd {
       flex: 1;
       padding: 0;
-      > div {
+      .select-input {
         margin-top: 0;
       }
     }

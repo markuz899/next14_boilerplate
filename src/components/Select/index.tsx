@@ -28,6 +28,8 @@ const Select: React.FC<SelectProps> = ({
   withFilter = false,
   disabled,
   fluid = true,
+  rounded = false,
+  clearable = false,
   width,
 }) => {
   const [disable, setDisable] = useState(disabled || false);
@@ -215,6 +217,9 @@ const Select: React.FC<SelectProps> = ({
         readOnly={readOnly}
         withFilter={withFilter || undefined}
         disabled={disable}
+        rounded={rounded}
+        clearable={clearable}
+        className="select-input"
       />
     </Target>
   );
