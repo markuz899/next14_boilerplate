@@ -125,7 +125,7 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       kind={buttonKind}
       reverse={reverse || undefined}
-      round={round || undefined}
+      $round={round || undefined}
       $fluid={fluid || undefined}
       size={buttonSize}
       className={`${className ? className : ""} ${isClicked ? "clicked" : ""}`}
@@ -146,7 +146,7 @@ const Button: React.FC<ButtonProps> = ({
         href={href}
         kind={buttonKind}
         reverse={reverse}
-        round={round}
+        $round={round}
         size={buttonSize}
       >
         {inner}

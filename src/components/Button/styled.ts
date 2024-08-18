@@ -264,11 +264,11 @@ export const StyledButton = styled.button<StyledButtonProps>`
     align-items: center;
     justify-content: center;
     margin: ${(props) =>
-      props.reverse ? `0 0 0 1rem;` : `0 ${props.round ? "0" : "1rem"} 0 0;`};
+      props.reverse ? `0 0 0 1rem;` : `0 ${props.$round ? "0" : "1rem"} 0 0;`};
   }
   ${(props) =>
-    props.round
-      ? `border-radius:50%;`
+    props.$round
+      ? `border-radius:50px;`
       : `
     border-radius: 8px;
     `};

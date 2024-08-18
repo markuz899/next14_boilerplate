@@ -14,7 +14,9 @@ export interface Agency {
 
 export interface Global {
   agency: Agency;
-  isAuth: boolean;
+  authentication: {
+    isAuth: boolean;
+  };
 }
 
 export interface HeaderProps {

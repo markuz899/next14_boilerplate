@@ -6,8 +6,7 @@ export const AUTH_KEY = "application_auth";
 export const USER_KEY = "application_user";
 
 export const navItems = [
-  { id: 1, path: "/", text: "Home" },
-  { id: 2, path: "/login", text: "Login" },
+  { id: 2, path: "/login", text: "Registrati o accedi" },
   { id: 3, path: "/components", text: "Components" },
 ];
 

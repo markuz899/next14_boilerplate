@@ -27,6 +27,6 @@ export interface StyledButtonProps {
   size: HeightKeys;
   $fluid?: boolean;
   reverse?: boolean;
-  round?: boolean;
+  $round?: boolean;
   kind: KindKeys;
 }

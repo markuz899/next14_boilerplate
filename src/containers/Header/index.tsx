@@ -13,6 +13,8 @@ const Header: React.FC<HeaderProps> = ({
   state,
   setState,
 }) => {
+  const { authentication } = global;
+  const { isAuth } = authentication;
   const router = useRouter();
   const path = router.pathname;
 
@@ -27,16 +29,20 @@ const Header: React.FC<HeaderProps> = ({
           {isSmall && (
             <Clicker radius>
               <div onClick={toggle}>
-                <Icon name="hamburger" />
+                <Icon
+                  name="hamburger"
+                  size={theme.spaces.space5}
+                  color={theme.colors.primary}
+                />
               </div>
             </Clicker>
           )}
           <Link href="/">
             <div className="agency">
               <Icon
-                name="home"
+                name="logo"
                 color={theme.colors.primary}
-                size={theme.spaces.space5}
+                size={theme.spaces.space8}
                 margin="0 10px 0 0"
               />
             </div>
@@ -71,23 +77,25 @@ const Header: React.FC<HeaderProps> = ({
                       );
                     })}
                   </div>
-                  <div className="section-icon">
-                    <div className="icon">
-                      <Link href={global.isAuth ? "/profilo" : "/login"}>
-                        <div
-                          className={`icon-container ${
-                            path.includes("/profilo") ? "active" : ""
-                          }`}
-                        >
-                          <Icon
-                            name="user"
-                            color={theme.colors.primary}
-                            size={theme.spaces.space5}
-                          />
-                        </div>
-                      </Link>
+                  {isAuth && (
+                    <div className="section-icon">
+                      <div className="icon">
+                        <Link href={isAuth ? "/profilo" : "/login"}>
+                          <div
+                            className={`icon-container ${
+                              path.includes("/profilo") ? "active" : ""
+                            }`}
+                          >
+                            <Icon
+                              name="user"
+                              color={theme.colors.primary}
+                              size={theme.spaces.space5}
+                            />
+                          </div>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -178,6 +186,7 @@ const MenuContent = styled.div`
           margin-right: 20px;
           font-size: ${theme.font.size.tiny};
           a {
+            cursor: pointer;
             position: relative;
             margin-left: 30px;
             &:first-child {

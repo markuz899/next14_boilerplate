@@ -392,14 +392,17 @@ const Components = ({ global }: GlobalPageProps) => {
         <Section title="Buttons">
           <div className="flex flex-col gap-3">
             <div className="text-left">
+              <Button round className="mr-3" size="sm" kind="primary">
+                SM round
+              </Button>
               <Button className="mr-3" size="sm" kind="primary">
-                Default
+                SM
               </Button>
               <Button className="mr-3" kind="primary">
                 Default
               </Button>
               <Button className="mr-3" size="lg" kind="primary">
-                Default
+                LG
               </Button>
             </div>
             <div className="flex flex-wrap gap-3">

@@ -35,12 +35,11 @@ const Menu: React.FC<MenuProps> = ({
       <div className="w-100">
         <div className="agency">
           <Icon
-            name="home"
-            size={theme.spaces.space6}
+            name="logo"
+            size={theme.spaces.space8}
             margin="0 10px 0 0"
             color={theme.colors.primary}
           />{" "}
-          <p>{process.env.NEXT_PUBLIC_SITE_NAME}</p>
         </div>
         <div onClick={toggle}>
           <Icon name="close" color={theme.colors.dark} />
