@@ -74,7 +74,6 @@ const Flex = styled.div`
 const Page = styled.div`
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
 `;
 const Body = styled.div<StyledDivProps>`
   background: ${({ background, theme }) =>
