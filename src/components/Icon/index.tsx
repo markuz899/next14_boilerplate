@@ -37,6 +37,7 @@ const Svg = styled.svg<{
   margin?: string;
   rotate?: string;
 }>`
+  display: unset;
   fill: ${(props) => props.color};
   height: ${(props) => props.size};
   margin: ${(props) => props.margin};

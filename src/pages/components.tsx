@@ -37,6 +37,7 @@ import {
   Textarea,
   Toggle,
   Tooltip,
+  WordChanger,
 } from "@/components";
 import QRCode from "react-qr-code";
 import icons from "@/components/Icon/icons";
@@ -175,6 +176,7 @@ const Components = ({ global }: GlobalPageProps) => {
   const [loaderActive, setLoaderActive] = useState<any>(false);
   const [loaderType, setLoaderType] = useState<any>("spin");
   const { loading, error, data } = useGeolocation();
+  const words = ["testo", "forma", "colore"];
 
   const handleCheckPosition = () => {
     setCheckPosition(true);
@@ -270,6 +272,9 @@ const Components = ({ global }: GlobalPageProps) => {
     <Layout global={{ ...global, handleSelectChange }} title="Components">
       <Content>
         <h3>Components</h3>
+        <Section title="Changed">
+          <WordChanger options={words} label="Componente cambia" />
+        </Section>
         <Section title="Slideshow">
           <Slideshow
             clickInside={true}

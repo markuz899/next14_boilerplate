@@ -36,6 +36,7 @@ const Tabs = dynamic(() => import("./Tabs/intex"), { loading: () => null });
 const Textarea = dynamic(() => import("./Textarea"), { loading: () => null });
 const Toggle = dynamic(() => import("./Toggle"), { loading: () => null });
 const Tooltip = dynamic(() => import("./Tooltip"), { loading: () => null });
+const WordChanger = dynamic(() => import("./WordChanger"), { loading: () => null });
 
 export {
   Accordion,
@@ -74,4 +75,5 @@ export {
   Textarea,
   Toggle,
   Tooltip,
+  WordChanger
 };
