@@ -32,6 +32,7 @@ import {
   Rating,
   Select,
   SliderTabs,
+  Slideshow,
   Tabs,
   Textarea,
   Toggle,
@@ -45,7 +46,7 @@ import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGeolocation } from "@/hooks";
 import { moveMarkerLinearly } from "@/utils/utils";
-import { mokSlider } from "@/utils/constants";
+import { defaultCarousel, mokSlider } from "@/utils/constants";
 
 const specialist = [
   {
@@ -269,6 +270,14 @@ const Components = ({ global }: GlobalPageProps) => {
     <Layout global={{ ...global, handleSelectChange }} title="Components">
       <Content>
         <h3>Components</h3>
+        <Section title="Slideshow">
+          <Slideshow
+            clickInside={true}
+            options={defaultCarousel}
+            duration={3000}
+            enableTransition={true}
+          />
+        </Section>
         <Section title="Carousel">
           <Carousel className="mb-3" type="default" options={mokSlider} />
           <Carousel type="grid" options={mokSlider} />

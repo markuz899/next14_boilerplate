@@ -31,6 +31,7 @@ const Rating = dynamic(() => import("./Rating"), { loading: () => null });
 const ScrollToTop = dynamic(() => import("./ScrollToTop"), { loading: () => null });
 const Select = dynamic(() => import("./Select"), { loading: () => null });
 const SliderTabs = dynamic(() => import("./SliderTabs"), { loading: () => null });
+const Slideshow = dynamic(() => import("./Slideshow"), { loading: () => null });
 const Tabs = dynamic(() => import("./Tabs/intex"), { loading: () => null });
 const Textarea = dynamic(() => import("./Textarea"), { loading: () => null });
 const Toggle = dynamic(() => import("./Toggle"), { loading: () => null });
@@ -68,6 +69,7 @@ export {
   ScrollToTop,
   Select,
   SliderTabs,
+  Slideshow,
   Tabs,
   Textarea,
   Toggle,

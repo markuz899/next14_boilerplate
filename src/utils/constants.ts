@@ -10,6 +10,30 @@ export const navItems = [
   { id: 3, path: "/components", text: "Components" },
 ];
 
+export const defaultCarousel = [
+  {
+    id: 1,
+    title: "Risparmia tempo,",
+    position: 1,
+    description: "trova il professionista giusto.",
+    src: `https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/c91f906b-5881-47b1-89e4-e4a69c1961a7`,
+  },
+  {
+    id: 2,
+    title: "Professionisti affidabili",
+    position: 2,
+    description: " a portata di clic.",
+    src: `https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/5bc859f0-db4f-4ab4-8f5f-e55977c33eb1`,
+  },
+  {
+    id: 3,
+    title: "Semplifica la tua vita, ",
+    position: 3,
+    description: "scegli i migliori esperti.",
+    src: `https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/d239a63a-a0f8-4213-82dc-bb8d3f0806db`,
+  },
+];
+
 export const mokSlider = [
   {
     path: "https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/c91f906b-5881-47b1-89e4-e4a69c1961a7",
