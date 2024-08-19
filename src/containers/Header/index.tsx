@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
         </div>
         {!isSmall && (
           <>
-            <div className="flex nopadd">
+            {/* <div className="flex nopadd">
               <Select
                 rounded
                 clearable
@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({
                 placeholder="Di cosa hai bisogno?"
                 options={mokCategories}
               />
-            </div>
+            </div> */}
             <div className="flex">
               <div className="link">
                 <div className="navigator">
@@ -141,7 +141,6 @@ const MenuContent = styled.div<{ $isSmall: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ $isSmall }) => ($isSmall ? 0 : theme.spaces.space2)};
   .menu-icon {
     padding: 0 ${theme.spaces.space6};
     cursor: pointer;

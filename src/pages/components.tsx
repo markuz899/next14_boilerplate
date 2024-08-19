@@ -269,7 +269,7 @@ const Components = ({ global }: GlobalPageProps) => {
   };
 
   return (
-    <Layout global={{ ...global, handleSelectChange }} title="Components">
+    <Layout global={global} title="Components">
       <Content>
         <h3>Components</h3>
         <Section title="Changed">

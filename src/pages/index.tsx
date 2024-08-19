@@ -4,16 +4,60 @@ import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ContainerFull } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import { Select } from "@/components";
+import { Button, Select } from "@/components";
 import { mokCategories } from "@/utils/constants";
 import { Utils } from "@/services";
+import { useForm } from "react-hook-form";
 
 const Home = ({ global }: GlobalPageProps) => {
   const [city, setCity] = useState([]);
+
+  let defaultValues: any = {
+    city: "",
+    category: "",
+  };
+  const inputForm: any = {
+    city: "city",
+    category: "category",
+  };
+  const validationCity: any = {
+    city: {},
+    category: {},
+  };
+
+  const {
+    register,
+    setValue,
+    getValues,
+    trigger,
+    unregister,
+    setError,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+  });
+
+  useEffect(() => {
+    Object.keys(inputForm).forEach((k: any) => {
+      register(k, validationCity[k]);
+    });
+    return () => {
+      Object.keys(inputForm).forEach((k: any) => {
+        unregister(k);
+      });
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  const handleSearch = () => {
+    const data = getValues();
+    console.log("formdata", data);
+  };
 
   const getCityFromService = async (query: string) => {
     let city = await Utils.getCity(query);
@@ -21,8 +65,10 @@ const Home = ({ global }: GlobalPageProps) => {
   };
 
   const handleSelectChange = (data: any, options: any) => {
-    const exists = options.some((cat: any) => cat.value === data?.value);
-    if (exists || data?.value == "") {
+    const { name, value } = data;
+    const exists = options.some((cat: any) => cat.value === value);
+    if (exists || value == "") {
+      setValue(name, value);
       console.log("select change", data);
     }
   };
@@ -30,26 +76,28 @@ const Home = ({ global }: GlobalPageProps) => {
   const handleSelectCity = (data: any) => {
     const { name, value } = data;
     if (value.length >= 3) {
+      setValue(name, value);
       getCityFromService(value);
     }
   };
 
   return (
-    <Layout global={{ ...global, handleSelectChange }} title="Homepage">
+    <Layout global={global} title="Homepage">
       <ContentPage>
         <ContainerFull className="content-full">
           <div className="content-banner">
             <div className="content-text-banner">
               <h2>
-                Connettiti con i migliori professionisti: Soluzioni su misura,
-                competenza garantita, risultati senza compromessi.
+                Connettiti con i migliori professionisti: <br />
+                Soluzioni su misura, competenza garantita, risultati senza
+                compromessi.
               </h2>
               <div className="content-row">
                 <Select
                   rounded
                   clearable
                   enableInput
-                  name="search"
+                  name={inputForm.category}
                   showArrow={false}
                   onChange={handleSelectChange}
                   iconBefore="search"
@@ -60,13 +108,16 @@ const Home = ({ global }: GlobalPageProps) => {
                   rounded
                   clearable
                   enableInput
-                  name="search"
+                  name={inputForm.city}
                   showArrow={false}
                   onChange={handleSelectCity}
                   iconBefore="map"
                   placeholder="Dove ne hai bisogno?"
                   options={city}
                 />
+              </div>
+              <div className="content-action">
+                <Button kind="action" label="CERCA" onClick={handleSearch} />
               </div>
             </div>
           </div>
@@ -97,6 +148,9 @@ const ContentPage = styled.div`
       align-items: center;
       justify-content: center;
       .content-text-banner {
+        display: flex;
+        flex-direction: column;
+        gap: ${theme.spaces.space4};
         max-width: 800px;
         padding: ${theme.spaces.space4};
         h2 {
@@ -106,6 +160,10 @@ const ContentPage = styled.div`
           display: flex;
           align-items: center;
           gap: ${theme.spaces.space2};
+        }
+        .content-action {
+          margin-top: 10px;
+          text-align: center;
         }
       }
     }

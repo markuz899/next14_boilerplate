@@ -51,7 +51,7 @@ const Menu: React.FC<MenuProps> = ({
 
   const renderMenu = () => (
     <List>
-      <div className="content-input">
+      {/* <div className="content-input">
         <Select
           rounded
           clearable
@@ -63,7 +63,7 @@ const Menu: React.FC<MenuProps> = ({
           placeholder="Di cosa hai bisogno?"
           options={mokCategories}
         />
-      </div>
+      </div> */}
       <div className="content-menu">
         {navItems?.map((item) => {
           return (
