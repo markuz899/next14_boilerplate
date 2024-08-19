@@ -52,6 +52,7 @@
     "signale": "^1.4.0",
     "styled-components": "^6.1.11",
     "supercluster": "^8.0.1",
+    "swiper": "^11.1.9",
     "use-supercluster": "^1.2.0"
   },
   "devDependencies": {

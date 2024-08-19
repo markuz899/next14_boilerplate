@@ -11,6 +11,7 @@ import {
   Button,
   Calendar,
   Card,
+  Carousel,
   Checkbox,
   Collapse,
   DatePicker,
@@ -44,6 +45,7 @@ import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGeolocation } from "@/hooks";
 import { moveMarkerLinearly } from "@/utils/utils";
+import { mokSlider } from "@/utils/constants";
 
 const specialist = [
   {
@@ -267,6 +269,10 @@ const Components = ({ global }: GlobalPageProps) => {
     <Layout global={{ ...global, handleSelectChange }} title="Components">
       <Content>
         <h3>Components</h3>
+        <Section title="Carousel">
+          <Carousel className="mb-3" type="default" options={mokSlider} />
+          <Carousel type="grid" options={mokSlider} />
+        </Section>
         <Section title="Accordion">
           <div className="flex gap-2 justify-center mb-2">
             <Checkbox

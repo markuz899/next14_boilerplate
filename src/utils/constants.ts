@@ -10,6 +10,24 @@ export const navItems = [
   { id: 3, path: "/components", text: "Components" },
 ];
 
+export const mokSlider = [
+  {
+    path: "https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/c91f906b-5881-47b1-89e4-e4a69c1961a7",
+  },
+  {
+    text: "Professionisti affidabili a portata di clic.",
+    path: "https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/5bc859f0-db4f-4ab4-8f5f-e55977c33eb1",
+  },
+  {
+    text: "Semplifica la tua vita, scegli i migliori esperti.",
+    path: "https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/d239a63a-a0f8-4213-82dc-bb8d3f0806db",
+  },
+  {
+    text: "Risparmia tempo, trova il professionista giusto.",
+    path: "https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/9c0637aa-b440-4aef-93f3-ea20cf19f42c",
+  },
+];
+
 export const mokCategories = [
   {
     label: "Casa e giardino",
