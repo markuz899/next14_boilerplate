@@ -153,7 +153,8 @@ const ContentSwiper = styled.div<{ $background?: string }>`
         position: absolute;
         left: 0;
         bottom: 0;
-        background: ${theme.colors.primaryLight};
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         width: 100%;
         height: 150px;
         z-index: 2;
