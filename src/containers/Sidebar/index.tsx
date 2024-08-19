@@ -123,7 +123,7 @@ const Menu: React.FC<MenuProps> = ({
   return (
     <MenuLeft $wide={isMenuOpen} $isMobile={isMobile}>
       <div className="padder">
-        {isMobile && renderHead()}
+        {/* {isMobile && renderHead()} */}
         {renderMenu()}
         {renderFooter()}
       </div>
@@ -308,7 +308,7 @@ const mobile = css<MenuLeftProps>`
   position: fixed;
   width: 100%;
   height: 100%;
-  top: ${(props) => (props.$wide ? "0" : "calc(-320vw)")};
+  top: ${(props) => (props.$wide ? "61px" : "calc(-320vw)")};
   overflow-x: hidden;
   overflow-y: hidden;
 `;

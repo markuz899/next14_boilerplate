@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({
             <Clicker radius>
               <div onClick={toggle}>
                 <Icon
-                  name="hamburger"
+                  name={state ? "close" : "hamburger"}
                   size={theme.spaces.space5}
                   color={theme.colors.primary}
                 />
