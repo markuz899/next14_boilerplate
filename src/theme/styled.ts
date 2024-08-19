@@ -11,6 +11,62 @@ export const setCols = (cols: 1 | 2 | 3 | 4) => {
   return col[cols];
 };
 
+export const Col = styled.div`
+  display: flex;
+  & > * {
+    &:first-child {
+      flex: 0 0 60%;
+    }
+    &:last-child {
+      flex: 0 0 40%;
+    }
+  }
+  .customize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .content {
+      padding: ${theme.spaces.space6};
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h2 {
+        color: ${theme.colors.grey};
+        font-size: ${theme.font.size.big};
+      }
+      p {
+        margin-top: ${theme.spaces.space2};
+        font-size: ${theme.font.size.large};
+        color: ${theme.colors.lightGrey};
+      }
+    }
+    .form-content {
+      box-sizing: border-box;
+      padding: ${theme.spaces.space12};
+      width: 100%;
+      & > * {
+        margin-bottom: ${theme.spaces.space2};
+        &:first-child {
+          margin-bottom: ${theme.spaces.space2};
+        }
+      }
+    }
+    .form-action {
+      width: 60%;
+    }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    flex-direction: column;
+    .customize {
+      .form-content {
+        width: 100%;
+        padding: ${theme.spaces.space6};
+      }
+    }
+  }
+`;
+
 export const Container = styled.div`
   padding: ${theme.spaces.space4} ${theme.spaces.space12};
   box-sizing: border-box;
@@ -67,6 +123,11 @@ export const Content = styled(Container)`
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     margin: 0;
   }
+`;
+
+export const ContainerFull = styled.div<{ kind?: string }>`
+  ${(p) => p.kind && `background: ${p.kind}`};
+  width: 100%;
 `;
 
 export const fadeIn = keyframes`

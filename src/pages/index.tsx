@@ -4,81 +4,74 @@ import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
-import React from "react";
+import React, { useState } from "react";
+import { ContainerFull } from "@/theme/styled";
+import styled from "styled-components";
+import theme from "@/theme";
+import { Select } from "@/components";
+import { mokCategories } from "@/utils/constants";
+import { Utils } from "@/services";
 
 const Home = ({ global }: GlobalPageProps) => {
+  const [city, setCity] = useState([]);
+
+  const getCityFromService = async (query: string) => {
+    let city = await Utils.getCity(query);
+    setCity(city);
+  };
+
+  const handleSelectChange = (data: any, options: any) => {
+    const exists = options.some((cat: any) => cat.value === data?.value);
+    if (exists || data?.value == "") {
+      console.log("select change", data);
+    }
+  };
+
+  const handleSelectCity = (data: any) => {
+    const { name, value } = data;
+    if (value.length >= 3) {
+      getCityFromService(value);
+    }
+  };
+
   return (
-    <Layout global={global} title="Homepage">
-      <main
-        className={`flex min-h-screen flex-col items-center justify-between p-24`}
-      >
-        <Counter />
-        <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-          <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-100 bg-gray-800 pb-6 pt-8 backdrop-blur-2xl lg:static lg:w-auto lg:rounded-xl lg:border lg:p-4">
-            Get started by editing&nbsp;
-            <code className="font-mono font-bold">src/pages/index.tsx</code>
-          </p>
-          <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-            <a
-              className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{" "}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className="dark:invert"
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+    <Layout global={{ ...global, handleSelectChange }} title="Homepage">
+      <ContentPage>
+        <ContainerFull className="content-full">
+          <div className="content-banner">
+            <div className="content-text-banner">
+              <h2>
+                Connettiti con i migliori professionisti: Soluzioni su misura,
+                competenza garantita, risultati senza compromessi.
+              </h2>
+              <div className="content-row">
+                <Select
+                  rounded
+                  clearable
+                  enableInput
+                  name="search"
+                  showArrow={false}
+                  onChange={handleSelectChange}
+                  iconBefore="search"
+                  placeholder="Di cosa hai bisogno?"
+                  options={mokCategories}
+                />
+                <Select
+                  rounded
+                  clearable
+                  enableInput
+                  name="search"
+                  showArrow={false}
+                  onChange={handleSelectCity}
+                  iconBefore="map"
+                  placeholder="Dove ne hai bisogno?"
+                  options={city}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-          <Image
-            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <Link href={"/login"}>
-            <h2 className={`mb-3 text-2xl font-semibold`}>Login</h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Test fake login service
-            </p>
-          </Link>
-
-          <Link href={"/hoc"}>
-            <h2 className={`mb-3 text-2xl font-semibold`}>Hoc</h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              List of enabled Hoc
-            </p>
-          </Link>
-
-          <Link href={"/hoc"}>
-            <h2 className={`mb-3 text-2xl font-semibold`}>Hooks</h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              List of Hooks
-            </p>
-          </Link>
-
-          <Link href={"/hoc"}>
-            <h2 className={`mb-3 text-2xl font-semibold`}>Theme</h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Docs of theme
-            </p>
-          </Link>
-        </div>
-      </main>
+        </ContainerFull>
+      </ContentPage>
     </Layout>
   );
 };
@@ -94,3 +87,38 @@ export async function getServerSideProps(ctx: { req: any }) {
 }
 
 export default WithAuth(React.memo(Home));
+
+const ContentPage = styled.div`
+  .content-full {
+    .content-banner {
+      height: 400px;
+      background: ${theme.colors.primaryLight};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .content-text-banner {
+        max-width: 800px;
+        padding: ${theme.spaces.space4};
+        h2 {
+          color: ${theme.colors.white};
+        }
+        .content-row {
+          display: flex;
+          align-items: center;
+          gap: ${theme.spaces.space2};
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    .content-full {
+      .content-banner {
+        .content-text-banner {
+          .content-row {
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+  }
+`;

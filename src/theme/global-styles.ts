@@ -46,11 +46,15 @@ export const GlobalStyle = createGlobalStyle`
   }
   h1 {
     font-weight: ${theme.font.weight.bold};
-    font-size: ${theme.font.size.large};
+    font-size: ${theme.font.size.xBig};
   }
   h2 {
     font-weight: ${theme.font.weight.regular};
-    font-size: ${theme.font.size.large};
+    font-size: ${theme.font.size.big};
+  }
+  h3 {
+    font-weight: ${theme.font.weight.regular};
+    font-size: ${theme.font.size.medium};
   }
   a {
     color: ${theme.colors.darkGrey};

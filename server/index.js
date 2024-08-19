@@ -42,8 +42,10 @@ const signale = new Signale(options);
 
     // Register routes
     const manifestRoutes = require("./manifest");
+    const utilsRoutes = require("./utils");
     const logRoutes = require("./routes/log");
     fastify.register(manifestRoutes);
+    fastify.register(utilsRoutes, { prefix: "/utils" });
     fastify.register(logRoutes, { prefix: "/api" });
 
     // Handle all other requests with Next.js
