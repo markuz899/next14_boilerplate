@@ -16,7 +16,7 @@ interface CardProps {
 const Card = ({
   option,
   mini = false,
-  renderFooter = true,
+  renderFooter = false,
   onClick,
   active,
 }: CardProps) => {
@@ -32,52 +32,54 @@ const Card = ({
         exit={{ opacity: 0 }}
         onClick={onClick}
       >
-        <CardStyle $active={active} $mini={mini}>
-          <div className="content-card">
-            <div className="content-column">
-              <div className="banner">
-                {isEven ? (
-                  <div className="first">{firstLetter}</div>
-                ) : (
-                  <div className="image">
-                    <img src="https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg" />
-                  </div>
-                )}
-              </div>
+        <a href={`/detail/${option?.id}`}>
+          <CardStyle $active={active} $mini={mini}>
+            <div className="content-card">
+              <div className="content-column">
+                <div className="banner">
+                  {isEven ? (
+                    <div className="first">{firstLetter}</div>
+                  ) : (
+                    <div className="image">
+                      <img src="https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg" />
+                    </div>
+                  )}
+                </div>
 
-              <div className="info">
-                <div className="row between">
-                  <Rating
-                    rate={option.rating}
-                    size={theme.spaces.space3}
-                    disable
-                  />
-                  <p>06/03/2022</p>
-                </div>
-                <div className="row">
-                  <span className="bold">Nome:</span>
-                  <p>{option.name}</p>
-                  <p>Rossi</p>
-                </div>
-                <div className="row">
-                  <span className="bold">Professione:</span>
-                  <p>{option.profession}</p>
+                <div className="info">
+                  <div className="row between">
+                    <Rating
+                      rate={option.rating}
+                      size={theme.spaces.space3}
+                      disable
+                    />
+                    <p>06/03/2022</p>
+                  </div>
+                  <div className="row">
+                    <span className="bold">Nome:</span>
+                    <p>{option.name}</p>
+                    <p>Rossi</p>
+                  </div>
+                  <div className="row">
+                    <span className="bold">Professione:</span>
+                    <p>{option.profession}</p>
+                  </div>
                 </div>
               </div>
+              {renderFooter && !mini && (
+                <div className="card-action">
+                  <Button
+                    kind="inverse-primary"
+                    fluid
+                    className="btn btn-redirect"
+                  >
+                    <b>DETTAGLI</b>
+                  </Button>
+                </div>
+              )}
             </div>
-            {renderFooter && !mini && (
-              <div className="card-action">
-                <Button
-                  kind="inverse-primary"
-                  fluid
-                  className="btn btn-redirect"
-                >
-                  <b>DETTAGLI</b>
-                </Button>
-              </div>
-            )}
-          </div>
-        </CardStyle>
+          </CardStyle>
+        </a>
       </m.div>
     </LazyMotion>
   );
@@ -86,10 +88,10 @@ const Card = ({
 export default Card;
 
 const isHover = css`
-  transition: box-shadow 0.3s ease-in-out!important;
-  -webkit-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75)!important;
-  -moz-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75)!important;
-  box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75)!important;
+  transition: box-shadow 0.3s ease-in-out !important;
+  -webkit-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
+  -moz-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
 `;
 const isActive = css`
   border: 2px solid ${theme.colors.success};
