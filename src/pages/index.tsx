@@ -212,7 +212,7 @@ const ContentPage = styled.div`
   .wave {
     &.primary {
       background: ${theme.colors.warning};
-      transform: scaleY(-1);
+      transform: rotate(180deg);
     }
     &.warning {
       transform: rotate(180deg);
