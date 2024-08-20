@@ -13,11 +13,11 @@ const NotFound = ({ global }: any) => {
             <h2>404</h2>
           </div>
           <div className="title">
-            <h2>Page not found</h2>
-            <p>You can anyway: </p>
+            <h2>Pagina non trovata</h2>
+            <p>Puoi comunque: </p>
             <ul>
               <li>
-                <Link href="/">Go back to home page</Link>
+                <Link href="/">Tornare alla homepage</Link>
               </li>
             </ul>
           </div>
@@ -31,6 +31,7 @@ export default NotFound;
 
 const Page = styled.div`
   width: 100%;
+  height: calc(100svh - 84px);
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -46,18 +47,19 @@ const Page = styled.div`
     flex-direction: column;
     .logo {
       h2 {
+        color: ${theme.colors.error};
         text-shadow: 5px 5px 10px black;
         font-size: 200px;
       }
     }
     .title {
-      margin-left: ${theme.spaces.space4};
       h2 {
         font-size: ${theme.font.size.big};
       }
       ul {
         list-style: circle;
         li {
+          color: ${theme.colors.dark};
           margin: ${theme.spaces.space2} ${theme.spaces.space4};
           a {
             &:hover {
