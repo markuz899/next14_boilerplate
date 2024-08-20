@@ -159,3 +159,62 @@ export const mokCategories = [
     url: "altro",
   },
 ];
+
+export const specialist = [
+  {
+    id: 1,
+    name: "Carlo",
+    position: [42.16137759041936, 12.339213749209796],
+    range: 20,
+    profession: "Musicista",
+    rating: 1,
+  },
+  {
+    id: 2,
+    name: "Flavio",
+    position: [42.142287926630516, 12.540400871218557],
+    range: 10,
+    profession: "Meccanico",
+    rating: 2,
+  },
+  {
+    id: 3,
+    name: "Mario",
+    position: [42.09288262437151, 12.273639107053354],
+    range: 50,
+    profession: "Giardiniere",
+    rating: 3,
+  },
+  {
+    id: 4,
+    name: "Anna",
+    position: [42.206914985163685, 12.39517535481974],
+    range: 80,
+    profession: "Operaio",
+    rating: 4,
+  },
+  {
+    id: 5,
+    name: "Claudia",
+    position: [42.0775948359501, 12.4497636694941],
+    range: 10,
+    profession: "Nerd",
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: "Sole",
+    position: [42.09950618862456, 12.563746817117186],
+    range: 15,
+    profession: "Avvocato",
+    rating: 3,
+  },
+  {
+    id: 7,
+    name: "Falco",
+    position: [42.090681921149525, 12.27409778617536],
+    range: 15,
+    profession: "Studente",
+    rating: 2,
+  },
+];

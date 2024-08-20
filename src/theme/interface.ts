@@ -58,11 +58,7 @@ export interface ITheme {
       bold: string;
     };
     family: {
-      fortnite: string;
-      gta: string;
-      valorant: string;
-      opti: string;
-      montserrat: string;
+      mont: string;
       montBold: string;
       montMedium: string;
       montRegular: string;

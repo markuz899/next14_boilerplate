@@ -88,13 +88,16 @@ export const Container = styled.div`
 `;
 
 export const Content = styled(Container)`
-  text-align: center;
+  text-align: left;
   margin: 0 auto;
   h2 {
-    font-size: ${theme.font.size.big};
-    margin: ${theme.spaces.space4} 0;
+    font-weight: bold;
+    color: ${theme.colors.dark};
+    text-transform: uppercase;
+    margin: ${theme.spaces.space4} ${theme.spaces.space2};
   }
   .show-more {
+    text-align: center;
     margin: ${theme.spaces.space8} 0 ${theme.spaces.space12};
   }
   .card-list {

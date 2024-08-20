@@ -109,7 +109,7 @@ const App = ({
           <ThemeProvider theme={themeMode}>
             <AuthProvider isAuth={authentication.isAuth}>
               {componentMounted && (
-                <main style={{ height: "100%" }} className={inter.className}>
+                <main style={{ height: "100%" }}>
                   <Component
                     {...pageProps}
                     global={{

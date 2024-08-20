@@ -58,11 +58,7 @@ const defaultTheme = {
       bold: "700",
     },
     family: {
-      fortnite: "Fortnite",
-      gta: "Gta",
-      valorant: "Valorant",
-      opti: "Opti",
-      montserrat: "Montserrat",
+      mont: "Montserrat",
       montBold: "Montserrat-Bold",
       montMedium: "Montserrat-Medium",
       montRegular: "Montserrat-Regular",

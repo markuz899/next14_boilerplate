@@ -8,11 +8,13 @@ const WordChanger = ({
   options = ["test", "esempio", "caso"],
   timing = 2000,
   color,
+  uppercase = false,
 }: {
-  label: string;
+  label?: string;
   options: any[];
   timing?: number;
   color?: string;
+  uppercase?: boolean;
 }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [words, setWords] = useState(options);
@@ -36,24 +38,27 @@ const WordChanger = ({
   }, []);
 
   return (
-    <Wrapper color={color}>
-      {label}{" "}
-      <span className={`word ${fade ? "fade" : ""}`}>
-        {words[currentWordIndex]}
-      </span>
+    <Wrapper
+      $uppercase={uppercase}
+      color={color}
+      className={`word ${fade ? "fade" : ""}`}
+    >
+      {words[currentWordIndex]}
     </Wrapper>
   );
 };
 
 export default React.memo(WordChanger);
 
-const Wrapper = styled.p<{ color?: string }>`
-  .word {
+const Wrapper = styled.span<{ color?: string; $uppercase: boolean }>`
+  &.word {
     transition: opacity 0.5s ease-in-out;
     display: inline-block;
     color: ${({ color }) => (color ? color : theme.colors.primary)};
+    text-transform: ${({ $uppercase }) =>
+      $uppercase ? "uppercase" : "inherit"};
   }
-  .fade {
+  &.fade {
     opacity: 0;
   }
 `;

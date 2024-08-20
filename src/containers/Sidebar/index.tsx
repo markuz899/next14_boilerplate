@@ -308,7 +308,7 @@ const mobile = css<MenuLeftProps>`
   position: fixed;
   width: 100%;
   height: 100%;
-  top: ${(props) => (props.$wide ? "61px" : "calc(-320vw)")};
+  bottom: ${(props) => (props.$wide ? "-61px" : "calc(-320vw)")};
   overflow-x: hidden;
   overflow-y: hidden;
 `;

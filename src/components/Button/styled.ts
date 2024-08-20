@@ -239,6 +239,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding: 0;
   font-size: ${font.size.minor};
   font-weight: ${font.weight.medium};
+  font-family: ${theme.font.family.ralewayMedium};
   display: inline-flex;
   align-items: center;
   justify-content: center;

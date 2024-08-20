@@ -5,13 +5,14 @@ import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 import React, { useEffect, useState } from "react";
-import { ContainerFull } from "@/theme/styled";
+import { ContainerFull, Content } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import { Button, Select } from "@/components";
-import { mokCategories } from "@/utils/constants";
+import { Button, Card, Select, WordChanger } from "@/components";
+import { mokCategories, specialist } from "@/utils/constants";
 import { Utils } from "@/services";
 import { useForm } from "react-hook-form";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Home = ({ global }: GlobalPageProps) => {
   const [city, setCity] = useState([]);
@@ -81,47 +82,97 @@ const Home = ({ global }: GlobalPageProps) => {
     }
   };
 
+  const words = [
+    "perfetto",
+    "qualificato",
+    "giusto",
+    "specializzato",
+    "professionale",
+    "efficiente",
+    "certificato",
+  ];
+
   return (
     <Layout global={global} title="Homepage">
       <ContentPage>
         <ContainerFull className="content-full">
-          <div className="content-banner">
+          <TextBanner color={theme.colors.primaryLight}>
             <div className="content-text-banner">
               <h2>
-                Connettiti con i migliori professionisti: <br />
-                Soluzioni su misura, competenza garantita, risultati senza
-                compromessi.
+                Trova il professionista{" "}
+                <WordChanger
+                  timing={5000}
+                  color={theme.colors.warning}
+                  options={words}
+                  uppercase
+                />{" "}
+                per ogni tua esigenza, senza compromessi!
               </h2>
-              <div className="content-row">
-                <Select
-                  rounded
-                  clearable
-                  enableInput
-                  name={inputForm.category}
-                  showArrow={false}
-                  onChange={handleSelectChange}
-                  iconBefore="search"
-                  placeholder="Di cosa hai bisogno?"
-                  options={mokCategories}
-                />
-                <Select
-                  rounded
-                  clearable
-                  enableInput
-                  name={inputForm.city}
-                  showArrow={false}
-                  onChange={handleSelectCity}
-                  iconBefore="map"
-                  placeholder="Dove ne hai bisogno?"
-                  options={city}
-                />
-              </div>
+              <p>
+                Il nostro portale ti offre accesso immediato a una rete di
+                esperti altamente qualificati, pronti a soddisfare le tue
+                richieste in modo rapido, efficiente e sicuro. Non importa quale
+                sia la tua necessità, qui troverai sempre la persona giusta.
+              </p>
               <div className="content-action">
-                <Button kind="action" label="CERCA" onClick={handleSearch} />
+                <Button
+                  kind="action"
+                  label="ISCRIVITI GRATIS"
+                  onClick={handleSearch}
+                />
               </div>
             </div>
-          </div>
+            <div className="content-img-banner">
+              <img src="/static/img/certificate.svg" />
+            </div>
+          </TextBanner>
+          <TextBanner color={theme.colors.warning}>
+            <div className="content-img-banner">
+              <img src="/static/img/experts.svg" />
+            </div>
+            <div className="content-text-banner">
+              <h2>Perchè i professionisti si iscrivono</h2>
+              <p>
+                Il nostro portale offre ai professionisti nuove opportunità per
+                espandere la loro carriera, lavorando con clienti di diversi
+                settori e su progetti stimolanti, il tutto comodamente dalla
+                propria area di residenza. I nostri iscritti continuano a
+                utilizzare la piattaforma perché rappresenta un modo flessibile
+                e gratificante per guadagnare, crescere professionalmente e fare
+                la differenza nella vita delle persone e delle aziende con cui
+                collaborano.
+              </p>
+              <div className="content-action">
+                <Button
+                  kind="action"
+                  label="UNISCITI ALLA RETE"
+                  onClick={handleSearch}
+                />
+              </div>
+            </div>
+          </TextBanner>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160">
+            <path
+              fill={theme.colors.warning}
+              fillOpacity="1"
+              d="M0,32L60,42.7C120,53,240,75,360,74.7C480,75,600,53,720,69.3C840,85,960,139,1080,154.7C1200,171,1320,149,1380,138.7L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+            ></path>
+          </svg>
         </ContainerFull>
+        <Content>
+          <h2>Specialisti disponibili</h2>
+          <motion.div layout className="card-list">
+            <AnimatePresence>
+              {specialist.map((item) => {
+                return <Card key={item.id} option={item} />;
+              })}
+            </AnimatePresence>
+          </motion.div>
+          <div className="show-more">
+            <Button>Vedi tutti gli specialisti</Button>
+          </div>
+        </Content>
+        <ContainerFull className="content-full">full</ContainerFull>
       </ContentPage>
     </Layout>
   );
@@ -139,44 +190,45 @@ export async function getServerSideProps(ctx: { req: any }) {
 
 export default WithAuth(React.memo(Home));
 
-const ContentPage = styled.div`
-  .content-full {
-    .content-banner {
-      height: 400px;
-      background: ${theme.colors.primaryLight};
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .content-text-banner {
-        display: flex;
-        flex-direction: column;
-        gap: ${theme.spaces.space4};
-        max-width: 800px;
-        padding: ${theme.spaces.space4};
-        h2 {
-          color: ${theme.colors.white};
-        }
-        .content-row {
-          display: flex;
-          align-items: center;
-          gap: ${theme.spaces.space2};
-        }
-        .content-action {
-          margin-top: 10px;
-          text-align: center;
-        }
-      }
+const ContentPage = styled.div``;
+
+const TextBanner = styled.div<{ color: string }>`
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: ${({ color }) => color};
+  .content-text-banner {
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spaces.space4};
+    max-width: 800px;
+    padding: ${theme.spaces.space4};
+    h2 {
+      font-weight: bold;
+      color: ${theme.colors.dark};
+      text-transform: uppercase;
+    }
+    p {
+      color: ${theme.colors.dark};
+      line-height: 1.3;
+    }
+    .content-action {
+      margin-top: 10px;
     }
   }
+  .content-img-banner {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    height: 350px;
+  }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    .content-full {
-      .content-banner {
-        .content-text-banner {
-          .content-row {
-            flex-wrap: wrap;
-          }
-        }
-      }
+    height: auto;
+    flex-wrap: wrap;
+    .content-img-banner {
+      display: none;
     }
   }
 `;

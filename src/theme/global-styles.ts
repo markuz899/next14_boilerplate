@@ -34,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     font-size: ${theme.font.size.normal};
     -webkit-tap-highlight-color: transparent;
+    font-family: ${theme.font.family.ralewayMedium};
   }
   #__next{
     width: 100%;
@@ -43,6 +44,13 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     color: ${({ theme }) => theme.text};
+    font-family: ${theme.font.family.montMedium};
+  }
+  p, span, label {
+    margin: 0;
+    padding: 0;
+    color: ${({ theme }) => theme.text};
+    font-family: ${theme.font.family.ralewayMedium};
   }
   h1 {
     font-weight: ${theme.font.weight.bold};
@@ -223,9 +231,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    h2{
-      font-size: ${theme.font.size.normal}
-    }
     input[type="text"]{
       font-size: 16px;
     }

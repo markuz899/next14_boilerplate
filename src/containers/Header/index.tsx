@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <Head $isSmall={isSmall}>
+    <Head $isSmall={isSmall} $active={state}>
       <MenuContent $isSmall={isSmall}>
         <div className={`menu-icon ${isSmall ? "isSmall" : "notSmall"}`}>
           {isSmall && (
@@ -116,12 +116,16 @@ const Header: React.FC<HeaderProps> = ({
 
 export default React.memo(Header);
 
-const Head = styled.div<{ $isSmall: boolean; isOpen?: boolean }>`
+const Head = styled.div<{
+  $isSmall: boolean;
+  isOpen?: boolean;
+  $active: boolean;
+}>`
   position: sticky;
   top: 0;
   z-index: 2100;
   transition: ${theme.extra.transitionFluid};
-  background: ${({ theme }) => theme.navbar};
+  background: ${(p) => (p.$active ? theme.colors.white : p.theme.navbar)};
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   left: ${(props) => (props.isOpen ? "270px" : "0")};

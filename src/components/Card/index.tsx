@@ -101,10 +101,12 @@ const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
     overflow: hidden;
     background: ${theme.colors.cardLight};
     border-radius: ${theme.spaces.space5};
-    border: 2px solid ${theme.colors.primary};
+    border: 2px solid transparent;
     display: flex;
     flex-direction: column;
     padding: ${theme.spaces.space4};
+    box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
+    transition: all 0.5s;
     .content-column {
       display: flex;
       align-items: center;
