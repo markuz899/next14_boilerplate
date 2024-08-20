@@ -6,7 +6,11 @@ import theme from "@/theme";
 
 const NotFound = ({ global }: any) => {
   return (
-    <Layout global={global} title="404 - Not found page">
+    <Layout
+      global={global}
+      title="404 - Not found page"
+      background={theme.colors.primaryLight}
+    >
       <Page>
         <div className="agency">
           <div className="logo">
@@ -59,11 +63,11 @@ const Page = styled.div`
       ul {
         list-style: circle;
         li {
-          color: ${theme.colors.dark};
           margin: ${theme.spaces.space2} ${theme.spaces.space4};
           a {
+            color: ${theme.colors.warning};
             &:hover {
-              color: ${theme.colors.lightGrey};
+              color: ${theme.colors.greyIcon};
             }
           }
         }
