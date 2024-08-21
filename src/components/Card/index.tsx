@@ -2,8 +2,6 @@ import styled, { css } from "styled-components";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import theme from "@/theme";
 import { Button, Rating } from "..";
-import { useState } from "react";
-import { getFirstLetter } from "@/utils/utils";
 
 interface CardProps {
   option: any;
@@ -20,8 +18,6 @@ const Card = ({
   onClick,
   active,
 }: CardProps) => {
-  const [firstLetter, setFirstLetter] = useState(getFirstLetter(option.name));
-  const isEven = option?.id % 2 == 0;
   return (
     <LazyMotion features={domAnimation}>
       <m.div
@@ -33,17 +29,15 @@ const Card = ({
         onClick={onClick}
       >
         <a href={`/detail/${option?.id}`}>
-          <CardStyle $active={active} $mini={mini}>
+          <CardStyle
+            $active={active}
+            $mini={mini}
+            src={`https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg`}
+          >
             <div className="content-card">
               <div className="content-column">
                 <div className="banner">
-                  {isEven ? (
-                    <div className="first">{firstLetter}</div>
-                  ) : (
-                    <div className="image">
-                      <img src="https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg" />
-                    </div>
-                  )}
+                  <img src="https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg" />
                 </div>
 
                 <div className="info">
@@ -94,49 +88,42 @@ const isHover = css`
   box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
 `;
 const isActive = css`
-  border: 2px solid ${theme.colors.success};
+  transition: box-shadow 0.3s ease-in-out !important;
+  box-shadow: 0 0 16px ${theme.colors.primary};
 `;
 
-const CardStyle = styled.div<{ $active?: boolean; $mini?: boolean }>`
+const CardStyle = styled.div<{
+  $active?: boolean;
+  $mini?: boolean;
+  src?: string;
+}>`
   .content-card {
     margin: ${theme.spaces.space2};
     overflow: hidden;
     background: ${theme.colors.cardLight};
     border-radius: ${theme.spaces.space5};
-    border: 2px solid transparent;
     display: flex;
     flex-direction: column;
-    padding: ${theme.spaces.space4};
     box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
     transition: all 0.5s;
     .content-column {
       display: flex;
       align-items: center;
-      gap: ${theme.spaces.space4};
       .banner {
         display: ${(p) => (p.$mini ? "none" : "block")};
-        .first {
-          width: 60px;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: ${theme.colors.greyIcon};
-          border-radius: ${theme.extra.radiusRound};
-          font-size: ${theme.font.size.large};
-        }
-        .image {
-          overflow: hidden;
-          max-width: 80px;
-          border-radius: ${theme.extra.radiusRound};
-          img {
-            width: 100%;
-            object-fit: cover;
-          }
+        overflow: hidden;
+        width: 150px;
+        height: 100%;
+        max-width: 150px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
       }
       .info {
-        width: 100%;
+        padding: ${theme.spaces.space2};
+        font-size: ${theme.font.size.tiny};
         .row {
           display: flex;
           align-items: center;
