@@ -347,6 +347,8 @@ const MapContainerStyle = styled(MapContainer)<{ height: string }>`
   .leaflet-popup-content-wrapper {
     padding: 0;
     border-radius: ${theme.spaces.space5};
+    background: transparent !important;
+    box-shadow: none !important;
     .leaflet-popup-content {
       margin: 0;
       width: 100% !important;
