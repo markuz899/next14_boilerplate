@@ -219,6 +219,7 @@ const Home = ({ global }: GlobalPageProps) => {
             <motion.div layout className="card-map">
               <AnimatePresence>
                 <Map
+                  gestureHandling={false}
                   center={specialist[0]?.position}
                   zoom={12}
                   height={"600px"}

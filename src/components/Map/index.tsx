@@ -163,6 +163,7 @@ const Map = ({
   withRadius = false,
   radius,
   dinamic,
+  gestureHandling = true,
 }: any) => {
   const [device, setDevice] = useState<boolean>();
   const [block, setBlock] = useState(false);
@@ -259,7 +260,7 @@ const Map = ({
       className={className ? className : ""}
       height={height}
     >
-      <GestureHandlingSetter />
+      {gestureHandling && <GestureHandlingSetter />}
       <UpdateMapView
         dinamic={dinamic}
         selection={selection}
