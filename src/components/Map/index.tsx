@@ -228,10 +228,10 @@ const Map = ({
   const customMarker = useMemo(
     () =>
       new Icon({
-        iconUrl: `static/pin/redPin.svg`,
-        iconSize: [25, 41],
+        iconUrl: `static/pin/current-location.png`,
+        iconSize: [35, 35],
         iconAnchor: [10, 30],
-        popupAnchor: [2, -20],
+        popupAnchor: [7, -20],
       }),
     []
   );

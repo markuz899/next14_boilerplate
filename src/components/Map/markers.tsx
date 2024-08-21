@@ -76,6 +76,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
     updateMap();
     setSelectedMarker(mark);
     setActive && setActive(mark);
+    map.flyTo(mark.position, map.getZoom(), { animate: true });
   };
 
   useMapEvents({
