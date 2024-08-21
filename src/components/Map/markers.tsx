@@ -257,7 +257,9 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                       </div>
                     </div>
                   </div>
-                  <button className="buttons">Dettaglio</button>
+                  <Button kind="inverse-primary" size="sm">
+                    DETTAGLIO
+                  </Button>
                 </Drop>
               </Popup>
             )}
@@ -319,22 +321,6 @@ const Drop = styled.div`
           }
         }
       }
-    }
-  }
-  button {
-    border: 2px solid ${theme.colors.primary};
-    padding: ${theme.spaces.space2};
-    border-radius: ${theme.extra.radiusBig};
-    text-transform: uppercase;
-    height: inherit;
-    &:hover {
-      background: ${theme.colors.primary};
-      color: ${theme.colors.white};
-    }
-    &:active,
-    &:focus {
-      animation: none !important;
-      transform: none !important;
     }
   }
 `;

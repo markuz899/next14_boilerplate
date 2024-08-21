@@ -8,7 +8,15 @@ import React, { useEffect, useState } from "react";
 import { ContainerFull, Content } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import { Button, Card, Select, WordChanger } from "@/components";
+import {
+  Button,
+  Card,
+  Select,
+  SliderTabs,
+  WordChanger,
+  Map,
+  Markers,
+} from "@/components";
 import { mokCategories, specialist } from "@/utils/constants";
 import { Utils } from "@/services";
 import { useForm } from "react-hook-form";
@@ -16,6 +24,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Home = ({ global }: GlobalPageProps) => {
   const [city, setCity] = useState([]);
+  const [view, setView] = useState("list");
 
   let defaultValues: any = {
     city: "",
@@ -63,6 +72,10 @@ const Home = ({ global }: GlobalPageProps) => {
   const getCityFromService = async (query: string) => {
     let city = await Utils.getCity(query);
     setCity(city);
+  };
+
+  const handleView = (data: any) => {
+    setView(data?.value);
   };
 
   const handleSelectChange = (data: any, options: any) => {
@@ -178,16 +191,45 @@ const Home = ({ global }: GlobalPageProps) => {
           </svg>
         </ContainerFull>
         <Content>
-          <h2>Specialisti disponibili</h2>
-          <motion.div layout className="card-list">
-            <AnimatePresence>
-              {specialist.map((item) => {
-                return <Card key={item.id} option={item} />;
-              })}
-            </AnimatePresence>
-          </motion.div>
+          <div className="title">
+            <h2>Specialisti disponibili</h2>
+            <div className="component">
+              <SliderTabs
+                onChange={handleView}
+                options={[
+                  { label: "", value: "list", icon: "list", checked: true },
+                  {
+                    label: "",
+                    value: "map",
+                    icon: "map",
+                  },
+                ]}
+              />
+            </div>
+          </div>
+          {view == "list" ? (
+            <motion.div layout className="card-list">
+              <AnimatePresence>
+                {specialist.map((item) => {
+                  return <Card key={item.id} option={item} />;
+                })}
+              </AnimatePresence>
+            </motion.div>
+          ) : (
+            <motion.div layout className="card-map">
+              <AnimatePresence>
+                <Map
+                  center={specialist[0]?.position}
+                  zoom={12}
+                  height={"600px"}
+                >
+                  <Markers options={specialist} zoom={14} />
+                </Map>
+              </AnimatePresence>
+            </motion.div>
+          )}
           <div className="show-more">
-            <Button>Vedi tutti gli specialisti</Button>
+            <Button>MOSTRA ALTRI</Button>
           </div>
         </Content>
         <ContainerFull className="content-full">full</ContainerFull>
@@ -258,7 +300,7 @@ const TextBanner = styled.div<{ color: string }>`
     height: 350px;
   }
   &.warning {
-    top: -1px;
+    top: -2px;
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     height: auto;

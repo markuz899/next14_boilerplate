@@ -90,11 +90,19 @@ export const Container = styled.div`
 export const Content = styled(Container)`
   text-align: left;
   margin: 0 auto;
-  h2 {
-    font-weight: bold;
-    color: ${theme.colors.dark};
-    text-transform: uppercase;
-    margin: ${theme.spaces.space4} ${theme.spaces.space2};
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h2 {
+      font-weight: bold;
+      color: ${theme.colors.dark};
+      text-transform: uppercase;
+      margin: ${theme.spaces.space4} ${theme.spaces.space2};
+    }
+    .component {
+      margin-right: 10px;
+    }
   }
   .show-more {
     text-align: center;
@@ -123,8 +131,14 @@ export const Content = styled(Container)`
       }
     }
   }
+  .card-map {
+    margin-top: ${theme.spaces.space2};
+  }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     margin: 0;
+    h2 {
+      font-size: ${theme.font.size.normal};
+    }
   }
 `;
 
