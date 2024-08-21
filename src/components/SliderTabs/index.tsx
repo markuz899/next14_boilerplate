@@ -69,7 +69,7 @@ const Tabs: React.FC<TabsProps> = ({
                   {option.icon && (
                     <Icon
                       name={option.icon}
-                      margin={`0 ${isSmall ? "0" : "5px"} 0 0`}
+                      margin={`0 ${isSmall ? "0" : "0"} 0 0`}
                       color={option.iconColor || theme.colors.dark}
                     />
                   )}
@@ -154,6 +154,9 @@ const Tab = styled.button<{ $iconColor: string }>`
       font-size: ${theme.font.size.minor};
       color: ${theme.colors.white};
     }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    padding: ${theme.spaces.space2};
   }
 `;
 
