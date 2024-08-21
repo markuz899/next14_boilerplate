@@ -115,7 +115,7 @@ const Home = ({ global }: GlobalPageProps) => {
               </p>
               <div className="content-action">
                 <Button
-                  kind="action"
+                  kind="inverse-warning"
                   label="ISCRIVITI GRATIS"
                   onClick={handleSearch}
                 />
@@ -156,7 +156,7 @@ const Home = ({ global }: GlobalPageProps) => {
               </p>
               <div className="content-action">
                 <Button
-                  kind="action"
+                  kind="inverse-primary"
                   label="UNISCITI ALLA RETE"
                   onClick={handleSearch}
                 />
