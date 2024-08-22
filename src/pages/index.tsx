@@ -5,7 +5,7 @@ import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 import React, { useEffect, useState } from "react";
-import { ContainerFull, Content } from "@/theme/styled";
+import { ContainerFull, Content, ContentMap } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
 import {
@@ -25,6 +25,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const Home = ({ global }: GlobalPageProps) => {
   const [city, setCity] = useState([]);
   const [view, setView] = useState("list");
+  const [activeMarker, setActiveMarker] = useState<any>(null);
 
   let defaultValues: any = {
     city: "",
@@ -190,6 +191,30 @@ const Home = ({ global }: GlobalPageProps) => {
             />
           </svg>
         </ContainerFull>
+
+        <ContainerFull className="content-full">
+          <ContentMap className="between">
+            <div className="content content-card full">
+              <motion.div layout className="card-list">
+                <AnimatePresence>
+                  {specialist.map((item) => {
+                    return <Card key={item.id} option={item} />;
+                  })}
+                </AnimatePresence>
+              </motion.div>
+            </div>
+            <div className="content content-map p-0">
+              <motion.div layout className="card-map">
+                <AnimatePresence>
+                  <Map center={specialist[0]?.position} zoom={12}>
+                    <Markers options={specialist} zoom={14} />
+                  </Map>
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          </ContentMap>
+        </ContainerFull>
+
         <Content>
           <div className="title">
             <h2>Specialisti disponibili</h2>
@@ -207,7 +232,28 @@ const Home = ({ global }: GlobalPageProps) => {
               />
             </div>
           </div>
-          {view == "list" ? (
+
+          <ContentMap className="between">
+            <div className="content content-card">
+              <motion.div layout className="card-list">
+                <AnimatePresence>
+                  {specialist.map((item) => {
+                    return <Card key={item.id} option={item} />;
+                  })}
+                </AnimatePresence>
+              </motion.div>
+            </div>
+            <div className="content content-map">
+              <motion.div layout className="card-map">
+                <AnimatePresence>
+                  <Map center={specialist[0]?.position} zoom={12}>
+                    <Markers options={specialist} zoom={14} />
+                  </Map>
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          </ContentMap>
+          {/* {view == "list" ? (
             <motion.div layout className="card-list">
               <AnimatePresence>
                 {specialist.map((item) => {
@@ -228,7 +274,7 @@ const Home = ({ global }: GlobalPageProps) => {
                 </Map>
               </AnimatePresence>
             </motion.div>
-          )}
+          )} */}
           <div className="show-more">
             <Button>MOSTRA ALTRI</Button>
           </div>

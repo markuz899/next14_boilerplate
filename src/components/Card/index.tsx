@@ -114,7 +114,7 @@ const CardStyle = styled.div<{
         overflow: hidden;
         width: 150px;
         height: 100%;
-        max-width: 150px;
+        min-width: 150px;
         img {
           width: 100%;
           height: 100%;
@@ -122,7 +122,7 @@ const CardStyle = styled.div<{
         }
       }
       .info {
-        padding: ${theme.spaces.space2};
+        padding: ${theme.spaces.space4};
         font-size: ${theme.font.size.tiny};
         .row {
           display: flex;

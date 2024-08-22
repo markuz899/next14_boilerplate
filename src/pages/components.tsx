@@ -41,7 +41,7 @@ import {
 } from "@/components";
 import QRCode from "react-qr-code";
 import icons from "@/components/Icon/icons";
-import { Content } from "@/theme/styled";
+import { Content, ContentMap } from "@/theme/styled";
 import styled from "styled-components";
 import { WithAuth } from "@/hoc";
 import { AnimatePresence, motion } from "framer-motion";
@@ -955,43 +955,6 @@ const ContentAppointment = ({
     </Section>
   );
 };
-
-const ContentMap = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  &.between {
-    justify-content: space-between;
-  }
-  .content {
-    padding: ${theme.spaces.space2};
-    &.content-map {
-      flex: 1 0 70%;
-    }
-    &.content-card {
-      flex: 1 0 30%;
-      max-height: 700px;
-      overflow-y: scroll;
-      .card-list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        .card {
-          width: 100%;
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
-    .content {
-      &.content-card {
-        flex: 1 0 100%;
-        max-height: 300px;
-      }
-    }
-  }
-`;
 
 const Compose = styled.div`
   margin: ${theme.spaces.space4} 0;

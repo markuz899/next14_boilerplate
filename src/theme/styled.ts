@@ -147,6 +147,53 @@ export const ContainerFull = styled.div<{ kind?: string }>`
   width: 100%;
 `;
 
+export const ContentMap = styled.div<{ view?: string }>`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  &.between {
+    justify-content: space-between;
+  }
+  .content {
+    padding: ${theme.spaces.space2};
+    &.p-0 {
+      padding: 0;
+    }
+    &.content-map {
+      flex: 1 0 50%;
+    }
+    &.content-card {
+      flex: 1 0 50%;
+      max-height: 700px;
+      overflow-y: scroll;
+      .card-list {
+        display: flex;
+        flex-direction: column;
+        .card {
+          width: 100%;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    .content {
+      &.content-card {
+        flex: 1 0 100%;
+        max-height: 300px;
+      }
+    }
+  }
+`;
+
+const listView = css<{ view?: string }>`
+  flex: 1 0 70%;
+  display: block;
+`;
+const withMapView = css`
+  display: none;
+`;
+
 export const fadeIn = keyframes`
   0% {
     opacity: 0;
