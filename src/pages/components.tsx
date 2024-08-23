@@ -759,7 +759,6 @@ const Components = ({ global }: GlobalPageProps) => {
                       <Card
                         key={item.id}
                         option={item}
-                        mini
                         active={activeMarker?.id == item?.id}
                         onClick={() => {
                           setActiveMarker(item);

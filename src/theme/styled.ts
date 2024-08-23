@@ -112,8 +112,8 @@ export const Content = styled(Container)`
     display: flex;
     flex-flow: row wrap;
     .card {
-      flex: 0 0 ${(p) => setCols(3)};
-      width: ${(p) => setCols(3)};
+      flex: 0 0 ${(p) => setCols(2)};
+      width: ${(p) => setCols(2)};
       @media only screen and (max-width: ${theme.breakpoints.tablet}) {
         flex: 0 0 50%;
       }
@@ -165,16 +165,25 @@ export const ContentMap = styled.div<{ view?: string }>`
     }
     &.content-card {
       flex: 1 0 50%;
-      max-height: 700px;
       overflow-y: scroll;
+      max-height: 700px;
+      max-width: 1000px;
       .card-list {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         .card {
-          width: 100%;
+          flex: 1;
+          min-width: 350px;
+          max-width: 100%;
         }
       }
     }
+  }
+  .show-more {
+    width: 100%;
+    text-align: center;
+    margin: ${theme.spaces.space8} 0 ${theme.spaces.space12};
   }
   @media only screen and (max-width: ${theme.breakpoints.tablet}) {
     .content {

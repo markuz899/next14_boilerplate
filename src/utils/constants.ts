@@ -163,7 +163,8 @@ export const mokCategories = [
 export const specialist = [
   {
     id: 1,
-    name: "Carlo",
+    createdAt: "06/03/2022",
+    name: "Carlo Rossi",
     position: [42.16137759041936, 12.339213749209796],
     range: 20,
     profession: "Musicista",
@@ -171,7 +172,8 @@ export const specialist = [
   },
   {
     id: 2,
-    name: "Flavio",
+    createdAt: "06/03/2022",
+    name: "Flavio Bianchi",
     position: [42.142287926630516, 12.540400871218557],
     range: 10,
     profession: "Meccanico",
@@ -179,7 +181,8 @@ export const specialist = [
   },
   {
     id: 3,
-    name: "Mario",
+    createdAt: "06/03/2022",
+    name: "Mario Verdi",
     position: [42.09288262437151, 12.273639107053354],
     range: 50,
     profession: "Giardiniere",
@@ -187,7 +190,8 @@ export const specialist = [
   },
   {
     id: 4,
-    name: "Anna",
+    createdAt: "06/03/2022",
+    name: "Anna Gialli",
     position: [42.206914985163685, 12.39517535481974],
     range: 80,
     profession: "Operaio",
@@ -195,7 +199,8 @@ export const specialist = [
   },
   {
     id: 5,
-    name: "Claudia",
+    createdAt: "06/03/2022",
+    name: "Claudia Shiffer",
     position: [42.0775948359501, 12.4497636694941],
     range: 10,
     profession: "Nerd",
@@ -203,7 +208,8 @@ export const specialist = [
   },
   {
     id: 6,
-    name: "Sole",
+    createdAt: "06/03/2022",
+    name: "Sole Soleil",
     position: [42.09950618862456, 12.563746817117186],
     range: 15,
     profession: "Avvocato",
@@ -211,7 +217,8 @@ export const specialist = [
   },
   {
     id: 7,
-    name: "Falco",
+    createdAt: "06/03/2022",
+    name: "Falco Neri",
     position: [42.090681921149525, 12.27409778617536],
     range: 15,
     profession: "Studente",
