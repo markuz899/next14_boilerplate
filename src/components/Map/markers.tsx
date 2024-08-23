@@ -14,7 +14,6 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import useSupercluster from "use-supercluster";
 import styled from "styled-components";
 import theme from "@/theme";
-import Button from "../Button";
 import Rating from "../Rating";
 import Card from "../Card";
 
@@ -224,9 +223,9 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                   popupRef.current[cluster.properties.id] = pop;
                 }}
               >
-                <Card option={cluster.properties} />
+                {/* <Card option={cluster.properties} mini /> */}
 
-                {/* <Drop>
+                <Drop>
                   <div className="profile">
                     <div className="registered">
                       <p className="m-0">06/03/2022</p>
@@ -261,10 +260,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                       </div>
                     </div>
                   </div>
-                  <Button kind="inverse-primary" size="sm">
-                    DETTAGLIO
-                  </Button>
-                </Drop> */}
+                </Drop>
               </Popup>
             )}
             {cluster.properties.range &&

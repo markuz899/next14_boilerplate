@@ -34,46 +34,36 @@ const Card = ({
         exit={{ opacity: 0 }}
         onClick={onClick}
       >
-        <CardStyle $active={active} $mini={mini}>
-          <a href={`/detail/${userInfo?.id}`}>
-            <div className="content-card">
-              <div className="content-column">
-                <div className="banner">
-                  <img src={`https://i.pravatar.cc/150?img=${userInfo.id}`} />
-                </div>
-
-                <div className="info">
-                  <div className="row between">
-                    <Rating
-                      rate={userInfo.rating}
-                      size={theme.spaces.space3}
-                      disable
-                    />
-                    <p>{userInfo.createdAt}</p>
-                  </div>
-                  <div className="row">
-                    <span className="bold">Nome:</span>
-                    <p>{userInfo.name}</p>
-                  </div>
-                  <div className="row">
-                    <span className="bold">Professione:</span>
-                    <p>{userInfo.profession}</p>
-                  </div>
-                </div>
+        <CardStyle className={`cardstyle`} $active={active} $mini={mini}>
+          <div className="content-card">
+            <div className="content-column">
+              <div className="banner">
+                <img src={`https://i.pravatar.cc/150?img=${userInfo.id}`} />
               </div>
-              {renderFooter && !mini && (
-                <div className="card-action">
-                  <Button
-                    kind="inverse-primary"
-                    fluid
-                    className="btn btn-redirect"
-                  >
-                    <b>DETTAGLI</b>
-                  </Button>
+
+              <div className="info">
+                <div className="row between">
+                  <Rating
+                    rate={userInfo.rating}
+                    size={theme.spaces.space3}
+                    disable
+                  />
+                  <p>{userInfo.createdAt}</p>
                 </div>
-              )}
+                <div className="row">
+                  <p className="bold">{userInfo.name}</p>
+                </div>
+                <div className="row">
+                  <p>{userInfo.profession}</p>
+                </div>
+                {!mini && (
+                  <div className="row">
+                    <p>Mi chiamo {userInfo.name} disponibile, capace</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </a>
+          </div>
         </CardStyle>
       </m.div>
     </LazyMotion>
@@ -98,72 +88,67 @@ const CardStyle = styled.div<{
   $mini?: boolean;
   src?: string;
 }>`
-  a {
-    width: 100%;
-    .content-card {
-      margin: ${theme.spaces.space2};
-      overflow: hidden;
-      background: ${theme.colors.cardLight};
-      border-radius: ${theme.spaces.space5};
+  margin: ${theme.spaces.space2};
+  .content-card {
+    overflow: hidden;
+    background: ${theme.colors.cardLight};
+    border-radius: ${theme.spaces.space5};
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
+    transition: all 0.5s;
+    height: 100%;
+    .content-column {
       display: flex;
-      flex-direction: column;
-      box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
-      transition: all 0.5s;
-      .content-column {
-        display: flex;
-        align-items: center;
-        .banner {
-          display: ${(p) => (p.$mini ? "none" : "block")};
-          overflow: hidden;
-          width: 150px;
-          height: 100%;
-          min-width: 150px;
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-          }
-        }
-        .info {
-          padding: ${theme.spaces.space4};
-          font-size: ${theme.font.size.tiny};
+      align-items: center;
+      .banner {
+        overflow: hidden;
+        width: 150px;
+        height: 100%;
+        min-width: 150px;
+        img {
           width: 100%;
           height: 100%;
-          .row {
-            display: flex;
-            align-items: center;
-            margin-bottom: ${theme.spaces.space2};
-            &.between {
-              justify-content: space-between;
-              flex-wrap: wrap-reverse;
-            }
-            span {
-              margin-right: 5px;
-            }
-            &:last-child {
-              margin-bottom: 0;
-            }
+          object-fit: contain;
+        }
+      }
+      .info {
+        padding: ${theme.spaces.space4};
+        font-size: ${theme.font.size.tiny};
+        width: 100%;
+        height: 100%;
+        .row {
+          display: flex;
+          align-items: center;
+          margin-bottom: ${theme.spaces.space2};
+          &.between {
+            justify-content: space-between;
+            flex-wrap: wrap-reverse;
+          }
+          span {
+            margin-right: 5px;
+          }
+          &:last-child {
+            margin-bottom: 0;
           }
         }
       }
-      .card-action {
-        margin-top: ${theme.spaces.space2};
-      }
-      &:hover {
-        ${isHover}
-      }
-      ${(p) => p.$active && isActive}
     }
+    .card-action {
+      margin-top: ${theme.spaces.space2};
+    }
+    &:hover {
+      ${isHover}
+    }
+    ${(p) => p.$active && isActive}
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    a {
-      .content-card {
-        margin: ${theme.spaces.space2};
-        &:hover {
-          -webkit-box-shadow: none;
-          -moz-box-shadow: none;
-          box-shadow: none;
-        }
+    .content-card {
+      margin: ${theme.spaces.space2};
+      &:hover {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
       }
     }
   }
