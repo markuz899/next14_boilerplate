@@ -102,6 +102,12 @@ export const Content = styled(Container)`
     }
     .component {
       margin-right: 10px;
+      .toggle-mobile {
+        span {
+          cursor: pointer;
+          font-size: ${theme.font.size.normal};
+        }
+      }
     }
   }
   .show-more {
@@ -114,12 +120,6 @@ export const Content = styled(Container)`
     .card {
       flex: 0 0 ${(p) => setCols(3)};
       width: ${(p) => setCols(3)};
-      @media only screen and (max-width: ${theme.breakpoints.tablet}) {
-        flex: 0 0 ${(p) => setCols(2)};
-      }
-      @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-        flex: 0 0 ${(p) => setCols(1)};
-      }
     }
     .empty-data {
       width: 100%;
@@ -134,10 +134,22 @@ export const Content = styled(Container)`
   .card-map {
     margin-top: ${theme.spaces.space2};
   }
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    .card-list {
+      .card {
+        flex: 0 0 ${(p) => setCols(2)};
+      }
+    }
+  }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     margin: 0;
     h2 {
       font-size: ${theme.font.size.normal};
+    }
+    .card-list {
+      .card {
+        flex: 0 0 ${(p) => setCols(1)};
+      }
     }
   }
 `;

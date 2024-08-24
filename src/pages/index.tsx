@@ -21,8 +21,10 @@ import { mokCategories, specialist } from "@/utils/constants";
 import { Utils } from "@/services";
 import { useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
+import { useBreakpoints } from "@/hooks";
 
 const Home = ({ global }: GlobalPageProps) => {
+  const { isSmall } = useBreakpoints();
   const [city, setCity] = useState([]);
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
@@ -107,7 +109,7 @@ const Home = ({ global }: GlobalPageProps) => {
   ];
 
   return (
-    <Layout global={global} title="Homepage">
+    <Layout global={global} title="Homepage" footer={false}>
       <ContentPage>
         <ContainerFull className="content-full">
           <TextBanner className="primary" color={theme.colors.primaryLight}>
@@ -196,17 +198,17 @@ const Home = ({ global }: GlobalPageProps) => {
           <div className="title">
             <h2>Specialisti disponibili</h2>
             <div className="component">
-              <SliderTabs
-                onChange={handleView}
-                options={[
-                  { label: "", value: "list", icon: "list", checked: true },
-                  {
-                    label: "",
-                    value: "map",
-                    icon: "map",
-                  },
-                ]}
-              />
+              <div className="toggle-mobile">
+                {view == "list" ? (
+                  <span onClick={() => handleView({ value: "map" })}>
+                    Mostra mappa
+                  </span>
+                ) : (
+                  <span onClick={() => handleView({ value: "list" })}>
+                    Mostra lista
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           {view == "list" ? (
@@ -221,10 +223,10 @@ const Home = ({ global }: GlobalPageProps) => {
             <motion.div layout className="card-map">
               <AnimatePresence>
                 <Map
-                  gestureHandling={false}
+                  gestureHandling={true}
                   center={specialist[0]?.position}
                   zoom={12}
-                  height={"600px"}
+                  height={"800px"}
                 >
                   <Markers options={specialist} zoom={14} />
                 </Map>
@@ -233,7 +235,10 @@ const Home = ({ global }: GlobalPageProps) => {
           )}
         </Content>
 
-        <ContainerFull className="content-full">
+        {/* <ContainerFull className="content-full">
+          <div className="title">
+            <h2>Specialisti disponibili</h2>
+          </div>
           <ContentMap className="between">
             <div className="content content-card">
               <motion.div layout className="card-list">
@@ -257,9 +262,7 @@ const Home = ({ global }: GlobalPageProps) => {
               <Button>MOSTRA ALTRI</Button>
             </div>
           </ContentMap>
-        </ContainerFull>
-
-        <ContainerFull className="content-full">full</ContainerFull>
+        </ContainerFull> */}
       </ContentPage>
     </Layout>
   );

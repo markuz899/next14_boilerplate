@@ -13,6 +13,7 @@ export interface LayoutProps {
   global?: any;
   title?: string;
   background?: string;
+  footer?: boolean;
   className?: string;
   handleSelectChange?: any;
 }

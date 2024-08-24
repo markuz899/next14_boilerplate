@@ -15,6 +15,7 @@ export const Layout = ({
   title,
   background,
   className,
+  footer = true,
 }: LayoutProps) => {
   const { menuState, setMenuState } = global;
   const { isSmall, isMedium } = useBreakpoints();
@@ -43,7 +44,7 @@ export const Layout = ({
           />
         )}
         <Page onClick={closeSiderMenu}>
-          <Main className={`bodys`}>
+          <Main className={`bodys ${className ? className : ""}`}>
             <Header
               global={global}
               isSmall={isSmall || isMedium}
@@ -51,7 +52,7 @@ export const Layout = ({
               setState={setMenuState}
             />
             <Body background={background}>{children}</Body>
-            <Footer />
+            {footer && <Footer />}
           </Main>
           <ScrollToTop />
         </Page>
