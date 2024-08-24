@@ -112,13 +112,13 @@ export const Content = styled(Container)`
     display: flex;
     flex-flow: row wrap;
     .card {
-      flex: 0 0 ${(p) => setCols(2)};
-      width: ${(p) => setCols(2)};
+      flex: 0 0 ${(p) => setCols(3)};
+      width: ${(p) => setCols(3)};
       @media only screen and (max-width: ${theme.breakpoints.tablet}) {
-        flex: 0 0 100%;
+        flex: 0 0 ${(p) => setCols(2)};
       }
       @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-        flex: 0 0 100%;
+        flex: 0 0 ${(p) => setCols(1)};
       }
     }
     .empty-data {
@@ -173,8 +173,8 @@ export const ContentMap = styled.div<{ view?: string }>`
         flex-direction: row;
         flex-wrap: wrap;
         .card {
-          flex: 0 0 ${setCols(1)};
-          width: ${setCols(1)};
+          flex: 0 0 ${setCols(2)};
+          width: ${setCols(2)};
         }
       }
     }
@@ -184,15 +184,15 @@ export const ContentMap = styled.div<{ view?: string }>`
     text-align: center;
     margin: ${theme.spaces.space8} 0 ${theme.spaces.space12};
   }
-  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     .content {
       &.content-card {
         flex: 1 0 100%;
         max-height: 300px;
         .card-list {
           .card {
-            flex: 0 0 100% !important;
-            width: 100%;
+            flex: 0 0 ${setCols(1)} !important;
+            width: ${setCols(1)};
           }
         }
       }

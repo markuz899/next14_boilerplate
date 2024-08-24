@@ -90,32 +90,30 @@ const CardStyle = styled.div<{
   $mini?: boolean;
   src?: string;
 }>`
-  margin: ${theme.spaces.space2};
   .content-card {
+    margin: ${theme.spaces.space2};
     overflow: hidden;
     background: ${theme.colors.cardLight};
     border-radius: ${theme.spaces.space5};
     box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
     transition: all 0.5s;
-    height: 100%;
+    padding: ${({ $mini }) =>
+      $mini ? theme.spaces.space3 : theme.spaces.space4};
     .content-card-col {
-      display: flex;
-      align-items: center;
-      height: 100%;
       .content-banner {
-        width: 150px;
-        height: 100%;
-        min-width: 125px;
-        max-width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+          margin-bottom: ${theme.spaces.space2};
+          min-height: 150px;
+          max-height: 150px;
+          border-radius: 50%;
+          object-fit: contain;
         }
       }
       .content-info {
         overflow: hidden;
-        padding: ${theme.spaces.space4};
         font-size: ${theme.font.size.tiny};
         width: 100%;
         height: 100%;
@@ -152,6 +150,13 @@ const CardStyle = styled.div<{
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     .content-card {
       margin: ${theme.spaces.space2};
+      .content-card-col {
+        .content-banner {
+          img {
+            min-height: 120px;
+          }
+        }
+      }
       &:hover {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
@@ -160,3 +165,80 @@ const CardStyle = styled.div<{
     }
   }
 `;
+
+// const CardStyle = styled.div<{
+//   $active?: boolean;
+//   $mini?: boolean;
+//   src?: string;
+// }>`
+//   margin: ${theme.spaces.space2};
+//   .content-card {
+//     overflow: hidden;
+//     background: ${theme.colors.cardLight};
+//     border-radius: ${theme.spaces.space5};
+//     box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
+//     transition: all 0.5s;
+//     height: 100%;
+//     .content-card-col {
+//       display: flex;
+//       align-items: center;
+//       height: 100%;
+//       .content-banner {
+//         display: flex;
+//         width: 150px;
+//         height: 100%;
+//         min-width: 125px;
+//         max-width: 150px;
+//         img {
+//           width: 100%;
+//           height: 100%;
+//           object-fit: cover;
+//         }
+//       }
+//       .content-info {
+//         overflow: hidden;
+//         padding: ${theme.spaces.space4};
+//         font-size: ${theme.font.size.tiny};
+//         width: 100%;
+//         height: 100%;
+//         .row {
+//           display: flex;
+//           align-items: center;
+//           margin-bottom: ${theme.spaces.space2};
+//           &.between {
+//             justify-content: space-between;
+//             flex-wrap: wrap-reverse;
+//           }
+//           span {
+//             margin-right: 5px;
+//           }
+//           .message {
+//             white-space: nowrap;
+//             overflow: hidden;
+//             text-overflow: ellipsis;
+//           }
+//           &:last-child {
+//             margin-bottom: 0;
+//           }
+//         }
+//       }
+//     }
+//     .card-action {
+//       margin-top: ${theme.spaces.space2};
+//     }
+//     &:hover {
+//       ${isHover}
+//     }
+//     ${(p) => p.$active && isActive}
+//   }
+//   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+//     .content-card {
+//       margin: ${theme.spaces.space2};
+//       &:hover {
+//         -webkit-box-shadow: none;
+//         -moz-box-shadow: none;
+//         box-shadow: none;
+//       }
+//     }
+//   }
+// `;
