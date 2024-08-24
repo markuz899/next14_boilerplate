@@ -36,12 +36,12 @@ const Card = ({
       >
         <CardStyle className={`cardstyle`} $active={active} $mini={mini}>
           <div className="content-card">
-            <div className="content-column">
-              <div className="banner">
+            <div className="content-card-col">
+              <div className="content-banner">
                 <img src={`https://i.pravatar.cc/150?img=${userInfo.id}`} />
               </div>
 
-              <div className="info">
+              <div className="content-info">
                 <div className="row between">
                   <Rating
                     rate={userInfo.rating}
@@ -58,7 +58,9 @@ const Card = ({
                 </div>
                 {!mini && (
                   <div className="row">
-                    <p>Mi chiamo {userInfo.name} disponibile, capace</p>
+                    <p className="message">
+                      Mi chiamo {userInfo.name} disponibile, capace
+                    </p>
                   </div>
                 )}
               </div>
@@ -93,27 +95,26 @@ const CardStyle = styled.div<{
     overflow: hidden;
     background: ${theme.colors.cardLight};
     border-radius: ${theme.spaces.space5};
-    display: flex;
-    flex-direction: column;
     box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
     transition: all 0.5s;
     height: 100%;
-    .content-column {
+    .content-card-col {
       display: flex;
       align-items: center;
       height: 100%;
-      .banner {
-        overflow: hidden;
+      .content-banner {
         width: 150px;
         height: 100%;
         min-width: 150px;
+        max-width: 150px;
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
       }
-      .info {
+      .content-info {
+        overflow: hidden;
         padding: ${theme.spaces.space4};
         font-size: ${theme.font.size.tiny};
         width: 100%;
@@ -128,6 +129,11 @@ const CardStyle = styled.div<{
           }
           span {
             margin-right: 5px;
+          }
+          .message {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           &:last-child {
             margin-bottom: 0;
