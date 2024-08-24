@@ -105,7 +105,7 @@ const CardStyle = styled.div<{
       .content-banner {
         width: 150px;
         height: 100%;
-        min-width: 150px;
+        min-width: 125px;
         max-width: 150px;
         img {
           width: 100%;
