@@ -293,10 +293,12 @@ const CustomPopup = styled(Popup)`
     .leaflet-popup-content {
       margin: 0;
       width: 100%;
-      min-width: 400px !important;
       .card {
         .cardstyle {
           margin: 0;
+          .content-card {
+            margin: 0;
+          }
         }
       }
     }
