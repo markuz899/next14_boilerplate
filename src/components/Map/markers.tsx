@@ -125,6 +125,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
       rating: mark.rating,
       range: mark.range,
       profession: mark.profession,
+      createdAt: mark.createdAt,
     },
     geometry: {
       type: "Point",
@@ -216,16 +217,16 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
             }}
           >
             {cluster.properties.name && (
-              <Popup
+              <CustomPopup
                 autoClose
                 closeOnEscapeKey
                 ref={(pop) => {
                   popupRef.current[cluster.properties.id] = pop;
                 }}
               >
-                {/* <Card option={cluster.properties} mini /> */}
+                <Card option={cluster.properties} mini />
 
-                <Drop>
+                {/* <Drop>
                   <div className="profile">
                     <div className="registered">
                       <p className="m-0">06/03/2022</p>
@@ -260,8 +261,8 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                       </div>
                     </div>
                   </div>
-                </Drop>
-              </Popup>
+                </Drop> */}
+              </CustomPopup>
             )}
             {cluster.properties.range &&
               selectedMarker?.id === cluster.properties.id && (
@@ -283,7 +284,24 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
 export default React.memo(Markers);
 
 const ContentMarker = styled.div``;
-
+const CustomPopup = styled(Popup)`
+  .leaflet-popup-content-wrapper {
+    background: unset;
+    color: unset;
+    box-shadow: none;
+    padding: 0;
+    .leaflet-popup-content {
+      margin: 0;
+      width: 100%;
+      min-width: 400px !important;
+      .card {
+        .cardstyle {
+          margin: 0;
+        }
+      }
+    }
+  }
+`;
 const Drop = styled.div`
   display: flex;
   flex-direction: column;
