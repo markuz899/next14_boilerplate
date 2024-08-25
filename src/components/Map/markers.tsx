@@ -44,7 +44,13 @@ const fetchIcon = (count: any, size: any) => {
   return icons[count];
 };
 
-const Markers = ({ options, zoom, active, setActive }: any) => {
+const Markers = ({
+  options,
+  zoom,
+  active,
+  setActive,
+  isSmall = false,
+}: any) => {
   const [selectedMarker, setSelectedMarker] = useState<any>(active);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
@@ -103,7 +109,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
         Object.keys(markerRef.current).forEach((el: any) => {
           markerRef.current[el]?.closePopup();
         });
-        setSelectedMarker(null);
+        !isSmall && setSelectedMarker(null);
       }
     }
   };
@@ -216,7 +222,7 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
               },
             }}
           >
-            {cluster.properties.name && (
+            {!isSmall && cluster.properties.name && (
               <CustomPopup
                 autoClose
                 closeOnEscapeKey
@@ -225,43 +231,6 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                 }}
               >
                 <Card option={cluster.properties} mini />
-
-                {/* <Drop>
-                  <div className="profile">
-                    <div className="registered">
-                      <p className="m-0">06/03/2022</p>
-                      {cluster.properties.rating && (
-                        <Rating
-                          rate={cluster.properties.rating}
-                          size={theme.spaces.space3}
-                          disable
-                        />
-                      )}
-                    </div>
-                    <div className="row">
-                      <div className="img">
-                        <img
-                          src={`https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg`}
-                          alt="img"
-                        />
-                      </div>
-                      <div className="info">
-                        <p>
-                          <span className="bold">Nome:</span>{" "}
-                          {cluster.properties.name}
-                        </p>
-                        <p>
-                          <span className="bold">Raggio:</span>{" "}
-                          {cluster.properties.range}km
-                        </p>
-                        <p>
-                          <span className="bold">Professione:</span>{" "}
-                          {cluster.properties.profession}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Drop> */}
               </CustomPopup>
             )}
             {cluster.properties.range &&
@@ -274,6 +243,13 @@ const Markers = ({ options, zoom, active, setActive }: any) => {
                   />
                 </LayerGroup>
               )}
+            {isSmall && selectedMarker?.id && (
+              <div className="content-popup">
+                <div className="popup-body">
+                  <Card option={selectedMarker} />
+                </div>
+              </div>
+            )}
           </Marker>
         );
       })}

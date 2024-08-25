@@ -359,4 +359,17 @@ const MapContainerStyle = styled(MapContainer)<{ height: string }>`
       background: ${theme.colors.softWhite};
     }
   }
+  .content-popup {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 400;
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    .popup-body {
+      width: 100%;
+      height: 100%;
+    }
+  }
 `;

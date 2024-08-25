@@ -237,12 +237,12 @@ const Home = ({ global }: GlobalPageProps) => {
                 className="card-map"
               >
                 <Map
-                  gestureHandling={true}
+                  gestureHandling={false}
                   center={specialist[0]?.position}
                   zoom={12}
                   height={"800px"}
                 >
-                  <Markers options={specialist} zoom={14} />
+                  <Markers isSmall={isSmall} options={specialist} zoom={14} />
                 </Map>
               </motion.div>
             )}
