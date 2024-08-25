@@ -179,7 +179,6 @@ export const ContentMap = styled.div<{ view?: string }>`
     justify-content: space-between;
   }
   .content {
-    padding: ${theme.spaces.space2};
     &.p-0 {
       padding: 0;
     }
@@ -196,8 +195,8 @@ export const ContentMap = styled.div<{ view?: string }>`
         flex-direction: row;
         flex-wrap: wrap;
         .card {
-          flex: 0 0 ${setCols(2)};
-          width: ${setCols(2)};
+          flex: 0 0 ${setCols(3)};
+          width: ${setCols(3)};
         }
       }
     }
@@ -207,10 +206,22 @@ export const ContentMap = styled.div<{ view?: string }>`
     text-align: center;
     margin: ${theme.spaces.space8} 0 ${theme.spaces.space12};
   }
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    .content {
+      &.content-card {
+        .card-list {
+          .card {
+            flex: 0 0 ${setCols(2)} !important;
+            width: ${setCols(2)};
+          }
+        }
+      }
+    }
+  }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     .content {
       &.content-card {
-        flex: 1 0 100%;
+        flex: 1 0 ${setCols(1)};
         max-height: 400px;
         .card-list {
           .card {

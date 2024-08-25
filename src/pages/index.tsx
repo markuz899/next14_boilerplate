@@ -1,107 +1,45 @@
-import Image from "next/image";
-import Link from "next/link";
 import { GlobalPageProps } from "@/utils/interface";
-import { WithAuth } from "@/hoc";
-import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
-import React, { useEffect, useState } from "react";
-import {
-  ContainerFull,
-  Content,
-  ContentMap,
-  ContentTitle,
-} from "@/theme/styled";
+import React from "react";
+import { ContainerFull, Content, ContentTitle } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import {
-  Button,
-  Card,
-  Select,
-  SliderTabs,
-  WordChanger,
-  Map,
-  Markers,
-} from "@/components";
-import { mokCategories, specialist } from "@/utils/constants";
-import { Utils } from "@/services";
-import { useForm } from "react-hook-form";
-import { AnimatePresence, motion } from "framer-motion";
+import { Button, Card, SliderTabs, WordChanger } from "@/components";
+import { specialist } from "@/utils/constants";
 import { useBreakpoints } from "@/hooks";
+import Link from "next/link";
 
 const Home = ({ global }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
-  const [city, setCity] = useState([]);
-  const [view, setView] = useState("list");
-  const [activeMarker, setActiveMarker] = useState<any>(null);
 
-  let defaultValues: any = {
-    city: "",
-    category: "",
-  };
-  const inputForm: any = {
-    city: "city",
-    category: "category",
-  };
-  const validationCity: any = {
-    city: {},
-    category: {},
-  };
+  let optionsView = [
+    {
+      label: "",
+      value: "list",
+      icon: "list",
+      checked: true,
+    },
+    {
+      label: "",
+      value: "mix",
+      icon: "grid",
+    },
+  ];
 
-  const {
-    register,
-    setValue,
-    getValues,
-    trigger,
-    unregister,
-    setError,
-    watch,
-    formState: { errors },
-  } = useForm({
-    defaultValues,
-  });
-
-  useEffect(() => {
-    Object.keys(inputForm).forEach((k: any) => {
-      register(k, validationCity[k]);
-    });
-    return () => {
-      Object.keys(inputForm).forEach((k: any) => {
-        unregister(k);
-      });
-    };
-    // eslint-disable-next-line
-  }, []);
-
-  const handleSearch = () => {
-    const data = getValues();
-    console.log("formdata", data);
-  };
-
-  const getCityFromService = async (query: string) => {
-    let city = await Utils.getCity(query);
-    setCity(city);
-  };
-
-  const handleView = (data: any) => {
-    setView(data?.value);
-  };
-
-  const handleSelectChange = (data: any, options: any) => {
-    const { name, value } = data;
-    const exists = options.some((cat: any) => cat.value === value);
-    if (exists || value == "") {
-      setValue(name, value);
-      console.log("select change", data);
-    }
-  };
-
-  const handleSelectCity = (data: any) => {
-    const { name, value } = data;
-    if (value.length >= 3) {
-      setValue(name, value);
-      getCityFromService(value);
-    }
-  };
+  if (isSmall) {
+    optionsView = [
+      {
+        label: "",
+        value: "list",
+        icon: "list",
+      },
+      {
+        label: "",
+        value: "map",
+        icon: "map",
+      },
+    ];
+  }
 
   const words = [
     "perfetto",
@@ -114,7 +52,7 @@ const Home = ({ global }: GlobalPageProps) => {
   ];
 
   return (
-    <Layout global={global} title="Homepage" footer={false}>
+    <Layout global={global} title="Homepage">
       <ContentPage>
         <ContainerFull className="content-full">
           <TextBanner className="primary" color={theme.colors.primaryLight}>
@@ -135,11 +73,7 @@ const Home = ({ global }: GlobalPageProps) => {
                 sia la tua necessità, qui troverai sempre la persona giusta.
               </p>
               <div className="content-action">
-                <Button
-                  kind="inverse-warning"
-                  label="ISCRIVITI GRATIS"
-                  onClick={handleSearch}
-                />
+                <Button kind="inverse-warning" label="ISCRIVITI GRATIS" />
               </div>
             </div>
             <div className="content-img-banner">
@@ -176,11 +110,7 @@ const Home = ({ global }: GlobalPageProps) => {
                 collaborano.
               </p>
               <div className="content-action">
-                <Button
-                  kind="inverse-primary"
-                  label="UNISCITI ALLA RETE"
-                  onClick={handleSearch}
-                />
+                <Button kind="inverse-primary" label="UNISCITI ALLA RETE" />
               </div>
             </div>
           </TextBanner>
@@ -202,103 +132,21 @@ const Home = ({ global }: GlobalPageProps) => {
         <ContentTitle>
           <div className="title">
             <h2>Specialisti disponibili</h2>
-            <div className="component">
-              <div className="toggle-mobile">
-                <SliderTabs
-                  onChange={handleView}
-                  options={[
-                    {
-                      label: "",
-                      value: "list",
-                      icon: "list",
-                      checked: view == "list",
-                    },
-                    {
-                      label: "",
-                      value: "map",
-                      icon: "map",
-                      checked: view == "map",
-                    },
-                    {
-                      label: "",
-                      value: "mix",
-                      icon: "grid",
-                    },
-                  ]}
-                />
-              </div>
-            </div>
           </div>
         </ContentTitle>
 
-        {(view == "list" || view == "map") && (
-          <Content>
-            {view == "list" && (
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key="list-view"
-                  layout
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.3 }}
-                  className="card-list"
-                >
-                  {specialist.map((item) => {
-                    return <Card key={item.id} option={item} />;
-                  })}
-                </motion.div>
-              </AnimatePresence>
-            )}
-            {view == "map" && (
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key="map-view"
-                  layout
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="card-map"
-                >
-                  <Map
-                    gestureHandling={false}
-                    center={specialist[0]?.position}
-                    zoom={12}
-                    height={"800px"}
-                  >
-                    <Markers isSmall={isSmall} options={specialist} zoom={14} />
-                  </Map>
-                </motion.div>
-              </AnimatePresence>
-            )}
-          </Content>
-        )}
-
-        {view == "mix" && (
-          <ContainerFull className="content-full">
-            <ContentMap className="between">
-              <div className="content content-card">
-                <motion.div layout className="card-list">
-                  <AnimatePresence>
-                    {specialist.map((item) => {
-                      return <Card key={item.id} option={item} />;
-                    })}
-                  </AnimatePresence>
-                </motion.div>
-              </div>
-              <div className="content content-map p-0">
-                <motion.div layout className="card-map">
-                  <AnimatePresence>
-                    <Map center={specialist[0]?.position} zoom={12}>
-                      <Markers options={specialist} zoom={14} />
-                    </Map>
-                  </AnimatePresence>
-                </motion.div>
-              </div>
-            </ContentMap>
-          </ContainerFull>
-        )}
+        <Content>
+          <div className="card-list">
+            {specialist.map((item) => {
+              return <Card key={item.id} option={item} />;
+            })}
+          </div>
+          <div className="show-more">
+            <Link href="/professional">
+              <Button>MOSTRA ALTRI</Button>
+            </Link>
+          </div>
+        </Content>
       </ContentPage>
     </Layout>
   );
@@ -314,7 +162,7 @@ export async function getServerSideProps(ctx: { req: any }) {
   };
 }
 
-export default WithAuth(React.memo(Home));
+export default React.memo(Home);
 
 const ContentPage = styled.div`
   .wave {

@@ -106,7 +106,7 @@ const CardStyle = styled.div<{
         justify-content: center;
         img {
           margin-bottom: ${theme.spaces.space2};
-          min-height: 150px;
+          min-height: 95px;
           max-height: 150px;
           border-radius: 50%;
           object-fit: contain;
