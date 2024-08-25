@@ -5,7 +5,12 @@ import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 import React, { useEffect, useState } from "react";
-import { ContainerFull, Content, ContentMap } from "@/theme/styled";
+import {
+  ContainerFull,
+  Content,
+  ContentMap,
+  ContentTitle,
+} from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
 import {
@@ -194,91 +199,106 @@ const Home = ({ global }: GlobalPageProps) => {
           </svg>
         </ContainerFull>
 
-        <Content>
+        <ContentTitle>
           <div className="title">
             <h2>Specialisti disponibili</h2>
             <div className="component">
               <div className="toggle-mobile">
-                {view == "list" ? (
-                  <span onClick={() => handleView({ value: "map" })}>
-                    Mostra mappa
-                  </span>
-                ) : (
-                  <span onClick={() => handleView({ value: "list" })}>
-                    Mostra lista
-                  </span>
-                )}
+                <SliderTabs
+                  onChange={handleView}
+                  options={[
+                    {
+                      label: "",
+                      value: "list",
+                      icon: "list",
+                      checked: view == "list",
+                    },
+                    {
+                      label: "",
+                      value: "map",
+                      icon: "map",
+                      checked: view == "map",
+                    },
+                    {
+                      label: "",
+                      value: "mix",
+                      icon: "grid",
+                    },
+                  ]}
+                />
               </div>
             </div>
           </div>
-          {view == "list" ? (
-            <AnimatePresence>
-              <motion.div
-                key="list-view"
-                layout
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3 }}
-                className="card-list"
-              >
-                {specialist.map((item) => {
-                  return <Card key={item.id} option={item} />;
-                })}
-              </motion.div>
-            </AnimatePresence>
-          ) : (
-            <AnimatePresence>
-              <motion.div
-                key="map-view"
-                layout
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="card-map"
-              >
-                <Map
-                  gestureHandling={false}
-                  center={specialist[0]?.position}
-                  zoom={12}
-                  height={"800px"}
-                >
-                  <Markers isSmall={isSmall} options={specialist} zoom={14} />
-                </Map>
-              </motion.div>
-            </AnimatePresence>
-          )}
-        </Content>
+        </ContentTitle>
 
-        {/* <ContainerFull className="content-full">
-          <div className="title">
-            <h2>Specialisti disponibili</h2>
-          </div>
-          <ContentMap className="between">
-            <div className="content content-card">
-              <motion.div layout className="card-list">
-                <AnimatePresence>
+        {(view == "list" || view == "map") && (
+          <Content>
+            {view == "list" && (
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key="list-view"
+                  layout
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-list"
+                >
                   {specialist.map((item) => {
                     return <Card key={item.id} option={item} />;
                   })}
-                </AnimatePresence>
-              </motion.div>
-            </div>
-            <div className="content content-map p-0">
-              <motion.div layout className="card-map">
-                <AnimatePresence>
-                  <Map center={specialist[0]?.position} zoom={12}>
-                    <Markers options={specialist} zoom={14} />
+                </motion.div>
+              </AnimatePresence>
+            )}
+            {view == "map" && (
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key="map-view"
+                  layout
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-map"
+                >
+                  <Map
+                    gestureHandling={false}
+                    center={specialist[0]?.position}
+                    zoom={12}
+                    height={"800px"}
+                  >
+                    <Markers isSmall={isSmall} options={specialist} zoom={14} />
                   </Map>
-                </AnimatePresence>
-              </motion.div>
-            </div>
-            <div className="show-more">
-              <Button>MOSTRA ALTRI</Button>
-            </div>
-          </ContentMap>
-        </ContainerFull> */}
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </Content>
+        )}
+
+        {view == "mix" && (
+          <ContainerFull className="content-full">
+            <ContentMap className="between">
+              <div className="content content-card">
+                <motion.div layout className="card-list">
+                  <AnimatePresence>
+                    {specialist.map((item) => {
+                      return <Card key={item.id} option={item} />;
+                    })}
+                  </AnimatePresence>
+                </motion.div>
+              </div>
+              <div className="content content-map p-0">
+                <motion.div layout className="card-map">
+                  <AnimatePresence>
+                    <Map center={specialist[0]?.position} zoom={12}>
+                      <Markers options={specialist} zoom={14} />
+                    </Map>
+                  </AnimatePresence>
+                </motion.div>
+              </div>
+            </ContentMap>
+          </ContainerFull>
+        )}
       </ContentPage>
     </Layout>
   );

@@ -87,8 +87,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Content = styled(Container)`
-  text-align: left;
+export const ContentTitle = styled(Container)`
   margin: 0 auto;
   .title {
     display: flex;
@@ -110,6 +109,18 @@ export const Content = styled(Container)`
       }
     }
   }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    .title {
+      h2 {
+        font-size: ${theme.font.size.normal};
+      }
+    }
+  }
+`;
+
+export const Content = styled(Container)`
+  text-align: left;
+  margin: 0 auto;
   .show-more {
     text-align: center;
     margin: ${theme.spaces.space8} 0 ${theme.spaces.space12};
@@ -200,7 +211,7 @@ export const ContentMap = styled.div<{ view?: string }>`
     .content {
       &.content-card {
         flex: 1 0 100%;
-        max-height: 300px;
+        max-height: 400px;
         .card-list {
           .card {
             flex: 0 0 ${setCols(1)} !important;
