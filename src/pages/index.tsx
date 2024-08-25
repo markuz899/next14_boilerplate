@@ -211,17 +211,31 @@ const Home = ({ global }: GlobalPageProps) => {
               </div>
             </div>
           </div>
-          {view == "list" ? (
-            <motion.div layout className="card-list">
-              <AnimatePresence>
+          <AnimatePresence mode="wait">
+            {view == "list" ? (
+              <motion.div
+                key="list-view"
+                layout
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="card-list"
+              >
                 {specialist.map((item) => {
                   return <Card key={item.id} option={item} />;
                 })}
-              </AnimatePresence>
-            </motion.div>
-          ) : (
-            <motion.div layout className="card-map">
-              <AnimatePresence>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="map-view"
+                layout
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="card-map"
+              >
                 <Map
                   gestureHandling={true}
                   center={specialist[0]?.position}
@@ -230,9 +244,9 @@ const Home = ({ global }: GlobalPageProps) => {
                 >
                   <Markers options={specialist} zoom={14} />
                 </Map>
-              </AnimatePresence>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Content>
 
         {/* <ContainerFull className="content-full">
