@@ -211,8 +211,8 @@ const Home = ({ global }: GlobalPageProps) => {
               </div>
             </div>
           </div>
-          <AnimatePresence mode="wait">
-            {view == "list" ? (
+          {view == "list" ? (
+            <AnimatePresence>
               <motion.div
                 key="list-view"
                 layout
@@ -226,7 +226,9 @@ const Home = ({ global }: GlobalPageProps) => {
                   return <Card key={item.id} option={item} />;
                 })}
               </motion.div>
-            ) : (
+            </AnimatePresence>
+          ) : (
+            <AnimatePresence>
               <motion.div
                 key="map-view"
                 layout
@@ -245,8 +247,8 @@ const Home = ({ global }: GlobalPageProps) => {
                   <Markers isSmall={isSmall} options={specialist} zoom={14} />
                 </Map>
               </motion.div>
-            )}
-          </AnimatePresence>
+            </AnimatePresence>
+          )}
         </Content>
 
         {/* <ContainerFull className="content-full">
