@@ -69,8 +69,8 @@ const COLORS = {
     }
   `,
   ghost: css`
-    background: ${theme.colors.greyIcon};
-    border: 2px solid ${theme.colors.lightGrey};
+    background: ${theme.colors.white};
+    border: 2px solid ${theme.colors.greyIcon};
     .text {
       color: ${theme.colors.dark}!important;
     }
@@ -86,7 +86,7 @@ const StyledBadge = styled.div<Props>`
   align-items: center;
   justify-content: space-between;
   background: ${theme.colors.primary};
-  padding: ${theme.spaces.space3} ${theme.spaces.space5};
+  padding: ${theme.spaces.space2} ${theme.spaces.space4};
   border: 2px solid ${theme.colors.primary};
   border-radius: 8px;
   text-transform: uppercase;

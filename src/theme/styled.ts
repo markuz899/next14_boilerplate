@@ -89,6 +89,7 @@ export const Container = styled.div`
 
 export const ContentTitle = styled(Container)`
   margin: 0 auto;
+  padding-top: 0;
   .title {
     display: flex;
     align-items: center;

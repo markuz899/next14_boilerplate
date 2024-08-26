@@ -55,109 +55,114 @@ export const mokSlider = [
 export const mokCategories = [
   {
     label: "Casa e giardino",
-    value: 12467,
+    value: "Casa e giardino",
     url: "articoli-per-la-casa",
   },
   {
     label: "Console e Videogiochi",
-    value: 12900,
+    value: "Console e Videogiochi",
     url: "console-e-videogiochi",
   },
   {
     label: "Cinema, libri e musica",
-    value: 12463,
+    value: "Cinema, libri e musica",
     url: "cinema-libri-musica",
   },
   {
     label: "Telefonia e Accessori",
-    value: 16000,
+    value: "Telefonia e Accessori",
     url: "telefonia-e-accessori",
   },
   {
     label: "Prodotti informatici",
-    value: 15000,
+    value: "Prodotti informatici",
     url: "informatica-e-elettronica",
   },
   {
     label: "Tecnologia ed elettronica",
-    value: 12545,
+    value: "Tecnologia ed elettronica",
     url: "tv-audio-e-fotocamere",
   },
   {
     label: "Sport e tempo libero",
-    value: 12579,
+    value: "Sport e tempo libero",
     url: "sport-e-tempo-libero",
   },
   {
     label: "Biciclette",
-    value: 17000,
+    value: "Biciclette",
     url: "biciclette",
   },
   {
     label: "Collezionismo",
-    value: 18000,
+    value: "Collezionismo",
     url: "oggetti-da-collezione",
   },
   {
     label: "Bambini e neonati",
-    value: 12461,
+    value: "Bambini e neonati",
     url: "bambini-e-neonati",
   },
   {
     label: "Moda e accessori",
-    value: 12465,
+    value: "Moda e accessori",
     url: "moda-e-accessori",
   },
   {
     label: "Auto",
-    value: 100,
+    value: "Auto",
     url: "auto",
   },
   {
     label: "Moto",
-    value: 14000,
+    value: "Moto",
     url: "moto",
   },
   {
     label: "Motori e accessori",
-    value: 12800,
+    value: "Motori e accessori",
     url: "motori-e-accessori",
   },
   {
     label: "Immobiliare",
-    value: 200,
+    value: "Immobiliare",
     url: "immobiliare",
   },
   {
     label: "Elettrodomestici",
-    value: 13100,
+    value: "Elettrodomestici",
     url: "elettrodomestici",
   },
   {
     label: "Attrezzature di lavoro",
-    value: 19000,
+    value: "Attrezzature di lavoro",
     url: "attrezzadure-di-lavoro",
   },
   {
     label: "Industria e agricoltura",
-    value: 20000,
+    value: "Industria e agricoltura",
     url: "industria-e-agricoltura",
   },
   {
     label: "Lavoro",
-    value: 21000,
+    value: "Lavoro",
     url: "offerte-di-lavoro",
   },
   {
     label: "Servizi",
-    value: 13200,
+    value: "Servizi",
     url: "servizi",
   },
   {
     label: "Altro",
-    value: 12485,
+    value: "Altro",
     url: "altro",
   },
+];
+
+export const mokSortPrice = [
+  { label: "Prezzo crescente", value: "ASC" },
+  { label: "Prezzo decrescente", value: "DESC" },
 ];
 
 export const specialist = [

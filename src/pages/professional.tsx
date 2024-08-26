@@ -21,6 +21,7 @@ import {
   WordChanger,
   Map,
   Markers,
+  Filters,
 } from "@/components";
 import { mokCategories, specialist } from "@/utils/constants";
 import { Utils } from "@/services";
@@ -147,7 +148,19 @@ const Professional = ({ global }: GlobalPageProps) => {
   return (
     <Layout global={global} title="Homepage" footer={false}>
       <ContentPage>
-        <ContentTitle>
+        <Content>
+          <SwitchMobile>
+            <div className="desktop">
+              <ContentFilter>
+                <Filters />
+              </ContentFilter>
+            </div>
+            <div className="mobile">
+              <Filters isMobile={true} />
+            </div>
+          </SwitchMobile>
+        </Content>
+        {/* <ContentTitle>
           <div className="title">
             <h2>Specialisti</h2>
             <div className="component">
@@ -156,7 +169,7 @@ const Professional = ({ global }: GlobalPageProps) => {
               </div>
             </div>
           </div>
-        </ContentTitle>
+        </ContentTitle> */}
 
         {(view == "list" || view == "map") && (
           <Content>
@@ -242,6 +255,28 @@ export async function getServerSideProps(ctx: { req: any }) {
 }
 
 export default WithAuth(React.memo(Professional));
+
+const SwitchMobile = styled.div`
+  .desktop {
+    display: block;
+  }
+  .mobile {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-end;
+    padding: ${theme.spaces.space2};
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    .desktop {
+      display: none;
+    }
+    .mobile {
+      display: flex;
+    }
+  }
+`;
+const ContentFilter = styled.div``;
 
 const ContentPage = styled.div`
   .wave {

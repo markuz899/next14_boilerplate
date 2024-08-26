@@ -40,47 +40,51 @@ const Select: React.FC<SelectProps> = ({
   const drop = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setFiltered(options);
-  }, [options]);
-
-  useEffect(() => {
     setState(value);
   }, [value]);
 
   useEffect(() => {
+    setFiltered(options);
     if (multiselect) {
-      let newSelection: string[] = [];
-      let selected: string[] = defaultValues ? [...defaultValues] : [];
-      setValues(selected);
-      options.forEach((el) => {
-        if (selected.includes(el.value)) {
-          newSelection.push(el.label);
-        }
-      });
-      if (newSelection.length === 0) {
+      const selected = defaultValues ? [...defaultValues] : [];
+
+      const newSelection = options
+        .filter((el) => selected.includes(el.value))
+        .map((el) => el.label);
+
+      if (JSON.stringify(values) !== JSON.stringify(selected)) {
+        setValues(selected);
+      }
+
+      if (newSelection.length === 0 && state !== "") {
         setState("");
-      } else if (newSelection.length === 1) {
+      } else if (
+        (newSelection.length === 1 || newSelection.length === 2) &&
+        state !== newSelection.toString()
+      ) {
         setState(newSelection.toString());
-      } else if (newSelection.length === 2) {
-        setState(newSelection.toString());
-      } else if (newSelection.length > 1) {
+      } else if (
+        newSelection.length > 2 &&
+        state !== `${newSelection.length} selezionati`
+      ) {
         setState(`${newSelection.length} selezionati`);
       }
     } else {
       if (defaultValues) {
-        let target = options?.find((item: any) => item.value === defaultValues);
-        if (target) {
+        const target = options.find((item) => item.value === defaultValues);
+
+        if (target && state !== target.label) {
           setState(target.label);
-          if (disabled) {
+          if (disabled && !disable) {
             setDisable(disabled || false);
           }
-        } else {
+        } else if (!target && disable) {
           setDisable(false);
         }
       }
     }
     // eslint-disable-next-line
-  }, []);
+  }, [defaultValues, options, disabled]);
 
   const onSelect = (
     item: { label: string; value: string },

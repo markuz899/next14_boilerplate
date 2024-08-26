@@ -14,6 +14,7 @@ const Clicker = dynamic(() => import("./Clicker"), { loading: () => null });
 const Collapse = dynamic(() => import("./Tabs/collapse"), { loading: () => null });
 const DatePicker = dynamic(() => import("./DatePicker"), { loading: () => null });
 const Dropdown = dynamic(() => import("./Dropdown"), { loading: () => null });
+const Filters = dynamic(() => import("./Filters"), { loading: () => null });
 const Icon = dynamic(() => import("./Icon"), { loading: () => null });
 const Input = dynamic(() => import("./Input"), { loading: () => null });
 const Loader = dynamic(() => import("./Loader"), { loading: () => null });
@@ -53,6 +54,7 @@ export {
   Collapse,
   DatePicker,
   Dropdown,
+  Filters,
   Icon,
   Input,
   Loader,
