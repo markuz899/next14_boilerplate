@@ -99,11 +99,11 @@ const Flex = styled.div`
 
 const Buttons = styled.div`
   position: relative;
+  background: ${theme.colors.white};
   display: inline-block;
   border-radius: ${theme.extra.radiusBig};
   border: 2px solid ${theme.colors.greyIcon};
-  box-shadow: ${theme.extra.shadow};
-  height: ${theme.spaces.space10};
+  height: ${theme.spaces.space9};
   .selector {
     height: 100%;
     display: inline-block;
@@ -119,7 +119,6 @@ const Buttons = styled.div`
     border: 2px solid ${theme.colors.primaryDark};
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    margin-left: ${theme.spaces.space1};
   }
 `;
 

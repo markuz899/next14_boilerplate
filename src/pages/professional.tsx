@@ -1,30 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
 import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
 import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 import React, { useEffect, useState } from "react";
-import {
-  ContainerFull,
-  Content,
-  ContentMap,
-  ContentTitle,
-} from "@/theme/styled";
+import { ContainerFull, Content, ContentMap } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import {
-  Button,
-  Card,
-  Select,
-  SliderTabs,
-  WordChanger,
-  Map,
-  Markers,
-  Filters,
-} from "@/components";
-import { mokCategories, specialist } from "@/utils/constants";
-import { Utils } from "@/services";
+import { Card, Map, Markers, Filters } from "@/components";
+import { specialist } from "@/utils/constants";
 import { useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { useBreakpoints } from "@/hooks";
@@ -34,37 +17,6 @@ const Professional = ({ global }: GlobalPageProps) => {
   const [city, setCity] = useState([]);
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
-
-  let optionsView = [
-    {
-      label: "",
-      value: "list",
-      icon: "list",
-      checked: view == "list",
-    },
-    {
-      label: "",
-      value: "mix",
-      icon: "grid",
-    },
-  ];
-
-  if (isSmall) {
-    optionsView = [
-      {
-        label: "",
-        value: "list",
-        icon: "list",
-        checked: view == "list",
-      },
-      {
-        label: "",
-        value: "map",
-        icon: "map",
-        checked: view == "map",
-      },
-    ];
-  }
 
   let defaultValues: any = {
     city: "",
@@ -104,35 +56,12 @@ const Professional = ({ global }: GlobalPageProps) => {
     // eslint-disable-next-line
   }, []);
 
-  const handleSearch = () => {
-    const data = getValues();
-    console.log("formdata", data);
-  };
-
-  const getCityFromService = async (query: string) => {
-    let city = await Utils.getCity(query);
-    setCity(city);
-  };
-
   const handleView = (data: any) => {
     setView(data?.value);
   };
 
-  const handleSelectChange = (data: any, options: any) => {
-    const { name, value } = data;
-    const exists = options.some((cat: any) => cat.value === value);
-    if (exists || value == "") {
-      setValue(name, value);
-      console.log("select change", data);
-    }
-  };
-
-  const handleSelectCity = (data: any) => {
-    const { name, value } = data;
-    if (value.length >= 3) {
-      setValue(name, value);
-      getCityFromService(value);
-    }
+  const onChangeFilters = (formData: any) => {
+    console.log("onChangeFilters", formData);
   };
 
   const words = [
@@ -152,11 +81,15 @@ const Professional = ({ global }: GlobalPageProps) => {
           <SwitchMobile>
             <div className="desktop">
               <ContentFilter>
-                <Filters />
+                <Filters onChange={onChangeFilters} onViewChange={handleView} />
               </ContentFilter>
             </div>
             <div className="mobile">
-              <Filters isMobile={true} />
+              <Filters
+                onChange={onChangeFilters}
+                onViewChange={handleView}
+                isMobile={true}
+              />
             </div>
           </SwitchMobile>
         </Content>

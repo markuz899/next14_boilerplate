@@ -11,17 +11,48 @@ import Icon from "../Icon";
 import Button from "../Button";
 import { motion } from "framer-motion";
 import Badge from "../Badge";
+import Toggle from "../Toggle";
+import SliderTabs from "../SliderTabs";
 
 interface FiltersProps {
   onChange?: any;
   isMobile?: boolean;
+  onViewChange?: any;
 }
 
-const Filters = ({ onChange, isMobile = false }: FiltersProps) => {
+const Filters = ({
+  onChange,
+  isMobile = false,
+  onViewChange,
+}: FiltersProps) => {
   const router = useRouter();
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
   const [city, setCity] = useState<any>([]);
   const [filters, setFilters] = useState([]);
+
+  let optionsView = [
+    {
+      label: "Lista",
+      value: "list",
+    },
+    {
+      label: "Mappa",
+      value: "mix",
+    },
+  ];
+
+  if (isMobile) {
+    optionsView = [
+      {
+        label: "Lista",
+        value: "list",
+      },
+      {
+        label: "Mappa",
+        value: "map",
+      },
+    ];
+  }
 
   let defaultValues: any = {
     city: "",
@@ -263,6 +294,9 @@ const Filters = ({ onChange, isMobile = false }: FiltersProps) => {
                     placeholder="Ordina per"
                     options={mokSortPrice}
                   />
+                  {onViewChange && (
+                    <SliderTabs onChange={onViewChange} options={optionsView} />
+                  )}
                 </div>
               </div>
               {filters.length ? (
@@ -338,6 +372,9 @@ const Filters = ({ onChange, isMobile = false }: FiltersProps) => {
             placeholder="Ordina per"
             options={mokSortPrice}
           />
+          {onViewChange && (
+            <SliderTabs onChange={onViewChange} options={optionsView} />
+          )}
         </div>
       </div>
       <div className="content-badge">
@@ -425,6 +462,12 @@ const MobileStyled = styled.div`
   justify-content: space-between;
   .content-filter-mobile {
     margin-bottom: ${theme.spaces.space2};
+    .filter,
+    .more {
+      & > * {
+        margin-bottom: 15px;
+      }
+    }
   }
   .content-filter-mobile-action {
     position: fixed;
@@ -481,7 +524,7 @@ const DesktopStyled = styled.div<{ $filters: boolean }>`
     display: ${({ $filters }) => ($filters ? "flex" : "none")};
     align-items: flex-start;
     justify-content: space-between;
-    margin: ${theme.spaces.space4} 0;
+    margin: ${theme.spaces.space4} 0 0;
     .badge {
       display: flex;
       flex-wrap: wrap;
