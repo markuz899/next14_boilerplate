@@ -96,7 +96,6 @@ const StyledBadge = styled.div<Props>`
     color: ${(props) =>
       colorBasedOnBg(BASE_COLOR[props.$kind] || theme.colors.white)};
     font-size: ${theme.font.size.minor};
-    font-weight: bold;
   }
   .icon {
     display: flex;

@@ -123,8 +123,6 @@ const Buttons = styled.div`
     z-index: 1;
     border-radius: 6px;
     transition-duration: 0.6s;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: ${theme.extra.shadow};
     background: ${theme.colors.primary};
     border: 2px solid ${theme.colors.primaryDark};
   }

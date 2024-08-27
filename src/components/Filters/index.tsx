@@ -197,7 +197,7 @@ const Filters = ({
       for (const [key, value] of Object.entries(data)) {
         if (value) {
           query[key] = value;
-          if (!key == inputForm._view) {
+          if (key !== inputForm._view) {
             filter.push({ name: key, value });
           }
         }
