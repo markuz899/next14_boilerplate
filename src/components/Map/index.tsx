@@ -153,7 +153,7 @@ const GestureHandlingSetter = () => {
 };
 
 const Map = ({
-  height = "700px",
+  height,
   center = [41.902782, 12.496366],
   zoom = 8,
   children,
@@ -180,10 +180,12 @@ const Map = ({
       setMapHeight(`${calculatedHeight}px`);
     };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+    if (!height) {
+      handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, [map, height]);
 
   const handleFly = () => {
