@@ -19,11 +19,17 @@ const Card = ({
   onClick,
   active,
 }: CardProps) => {
+  const [miniCard, setMiniCard] = useState(mini);
   const [userInfo, setUserInfo] = useState(option);
 
   useEffect(() => {
     setUserInfo(option);
   }, [option]);
+
+  useEffect(() => {
+    setMiniCard(mini);
+  }, [mini]);
+
   return (
     <LazyMotion features={domAnimation}>
       <m.div
@@ -34,7 +40,7 @@ const Card = ({
         exit={{ opacity: 0 }}
         onClick={onClick}
       >
-        <CardStyle className={`cardstyle`} $active={active} $mini={mini}>
+        <CardStyle className={`cardstyle`} $active={active} $mini={miniCard}>
           <div className="content-card">
             <div className="content-card-col">
               <div className="content-banner">
@@ -56,7 +62,7 @@ const Card = ({
                 <div className="row">
                   <p>{userInfo.profession}</p>
                 </div>
-                {!mini && (
+                {!miniCard && (
                   <div className="row">
                     <p className="message">
                       Mi chiamo {userInfo.name} disponibile, capace
@@ -99,46 +105,7 @@ const CardStyle = styled.div<{
     transition: all 0.5s;
     padding: ${({ $mini }) =>
       $mini ? theme.spaces.space3 : theme.spaces.space4};
-    .content-card-col {
-      .content-banner {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-          margin-bottom: ${theme.spaces.space2};
-          min-height: 95px;
-          max-height: 150px;
-          border-radius: 50%;
-          object-fit: contain;
-        }
-      }
-      .content-info {
-        overflow: hidden;
-        font-size: ${theme.font.size.tiny};
-        width: 100%;
-        height: 100%;
-        .row {
-          display: flex;
-          align-items: center;
-          margin-bottom: ${theme.spaces.space2};
-          &.between {
-            justify-content: space-between;
-            flex-wrap: wrap-reverse;
-          }
-          span {
-            margin-right: 5px;
-          }
-          .message {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
+    ${({ $mini }) => ($mini ? mini : normal)};
     .card-action {
       margin-top: ${theme.spaces.space2};
     }
@@ -153,7 +120,6 @@ const CardStyle = styled.div<{
       .content-card-col {
         .content-banner {
           img {
-            min-height: 120px;
           }
         }
       }
@@ -161,6 +127,93 @@ const CardStyle = styled.div<{
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
+      }
+    }
+  }
+`;
+
+const mini = css`
+  .content-card-col {
+    display: flex;
+    align-items: center;
+    gap: ${theme.spaces.space4};
+    .content-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        min-height: 50px;
+        max-height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .content-info {
+      overflow: hidden;
+      font-size: ${theme.font.size.tiny};
+      width: 100%;
+      height: 100%;
+      .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: ${theme.spaces.space2};
+        &.between {
+          justify-content: space-between;
+          flex-wrap: wrap-reverse;
+        }
+        span {
+          margin-right: 5px;
+        }
+        .message {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+`;
+const normal = css`
+  .content-card-col {
+    .content-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        margin-bottom: ${theme.spaces.space2};
+        min-height: 95px;
+        max-height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .content-info {
+      overflow: hidden;
+      font-size: ${theme.font.size.tiny};
+      width: 100%;
+      height: 100%;
+      .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: ${theme.spaces.space2};
+        &.between {
+          justify-content: space-between;
+          flex-wrap: wrap-reverse;
+        }
+        span {
+          margin-right: 5px;
+        }
+        .message {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }

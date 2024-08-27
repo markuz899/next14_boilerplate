@@ -1,5 +1,6 @@
 export interface BadgeProps {
   label?: string;
+  children?: any;
   onClick?: (label: string) => void;
   className?: string;
   iconClose?: boolean;

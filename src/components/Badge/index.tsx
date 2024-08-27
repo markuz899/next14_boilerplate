@@ -15,20 +15,21 @@ const COLOR_ICON = {
 
 const Badge: React.FC<BadgeProps> = ({
   label,
+  children,
   onClick,
   className,
   iconClose = true,
   kind = "ghost",
 }) => {
   const handleClick = () => {
-    if (onClick && label) {
-      onClick(label);
+    if (onClick && (label || children)) {
+      onClick(label || children);
     }
   };
 
   return (
     <StyledBadge className={className} $kind={kind}>
-      <div className="text">{label}</div>
+      <div className="text">{label || children}</div>
       {iconClose && (
         <div className="icon" onClick={handleClick}>
           <Icon

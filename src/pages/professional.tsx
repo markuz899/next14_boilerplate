@@ -138,7 +138,7 @@ const Professional = ({ global }: GlobalPageProps) => {
                     className="mapper"
                     gestureHandling={false}
                     center={specialist[0]?.position}
-                    zoom={12}
+                    zoom={11}
                     height={"800px"}
                   >
                     <Markers isSmall={isSmall} options={specialist} zoom={14} />

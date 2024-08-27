@@ -82,7 +82,16 @@ const Markers = ({
     updateMap();
     setSelectedMarker(mark);
     setActive && setActive(mark);
-    map.flyTo(mark.position, map.getZoom(), { animate: true });
+
+    // offset position marker and popup
+    const offsetY = isSmall ? 0 : 100;
+
+    const point = map.latLngToContainerPoint(mark.position);
+    const newPoint = L.point(point.x, point.y - offsetY);
+
+    const newLatLng = map.containerPointToLatLng(newPoint);
+
+    map.flyTo(newLatLng, map.getZoom(), { animate: true });
   };
 
   useMapEvents({
@@ -230,7 +239,7 @@ const Markers = ({
                   popupRef.current[cluster.properties.id] = pop;
                 }}
               >
-                <Card option={cluster.properties} mini />
+                <Card option={cluster.properties} mini={isSmall} />
               </CustomPopup>
             )}
             {cluster.properties.range &&
@@ -246,7 +255,7 @@ const Markers = ({
             {isSmall && selectedMarker?.id && (
               <div className="content-popup">
                 <div className="popup-body">
-                  <Card option={selectedMarker} />
+                  <Card option={selectedMarker} mini={isSmall} />
                 </div>
               </div>
             )}
