@@ -167,7 +167,24 @@ const Map = ({
 }: any) => {
   const [device, setDevice] = useState<boolean>();
   const [block, setBlock] = useState(false);
+  const [mapHeight, setMapHeight] = useState(height || "100vh");
   const map: any = useRef();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const navbarHeight = document.querySelector(".navbar")?.clientHeight || 0;
+      const filtersHeight =
+        document.querySelector(".filters")?.clientHeight || 0;
+      const calculatedHeight =
+        window.innerHeight - navbarHeight - filtersHeight - 13;
+      setMapHeight(`${calculatedHeight}px`);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [map, height]);
 
   const handleFly = () => {
     if (map && map?.current && selection && selection.position) {
@@ -248,88 +265,92 @@ const Map = ({
   );
 
   return (
-    <MapContainerStyle
-      ref={map}
-      center={center}
-      zoom={DEFAULTZOOM}
-      zoomAnimation
-      touchZoom
-      markerZoomAnimation
-      fadeAnimation
-      scrollWheelZoom={false}
-      className={className ? className : ""}
-      height={height}
-    >
-      {gestureHandling && <GestureHandlingSetter />}
-      <UpdateMapView
-        dinamic={dinamic}
-        selection={selection}
-        selectionSeller={selectionSeller}
-        zoom={zoom}
-        withRadius={withRadius}
-        radius={radius}
-      />
-      <LayersControl>
-        <LayersControl.BaseLayer checked name="Map">
-          <TileLayer
-            attribution="Google Maps"
-            url={device ? colorMap.light : colorMap.default}
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Satellite">
-          <TileLayer attribution="Google Maps Satellite" url={colorMap.sat} />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Ibrida">
-          <TileLayer attribution="Google Maps Ibrida" url={colorMap.hybrid} />
-        </LayersControl.BaseLayer>
+    <div style={{ height: mapHeight }}>
+      <MapContainerStyle
+        ref={map}
+        center={center}
+        zoom={DEFAULTZOOM}
+        zoomAnimation
+        touchZoom
+        markerZoomAnimation
+        fadeAnimation
+        scrollWheelZoom={false}
+        className={className ? className : ""}
+        height={mapHeight}
+      >
+        {gestureHandling && <GestureHandlingSetter />}
+        <UpdateMapView
+          dinamic={dinamic}
+          selection={selection}
+          selectionSeller={selectionSeller}
+          zoom={zoom}
+          withRadius={withRadius}
+          radius={radius}
+        />
+        <LayersControl>
+          <LayersControl.BaseLayer checked name="Map">
+            <TileLayer
+              attribution="Google Maps"
+              url={device ? colorMap.light : colorMap.default}
+            />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="Satellite">
+            <TileLayer attribution="Google Maps Satellite" url={colorMap.sat} />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="Ibrida">
+            <TileLayer attribution="Google Maps Ibrida" url={colorMap.hybrid} />
+          </LayersControl.BaseLayer>
 
-        {/* <LayersControl.BaseLayer name="Leaflet">
+          {/* <LayersControl.BaseLayer name="Leaflet">
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url={colorMap.light}
           />
         </LayersControl.BaseLayer> */}
-      </LayersControl>
-      {selection?.position && (
-        <>
-          <CenterNav
-            zoom={zoom}
-            selection={selection}
-            iconName="pin"
-            onClick={handleFly}
-            block={block}
-          />
-          <CenterNav
-            zoom={zoom}
-            selection={selection}
-            iconName={block ? "pinTrakOn" : "pinTrakOff"}
-            iconColor={block ? theme.colors.error : theme.colors.success}
-            onClick={handleBlock}
-            block={block}
-            withTooltip="Segui"
-          />
-        </>
-      )}
-      {children && children}
-      {selection?.position && (
-        <Marker position={selection.position} icon={customMarker}>
-          <Popup>{selection.label}</Popup>
-        </Marker>
-      )}
-      {selectionSeller?.position && (
-        <Marker position={selectionSeller.position} icon={customSellerMarker}>
-          <Popup>{selectionSeller.label}</Popup>
-        </Marker>
-      )}
-    </MapContainerStyle>
+        </LayersControl>
+        {selection?.position && (
+          <>
+            <CenterNav
+              zoom={zoom}
+              selection={selection}
+              iconName="pin"
+              onClick={handleFly}
+              block={block}
+            />
+            <CenterNav
+              zoom={zoom}
+              selection={selection}
+              iconName={block ? "pinTrakOn" : "pinTrakOff"}
+              iconColor={block ? theme.colors.error : theme.colors.success}
+              onClick={handleBlock}
+              block={block}
+              withTooltip="Segui"
+            />
+          </>
+        )}
+        {children && children}
+        {selection?.position && (
+          <Marker position={selection.position} icon={customMarker}>
+            <Popup>{selection.label}</Popup>
+          </Marker>
+        )}
+        {selectionSeller?.position && (
+          <Marker position={selectionSeller.position} icon={customSellerMarker}>
+            <Popup>{selectionSeller.label}</Popup>
+          </Marker>
+        )}
+      </MapContainerStyle>
+    </div>
   );
 };
 
 export default React.memo(Map);
 
-const MapContainerStyle = styled(MapContainer)<{ height: string }>`
+const MapContainerStyle = styled(MapContainer)<{ height?: string }>`
   width: 100%;
-  height: ${(p) => p.height};
+  flex: 1;
+  /* height: ${(p) => p.height}; */
+  height: 100%;
   .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
@@ -364,7 +385,6 @@ const MapContainerStyle = styled(MapContainer)<{ height: string }>`
     bottom: 0px;
     right: 0px;
     z-index: 400;
-    padding: 20px;
     width: 100%;
     max-width: 450px;
     .popup-body {

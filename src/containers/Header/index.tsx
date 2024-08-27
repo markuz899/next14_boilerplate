@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <Head $isSmall={isSmall} $active={state}>
+    <Head className="navbar" $isSmall={isSmall} $active={state}>
       <MenuContent $isSmall={isSmall}>
         <div className={`menu-icon ${isSmall ? "isSmall" : "notSmall"}`}>
           {isSmall && (

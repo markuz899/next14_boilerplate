@@ -164,8 +164,8 @@ export const Content = styled(Container)`
       }
     }
     .card-map {
+      margin-top: 0;
       .mapper {
-        height: calc(100svh - 125px);
       }
     }
   }

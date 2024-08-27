@@ -77,7 +77,7 @@ const Professional = ({ global }: GlobalPageProps) => {
   return (
     <Layout global={global} title="Homepage" footer={false}>
       <ContentPage>
-        <Content>
+        <Content className="filters">
           <SwitchMobile>
             <div className="desktop">
               <ContentFilter>
@@ -139,7 +139,6 @@ const Professional = ({ global }: GlobalPageProps) => {
                     gestureHandling={false}
                     center={specialist[0]?.position}
                     zoom={11}
-                    height={"800px"}
                   >
                     <Markers isSmall={isSmall} options={specialist} zoom={14} />
                   </Map>
