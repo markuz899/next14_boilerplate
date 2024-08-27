@@ -15,7 +15,7 @@ export interface ModalProps {
 }
 
 export interface ModalRootProps {
-  fullScreen?: boolean;
+  $fullScreen?: boolean;
   $noTitle?: boolean;
   rightScreen?: boolean;
 }
@@ -23,6 +23,6 @@ export interface ModalRootProps {
 export interface ModalContentProps {
   size: [number | null, number | null];
   $noTitle?: boolean;
-  fullScreen?: boolean;
+  $fullScreen?: boolean;
   rightScreen?: boolean;
 }

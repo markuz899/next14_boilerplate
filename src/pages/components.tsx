@@ -522,7 +522,7 @@ const Components = ({ global }: GlobalPageProps) => {
         </Section>
         <Section title="Radio slider">
           <SliderTabs
-            onChange={(data) => console.log(data)}
+            onChange={(data: any) => console.log(data)}
             options={[
               { label: "Cloud", value: 3, icon: "cloud" },
               {
@@ -735,7 +735,7 @@ const Components = ({ global }: GlobalPageProps) => {
           {loaderActive && (
             <SliderTabs
               className="mb-5"
-              onChange={(data) => setLoaderType(data.value)}
+              onChange={(data: any) => setLoaderType(data.value)}
               options={[
                 { label: "Default", value: "spin", checked: true },
                 {

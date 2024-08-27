@@ -60,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({
       >
         <Root
           rightScreen={rightScreen}
-          fullScreen={fullScreen}
+          $fullScreen={fullScreen}
           $noTitle={noTitle}
           onClick={handleClickOnOverlay}
           ref={overlay}
@@ -69,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({
             size={size}
             $noTitle={noTitle}
             rightScreen={rightScreen}
-            fullScreen={fullScreen}
+            $fullScreen={fullScreen}
           >
             {!noTitle && (
               <Header>
@@ -138,7 +138,7 @@ const Root = styled.div<ModalRootProps>`
   align-items: center;
   padding: ${theme.spaces.space4};
   height: 100%;
-  ${(p) => p.fullScreen && fullRoot};
+  ${(p) => p.$fullScreen && fullRoot};
   ${(p) => (p.rightScreen ? right : normal)};
 `;
 
@@ -196,7 +196,7 @@ const Content = styled.div<ModalContentProps>`
   flex-basis: auto;
   z-index: ${theme.zIndex.zIndex1};
   overflow: scroll;
-  ${(p) => p.fullScreen && fullContent};
+  ${(p) => p.$fullScreen && fullContent};
   ${(p) => (p.rightScreen ? rightMode : normalMode)};
   .img {
     width: 100%;

@@ -163,6 +163,11 @@ export const Content = styled(Container)`
         flex: 0 0 ${(p) => setCols(1)};
       }
     }
+    .card-map {
+      .mapper {
+        height: calc(100svh - 125px);
+      }
+    }
   }
 `;
 

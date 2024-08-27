@@ -58,16 +58,19 @@ const Filters = ({
     city: "",
     category: "",
     _sortPrice: "",
+    _view: "",
   };
   const inputForm: any = {
     city: "city",
     category: "category",
     _sortPrice: "_sortPrice",
+    _view: "_view",
   };
   const validationCity: any = {
     city: {},
     category: {},
     _sortPrice: {},
+    _view: {},
   };
 
   const {
@@ -104,7 +107,11 @@ const Filters = ({
         }
         if (value) {
           setValue(key, value);
-          filter.push({ name: key, value });
+          if (key != inputForm._view) {
+            filter.push({ name: key, value });
+          } else {
+            onViewChange({ name, value });
+          }
         }
       }
     }
@@ -139,6 +146,9 @@ const Filters = ({
   const handleChange = (data: any) => {
     const { name, value } = data;
     setValue(name, value);
+    if (name == inputForm._view) {
+      onViewChange(data);
+    }
     handleSubmit();
   };
 
@@ -187,7 +197,9 @@ const Filters = ({
       for (const [key, value] of Object.entries(data)) {
         if (value) {
           query[key] = value;
-          filter.push({ name: key, value });
+          if (!key == inputForm._view) {
+            filter.push({ name: key, value });
+          }
         }
       }
     }
@@ -295,7 +307,12 @@ const Filters = ({
                     options={mokSortPrice}
                   />
                   {onViewChange && (
-                    <SliderTabs onChange={onViewChange} options={optionsView} />
+                    <SliderTabs
+                      name={inputForm._view}
+                      defaultValue={getValues(inputForm._view)}
+                      onChange={handleChange}
+                      options={optionsView}
+                    />
                   )}
                 </div>
               </div>
@@ -373,7 +390,12 @@ const Filters = ({
             options={mokSortPrice}
           />
           {onViewChange && (
-            <SliderTabs onChange={onViewChange} options={optionsView} />
+            <SliderTabs
+              name={inputForm._view}
+              defaultValue={getValues(inputForm._view)}
+              onChange={handleChange}
+              options={optionsView}
+            />
           )}
         </div>
       </div>

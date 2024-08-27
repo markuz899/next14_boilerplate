@@ -12,19 +12,23 @@ interface Option {
 }
 
 interface TabsProps {
+  name?: string;
   className?: string;
   options: Option[];
-  onChange?: (option: Option) => void;
+  onChange?: any;
   children?: React.ReactNode;
   isSmall?: boolean;
+  defaultValue?: string;
 }
 
 const Tabs: React.FC<TabsProps> = ({
+  name = "slider",
   className,
   options,
   onChange = () => {},
   children,
   isSmall,
+  defaultValue,
 }) => {
   const tabRef = useRef<HTMLDivElement>(null);
   const selectorRef = useRef<HTMLDivElement>(null);
@@ -44,12 +48,18 @@ const Tabs: React.FC<TabsProps> = ({
         selectorRef.current.style.width = `${boundingWidh}px`;
       }
     }
-  }, [selected, options]);
+    if (defaultValue) {
+      const target: any = options.find((item) => item.value === defaultValue);
+      if (target) {
+        setValue(target);
+      }
+    }
+  }, [selected, options, defaultValue]);
 
   const select = (option: Option, index: number) => {
     if (option.value === selected.value) return;
     setValue(option);
-    onChange(option);
+    onChange && onChange({ name, value: option.value });
   };
 
   return (
@@ -62,7 +72,7 @@ const Tabs: React.FC<TabsProps> = ({
               <Tab
                 key={option.value}
                 onClick={() => select(option, i)}
-                className={option.value === selected.value ? "active" : ""}
+                className={option.value == selected.value ? "active" : ""}
                 $iconColor={option.iconColor || ""}
               >
                 <div className="d-flex">

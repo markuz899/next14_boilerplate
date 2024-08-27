@@ -135,6 +135,7 @@ const Professional = ({ global }: GlobalPageProps) => {
                   className="card-map"
                 >
                   <Map
+                    className="mapper"
                     gestureHandling={false}
                     center={specialist[0]?.position}
                     zoom={12}
