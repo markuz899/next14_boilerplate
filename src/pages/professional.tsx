@@ -1,6 +1,5 @@
 import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
-import Counter from "@/utils/redux/example";
 import Layout from "@/containers/Layout";
 import React, { useEffect, useState } from "react";
 import { ContainerFull, Content, ContentMap } from "@/theme/styled";
@@ -8,53 +7,13 @@ import styled from "styled-components";
 import theme from "@/theme";
 import { Card, Map, Markers, Filters } from "@/components";
 import { specialist } from "@/utils/constants";
-import { useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { useBreakpoints } from "@/hooks";
 
 const Professional = ({ global }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
-  const [city, setCity] = useState([]);
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
-
-  let defaultValues: any = {
-    city: "",
-    category: "",
-  };
-  const inputForm: any = {
-    city: "city",
-    category: "category",
-  };
-  const validationCity: any = {
-    city: {},
-    category: {},
-  };
-
-  const {
-    register,
-    setValue,
-    getValues,
-    trigger,
-    unregister,
-    setError,
-    watch,
-    formState: { errors },
-  } = useForm({
-    defaultValues,
-  });
-
-  useEffect(() => {
-    Object.keys(inputForm).forEach((k: any) => {
-      register(k, validationCity[k]);
-    });
-    return () => {
-      Object.keys(inputForm).forEach((k: any) => {
-        unregister(k);
-      });
-    };
-    // eslint-disable-next-line
-  }, []);
 
   const handleView = (data: any) => {
     setView(data?.value);
@@ -64,15 +23,9 @@ const Professional = ({ global }: GlobalPageProps) => {
     console.log("onChangeFilters", formData);
   };
 
-  const words = [
-    "perfetto",
-    "qualificato",
-    "giusto",
-    "specializzato",
-    "professionale",
-    "efficiente",
-    "certificato",
-  ];
+  const onChangeMap = ({ position }: { position: [number, number] }) => {
+    console.log("La mappa è stata spostata. Nuove coordinate:", position);
+  };
 
   return (
     <Layout global={global} title="Homepage" footer={false}>
@@ -93,16 +46,6 @@ const Professional = ({ global }: GlobalPageProps) => {
             </div>
           </SwitchMobile>
         </Content>
-        {/* <ContentTitle>
-          <div className="title">
-            <h2>Specialisti</h2>
-            <div className="component">
-              <div className="toggle-mobile">
-                <SliderTabs onChange={handleView} options={optionsView} />
-              </div>
-            </div>
-          </div>
-        </ContentTitle> */}
 
         {(view == "list" || view == "map") && (
           <Content>
@@ -135,6 +78,7 @@ const Professional = ({ global }: GlobalPageProps) => {
                   className="card-map"
                 >
                   <Map
+                    onChange={onChangeMap}
                     className="mapper"
                     gestureHandling={false}
                     center={specialist[0]?.position}
@@ -163,7 +107,11 @@ const Professional = ({ global }: GlobalPageProps) => {
               <div className="content content-map p-0">
                 <motion.div layout className="card-map">
                   <AnimatePresence>
-                    <Map center={specialist[0]?.position} zoom={12}>
+                    <Map
+                      onChange={onChangeMap}
+                      center={specialist[0]?.position}
+                      zoom={12}
+                    >
                       <Markers options={specialist} zoom={14} />
                     </Map>
                   </AnimatePresence>

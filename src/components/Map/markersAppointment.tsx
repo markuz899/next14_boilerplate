@@ -14,6 +14,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import useSupercluster from "use-supercluster";
 import styled from "styled-components";
 import theme from "@/theme";
+import { optionsAnimate } from "@/utils/constants";
 
 const icons: any = {};
 const fetchIcon = (count: any, size: any) => {
@@ -58,7 +59,7 @@ const MarkersAppointment = ({ options, zoom, active, setActive }: any) => {
   useEffect(() => {
     if (active) {
       if (!active?.isInternal) {
-        map.flyTo(active.position, 15, { animate: true });
+        map.flyTo(active.position, 15, optionsAnimate);
         map.on("zoomend", function () {
           markerRef.current[active.id]?.openPopup();
         });

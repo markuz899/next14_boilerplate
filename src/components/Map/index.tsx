@@ -9,6 +9,7 @@ import {
   LayerGroup,
   Circle,
   useMap,
+  useMapEvents,
 } from "react-leaflet";
 import L, { Icon } from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
@@ -20,6 +21,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { isAppleDevice } from "@/utils/isMobile";
+import { optionsAnimate } from "@/utils/constants";
 
 const DEFAULTZOOM = 12;
 
@@ -94,6 +96,7 @@ const UpdateMapView = ({
   withRadius = false,
   radius,
   dinamic,
+  onChange,
 }: {
   selection?: any;
   selectionSeller?: any;
@@ -101,22 +104,23 @@ const UpdateMapView = ({
   withRadius?: boolean;
   radius?: number;
   dinamic?: boolean;
+  onChange?: any;
 }) => {
   const [circleRadius, setCircleRadius] = useState((radius || 20) * 100);
   const map = useMap();
 
   useEffect(() => {
     // if (map && center) {
-    //   map.setView(center, zoom, { animate: true });
+    //   map.setView(center, zoom, optionsAnimate);
     // }
     if (map && zoom && !dinamic) {
-      map.setZoom(zoom, { animate: true });
+      map.setZoom(zoom, optionsAnimate);
     }
     if (map && selection && selection.position && !dinamic) {
-      map.flyTo(selection.position, zoom, { animate: true });
+      map.flyTo(selection.position, zoom, optionsAnimate);
     }
     if (map && selectionSeller && selectionSeller.position && !dinamic) {
-      map.flyTo(selectionSeller.position, zoom, { animate: true });
+      map.flyTo(selectionSeller.position, zoom, optionsAnimate);
     }
   }, [zoom, selection, selectionSeller, map]);
 
@@ -127,6 +131,14 @@ const UpdateMapView = ({
       setCircleRadius(newRadius);
     }
   }, [zoom, radius, map]);
+
+  useMapEvents({
+    moveend: (event) => {
+      const map = event.target;
+      const { lat, lng } = map.getCenter();
+      onChange && onChange({ position: [lat, lng] });
+    },
+  });
 
   return (
     <>
@@ -164,6 +176,7 @@ const Map = ({
   radius,
   dinamic,
   gestureHandling = true,
+  onChange,
 }: any) => {
   const [device, setDevice] = useState<boolean>();
   const [block, setBlock] = useState(false);
@@ -190,7 +203,7 @@ const Map = ({
 
   const handleFly = () => {
     if (map && map?.current && selection && selection.position) {
-      map?.current.flyTo(selection.position, zoom, { animate: true });
+      map?.current.flyTo(selection.position, zoom, optionsAnimate);
     }
   };
 
@@ -205,7 +218,7 @@ const Map = ({
 
   useEffect(() => {
     if (map && map?.current && selection && selection.position && block) {
-      map?.current.flyTo(selection.position, undefined, { animate: true });
+      map?.current.flyTo(selection.position, undefined, optionsAnimate);
     }
   }, [map, block, selection]);
 
@@ -282,6 +295,7 @@ const Map = ({
       >
         {gestureHandling && <GestureHandlingSetter />}
         <UpdateMapView
+          onChange={onChange}
           dinamic={dinamic}
           selection={selection}
           selectionSeller={selectionSeller}
@@ -301,6 +315,9 @@ const Map = ({
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer name="Ibrida">
             <TileLayer attribution="Google Maps Ibrida" url={colorMap.hybrid} />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="Default">
+            <TileLayer attribution="Nearme" url={colorMap.default} />
           </LayersControl.BaseLayer>
 
           {/* <LayersControl.BaseLayer name="Leaflet">

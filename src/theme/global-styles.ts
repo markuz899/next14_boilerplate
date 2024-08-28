@@ -67,6 +67,7 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: ${theme.colors.darkGrey};
     text-decoration: none;
+    display: contents;
     &:hover {
       color: ${theme.colors.lightGrey};
     }

@@ -16,8 +16,10 @@ import styled from "styled-components";
 import theme from "@/theme";
 import Rating from "../Rating";
 import Card from "../Card";
+import { optionsAnimate } from "@/utils/constants";
 
 const icons: any = {};
+
 const fetchIcon = (count: any, size: any) => {
   if (!icons[count]) {
     const markerHTML = `
@@ -66,7 +68,7 @@ const Markers = ({
   useEffect(() => {
     if (active) {
       if (!active?.isInternal) {
-        map.flyTo(active.position, 15, { animate: true });
+        map.flyTo(active.position, 15, optionsAnimate);
         map.on("zoomend", function () {
           markerRef.current[active.id]?.openPopup();
         });
@@ -91,7 +93,7 @@ const Markers = ({
 
     const newLatLng = map.containerPointToLatLng(newPoint);
 
-    map.flyTo(newLatLng, map.getZoom(), { animate: true });
+    map.flyTo(newLatLng, map.getZoom(), optionsAnimate);
   };
 
   useMapEvents({
@@ -177,9 +179,11 @@ const Markers = ({
                     supercluster.getClusterExpansionZoom(cluster.id),
                     22
                   );
-                  map.setView([latitude, longitude], expansionZoom, {
-                    animate: true,
-                  });
+                  map.setView(
+                    [latitude, longitude],
+                    expansionZoom,
+                    optionsAnimate
+                  );
                 },
               }}
             />

@@ -5,6 +5,8 @@ export const FORMAT_DATA = process.env.NEXT_PUBLIC_FORMAT_DATA;
 export const AUTH_KEY = "application_auth";
 export const USER_KEY = "application_user";
 
+export const optionsAnimate = { animate: true, duration: 0.5 };
+
 export const navItems = [
   { id: 2, path: "/login", text: "Registrati o accedi" },
   { id: 3, path: "/components", text: "Components" },
