@@ -181,6 +181,7 @@ export const ContentMap = styled.div<{ view?: string }>`
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+  height: calc(100svh - 190px);
   &.between {
     justify-content: space-between;
   }
@@ -194,7 +195,7 @@ export const ContentMap = styled.div<{ view?: string }>`
     &.content-card {
       flex: 1 0 50%;
       overflow-y: scroll;
-      max-height: 700px;
+      max-height: 100%;
       max-width: 1000px;
       .card-list {
         display: flex;

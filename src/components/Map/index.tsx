@@ -189,7 +189,7 @@ const Map = ({
       const filtersHeight =
         document.querySelector(".filters")?.clientHeight || 0;
       const calculatedHeight =
-        window.innerHeight - navbarHeight - filtersHeight - 13;
+        window.innerHeight - navbarHeight - filtersHeight - 2;
       setMapHeight(`${calculatedHeight}px`);
     };
 
