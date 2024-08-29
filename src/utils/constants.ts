@@ -10,6 +10,7 @@ export const optionsAnimate = { animate: true, duration: 0.5 };
 export const navItems = [
   { id: 2, path: "/login", text: "Registrati o accedi" },
   { id: 3, path: "/components", text: "Components" },
+  { id: 4, path: "/professional", text: "Professionisti", shield: true },
 ];
 
 export const defaultCarousel = [

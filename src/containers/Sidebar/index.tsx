@@ -15,7 +15,8 @@ const Menu: React.FC<MenuProps> = ({
   toggleTheme,
   global,
 }) => {
-  const { pwa, handleSelectChange } = global;
+  const { pwa, handleSelectChange, authentication } = global;
+  const { isAuth } = authentication;
   const { logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
@@ -66,6 +67,9 @@ const Menu: React.FC<MenuProps> = ({
       </div> */}
       <div className="content-menu">
         {navItems?.map((item) => {
+          if (item.shield && !isAuth) {
+            return null;
+          }
           return (
             <Link legacyBehavior key={item?.path} href={item?.path}>
               <a className={router.asPath == item?.path ? "active" : ""}>
@@ -76,23 +80,17 @@ const Menu: React.FC<MenuProps> = ({
         })}
         <div className="divider"></div>
 
-        {!global.isAuth && (
-          <Link
-            legacyBehavior
-            href={global.isAuth ? "/profile/info" : "/login"}
+        <Link legacyBehavior href={isAuth ? "/profile/info" : "/login"}>
+          <a
+            className={
+              path.includes("/profile/info") || path.includes("/profile/orders")
+                ? "active"
+                : ""
+            }
           >
-            <a
-              className={
-                path.includes("/profile/info") ||
-                path.includes("/profile/orders")
-                  ? "active"
-                  : ""
-              }
-            >
-              <p>{global.isAuth ? "Profile" : "Login"}</p>
-            </a>
-          </Link>
-        )}
+            <p>{isAuth ? "Profile" : "Login"}</p>
+          </a>
+        </Link>
       </div>
     </List>
   );

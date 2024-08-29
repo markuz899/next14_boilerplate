@@ -148,7 +148,7 @@ const SwitchMobile = styled.div`
     justify-content: flex-end;
     padding: ${theme.spaces.space2};
   }
-  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
     .desktop {
       display: none;
     }
@@ -171,52 +171,6 @@ const ContentPage = styled.div`
     &.warning {
       transform: rotate(180deg);
       top: -2px;
-    }
-  }
-`;
-
-const TextBanner = styled.div<{ color: string }>`
-  position: relative;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  background: ${({ color }) => color};
-  z-index: 2;
-  .content-text-banner {
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spaces.space4};
-    max-width: 800px;
-    padding: ${theme.spaces.space4};
-    h2 {
-      font-weight: bold;
-      color: ${theme.colors.dark};
-      text-transform: uppercase;
-    }
-    p {
-      color: ${theme.colors.dark};
-      line-height: 1.3;
-    }
-    .content-action {
-      margin-top: 10px;
-    }
-  }
-  .content-img-banner {
-    padding: ${theme.spaces.space4};
-    display: flex;
-    align-items: center;
-    width: 300px;
-    height: 350px;
-  }
-  &.warning {
-    top: -2px;
-  }
-  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    height: auto;
-    flex-wrap: wrap;
-    .content-img-banner {
-      display: none;
     }
   }
 `;

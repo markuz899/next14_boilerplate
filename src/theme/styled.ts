@@ -77,7 +77,7 @@ export const Container = styled.div`
     min-width: 100%;
   }
   @media only screen and (max-width: ${theme.breakpoints.tablet}) {
-    padding: ${theme.spaces.space6};
+    padding: ${theme.spaces.space1};
     min-width: 100%;
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {

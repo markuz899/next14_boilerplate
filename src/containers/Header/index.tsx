@@ -68,6 +68,9 @@ const Header: React.FC<HeaderProps> = ({
                 <div className="navigator">
                   <div className="section-link">
                     {navItems?.map((item) => {
+                      if (item.shield && !isAuth) {
+                        return null;
+                      }
                       return (
                         <Link legacyBehavior key={item?.path} href={item?.path}>
                           <Button
