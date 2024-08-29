@@ -141,12 +141,13 @@ const ContentSwiper = styled.div<{ $background?: string }>`
       justify-content: center;
       text-align: center !important;
       font-size: 18px;
-      height: 500px;
+      height: 400px;
       img {
         display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
       }
       .content-title {
         padding: ${theme.spaces.space4};
@@ -179,7 +180,7 @@ const ContentSwiper = styled.div<{ $background?: string }>`
     .swiper-slide {
       position: relative;
       width: 200px !important;
-      height: 500px;
+      height: 400px;
       border-radius: 12px;
       overflow: hidden;
       transition: 1s;
@@ -188,6 +189,7 @@ const ContentSwiper = styled.div<{ $background?: string }>`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
         transition: 1s;
       }
       .content-title {

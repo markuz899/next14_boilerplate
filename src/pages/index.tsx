@@ -4,8 +4,8 @@ import React from "react";
 import { ContainerFull, Content, ContentTitle } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import { Button, Card, SliderTabs, WordChanger } from "@/components";
-import { specialist } from "@/utils/constants";
+import { Button, Card, Carousel, SliderTabs, WordChanger } from "@/components";
+import { mokSlider, specialist } from "@/utils/constants";
 import { useBreakpoints } from "@/hooks";
 import Link from "next/link";
 
