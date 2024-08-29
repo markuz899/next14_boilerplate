@@ -350,12 +350,12 @@ const Map = ({
         {children && children}
         {selection?.position && (
           <Marker position={selection.position} icon={customMarker}>
-            <Popup>{selection.label}</Popup>
+            <Popup closeButton={false}>{selection.label}</Popup>
           </Marker>
         )}
         {selectionSeller?.position && (
           <Marker position={selectionSeller.position} icon={customSellerMarker}>
-            <Popup>{selectionSeller.label}</Popup>
+            <Popup closeButton={false}>{selectionSeller.label}</Popup>
           </Marker>
         )}
       </MapContainerStyle>

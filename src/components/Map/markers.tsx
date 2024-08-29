@@ -57,6 +57,7 @@ const Markers = ({
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
   const [done, setDone] = useState(true);
+  const [showCircle, setShowCircle] = useState(false);
   const markerRef: any = useRef({});
   const popupRef: any = useRef({});
   const map = useMap();
@@ -94,12 +95,17 @@ const Markers = ({
     const newLatLng = map.containerPointToLatLng(newPoint);
 
     map.flyTo(newLatLng, map.getZoom(), optionsAnimate);
+    setShowCircle(false);
   };
 
   useMapEvents({
     click: () => {
       setSelectedMarker(null);
       setActive && setActive(null);
+      setShowCircle(false);
+    },
+    moveend: () => {
+      setShowCircle(true);
     },
   });
 
@@ -239,6 +245,7 @@ const Markers = ({
               <CustomPopup
                 autoClose
                 closeOnEscapeKey
+                closeButton={false}
                 ref={(pop) => {
                   popupRef.current[cluster.properties.id] = pop;
                 }}
@@ -247,7 +254,8 @@ const Markers = ({
               </CustomPopup>
             )}
             {cluster.properties.range &&
-              selectedMarker?.id === cluster.properties.id && (
+              selectedMarker?.id === cluster.properties.id &&
+              showCircle && (
                 <LayerGroup>
                   <Circle
                     center={[latitude, longitude]}
