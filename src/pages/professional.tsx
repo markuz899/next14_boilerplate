@@ -10,24 +10,23 @@ import { specialist } from "@/utils/constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { useBreakpoints } from "@/hooks";
 
-const Professional = ({ global }: GlobalPageProps) => {
+const Professional = ({ global, query }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
   const [position, setPosition] = useState({});
 
-  const handleView = (data: any) => {
-    setView(data?.value);
-  };
-
-  const onInitFilters = async (formData: any) => {
-    console.log("onInitFilters", formData);
-    if (formData?._position) {
-      const p = { label: formData.city, position: formData?._position };
+  useEffect(() => {
+    if (query?._position) {
+      const p = { label: query.city, position: query?._position };
       setPosition(p);
     } else {
       setPosition({});
     }
+  }, [query]);
+
+  const handleView = (data: any) => {
+    setView(data?.value);
   };
 
   const onChangeFilters = async (formData: any) => {
@@ -45,16 +44,11 @@ const Professional = ({ global }: GlobalPageProps) => {
           <SwitchMobile>
             <div className="desktop">
               <ContentFilter>
-                <Filters
-                  onInitFilters={onInitFilters}
-                  onChange={onChangeFilters}
-                  onViewChange={handleView}
-                />
+                <Filters onChange={onChangeFilters} onViewChange={handleView} />
               </ContentFilter>
             </div>
             <div className="mobile">
               <Filters
-                onInitFilters={onInitFilters}
                 onChange={onChangeFilters}
                 onViewChange={handleView}
                 isMobile={true}
@@ -143,13 +137,13 @@ const Professional = ({ global }: GlobalPageProps) => {
   );
 };
 
-export async function getServerSideProps(ctx: { req: any }) {
+export async function getServerSideProps(ctx: { req: any; query: any }) {
   // const delay = (s: number) => new Promise((resolve) => setTimeout(resolve, s));
   // await delay(2000);
-  const { req } = ctx;
+  const { req, query } = ctx;
   // const customVariable = req.headers["x-custom-variable"];
   return {
-    props: {},
+    props: { query },
   };
 }
 

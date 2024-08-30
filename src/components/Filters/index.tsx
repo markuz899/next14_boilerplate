@@ -15,14 +15,12 @@ import Toggle from "../Toggle";
 import SliderTabs from "../SliderTabs";
 
 interface FiltersProps {
-  onInitFilters?: any;
   onChange?: any;
   isMobile?: boolean;
   onViewChange?: any;
 }
 
 const Filters = ({
-  onInitFilters,
   onChange,
   isMobile = false,
   onViewChange,
@@ -125,8 +123,6 @@ const Filters = ({
         key.name !== inputForm._position && key.name !== inputForm._view
     );
     setFilters(removeUnused);
-    const data = getValues();
-    onInitFilters && onInitFilters(data);
     // eslint-disable-next-line
   }, [router.query]);
 
