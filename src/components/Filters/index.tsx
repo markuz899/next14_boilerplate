@@ -2,7 +2,7 @@ import { useState, useEffect, memo, useRef } from "react";
 import styled from "styled-components";
 import theme from "@/theme";
 import Select from "../Select";
-import { Utils } from "@/services";
+import { Navigation, Utils } from "@/services";
 import { useForm } from "react-hook-form";
 import { mokCategories, mokSortPrice } from "@/utils/constants";
 import { useRouter } from "next/router";
@@ -15,12 +15,14 @@ import Toggle from "../Toggle";
 import SliderTabs from "../SliderTabs";
 
 interface FiltersProps {
+  onInitFilters?: any;
   onChange?: any;
   isMobile?: boolean;
   onViewChange?: any;
 }
 
 const Filters = ({
+  onInitFilters,
   onChange,
   isMobile = false,
   onViewChange,
@@ -59,18 +61,21 @@ const Filters = ({
     category: "",
     _sortPrice: "",
     _view: "",
+    _position: {},
   };
   const inputForm: any = {
     city: "city",
     category: "category",
     _sortPrice: "_sortPrice",
     _view: "_view",
+    _position: "_position",
   };
   const validationCity: any = {
     city: {},
     category: {},
     _sortPrice: {},
     _view: {},
+    _position: {},
   };
 
   const {
@@ -107,16 +112,21 @@ const Filters = ({
         }
         if (value) {
           setValue(key, value);
-          if (key != inputForm._view) {
-            filter.push({ name: key, value });
-          } else {
+          filter.push({ name: key, value });
+          if (key == inputForm._view) {
             onViewChange({ name, value });
           }
         }
       }
     }
 
-    setFilters(filter);
+    const removeUnused = filter.filter(
+      (key: any) =>
+        key.name !== inputForm._position && key.name !== inputForm._view
+    );
+    setFilters(removeUnused);
+    const data = getValues();
+    onInitFilters && onInitFilters(data);
     // eslint-disable-next-line
   }, [router.query]);
 
@@ -139,15 +149,32 @@ const Filters = ({
 
     const exist = city.some((c: any) => c.value === data.value);
     if (exist) {
-      handleChange({ name, value });
+      let data: any = { label: value };
+      const c = await Navigation.getPositionCity({ city: value });
+      if (c) {
+        const [city] = c;
+        if (city) {
+          data = {
+            position: [city.lat, city.lon],
+            geojson: city?.geojson?.coordinates,
+            ...data,
+          };
+        }
+      }
+      handleChange({ name, value: { data } });
     }
   };
 
   const handleChange = (data: any) => {
     const { name, value } = data;
-    setValue(name, value);
-    if (name == inputForm._view) {
+    if (name == inputForm.city) {
+      setValue(name, value.data.label);
+      setValue(inputForm._position, value.data.position);
+    } else if (name == inputForm._view) {
+      setValue(name, value);
       onViewChange(data);
+    } else {
+      setValue(name, value);
     }
     handleSubmit();
   };
@@ -164,16 +191,10 @@ const Filters = ({
   };
 
   const handleRemoveOne = ({ name, value, selected }: any) => {
-    if (value) {
-      if (value.length === 0) {
-        setValue(name, "");
-      } else {
-        let newVal = value.filter((el: any) => el !== selected);
-        setValue(name, newVal);
-      }
-    } else {
-      setValue(name, "");
+    if (name == inputForm.city) {
+      setValue(inputForm._position, "");
     }
+    setValue(name, "");
     let data = getValues();
     let filter: any = [];
     if (Object.keys(data).length) {
@@ -197,14 +218,16 @@ const Filters = ({
       for (const [key, value] of Object.entries(data)) {
         if (value) {
           query[key] = value;
-          if (key !== inputForm._view) {
-            filter.push({ name: key, value });
-          }
+          filter.push({ name: key, value });
         }
       }
     }
 
-    setFilters(filter);
+    const removeUnused = filter.filter(
+      (key: any) =>
+        key.name !== inputForm._position && key.name !== inputForm._view
+    );
+    setFilters(removeUnused);
     router.push({ query });
     onChange && onChange({ data, query });
   };

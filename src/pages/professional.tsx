@@ -14,12 +14,23 @@ const Professional = ({ global }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
+  const [position, setPosition] = useState({});
 
   const handleView = (data: any) => {
     setView(data?.value);
   };
 
-  const onChangeFilters = (formData: any) => {
+  const onInitFilters = async (formData: any) => {
+    console.log("onInitFilters", formData);
+    if (formData?._position) {
+      const p = { label: formData.city, position: formData?._position };
+      setPosition(p);
+    } else {
+      setPosition({});
+    }
+  };
+
+  const onChangeFilters = async (formData: any) => {
     console.log("onChangeFilters", formData);
   };
 
@@ -34,11 +45,16 @@ const Professional = ({ global }: GlobalPageProps) => {
           <SwitchMobile>
             <div className="desktop">
               <ContentFilter>
-                <Filters onChange={onChangeFilters} onViewChange={handleView} />
+                <Filters
+                  onInitFilters={onInitFilters}
+                  onChange={onChangeFilters}
+                  onViewChange={handleView}
+                />
               </ContentFilter>
             </div>
             <div className="mobile">
               <Filters
+                onInitFilters={onInitFilters}
                 onChange={onChangeFilters}
                 onViewChange={handleView}
                 isMobile={true}
@@ -78,6 +94,7 @@ const Professional = ({ global }: GlobalPageProps) => {
                   className="card-map"
                 >
                   <Map
+                    selection={position}
                     onChange={onChangeMap}
                     className="mapper"
                     gestureHandling={false}
@@ -108,6 +125,7 @@ const Professional = ({ global }: GlobalPageProps) => {
                 <motion.div layout className="card-map">
                   <AnimatePresence>
                     <Map
+                      selection={position}
                       onChange={onChangeMap}
                       center={specialist[0]?.position}
                       zoom={12}
