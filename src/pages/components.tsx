@@ -411,7 +411,7 @@ const Components = ({ global }: GlobalPageProps) => {
               <Tooltip key={el} content={el}>
                 <Icon
                   name={el}
-                  size={theme.spaces.space3}
+                  size={theme.spaces.space5}
                   color={theme.colors.primary}
                 />
               </Tooltip>

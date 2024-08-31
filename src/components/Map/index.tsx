@@ -332,7 +332,7 @@ const Map = ({
             <CenterNav
               zoom={zoom}
               selection={selection}
-              iconName="pin"
+              iconName="pin-map-fill"
               onClick={handleFly}
               block={block}
             />
