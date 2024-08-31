@@ -66,8 +66,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
           {isChecked && (
             <Icon
               name="check"
-              margin="5px 0 0 3px"
-              size="15px"
+              margin="1px 0 0 0"
+              size="10px"
               color={theme.colors.white}
             />
           )}
