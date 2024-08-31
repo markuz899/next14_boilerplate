@@ -59,6 +59,7 @@ const Markers = ({
   const [done, setDone] = useState(true);
   const [showCircle, setShowCircle] = useState(false);
   const markerRef: any = useRef({});
+  const markerHtmlPopup: any = useRef({});
   const popupRef: any = useRef({});
   const map = useMap();
 
@@ -99,7 +100,8 @@ const Markers = ({
   };
 
   useMapEvents({
-    click: () => {
+    click: (e) => {
+      if (markerHtmlPopup.current.contains(e.originalEvent.target)) return;
       setSelectedMarker(null);
       setActive && setActive(null);
       setShowCircle(false);
@@ -265,7 +267,7 @@ const Markers = ({
                 </LayerGroup>
               )}
             {isSmall && selectedMarker?.id && (
-              <div className="content-popup">
+              <div ref={markerHtmlPopup} className="content-popup">
                 <div className="popup-body">
                   <Card option={selectedMarker} mini={isSmall} />
                 </div>

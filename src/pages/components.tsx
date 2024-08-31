@@ -698,6 +698,7 @@ const Components = ({ global }: GlobalPageProps) => {
                   {specialist.map((item) => {
                     return (
                       <Card
+                        disabled
                         key={item.id}
                         option={item}
                         active={activeMarker?.id == item?.id}
