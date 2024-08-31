@@ -322,6 +322,7 @@ const Filters = ({
                     name={inputForm._sortPrice}
                     defaultValues={watch(inputForm._sortPrice)}
                     onChange={handleChange}
+                    iconBefore="sort"
                     placeholder="Ordina per"
                     options={mokSortPrice}
                   />
@@ -346,6 +347,11 @@ const Filters = ({
               ) : (
                 ""
               )}
+              {filters.length ? (
+                <div className="content-mobile-badge">{renderBadge()}</div>
+              ) : (
+                <></>
+              )}
               <div className="content-filter-mobile-action">
                 <Button
                   onClick={close}
@@ -365,14 +371,15 @@ const Filters = ({
               color={theme.colors.primary}
               margin="0 10px 0 0"
             />
-            <p className="text-primary text-bolder">FILTRI</p>
+            <p
+              className={`text-primary text-bolder ${
+                filters?.length ? "bold" : ""
+              }`}
+            >
+              FILTRI
+            </p>
           </div>
         </Modal>
-        {filters.length ? (
-          <div className="content-mobile-badge">{renderBadge()}</div>
-        ) : (
-          <></>
-        )}
       </MobileContainer>
     );
   }
@@ -405,6 +412,7 @@ const Filters = ({
             name={inputForm._sortPrice}
             value={getValues(inputForm._sortPrice)}
             onChange={handleChange}
+            iconBefore="sort"
             placeholder="Ordina per"
             options={mokSortPrice}
           />
