@@ -88,13 +88,14 @@ export default Card;
 
 const isHover = css`
   transition: box-shadow 0.3s ease-in-out !important;
-  -webkit-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
-  -moz-box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
-  box-shadow: 0px 10px 55px -25px rgba(0, 0, 0, 0.75) !important;
+  -webkit-box-shadow: 0 0 15px 0 #00315129, 0 1px 4px 0 #0031511f !important;
+  -moz-box-shadow: 0 0 15px 0 #00315129, 0 1px 4px 0 #0031511f !important;
+  box-shadow: 0 0 15px 0 #00315129, 0 1px 4px 0 #0031511f !important;
 `;
 const isActive = css`
   transition: box-shadow 0.3s ease-in-out !important;
-  box-shadow: 0 0 16px ${theme.colors.primary};
+  box-shadow: 0 0 2px 0 ${theme.colors.primary}29,
+    0 1px 4px 0 ${theme.colors.primary}1f;
 `;
 
 const CardStyle = styled.div<{
@@ -107,7 +108,7 @@ const CardStyle = styled.div<{
     overflow: hidden;
     background: ${theme.colors.cardLight};
     border-radius: ${theme.spaces.space5};
-    box-shadow: 0 0 16px rgba(14, 39, 63, 0.18);
+    box-shadow: 0 0 2px 0 #00315129, 0 1px 4px 0 #0031511f;
     transition: all 0.5s;
     padding: ${({ $mini }) =>
       $mini ? theme.spaces.space3 : theme.spaces.space4};
