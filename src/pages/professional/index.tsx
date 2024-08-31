@@ -8,9 +8,10 @@ import theme from "@/theme";
 import { Card, Map, Markers, Filters } from "@/components";
 import { specialist } from "@/utils/constants";
 import { AnimatePresence, motion } from "framer-motion";
-import { useBreakpoints } from "@/hooks";
+import { useBreakpoints, useGeolocation } from "@/hooks";
 
 const Professional = ({ global, query }: GlobalPageProps) => {
+  const { loading, error, data } = useGeolocation();
   const { isSmall } = useBreakpoints();
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
@@ -57,10 +58,10 @@ const Professional = ({ global, query }: GlobalPageProps) => {
           </SwitchMobile>
         </Content>
 
-        {(view == "list" || view == "map") && (
-          <Content>
-            {view == "list" && (
-              <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="popLayout">
+          {(view == "list" || view == "map") && (
+            <Content>
+              {view == "list" && (
                 <motion.div
                   key="list-view"
                   layout
@@ -74,10 +75,8 @@ const Professional = ({ global, query }: GlobalPageProps) => {
                     return <Card key={item.id} option={item} />;
                   })}
                 </motion.div>
-              </AnimatePresence>
-            )}
-            {view == "map" && (
-              <AnimatePresence mode="popLayout">
+              )}
+              {view == "map" && (
                 <motion.div
                   key="map-view"
                   layout
@@ -92,46 +91,62 @@ const Professional = ({ global, query }: GlobalPageProps) => {
                     onChange={onChangeMap}
                     className="mapper"
                     gestureHandling={false}
-                    center={specialist[0]?.position}
+                    center={
+                      data?.latitude
+                        ? [data?.latitude, data?.longitude]
+                        : specialist[0]?.position
+                    }
                     zoom={11}
                   >
                     <Markers isSmall={isSmall} options={specialist} zoom={14} />
                   </Map>
                 </motion.div>
-              </AnimatePresence>
-            )}
-          </Content>
-        )}
+              )}
+            </Content>
+          )}
 
-        {view == "mix" && (
-          <ContainerFull className="content-full">
-            <ContentMap className="between">
-              <div className="content content-card">
-                <motion.div layout className="card-list">
-                  <AnimatePresence>
+          {view == "mix" && (
+            <ContainerFull className="content-full">
+              <ContentMap className="between">
+                <div className="content content-card">
+                  <motion.div
+                    layout
+                    className="card-list"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                  >
                     {specialist.map((item) => {
                       return <Card key={item.id} option={item} />;
                     })}
-                  </AnimatePresence>
-                </motion.div>
-              </div>
-              <div className="content content-map p-0">
-                <motion.div layout className="card-map">
-                  <AnimatePresence>
+                  </motion.div>
+                </div>
+                <div className="content content-map p-0">
+                  <motion.div
+                    layout
+                    className="card-map"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                  >
                     <Map
                       selection={position}
                       onChange={onChangeMap}
-                      center={specialist[0]?.position}
+                      center={
+                        data?.latitude
+                          ? [data?.latitude, data?.longitude]
+                          : specialist[0]?.position
+                      }
                       zoom={12}
                     >
                       <Markers options={specialist} zoom={14} />
                     </Map>
-                  </AnimatePresence>
-                </motion.div>
-              </div>
-            </ContentMap>
-          </ContainerFull>
-        )}
+                  </motion.div>
+                </div>
+              </ContentMap>
+            </ContainerFull>
+          )}
+        </AnimatePresence>
       </ContentPage>
     </Layout>
   );

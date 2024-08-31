@@ -163,9 +163,18 @@ export const mokCategories = [
   },
 ];
 
+export const mokSortPriceLabel: any = {
+  ASC: "Prezzo crescente",
+  DESC: "Prezzo decrescente",
+  RAT_ASC: "Rating crescente",
+  RAT_DESC: "Rating decrescente",
+};
+
 export const mokSortPrice = [
   { label: "Prezzo crescente", value: "ASC" },
   { label: "Prezzo decrescente", value: "DESC" },
+  { label: "Rating crescente", value: "RAT_ASC" },
+  { label: "Rating decrescente", value: "RAT_DESC" },
 ];
 
 export const specialist = [
@@ -181,6 +190,51 @@ export const specialist = [
   {
     id: 2,
     createdAt: "06/03/2022",
+    name: "Gioia Rossi",
+    position: [42.165409569338486, 12.34877710026145],
+    range: 20,
+    profession: "Musicista",
+    rating: 3,
+  },
+  {
+    id: 3,
+    createdAt: "06/03/2022",
+    name: "Guido Coni",
+    position: [42.156976752692, 12.33347900640793],
+    range: 20,
+    profession: "Musicista",
+    rating: 2,
+  },
+  {
+    id: 4,
+    createdAt: "06/03/2022",
+    name: "Piero Lizzo",
+    position: [42.15700077940703, 12.333381772760559],
+    range: 20,
+    profession: "Musicista",
+    rating: 4,
+  },
+  {
+    id: 5,
+    createdAt: "06/03/2022",
+    name: "Fausta Vecchi",
+    position: [42.16884483909552, 12.331437099813078],
+    range: 20,
+    profession: "Musicista",
+    rating: 5,
+  },
+  {
+    id: 6,
+    createdAt: "06/03/2022",
+    name: "Claudia Pitto",
+    position: [42.16079688579956, 12.351207941445798],
+    range: 20,
+    profession: "Musicista",
+    rating: 3,
+  },
+  {
+    id: 7,
+    createdAt: "06/03/2022",
     name: "Flavio Bianchi",
     position: [42.142287926630516, 12.540400871218557],
     range: 10,
@@ -188,16 +242,16 @@ export const specialist = [
     rating: 2,
   },
   {
-    id: 3,
+    id: 8,
     createdAt: "06/03/2022",
     name: "Mario Verdi",
     position: [42.09288262437151, 12.273639107053354],
     range: 50,
     profession: "Giardiniere",
-    rating: 3,
+    rating: 1,
   },
   {
-    id: 4,
+    id: 9,
     createdAt: "06/03/2022",
     name: "Anna Gialli",
     position: [42.206914985163685, 12.39517535481974],
@@ -206,7 +260,7 @@ export const specialist = [
     rating: 4,
   },
   {
-    id: 5,
+    id: 10,
     createdAt: "06/03/2022",
     name: "Claudia Shiffer",
     position: [42.0775948359501, 12.4497636694941],
@@ -215,7 +269,7 @@ export const specialist = [
     rating: 5,
   },
   {
-    id: 6,
+    id: 11,
     createdAt: "06/03/2022",
     name: "Sole Soleil",
     position: [42.09950618862456, 12.563746817117186],
@@ -224,7 +278,7 @@ export const specialist = [
     rating: 3,
   },
   {
-    id: 7,
+    id: 12,
     createdAt: "06/03/2022",
     name: "Falco Neri",
     position: [42.090681921149525, 12.27409778617536],

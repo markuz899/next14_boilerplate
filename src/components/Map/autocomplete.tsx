@@ -8,6 +8,8 @@ export interface AutocompleteProps {
   placeholder?: string;
   value?: string;
   className?: string;
+  iconBefore?: string;
+  fluid?: boolean;
 }
 
 const Autocomplete = ({
@@ -16,6 +18,8 @@ const Autocomplete = ({
   onChange,
   value = "",
   className,
+  iconBefore = "search",
+  fluid = true,
 }: AutocompleteProps) => {
   const [provider, setProvider] = useState<any>(null);
   const [address, setAddress] = useState<any>([]);
@@ -65,7 +69,7 @@ const Autocomplete = ({
       if (!existingItem) {
         acc.push({
           position: [item.y, item.x],
-          value: item.label,
+          value: item.raw.name,
           label: item.label,
           raw: item.raw,
         });
@@ -139,10 +143,13 @@ const Autocomplete = ({
     <Select
       className={className}
       enableInput
+      width={370}
+      fluid={fluid}
+      showArrow={address?.length ? true : false}
       name={name}
       onChange={handleChangeCity}
       value={getValues(inputForm.city)}
-      iconBefore="search"
+      iconBefore={iconBefore}
       placeholder={placeholder}
       options={address || []}
       isError={!!errors[inputForm.city]}

@@ -20,7 +20,7 @@ export interface SelectProps {
   withFilter?: boolean;
   disabled?: boolean;
   fluid?: boolean;
-  width?: boolean;
+  width?: any;
   rounded?: boolean;
   clearable?: boolean;
 }

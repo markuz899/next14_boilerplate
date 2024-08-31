@@ -70,7 +70,7 @@ const Markers = ({
   useEffect(() => {
     if (active) {
       if (!active?.isInternal) {
-        map.flyTo(active.position, 15, optionsAnimate);
+        map.flyTo(active.position, 11, optionsAnimate);
         map.on("zoomend", function () {
           markerRef.current[active.id]?.openPopup();
         });
@@ -167,7 +167,7 @@ const Markers = ({
     points,
     bounds,
     zoom: currentZoom,
-    options: { radius: 75, maxZoom: 17 },
+    options: { radius: 75, maxZoom: 10 },
   });
 
   return (

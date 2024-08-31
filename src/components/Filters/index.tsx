@@ -4,7 +4,11 @@ import theme from "@/theme";
 import Select from "../Select";
 import { Navigation, Utils } from "@/services";
 import { useForm } from "react-hook-form";
-import { mokCategories, mokSortPrice } from "@/utils/constants";
+import {
+  mokCategories,
+  mokSortPrice,
+  mokSortPriceLabel,
+} from "@/utils/constants";
 import { useRouter } from "next/router";
 import Modal from "../Modal";
 import Icon from "../Icon";
@@ -13,6 +17,7 @@ import { motion } from "framer-motion";
 import Badge from "../Badge";
 import Toggle from "../Toggle";
 import SliderTabs from "../SliderTabs";
+import Autocomplete from "../Map/autocomplete";
 
 interface FiltersProps {
   onChange?: any;
@@ -57,21 +62,21 @@ const Filters = ({
   let defaultValues: any = {
     city: "",
     category: "",
-    _sortPrice: "",
+    _sort: "",
     _view: "",
     _position: {},
   };
   const inputForm: any = {
     city: "city",
     category: "category",
-    _sortPrice: "_sortPrice",
+    _sort: "_sort",
     _view: "_view",
     _position: "_position",
   };
   const validationCity: any = {
     city: {},
     category: {},
-    _sortPrice: {},
+    _sort: {},
     _view: {},
     _position: {},
   };
@@ -143,22 +148,23 @@ const Filters = ({
       }
     }, 500);
 
-    const exist = city.some((c: any) => c.value === data.value);
-    if (exist) {
-      let data: any = { label: value };
-      const c = await Navigation.getPositionCity({ city: value });
-      if (c) {
-        const [city] = c;
-        if (city) {
-          data = {
-            position: [city.lat, city.lon],
-            geojson: city?.geojson?.coordinates,
-            ...data,
-          };
-        }
-      }
-      handleChange({ name, value: { data } });
-    }
+    // const exist = city.some((c: any) => c.value === data.value);
+    // if (exist) {
+    //   let data: any = { label: value };
+    //   const c = await Navigation.getPositionCity({ city: value });
+    //   if (c) {
+    //     const [city] = c;
+    //     if (city) {
+    //       data = {
+    //         position: [city.lat, city.lon],
+    //         geojson: city?.geojson?.coordinates,
+    //         ...data,
+    //       };
+    //     }
+    //   }
+    //   handleChange({ name, value: { data } });
+    // }
+    handleChange({ name, value: { data } });
   };
 
   const handleChange = (data: any) => {
@@ -246,6 +252,21 @@ const Filters = ({
             />
           </motion.div>
         );
+      } else if (item.name == inputForm._sort) {
+        return (
+          <motion.div
+            key={item.name}
+            className="badges"
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+          >
+            <Badge
+              label={`${mokSortPriceLabel[item.value]}`}
+              onClick={() => handleRemoveOne({ name: item.name })}
+            />
+          </motion.div>
+        );
       } else if (Array.isArray(item.value)) {
         return item.value.map((el: any, i: any) => {
           return (
@@ -298,15 +319,22 @@ const Filters = ({
             <MobileStyled>
               <div className="content-filter-mobile">
                 <div className="filter">
-                  <Select
+                  <Autocomplete
+                    name={inputForm.city}
+                    value={getValues(inputForm.city)}
+                    onChange={handleChangeCity}
+                    iconBefore="map"
+                  />
+                  {/* <Select
                     enableInput
+                    showArrow={city.length ? true : false}
                     name={inputForm.city}
                     defaultValues={watch(inputForm.city)}
                     onChange={handleChangeCity}
                     iconBefore="map"
                     placeholder="Città"
                     options={city}
-                  />
+                  /> */}
                   <Select
                     enableInput
                     name={inputForm.category}
@@ -319,8 +347,8 @@ const Filters = ({
                 </div>
                 <div className="more">
                   <Select
-                    name={inputForm._sortPrice}
-                    defaultValues={watch(inputForm._sortPrice)}
+                    name={inputForm._sort}
+                    defaultValues={watch(inputForm._sort)}
                     onChange={handleChange}
                     iconBefore="sort"
                     placeholder="Ordina per"
@@ -388,15 +416,22 @@ const Filters = ({
     <DesktopStyled $filters={filters?.length > 0}>
       <div className="content-filter">
         <div className="filter">
-          <Select
+          <Autocomplete
+            name={inputForm.city}
+            value={getValues(inputForm.city)}
+            onChange={handleChangeCity}
+            iconBefore="map"
+          />
+          {/* <Select
             enableInput
+            showArrow={city.length ? true : false}
             name={inputForm.city}
             value={getValues(inputForm.city)}
             onChange={handleChangeCity}
             iconBefore="map"
             placeholder="Città"
             options={city}
-          />
+          /> */}
           <Select
             enableInput
             name={inputForm.category}
@@ -409,8 +444,8 @@ const Filters = ({
         </div>
         <div className="more">
           <Select
-            name={inputForm._sortPrice}
-            value={getValues(inputForm._sortPrice)}
+            name={inputForm._sort}
+            defaultValues={getValues(inputForm._sort)}
             onChange={handleChange}
             iconBefore="sort"
             placeholder="Ordina per"
@@ -427,42 +462,7 @@ const Filters = ({
         </div>
       </div>
       <div className="content-badge">
-        <div className="badge">
-          {filters.map((item: any) => {
-            if (item.name === "canon") {
-              return (
-                <Badge
-                  key={item.name}
-                  label={`${item.value.min}-${item.value.max}`}
-                  onClick={() => handleRemoveOne({ name: item.name })}
-                />
-              );
-            } else if (Array.isArray(item.value)) {
-              return item.value.map((el: any, i: number) => {
-                return (
-                  <Badge
-                    key={el.name}
-                    label={el}
-                    onClick={() =>
-                      handleRemoveOne({
-                        name: item.name,
-                        value: item.value,
-                        selected: el,
-                      })
-                    }
-                  />
-                );
-              });
-            }
-            return (
-              <Badge
-                key={item.name}
-                label={item.value}
-                onClick={() => handleRemoveOne({ name: item.name })}
-              />
-            );
-          })}
-        </div>
+        <div className="badge">{renderBadge()}</div>
         {filters.length ? (
           <div className="remove" onClick={handleRemoveAll}>
             <Icon

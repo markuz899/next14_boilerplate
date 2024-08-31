@@ -209,12 +209,10 @@ const Select: React.FC<SelectProps> = ({
       setState(`${data.address.road} ${data.address.county}`);
       onChange({
         label: `${data.address.road} ${data.address.county}`,
-        value: "actual",
+        value: `${data.address.road} ${data.address.county}`,
         name,
-        position: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        },
+        position: [position.coords.latitude, position.coords.longitude],
+        row: data,
       });
     }
   };
@@ -255,13 +253,14 @@ const Select: React.FC<SelectProps> = ({
         readOnly={readOnly}
         withFilter={withFilter || undefined}
         disabled={disable}
+        clearable={true}
       />
     </Target>
   );
 
   const renderDropdown = ({ close }: { close: () => void }) => (
     <Options ref={drop}>
-      <Row $multiselect={!!multiselect}>
+      {/* <Row $multiselect={!!multiselect}>
         <Option
           onClick={() => getCurrentPosition(close)}
           selected={state === "actual"}
@@ -269,10 +268,9 @@ const Select: React.FC<SelectProps> = ({
           onMouseEnter={() => setHover(1001)}
           onMouseLeave={() => setHover(-1)}
         >
-          <Icon margin="0 10px 0 0" name="map" color={theme.colors.error} />
           POSIZIONE ATTUALE
         </Option>
-      </Row>
+      </Row> */}
       {filtered &&
         filtered.map((option, i) => (
           <Row key={`${option.value}-${i}`} $multiselect={!!multiselect}>

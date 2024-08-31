@@ -168,7 +168,7 @@ const Input = forwardRef<InputRef, InputProps>(
           className={className}
           $focus={focus}
           withFilter={withFilter}
-          topPlaceholder={topPlaceholder}
+          $topPlaceholder={topPlaceholder}
           $labelBgColor={labelBgColor}
           $inputBgColor={inputBgColor}
         >
@@ -246,13 +246,13 @@ const Box = styled.div<{
   $isWarning: any;
   $focus: any;
   withFilter?: boolean;
-  topPlaceholder?: string;
+  $topPlaceholder?: string;
   $labelBgColor?: string;
   $inputBgColor?: string;
 }>`
   position: relative;
-  margin-top: ${({ topPlaceholder }) =>
-    topPlaceholder ? theme.spaces.space3 : 0};
+  margin-top: ${({ $topPlaceholder }) =>
+    $topPlaceholder ? theme.spaces.space3 : 0};
   border-radius: 0;
   box-sizing: border-box;
   display: flex;
