@@ -101,7 +101,12 @@ const Markers = ({
 
   useMapEvents({
     click: (e) => {
-      if (markerHtmlPopup.current.contains(e.originalEvent.target)) return;
+      if (
+        markerHtmlPopup.current &&
+        Object.keys(markerHtmlPopup.current)?.length &&
+        markerHtmlPopup.current.contains(e.originalEvent.target)
+      )
+        return;
       setSelectedMarker(null);
       setActive && setActive(null);
       setShowCircle(false);
