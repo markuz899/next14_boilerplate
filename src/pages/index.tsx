@@ -213,6 +213,12 @@ const TextBanner = styled.div<{ color: string }>`
     align-items: center;
     width: 300px;
     height: 350px;
+    overflow: hidden;
+    border-radius: 73% 27% 76% 24% / 36% 69% 31% 64%;
+    background: ${theme.colors.softWhite};
+    &:last-of-type {
+      border-radius: 67% 33% 68% 32% / 30% 52% 48% 70%;
+    }
   }
   &.warning {
     top: -2px;

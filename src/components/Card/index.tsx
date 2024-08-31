@@ -188,7 +188,7 @@ const normal = css`
       display: flex;
       align-items: center;
       justify-content: center;
-      background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%201351.68%20675.84%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20preserveAspectRatio%3D%22none%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%221351.68%22%20height%3D%22675.84%22%20fill%3D%22transparent%22%3E%3C/rect%3E%3Cg%20transform%3D%22rotate(0%20675.84%20337.92)%22%3E%3Cpath%20d%3D%22M%20-675.84%20395.84%20S%20-397.00%20164.84%200.00%20395.84%20327.92%20137.84%20675.84%20395.84%201003.76%20373.84%201351.68%20395.84%201370.52%20309.84%202027.52%20395.84%20h%20110%20V%201275.8400000000001%20H%20-675.84%20Z%22%20fill%3D%22transparent%22%3E%3C/path%3E%3Cpath%20d%3D%22M%20-675.84%20305.00%20S%20-588.00%2072.00%200.00%20305.00%20232.84%20162.50%20675.84%20305.00%201003.76%20162.50%201351.68%20305.00%201679.60%20162.50%202027.52%20305.00%20h%20110%20V%20-600%20H%20-675.84%20Z%22%20fill%3D%22%230077B6%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+      background-image: ${() => getSvgBackground(theme.colors.primary)};
       border-radius: ${theme.extra.radiusRound};
       padding: ${theme.spaces.space2};
       img {
@@ -303,3 +303,19 @@ const normal = css`
 //     }
 //   }
 // `;
+const getSvgBackground = (
+  colorTop: string,
+  colorBottom: string = "transparent"
+) => {
+  const svg = `
+    <svg viewBox="0 0 1351.68 675.84" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect x="0" y="0" width="1351.68" height="675.84" fill="${colorBottom}"></rect>
+      <g transform="rotate(0 675.84 337.92)">
+        <path d="M -675.84 395.84 S -397.00 164.84 0.00 395.84 327.92 137.84 675.84 395.84 1003.76 373.84 1351.68 395.84 1370.52 309.84 2027.52 395.84 h 110 V 1275.8400000000001 H -675.84 Z" fill="transparent"></path>
+        <path d="M -675.84 305.00 S -588.00 72.00 0.00 305.00 232.84 162.50 675.84 305.00 1003.76 162.50 1351.68 305.00 1679.60 162.50 2027.52 305.00 h 110 V -600 H -675.84 Z" fill="${colorTop}"></path>
+      </g>
+    </svg>
+  `;
+
+  return `url('data:image/svg+xml,${encodeURIComponent(svg)}')`;
+};
