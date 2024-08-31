@@ -77,7 +77,7 @@ const Home = ({ global }: GlobalPageProps) => {
               </div>
             </div>
             <div className="content-img-banner">
-              <img src="/static/img/certificate.svg" />
+              <img src="/static/img/location.svg" />
             </div>
           </TextBanner>
           <svg className="wave primary" viewBox="0 0 1440 190" version="1.1">
@@ -95,7 +95,7 @@ const Home = ({ global }: GlobalPageProps) => {
           </svg>
           <TextBanner className="warning" color={theme.colors.warning}>
             <div className="content-img-banner">
-              <img src="/static/img/experts.svg" />
+              <img src="/static/img/review.svg" />
             </div>
             <div className="content-text-banner">
               <h2>Perchè i professionisti si iscrivono</h2>
@@ -182,7 +182,7 @@ const ContentPage = styled.div`
 
 const TextBanner = styled.div<{ color: string }>`
   position: relative;
-  height: 400px;
+  /* height: 400px; */
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -211,14 +211,8 @@ const TextBanner = styled.div<{ color: string }>`
     padding: ${theme.spaces.space4};
     display: flex;
     align-items: center;
-    width: 300px;
-    height: 350px;
-    overflow: hidden;
-    border-radius: 73% 27% 76% 24% / 36% 69% 31% 64%;
-    background: ${theme.colors.softWhite};
-    &:last-of-type {
-      border-radius: 67% 33% 68% 32% / 30% 52% 48% 70%;
-    }
+    width: 350px;
+    /* height: 350px; */
   }
   &.warning {
     top: -2px;
