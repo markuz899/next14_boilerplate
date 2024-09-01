@@ -218,10 +218,11 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
           5: `static/pin/gBlue.svg`,
           active: `static/pin/gRed.svg`,
           hover: `static/pin/gGreen.svg`,
+          shadow: `static/pin/gBlack.svg`,
         };
 
         const customMarkers = new Icon({
-          iconUrl: initColor[rating || 0],
+          iconUrl: initColor[rating || 1],
           iconSize: [25, 41],
           iconAnchor: [10, 40],
           popupAnchor: [2, -40],
@@ -232,6 +233,9 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
           iconSize: [25, 41],
           iconAnchor: [10, 40],
           popupAnchor: [2, -40],
+          shadowUrl: initColor.shadow,
+          shadowSize: [41, 41],
+          shadowAnchor: [10, 40],
         });
 
         const hoverMarkers = new Icon({
@@ -239,6 +243,9 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
           iconSize: [25, 41],
           iconAnchor: [10, 40],
           popupAnchor: [2, -40],
+          shadowUrl: initColor.shadow,
+          shadowSize: [41, 41],
+          shadowAnchor: [10, 40],
         });
 
         const getIcon = () => {
