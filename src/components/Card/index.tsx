@@ -103,6 +103,7 @@ const CardStyle = styled.div<{
   $mini?: boolean;
   src?: string;
 }>`
+  cursor: pointer;
   .content-card {
     margin: ${theme.spaces.space2};
     overflow: hidden;
