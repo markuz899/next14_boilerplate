@@ -160,7 +160,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: ${theme.spaces.space4};
   h2 {
     text-align: center;
     font-size: ${theme.font.size.medium};
