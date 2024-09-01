@@ -156,11 +156,15 @@ const UpdateMapView = ({
 };
 
 const GestureHandlingSetter = () => {
-  /* eslint-disable */
-  const map = useMap() as any;
-  map?.gestureHandling?.enable();
-  map.addHandler("gestureHandling", GestureHandling);
-  /* eslint-enable */
+  const map = useMap();
+
+  useEffect(() => {
+    map.addHandler("gestureHandling", GestureHandling);
+    // @ts-expect-error typescript does not see additional handler here
+    map.gestureHandling.enable();
+    //eslint-enable
+  }, [map]);
+
   return null;
 };
 
