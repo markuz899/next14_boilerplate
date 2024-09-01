@@ -133,7 +133,7 @@ const UpdateMapView = ({
   }, [zoom, radius, map]);
 
   useMapEvents({
-    moveend: (event) => {
+    dragend: (event) => {
       const map = event.target;
       const { lat, lng } = map.getCenter();
       onChange && onChange({ position: [lat, lng] });
@@ -347,7 +347,7 @@ const Map = ({
             />
           </>
         )}
-        {children && children}
+        {children && React.cloneElement(children, { onChange })}
         {selection?.position && (
           <Marker position={selection.position} icon={customMarker}>
             {selection.label && (
@@ -405,7 +405,7 @@ const MapContainerStyle = styled(MapContainer)<{ height?: string }>`
   }
   .content-popup {
     position: absolute;
-    bottom: 0px;
+    bottom: 10px;
     right: 0px;
     z-index: 400;
     width: 100%;

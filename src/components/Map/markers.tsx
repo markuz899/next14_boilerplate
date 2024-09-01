@@ -52,6 +52,7 @@ const Markers = ({
   active,
   setActive,
   isSmall = false,
+  onChange,
 }: any) => {
   const [selectedMarker, setSelectedMarker] = useState<any>(active);
   const [bounds, setBounds] = useState<any>(null);
@@ -97,6 +98,9 @@ const Markers = ({
 
     map.flyTo(newLatLng, map.getZoom(), optionsAnimate);
     setShowCircle(false);
+    if (mark?.id !== selectedMarker?.id) {
+      onChange && onChange({ position: mark.position });
+    }
   };
 
   useMapEvents({
