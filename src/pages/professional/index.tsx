@@ -16,6 +16,7 @@ const Professional = ({ global, query }: GlobalPageProps) => {
   const [view, setView] = useState("list");
   const [activeMarker, setActiveMarker] = useState<any>(null);
   const [position, setPosition] = useState({});
+  const [hoverMarker, setHoverMarker] = useState<any>(null);
 
   useEffect(() => {
     if (query?._position) {
@@ -117,7 +118,18 @@ const Professional = ({ global, query }: GlobalPageProps) => {
                     exit={{ opacity: 0, x: 20 }}
                   >
                     {specialist.map((item) => {
-                      return <Card key={item.id} option={item} />;
+                      return (
+                        <Card
+                          key={item.id}
+                          option={item}
+                          onMouseEnter={() => {
+                            setHoverMarker(item);
+                          }}
+                          onMouseLeave={() => {
+                            setHoverMarker(null);
+                          }}
+                        />
+                      );
                     })}
                   </motion.div>
                 </div>
@@ -139,7 +151,11 @@ const Professional = ({ global, query }: GlobalPageProps) => {
                       }
                       zoom={12}
                     >
-                      <Markers options={specialist} zoom={14} />
+                      <Markers
+                        options={specialist}
+                        zoom={14}
+                        hover={hoverMarker}
+                      />
                     </Map>
                   </motion.div>
                 </div>

@@ -110,7 +110,7 @@ const Components = ({ global }: GlobalPageProps) => {
   const [multipleAcc, setMultipleAcc] = useState(false);
   const [view, setView] = useState<any>(true);
   const [grid, setGrid] = useState<any>(true);
-  const [activeMarker, setActiveMarker] = useState<any>(null);
+  const [hoverMarker, setHoverMarker] = useState<any>(null);
   const [centerMap, setCenterMap] = useState(specialist[0]?.position);
   const [currentPosition, setCurrentPosition] = useState<any>(null);
   const [checkPosition, setCheckPosition] = useState<any>(false);
@@ -684,12 +684,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <ContentMap className="between">
             <div className="content content-map">
               <Map center={centerMap} zoom={12}>
-                <Markers
-                  options={specialist}
-                  zoom={14}
-                  setActive={setActiveMarker}
-                  active={activeMarker}
-                />
+                <Markers options={specialist} zoom={14} hover={hoverMarker} />
               </Map>
             </div>
             <div className="content content-card">
@@ -701,9 +696,11 @@ const Components = ({ global }: GlobalPageProps) => {
                         disabled
                         key={item.id}
                         option={item}
-                        active={activeMarker?.id == item?.id}
-                        onClick={() => {
-                          setActiveMarker(item);
+                        onMouseEnter={() => {
+                          setHoverMarker(item);
+                        }}
+                        onMouseLeave={() => {
+                          setHoverMarker(null);
                         }}
                       />
                     );

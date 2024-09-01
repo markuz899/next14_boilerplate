@@ -46,15 +46,9 @@ const fetchIcon = (count: any, size: any) => {
   return icons[count];
 };
 
-const Markers = ({
-  options,
-  zoom,
-  active,
-  setActive,
-  isSmall = false,
-  onChange,
-}: any) => {
-  const [selectedMarker, setSelectedMarker] = useState<any>(active);
+const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
+  const [selectedMarker, setSelectedMarker] = useState<any>();
+  const [hoverMarker, setHoverMarker] = useState<any>(hover);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
   const [done, setDone] = useState(true);
@@ -69,24 +63,28 @@ const Markers = ({
   }, [done]);
 
   useEffect(() => {
-    if (active) {
-      if (!active?.isInternal) {
-        map.flyTo(active.position, 11, optionsAnimate);
-        map.on("zoomend", function () {
-          markerRef.current[active.id]?.openPopup();
-        });
+    markerRef.current[selectedMarker?.id]?.closePopup();
+    setSelectedMarker(null);
+    if (hover?.id) {
+      map.flyTo(hover.position, map.getZoom(), optionsAnimate);
+
+      if (hover !== hoverMarker) {
+        setHoverMarker(hover);
       }
-      setSelectedMarker(active);
+    } else {
+      setHoverMarker(null);
     }
+
     return () => {
-      map.off("zoomend");
+      if (!hover && hover?.id !== hoverMarker?.id) {
+        setHoverMarker(null);
+      }
     };
-  }, [active]);
+  }, [hover]);
 
   const handleMarkerClick = (mark: any) => {
     updateMap();
     setSelectedMarker(mark);
-    setActive && setActive(mark);
 
     // offset position marker and popup
     const offsetY = isSmall ? 0 : 100;
@@ -112,7 +110,6 @@ const Markers = ({
       )
         return;
       setSelectedMarker(null);
-      setActive && setActive(null);
       setShowCircle(false);
     },
     moveend: () => {
@@ -178,8 +175,14 @@ const Markers = ({
     <ContentMarker>
       {clusters.map((cluster, i) => {
         const [longitude, latitude] = cluster.geometry.coordinates;
-        const { cluster: isCluster, point_count: pointCount } =
-          cluster.properties;
+        const {
+          cluster: isCluster,
+          point_count: pointCount,
+          id,
+          name,
+          rating,
+          range,
+        } = cluster.properties;
 
         if (isCluster) {
           return (
@@ -214,10 +217,11 @@ const Markers = ({
           4: `static/pin/gBlue.svg`,
           5: `static/pin/gBlue.svg`,
           active: `static/pin/gRed.svg`,
+          hover: `static/pin/gGreen.svg`,
         };
 
         const customMarkers = new Icon({
-          iconUrl: initColor[cluster.properties.rating || 0],
+          iconUrl: initColor[rating || 0],
           iconSize: [25, 41],
           iconAnchor: [10, 40],
           popupAnchor: [2, -40],
@@ -230,18 +234,31 @@ const Markers = ({
           popupAnchor: [2, -40],
         });
 
+        const hoverMarkers = new Icon({
+          iconUrl: initColor.hover,
+          iconSize: [25, 41],
+          iconAnchor: [10, 40],
+          popupAnchor: [2, -40],
+        });
+
+        const getIcon = () => {
+          if (hoverMarker?.id === id) {
+            return hoverMarkers;
+          } else if (selectedMarker?.id === id) {
+            return selectedMarkers;
+          } else {
+            return customMarkers;
+          }
+        };
+
         return (
           <Marker
-            key={`marker-${cluster.properties.name}`}
+            key={`marker-${name}`}
             ref={(mark) => {
-              markerRef.current[cluster.properties.id] = mark;
+              markerRef.current[id] = mark;
             }}
             position={[latitude, longitude]}
-            icon={
-              selectedMarker?.id === cluster.properties.id
-                ? selectedMarkers
-                : customMarkers
-            }
+            icon={getIcon()}
             eventHandlers={{
               click: () => {
                 handleMarkerClick({
@@ -252,29 +269,27 @@ const Markers = ({
               },
             }}
           >
-            {!isSmall && cluster.properties.name && (
+            {!isSmall && name && (
               <CustomPopup
                 autoClose
                 closeOnEscapeKey
                 closeButton={false}
                 ref={(pop) => {
-                  popupRef.current[cluster.properties.id] = pop;
+                  popupRef.current[id] = pop;
                 }}
               >
                 <Card option={cluster.properties} mini={isSmall} />
               </CustomPopup>
             )}
-            {cluster.properties.range &&
-              selectedMarker?.id === cluster.properties.id &&
-              showCircle && (
-                <LayerGroup>
-                  <Circle
-                    center={[latitude, longitude]}
-                    radius={cluster.properties.range * 100}
-                    pathOptions={{ color: "#3388ff", fillColor: "blue" }}
-                  />
-                </LayerGroup>
-              )}
+            {range && selectedMarker?.id === id && showCircle && (
+              <LayerGroup>
+                <Circle
+                  center={[latitude, longitude]}
+                  radius={range * 100}
+                  pathOptions={{ color: "#3388ff", fillColor: "blue" }}
+                />
+              </LayerGroup>
+            )}
             {isSmall && selectedMarker?.id && (
               <div ref={markerHtmlPopup} className="content-popup">
                 <div className="popup-body">

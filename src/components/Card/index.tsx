@@ -1,23 +1,23 @@
 import styled, { css } from "styled-components";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import theme from "@/theme";
-import { Button, Rating } from "..";
+import { Rating } from "..";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface CardProps {
   option: any;
   mini?: boolean;
-  onClick?: any;
-  active?: any;
+  onMouseEnter?: any;
+  onMouseLeave?: any;
   disabled?: boolean;
 }
 
 const Card = ({
   option,
   mini = false,
-  onClick,
-  active,
+  onMouseEnter,
+  onMouseLeave,
   disabled,
 }: CardProps) => {
   const [miniCard, setMiniCard] = useState(mini);
@@ -39,13 +39,14 @@ const Card = ({
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         exit={{ opacity: 0 }}
-        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         <Link
           onClick={(e) => (disabled ? e.preventDefault() : null)}
           href={`/professional/${userInfo.id}`}
         >
-          <CardStyle className={`cardstyle`} $active={active} $mini={miniCard}>
+          <CardStyle className={`cardstyle`} $mini={miniCard}>
             <div className="content-card">
               <div className="content-card-col">
                 <div className="content-banner">
@@ -99,7 +100,6 @@ const isActive = css`
 `;
 
 const CardStyle = styled.div<{
-  $active?: boolean;
   $mini?: boolean;
   src?: string;
 }>`
@@ -120,7 +120,6 @@ const CardStyle = styled.div<{
     &:hover {
       ${isHover}
     }
-    ${(p) => p.$active && isActive}
   }
   @media only screen and (max-width: ${theme.breakpoints.mobile}) {
     .content-card {
