@@ -1,4 +1,3 @@
-// Table.tsx
 import React, { Fragment } from "react";
 import styled from "styled-components";
 import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
@@ -139,9 +138,11 @@ const Table: React.FC<TableProps> = ({
           <Thead>
             {headerGroups.map((headerGroup: any) => {
               return (
+                // eslint-disable-next-line
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column: any) => {
                     return (
+                      // eslint-disable-next-line
                       <th
                         {...column.getHeaderProps(
                           column.getSortByToggleProps()
@@ -177,6 +178,7 @@ const Table: React.FC<TableProps> = ({
                   <tr {...row.getRowProps()}>
                     {row.cells.map((cell: any) => {
                       return (
+                        // eslint-disable-next-line
                         <td {...cell.getCellProps()}>
                           {cell.render("Cell", extraData)}
                         </td>
