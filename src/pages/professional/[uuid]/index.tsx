@@ -14,13 +14,24 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
   const { uuid } = router.query;
 
   return (
-    <Layout global={global} title="Homepage" footer={false}>
+    <Layout global={global} title="Dettaglio">
       <ContentDetail>
         <h2>Titolo pagina</h2>
         <StyledDetail>
           <div className="content-detail">
-            <Column cols={30}>dettaglio {uuid}</Column>
-            <Column cols={70}>dettaglio {uuid}</Column>
+            <Column cols={35}>
+              <div className="content-img">
+                <img
+                  src={`https://i.pravatar.cc/150?img=${uuid}`}
+                  alt="image profile"
+                />
+              </div>
+            </Column>
+            <Column cols={60}>
+              <div className="content-info">
+                <div className="row justify">dettaglio {uuid}</div>
+              </div>
+            </Column>
           </div>
         </StyledDetail>
       </ContentDetail>

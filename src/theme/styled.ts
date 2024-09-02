@@ -2,7 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import theme from ".";
 
 export const setCols = (
-  cols: 1 | 2 | 3 | 4 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90
+  cols: 1 | 2 | 3 | 4 | 10 | 20 | 30 | 35 | 40 | 50 | 60 | 65 | 70 | 80 | 90
 ) => {
   const col = {
     1: "100%",
@@ -12,9 +12,11 @@ export const setCols = (
     10: "10%",
     20: "20%",
     30: "30%",
+    35: "35%",
     40: "40%",
     50: "50%",
     60: "60%",
+    65: "65%",
     70: "70%",
     80: "80%",
     90: "90%",
@@ -252,8 +254,28 @@ export const ContentMap = styled.div<{ view?: string }>`
   }
 `;
 
-export const ContentDetail = styled(Container)<{ noMargin?: boolean }>`
-  ${(p) => (p.noMargin ? "max-width: 100%" : "max-width: 1440px")};
+export const ContainerDetail = styled.div`
+  padding: ${theme.spaces.space4} ${theme.spaces.space15};
+  box-sizing: border-box;
+  max-width: 1300px;
+  min-width: 1300px;
+  @media only screen and (max-width: 1300px) {
+    max-width: 100%;
+    min-width: 100%;
+  }
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    padding: ${theme.spaces.space6};
+    min-width: 100%;
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    padding: "";
+    margin: 0;
+    min-width: 100%;
+  }
+`;
+
+export const ContentDetail = styled(ContainerDetail)<{ noMargin?: boolean }>`
+  ${(p) => (p.noMargin ? "max-width: 100%" : "max-width: 1300px")};
   ${(p) => (p.noMargin ? "margin: 0" : "margin: 0 auto")};
   width: 100%;
   h2 {
@@ -278,15 +300,16 @@ export const StyledDetail = styled.div`
   .content-detail {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     .content-img {
-      max-width: 500px;
+      width: 100%;
       img {
         width: 100%;
+        max-width: 500px;
+        object-fit: cover;
       }
     }
     .content-info {
-      margin-top: ${theme.spaces.space4};
       position: relative;
       width: 100%;
       display: flex;
