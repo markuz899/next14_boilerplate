@@ -1,12 +1,23 @@
 import styled, { css, keyframes } from "styled-components";
 import theme from ".";
 
-export const setCols = (cols: 1 | 2 | 3 | 4) => {
+export const setCols = (
+  cols: 1 | 2 | 3 | 4 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90
+) => {
   const col = {
     1: "100%",
     2: "50%",
     3: "33.33333%",
     4: "25%",
+    10: "10%",
+    20: "20%",
+    30: "30%",
+    40: "40%",
+    50: "50%",
+    60: "60%",
+    70: "70%",
+    80: "80%",
+    90: "90%",
   };
   return col[cols];
 };
@@ -241,12 +252,125 @@ export const ContentMap = styled.div<{ view?: string }>`
   }
 `;
 
-const listView = css<{ view?: string }>`
-  flex: 1 0 70%;
-  display: block;
+export const ContentDetail = styled(Container)<{ noMargin?: boolean }>`
+  ${(p) => (p.noMargin ? "max-width: 100%" : "max-width: 1440px")};
+  ${(p) => (p.noMargin ? "margin: 0" : "margin: 0 auto")};
+  width: 100%;
+  h2 {
+    font-size: ${theme.font.size.big};
+    margin: ${theme.spaces.space4} 0;
+  }
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    .content-detail {
+      flex-direction: column;
+      & > div {
+        width: 100%;
+      }
+    }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    margin: 0;
+    padding: 0;
+  }
 `;
-const withMapView = css`
-  display: none;
+
+export const StyledDetail = styled.div`
+  .content-detail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    .content-img {
+      max-width: 500px;
+      img {
+        width: 100%;
+      }
+    }
+    .content-info {
+      margin-top: ${theme.spaces.space4};
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: ${theme.spaces.space3};
+        text-align: left;
+        &:first-of-type {
+          margin-bottom: 0;
+        }
+        p {
+          color: ${({ theme }) => theme.text};
+          font-size: ${theme.font.size.tiny};
+        }
+        .info {
+          &.device {
+            font-size: ${theme.font.size.large};
+          }
+          &.price {
+            font-size: ${theme.font.size.large};
+          }
+          span {
+            color: ${theme.colors.error};
+          }
+        }
+        &.justify {
+          justify-content: space-between;
+          margin-bottom: ${theme.spaces.space2};
+        }
+        &.center {
+          margin-bottom: 0;
+          justify-content: center;
+          p {
+            margin-left: ${theme.spaces.space2};
+          }
+        }
+        &.action {
+          width: 100%;
+          margin-top: ${theme.spaces.space3};
+          margin-bottom: 0;
+          display: flex;
+          flex-direction: column;
+          button {
+            transition: none;
+            margin-bottom: ${theme.spaces.space2};
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    .content-detail {
+      padding: 0 ${theme.spaces.space4} ${theme.spaces.space4};
+      .content-img {
+        width: 100%;
+      }
+      .content-info {
+        margin-top: 0;
+        .row {
+          p {
+            font-size: ${theme.font.size.mini};
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const Column = styled.div<{ cols: number | any }>`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  flex: 0 0 ${({ cols }) => setCols(cols)};
+  width: ${({ cols }) => setCols(cols)};
+  padding: ${theme.spaces.space2};
+  @media only screen and (max-width: ${theme.breakpoints.tablet}) {
+    flex: 0 0 45%;
+  }
+  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
+    flex: 0 0 100%;
+    padding: 0;
+  }
 `;
 
 export const fadeIn = keyframes`

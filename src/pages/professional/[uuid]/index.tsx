@@ -2,7 +2,7 @@ import { GlobalPageProps } from "@/utils/interface";
 import { WithAuth } from "@/hoc";
 import Layout from "@/containers/Layout";
 import React, { useEffect, useState } from "react";
-import { Content } from "@/theme/styled";
+import { Column, ContentDetail, StyledDetail } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
 import { useBreakpoints } from "@/hooks";
@@ -15,7 +15,15 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
 
   return (
     <Layout global={global} title="Homepage" footer={false}>
-      <Content>dettaglio {uuid}</Content>
+      <ContentDetail>
+        <h2>Titolo pagina</h2>
+        <StyledDetail>
+          <div className="content-detail">
+            <Column cols={30}>dettaglio {uuid}</Column>
+            <Column cols={70}>dettaglio {uuid}</Column>
+          </div>
+        </StyledDetail>
+      </ContentDetail>
     </Layout>
   );
 };
