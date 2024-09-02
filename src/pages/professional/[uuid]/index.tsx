@@ -8,7 +8,16 @@ import theme from "@/theme";
 import { useBreakpoints } from "@/hooks";
 import { useRouter } from "next/router";
 import { specialist } from "@/utils/constants";
-import { Button, Dropdown, Icon, Map, Markers, Rating } from "@/components";
+import {
+  Button,
+  Dropdown,
+  Icon,
+  Map,
+  Markers,
+  Modal,
+  RadioButton,
+  Rating,
+} from "@/components";
 
 const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
@@ -18,6 +27,18 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
   const [userInfo, setUserInfo] = useState(
     specialist.find((el: any) => el.id == uuid)
   );
+  const services = [
+    {
+      label: "VALUTAZIONE STANDARD (20€)",
+      value: "VALUTAZIONE STANDARD",
+      checked: true,
+    },
+    {
+      label: "VALUTAZIONE E TRASPORTO (40€)",
+      value: "VALUTAZIONE E TRASPORTO",
+    },
+    { label: "SMONTO RIMONTO (30€)", value: "SMONTO RIMONTO" },
+  ];
 
   useEffect(() => {}, []);
 
@@ -60,6 +81,59 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                     alt="image profile"
                   />
                 </div>
+                <Section
+                  icon="calendar"
+                  title={`Disponibilità di ${userInfo?.name}`}
+                >
+                  <table>
+                    <tr>
+                      <th></th>
+                      <th>LU</th>
+                      <th>MA</th>
+                      <th>ME</th>
+                      <th>GI</th>
+                      <th>VE</th>
+                      <th>SA</th>
+                      <th>DO</th>
+                    </tr>
+                    <tr>
+                      <td>Mattina</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>❌</td>
+                      <td>❌</td>
+                    </tr>
+                    <tr>
+                      <td>Pomeriggio</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>❌</td>
+                      <td>❌</td>
+                    </tr>
+                    <tr>
+                      <td>Sera</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>✅</td>
+                      <td>❌</td>
+                      <td>❌</td>
+                    </tr>
+                  </table>
+                </Section>
+                <Section icon="stopWatch" title={"Attività"}>
+                  <ul>
+                    <li>Iscritta il {userInfo?.createdAt}</li>
+                    <li>Ultimo login: 3 giorni fa</li>
+                  </ul>
+                </Section>
               </div>
             </Column>
             <Column cols={60}>
@@ -78,13 +152,35 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                   </div>
                   <div className="row start">
                     <div className="action">
-                      <Button kind="primary">SELEZIONA</Button>
+                      <Modal
+                        onClickOther
+                        size={[600, null]}
+                        title="Conferma acquisto"
+                        render={({ close }) => <ModalConfirm close={close} />}
+                      >
+                        <Button
+                          kind="primary"
+                          icon="check-circular"
+                          iconSize={theme.spaces.space4}
+                          label="SELEZIONA"
+                        />
+                      </Modal>
                       <Button kind="ghost" onClick={scrollToMap}>
                         <Icon name="pin-map-fill" size={theme.spaces.space4} />
                       </Button>
-                      <Button kind="ghost">
-                        <Icon name="share" size={theme.spaces.space4} />
-                      </Button>
+                      <Modal
+                        className="modal-share"
+                        onClickOther
+                        size={[600, null]}
+                        title="Condivi con"
+                        render={({ close }: any) => (
+                          <ModalShare close={close} />
+                        )}
+                      >
+                        <Button kind="ghost">
+                          <Icon name="share" size={theme.spaces.space4} />
+                        </Button>
+                      </Modal>
                       <Dropdown
                         fullWidth={false}
                         includeTarget={true}
@@ -123,6 +219,14 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                     <li>Capacità di Improvvisazione</li>
                     <li>Orecchio Musicale</li>
                   </ul>
+                </Section>
+                <Section icon="hotelBell" title={"Servizi offerti"}>
+                  <RadioButton
+                    inline
+                    name="service"
+                    onChange={() => {}}
+                    options={services}
+                  />
                 </Section>
                 <Section
                   reference={refMap}
@@ -185,6 +289,53 @@ const Section = ({ reference, icon, title, content, children }: any) => {
     </SectionStyle>
   );
 };
+
+const ModalConfirm = ({ close, data }: any) => {
+  return (
+    <StyledModal>
+      <div className="description">
+        <p>Confermi di voler acquistare?</p>
+      </div>
+      <div className="action">
+        <Button fluid kind="error" onClick={close}>
+          Chiudi
+        </Button>
+        <Button fluid kind="success" onClick={close}>
+          Confermo
+        </Button>
+      </div>
+    </StyledModal>
+  );
+};
+
+const ModalShare = ({ close }: any) => {
+  return (
+    <StyledModal className="column">
+      <Button fluid kind="ghost" icon="copy" label="Copia link" />
+      <Button fluid kind="ghost" icon="facebook" label="Facebook" />
+      <Button fluid kind="error" onClick={close}>
+        Chiudi
+      </Button>
+    </StyledModal>
+  );
+};
+
+const StyledModal = styled.div`
+  padding: ${theme.spaces.space4};
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  &.column {
+    gap: ${theme.spaces.space3};
+    padding: ${theme.spaces.space2} ${theme.spaces.space15};
+  }
+  .action {
+    display: flex;
+    align-items: center;
+    gap: ${theme.spaces.space4};
+    margin-top: ${theme.spaces.space2};
+  }
+`;
 
 const StyledDetail = styled.div`
   .content-detail {
@@ -277,6 +428,11 @@ const SectionStyle = styled.section`
           padding: 0 ${theme.spaces.space2};
         }
       }
+      .modal-share {
+        button {
+          padding: 0 ${theme.spaces.space2};
+        }
+      }
     }
   }
   .title {
@@ -286,6 +442,17 @@ const SectionStyle = styled.section`
   }
   .content {
     font-size: ${theme.font.size.normal};
+    table {
+      border: 2px solid ${theme.colors.greyIcon};
+      border-radius: ${theme.extra.radiusBig};
+      font-family: arial, sans-serif;
+      width: 100%;
+    }
+    td,
+    th {
+      text-align: left;
+      padding: 8px;
+    }
   }
 `;
 

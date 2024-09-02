@@ -94,19 +94,7 @@ const Modal: React.FC<ModalProps> = ({
       <Destiny className={className} onClick={open} $fluid={fluid}>
         {Children.toArray(children)}
       </Destiny>
-      <AnimatePresence initial={false} mode="wait">
-        {visible && (
-          <motion.div
-            key="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderModal()}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {visible && renderModal()}
     </>
   );
 };

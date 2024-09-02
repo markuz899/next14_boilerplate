@@ -26,7 +26,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           <Button
             type="button"
             key={option.value}
-            kind={option.value === selected.value ? "primary" : "action"}
+            kind={option.value == selected.value ? "primary" : "action"}
             disabled={option.disabled}
             onClick={(e: any) => select(e, option)}
           >
@@ -47,6 +47,7 @@ const Wrapper = styled.div<{ $inline: boolean }>`
     width: 100%;
     display: flex;
     flex-direction: ${(props) => (props.$inline ? "row" : "column")};
+    flex-wrap: wrap;
     gap: ${theme.spaces.space2};
     button {
       min-width: 80px;
