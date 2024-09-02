@@ -74,10 +74,9 @@ const Header: React.FC<HeaderProps> = ({
                       return (
                         <Link legacyBehavior key={item?.path} href={item?.path}>
                           <Button
-                            round
                             size="sm"
                             kind={
-                              router.asPath === item?.path
+                              router.asPath.includes(item?.path)
                                 ? "primary"
                                 : "inverse-primary"
                             }

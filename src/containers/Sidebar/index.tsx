@@ -72,7 +72,7 @@ const Menu: React.FC<MenuProps> = ({
           }
           return (
             <Link legacyBehavior key={item?.path} href={item?.path}>
-              <a className={router.asPath == item?.path ? "active" : ""}>
+              <a className={router.asPath.includes(item?.path) ? "active" : ""}>
                 <p>{item?.text}</p>
               </a>
             </Link>
