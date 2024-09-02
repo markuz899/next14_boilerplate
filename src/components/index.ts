@@ -29,11 +29,13 @@ const Radio = dynamic(() => import("./Radio"), { loading: () => null });
 const RadioButton = dynamic(() => import("./RadioButton"), { loading: () => null });
 const RangeSlider = dynamic(() => import("./RangeSlider"), { loading: () => null });
 const Rating = dynamic(() => import("./Rating"), { loading: () => null });
+const ReadMore = dynamic(() => import("./ReadMore"), { loading: () => null });
 const ScrollToTop = dynamic(() => import("./ScrollToTop"), { loading: () => null });
 const Select = dynamic(() => import("./Select"), { loading: () => null });
 const SliderTabs = dynamic(() => import("./SliderTabs"), { loading: () => null });
 const Slideshow = dynamic(() => import("./Slideshow"), { loading: () => null });
-const Tabs = dynamic(() => import("./Tabs/intex"), { loading: () => null });
+const Tabs = dynamic(() => import("./Tabs"), { loading: () => null });
+const Table = dynamic(() => import("./Table"), { loading: () => null });
 const Textarea = dynamic(() => import("./Textarea"), { loading: () => null });
 const Toggle = dynamic(() => import("./Toggle"), { loading: () => null });
 const Tooltip = dynamic(() => import("./Tooltip"), { loading: () => null });
@@ -69,11 +71,13 @@ export {
   RadioButton,
   RangeSlider,
   Rating,
+  ReadMore,
   ScrollToTop,
   Select,
   SliderTabs,
   Slideshow,
   Tabs,
+  Table,
   Textarea,
   Toggle,
   Tooltip,

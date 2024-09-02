@@ -17,7 +17,10 @@ import {
   Modal,
   RadioButton,
   Rating,
+  ReadMore,
+  Table,
 } from "@/components";
+import { columns } from "@/config";
 
 const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
@@ -98,33 +101,75 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                     </tr>
                     <tr>
                       <td>Mattina</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>❌</td>
-                      <td>❌</td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="close" color={theme.colors.error} />
+                      </td>
+                      <td>
+                        <Icon name="close" color={theme.colors.error} />
+                      </td>
                     </tr>
                     <tr>
                       <td>Pomeriggio</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>❌</td>
-                      <td>❌</td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="close" color={theme.colors.error} />
+                      </td>
+                      <td>
+                        <Icon name="close" color={theme.colors.error} />
+                      </td>
                     </tr>
                     <tr>
                       <td>Sera</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>✅</td>
-                      <td>❌</td>
-                      <td>❌</td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="check" color={theme.colors.success} />
+                      </td>
+                      <td>
+                        <Icon name="close" color={theme.colors.error} />
+                      </td>
+                      <td>
+                        <Icon name="close" color={theme.colors.error} />
+                      </td>
                     </tr>
                   </table>
                 </Section>
@@ -194,7 +239,9 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                 <Section
                   icon="user-manual"
                   title={`Ciao! Sono ${userInfo?.name}`}
-                  content={`Laboris dolor sint esse sit tempor tempor pariatur ea laborum velit.
+                >
+                  <ReadMore
+                    text={`Laboris dolor sint esse sit tempor tempor pariatur ea laborum velit.
         Sint non nulla pariatur eu. Ea magna est proident cupidatat consequat do
         velit deserunt labore exercitation eiusmod sint dolore ad. Sunt elit
         deserunt reprehenderit ut cupidatat est anim eiusmod do aute adipisicing
@@ -207,7 +254,8 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
         fugiat. Sint cupidatat ipsum officia sunt qui culpa officia. Aute dolor
         sint deserunt tempor est. Ad duis pariatur eiusmod sint ea fugiat. Enim
         et et reprehenderit culpa eiusmod.`}
-                />
+                  />
+                </Section>
                 <Section
                   icon="folder-document"
                   title={"Esperienza"}
