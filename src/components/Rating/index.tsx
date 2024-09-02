@@ -4,6 +4,7 @@ import theme from "@/theme";
 import Icon from "../Icon";
 
 export interface RatingProps {
+  className?: string;
   rate?: number;
   disable?: boolean;
   numberStar?: number;
@@ -12,6 +13,7 @@ export interface RatingProps {
 }
 
 const Rating = ({
+  className,
   rate,
   disable,
   numberStar = 5,
@@ -33,7 +35,7 @@ const Rating = ({
   };
 
   return (
-    <ContentRating $disable={disable}>
+    <ContentRating className={className || ""} $disable={disable}>
       {[...Array(totalStars)].map((star, index) => {
         const currentRating: any = index + 1;
 

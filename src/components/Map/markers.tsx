@@ -46,8 +46,17 @@ const fetchIcon = (count: any, size: any) => {
   return icons[count];
 };
 
-const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
-  const [selectedMarker, setSelectedMarker] = useState<any>();
+const Markers = ({
+  options,
+  zoom,
+  hover,
+  isSmall = false,
+  onChange,
+  mini,
+  disabled,
+  selected,
+}: any) => {
+  const [selectedMarker, setSelectedMarker] = useState<any>(selected);
   const [hoverMarker, setHoverMarker] = useState<any>(hover);
   const [bounds, setBounds] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState<any>(zoom);
@@ -211,14 +220,14 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
         }
 
         const initColor: any = {
-          1: `static/pin/gBlue.svg`,
-          2: `static/pin/gBlue.svg`,
-          3: `static/pin/gBlue.svg`,
-          4: `static/pin/gBlue.svg`,
-          5: `static/pin/gBlue.svg`,
-          active: `static/pin/gRed.svg`,
-          hover: `static/pin/gGreen.svg`,
-          shadow: `static/pin/gBlack.svg`,
+          1: `../static/pin/gBlue.svg`,
+          2: `../static/pin/gBlue.svg`,
+          3: `../static/pin/gBlue.svg`,
+          4: `../static/pin/gBlue.svg`,
+          5: `../static/pin/gBlue.svg`,
+          active: `../static/pin/gRed.svg`,
+          hover: `../static/pin/gGreen.svg`,
+          shadow: `../static/pin/gBlack.svg`,
         };
 
         const customMarkers = new Icon({
@@ -258,6 +267,32 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
           }
         };
 
+        const renderCircle = () => {
+          if (range && selectedMarker?.id == id && showCircle) {
+            return (
+              <LayerGroup>
+                <Circle
+                  center={[latitude, longitude]}
+                  radius={range * 100}
+                  pathOptions={{ color: "#3388ff", fillColor: "blue" }}
+                />
+              </LayerGroup>
+            );
+          } else if (range && selected?.id == id) {
+            return (
+              <LayerGroup>
+                <Circle
+                  center={[latitude, longitude]}
+                  radius={range * 100}
+                  pathOptions={{ color: "#3388ff", fillColor: "blue" }}
+                />
+              </LayerGroup>
+            );
+          } else {
+            return null;
+          }
+        };
+
         return (
           <Marker
             key={`marker-${name}`}
@@ -268,15 +303,17 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
             icon={getIcon()}
             eventHandlers={{
               click: () => {
-                handleMarkerClick({
-                  ...cluster.properties,
-                  position: [latitude, longitude],
-                  isInternal: true,
-                });
+                if (!disabled) {
+                  handleMarkerClick({
+                    ...cluster.properties,
+                    position: [latitude, longitude],
+                    isInternal: true,
+                  });
+                }
               },
             }}
           >
-            {!isSmall && name && (
+            {!isSmall && !disabled && name && (
               <CustomPopup
                 autoClose
                 closeOnEscapeKey
@@ -288,19 +325,11 @@ const Markers = ({ options, zoom, hover, isSmall = false, onChange }: any) => {
                 <Card option={cluster.properties} mini={isSmall} />
               </CustomPopup>
             )}
-            {range && selectedMarker?.id === id && showCircle && (
-              <LayerGroup>
-                <Circle
-                  center={[latitude, longitude]}
-                  radius={range * 100}
-                  pathOptions={{ color: "#3388ff", fillColor: "blue" }}
-                />
-              </LayerGroup>
-            )}
-            {isSmall && selectedMarker?.id && (
+            {renderCircle()}
+            {isSmall && !disabled && selectedMarker?.id && (
               <div ref={markerHtmlPopup} className="content-popup">
                 <div className="popup-body">
-                  <Card option={selectedMarker} mini={isSmall} />
+                  <Card option={selectedMarker} mini={isSmall || mini} />
                 </div>
               </div>
             )}

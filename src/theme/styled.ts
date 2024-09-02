@@ -274,7 +274,7 @@ export const ContainerDetail = styled.div`
   }
 `;
 
-export const ContentDetail = styled(ContainerDetail)<{ noMargin?: boolean }>`
+export const ContentDetail = styled(Container)<{ noMargin?: boolean }>`
   ${(p) => (p.noMargin ? "max-width: 100%" : "max-width: 1300px")};
   ${(p) => (p.noMargin ? "margin: 0" : "margin: 0 auto")};
   width: 100%;
@@ -296,90 +296,6 @@ export const ContentDetail = styled(ContainerDetail)<{ noMargin?: boolean }>`
   }
 `;
 
-export const StyledDetail = styled.div`
-  .content-detail {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    .content-img {
-      width: 100%;
-      img {
-        width: 100%;
-        max-width: 500px;
-        object-fit: cover;
-      }
-    }
-    .content-info {
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      .row {
-        display: flex;
-        align-items: center;
-        margin-bottom: ${theme.spaces.space3};
-        text-align: left;
-        &:first-of-type {
-          margin-bottom: 0;
-        }
-        p {
-          color: ${({ theme }) => theme.text};
-          font-size: ${theme.font.size.tiny};
-        }
-        .info {
-          &.device {
-            font-size: ${theme.font.size.large};
-          }
-          &.price {
-            font-size: ${theme.font.size.large};
-          }
-          span {
-            color: ${theme.colors.error};
-          }
-        }
-        &.justify {
-          justify-content: space-between;
-          margin-bottom: ${theme.spaces.space2};
-        }
-        &.center {
-          margin-bottom: 0;
-          justify-content: center;
-          p {
-            margin-left: ${theme.spaces.space2};
-          }
-        }
-        &.action {
-          width: 100%;
-          margin-top: ${theme.spaces.space3};
-          margin-bottom: 0;
-          display: flex;
-          flex-direction: column;
-          button {
-            transition: none;
-            margin-bottom: ${theme.spaces.space2};
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: ${theme.breakpoints.mobile}) {
-    .content-detail {
-      padding: 0 ${theme.spaces.space4} ${theme.spaces.space4};
-      .content-img {
-        width: 100%;
-      }
-      .content-info {
-        margin-top: 0;
-        .row {
-          p {
-            font-size: ${theme.font.size.mini};
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const Column = styled.div<{ cols: number | any }>`
   display: flex;
   flex-flow: row wrap;
@@ -387,6 +303,7 @@ export const Column = styled.div<{ cols: number | any }>`
   flex: 0 0 ${({ cols }) => setCols(cols)};
   width: ${({ cols }) => setCols(cols)};
   padding: ${theme.spaces.space2};
+  height: 100%;
   @media only screen and (max-width: ${theme.breakpoints.tablet}) {
     flex: 0 0 45%;
   }
