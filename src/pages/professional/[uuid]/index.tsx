@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Column, ContentDetail } from "@/theme/styled";
 import styled from "styled-components";
 import theme from "@/theme";
-import { useBreakpoints } from "@/hooks";
+import { useBreakpoints, useCopyToClipboard } from "@/hooks";
 import { useRouter } from "next/router";
 import { specialist } from "@/utils/constants";
 import {
@@ -18,9 +18,7 @@ import {
   RadioButton,
   Rating,
   ReadMore,
-  Table,
 } from "@/components";
-import { columns } from "@/config";
 
 const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
@@ -357,10 +355,47 @@ const ModalConfirm = ({ close, data }: any) => {
 };
 
 const ModalShare = ({ close }: any) => {
+  const labelButton = "Copia link";
+  const [copiedText, copyToClipboard] = useCopyToClipboard();
+  const [copied, setCopied] = useState({ label: labelButton, state: false });
+
+  useEffect(() => {
+    if (copied?.state) {
+      setTimeout(() => {
+        setCopied({ ...copied, label: labelButton, state: false });
+      }, 1500);
+    }
+  }, [copied.state]);
+
+  const handleCopy = () => {
+    copyToClipboard(location.href);
+    setCopied({ ...copied, label: "Copiato", state: true });
+  };
+
+  const handleFacebook = () => {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${location.href}`,
+      "facebook-popup",
+      "height=350,width=600"
+    );
+  };
+
   return (
     <StyledModal className="column">
-      <Button fluid kind="ghost" icon="copy" label="Copia link" />
-      <Button fluid kind="ghost" icon="facebook" label="Facebook" />
+      <Button
+        fluid
+        kind={!copied.state ? "ghost" : "action"}
+        icon="copy"
+        label={copied.label}
+        onClick={handleCopy}
+      />
+      <Button
+        fluid
+        kind="ghost"
+        icon="facebook"
+        label="Facebook"
+        onClick={handleFacebook}
+      />
       <Button fluid kind="error" onClick={close}>
         Chiudi
       </Button>
@@ -429,7 +464,7 @@ const StyledDetail = styled.div`
 
 const SectionStyle = styled.section`
   padding: ${theme.spaces.space4} 0;
-  border-bottom: 2px solid ${theme.colors.greyIcon};
+  border-bottom: 1px solid ${theme.colors.greyIcon};
   &:first-child {
     padding-top: 0;
   }
@@ -492,6 +527,7 @@ const SectionStyle = styled.section`
     table {
       border: 2px solid ${theme.colors.greyIcon};
       border-radius: ${theme.extra.radiusBig};
+      border-collapse: separate;
       font-family: arial, sans-serif;
       width: 100%;
     }
