@@ -527,7 +527,6 @@ const SectionStyle = styled.section`
     table {
       border: 2px solid ${theme.colors.greyIcon};
       border-radius: ${theme.extra.radiusBig};
-      border-collapse: separate;
       font-family: arial, sans-serif;
       width: 100%;
     }
