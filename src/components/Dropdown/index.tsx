@@ -35,12 +35,14 @@ const Dropdown: React.FC<DropdownProps> = ({
       const p: React.CSSProperties = {
         left: leftPosition || 0,
         right: undefined,
-        maxWidth,
+        // maxWidth,
       };
       if (topPosition) p.top = topPosition;
-      if (rect.x + 300 > window.innerWidth) {
-        p.left = leftPosition || 0;
-        p.right = undefined;
+      if (rect.x + 200 > window.innerWidth) {
+        // p.left = leftPosition || 0;
+        p.maxWidth = "inherit";
+        p.left = "inherit";
+        p.right = 0;
       }
       if (rect.bottom + 100 > window.innerHeight) {
         p.bottom = 30;
@@ -106,7 +108,12 @@ const Dropdown: React.FC<DropdownProps> = ({
     <Box className={className} $fluid={fullWidth} ref={target}>
       <div className="target">{renderTarget({ show, close, visible })}</div>
       {renderDropdown && (
-        <RenderDrop $visible={visible} $width={width} $fluid={fluid}>
+        <RenderDrop
+          position={position}
+          $visible={visible}
+          $width={width}
+          $fluid={fluid}
+        >
           {showArrow && <Arrow top={topPosition} />}
           <Drop ref={dropdown} position={position} size={width} $fluid={fluid}>
             {renderDropdown({ show, close, visible })}
@@ -119,10 +126,13 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 export default React.memo(Dropdown);
 
-const RenderDrop = styled.div<{
+const RenderDrop = styled.div.attrs(({ position }: any) => ({
+  style: position,
+}))<{
   $visible: boolean;
   $width: number;
   $fluid: boolean;
+  position: any;
 }>`
   position: absolute;
   visibility: ${(props) => (props.$visible ? "visible" : "hidden")};
@@ -158,6 +168,7 @@ const Drop = styled.div<{
   margin: ${theme.spaces.space3} 0;
   font-size: ${theme.font.size.tiny};
   min-width: 100%;
+  ${(props) => props.$fluid && "width: 100%;"}
   &::-webkit-scrollbar {
     display: none;
   }

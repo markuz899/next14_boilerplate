@@ -321,13 +321,12 @@ const ModalShare = ({ close }: any) => {
 };
 
 const StyledModal = styled.div`
-  padding: ${theme.spaces.space4};
   display: flex;
   flex-direction: column;
   width: 100%;
   &.column {
     gap: ${theme.spaces.space3};
-    padding: ${theme.spaces.space2} ${theme.spaces.space15};
+    padding: 0 ${theme.spaces.space15};
   }
   .action {
     display: flex;
