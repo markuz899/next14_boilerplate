@@ -32,6 +32,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   selectsMultiple = false,
   withPortal = false,
   clearable = true,
+  width = 200,
 }) => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
@@ -282,7 +283,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           renderTarget={renderTarget}
           renderDropdown={renderDropdown}
           showArrow={false}
-          width={200}
+          width={width}
           includeTarget
           leftPosition={0}
         />

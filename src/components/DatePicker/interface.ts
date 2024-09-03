@@ -22,4 +22,5 @@ export interface DatePickerProps {
   selectsMultiple?: boolean;
   withPortal?: boolean;
   clearable?: boolean;
+  width?: number;
 }

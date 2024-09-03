@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { specialist } from "@/utils/constants";
 import {
   Button,
+  DatePicker,
   Dropdown,
   Icon,
   Map,
@@ -316,10 +317,17 @@ export async function getServerSideProps(ctx: { req: any; query: any }) {
 
 export default WithAuth(React.memo(ProfessionalDetail));
 
-const Section = ({ reference, icon, title, content, children }: any) => {
+const Section = ({
+  className,
+  reference,
+  icon,
+  title,
+  content,
+  children,
+}: any) => {
   useEffect(() => {}, []);
   return (
-    <SectionStyle ref={reference}>
+    <SectionStyle className={className ? className : null} ref={reference}>
       <div className="title">
         {icon && (
           <Icon
@@ -341,6 +349,15 @@ const ModalConfirm = ({ close, data }: any) => {
     <StyledModal>
       <div className="description">
         <p>Confermi di voler acquistare?</p>
+      </div>
+      <div className="content-picker">
+        <DatePicker
+          clearable
+          placeholder="Seleziona la data"
+          className="picker"
+          withPortal={true}
+          onChange={(d: any) => console.log(d)}
+        />
       </div>
       <div className="action">
         <Button fluid kind="error" onClick={close}>
