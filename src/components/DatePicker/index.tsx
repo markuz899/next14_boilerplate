@@ -11,6 +11,7 @@ import { formatDate } from "@/utils/utils";
 import { Modal } from "..";
 
 const DatePicker: React.FC<DatePickerProps> = ({
+  defaultValue,
   start,
   placeholder = "Seleziona data",
   topPlaceholder,
@@ -63,6 +64,23 @@ const DatePicker: React.FC<DatePickerProps> = ({
     }
   }, [start, end]);
 
+  useEffect(() => {
+    if (defaultValue) {
+      if (range) {
+        const [day, month, year] = defaultValue[0].split("/");
+        const [dayEnd, monthEnd, yearEnd] = defaultValue[1].split("/");
+        const dataStart = new Date(`${month}/${day}/${year}`);
+        const dataEnd = new Date(`${monthEnd}/${dayEnd}/${yearEnd}`);
+        setStartDate(dataStart);
+        setEndDate(dataEnd);
+      } else {
+        const [day, month, year] = defaultValue.split("/");
+        const data = new Date(`${month}/${day}/${year}`);
+        setStartDate(data);
+      }
+    }
+  }, [defaultValue]);
+
   const select = (value: any, callback?: () => void) => {
     if (onChange) {
       if (range) {
@@ -73,8 +91,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
           onChange({
             name,
             value: {
-              start: formatDate(start, false, false),
-              end: formatDate(end, false, false),
+              start: formatDate(start, false, showTimeSelect),
+              end: formatDate(end, false, showTimeSelect),
             },
           });
           setWarning(false);
@@ -90,7 +108,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
       } else {
         onChange({
           name,
-          value: value ? formatDate(value, false, false) : null,
+          value: value ? formatDate(value, false, showTimeSelect) : null,
         });
         setStartDate(value);
         setSelectedDates([]);
@@ -101,7 +119,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
   const onChangeSelection = (dates: any) => {
     setSelectedDates(dates);
-    const many = dates.map((el: any) => formatDate(el, false, false));
+    const many = dates.map((el: any) => formatDate(el, false, showTimeSelect));
     onChange &&
       onChange({
         name,
@@ -125,7 +143,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
       return `${s} - ${e}`;
     } else if (selectsMultiple) {
       const many = selectedDates?.map((el: any) =>
-        formatDate(el, false, false)
+        formatDate(el, false, showTimeSelect)
       );
       if (many[0]) {
         return `${many[0]} +${many.length}`;
@@ -307,6 +325,7 @@ const CalendarContainerStyled = styled(CalendarContainer)<{
   &.react-datepicker {
     width: 100%;
     border: ${(p) => (p.$withPortal ? "none" : "inherit")};
+    display: flex;
     .react-datepicker__month-container {
       width: 100%;
     }

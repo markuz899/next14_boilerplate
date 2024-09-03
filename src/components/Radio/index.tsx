@@ -42,6 +42,7 @@ const Radio: React.FC<RadioProps> = ({
           <label key={`${option.label}`}>
             <input type="radio" name={name} value={option.value} />
             <Option
+              $isError={isError}
               onClick={(e) => handleOnClick(e, option.value)}
               active={state === option.value ? "si" : undefined}
               disabled={disabled}
@@ -91,14 +92,17 @@ const Options = styled.div<{ $inline: any; $isError: boolean | undefined }>`
   }
 `;
 
-const Option = styled.div<{ active: any; disabled: boolean }>`
+const Option = styled.div<{
+  active: any;
+  disabled: boolean;
+  $isError: boolean;
+}>`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   .selector {
     background: ${({ disabled }) =>
       disabled ? theme.colors.greyIcon : theme.colors.white};
-    border: 1px solid ${theme.colors.primary};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,7 +111,11 @@ const Option = styled.div<{ active: any; disabled: boolean }>`
     border-radius: 50%;
     border: 2px solid
       ${(props) =>
-        props.active ? theme.colors.primary : theme.colors.greyIcon};
+        props.$isError
+          ? theme.colors.error
+          : props.active
+          ? theme.colors.primary
+          : theme.colors.greyIcon};
     &:hover {
       opacity: 0.8;
     }

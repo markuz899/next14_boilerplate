@@ -1,8 +1,9 @@
 import theme from "@/theme";
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useEffect } from "react";
 import styled from "styled-components";
 import { RadioButtonProps, OptionProps } from "./interface";
 import { Button } from "..";
+import Icon from "../Icon";
 
 const RadioButton: React.FC<RadioButtonProps> = ({
   options,
@@ -10,23 +11,32 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   className,
   name = "radio-button",
   inline = true,
+  defaultValue,
+  isError = false,
 }) => {
-  const initialValue = options.find((item) => item.checked) || options[0];
-  const [selected, setValue] = useState<OptionProps>(initialValue);
+  const initialValue = options.find((item) => item.checked);
+  const [selected, setValue] = useState<any>(initialValue || null);
 
-  const select = (e: MouseEvent<HTMLButtonElement>, option: OptionProps) => {
+  useEffect(() => {
+    if (defaultValue) {
+      let t: any = options?.find((item) => item.value.includes(defaultValue));
+      setValue(t);
+    }
+  }, [defaultValue]);
+
+  const select = (e: MouseEvent<HTMLButtonElement>, option: any) => {
     setValue(option);
     onChange({ ...option, name });
   };
 
   return (
-    <Wrapper $inline={inline} className={className}>
+    <Wrapper $inline={inline} $isError={isError} className={className}>
       <div className="content">
         {options.map((option, index) => (
           <Button
             type="button"
             key={option.value}
-            kind={option.value == selected.value ? "primary" : "action"}
+            kind={option.value == selected?.value ? "primary" : "action"}
             disabled={option.disabled}
             onClick={(e: any) => select(e, option)}
           >
@@ -40,7 +50,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 
 export default RadioButton;
 
-const Wrapper = styled.div<{ $inline: boolean }>`
+const Wrapper = styled.div<{ $inline: boolean; $isError: boolean }>`
   width: 100%;
   .content {
     margin: 0 auto;
@@ -51,6 +61,8 @@ const Wrapper = styled.div<{ $inline: boolean }>`
     gap: ${theme.spaces.space2};
     button {
       min-width: 80px;
+      border-color: ${({ $isError }) =>
+        $isError ? theme.colors.error : "inherit"};
     }
   }
 `;

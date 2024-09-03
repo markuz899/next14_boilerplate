@@ -1,5 +1,6 @@
 // DatePicker.interface.ts
 export interface DatePickerProps {
+  defaultValue?: any;
   label?: string;
   placeholder?: string;
   topPlaceholder?: string;

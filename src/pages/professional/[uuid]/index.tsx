@@ -20,6 +20,12 @@ import {
   Rating,
   ReadMore,
 } from "@/components";
+import {
+  defaultValues,
+  inputForm,
+  validation,
+} from "@/config/validation/order";
+import { useForm } from "react-hook-form";
 
 const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
   const { isSmall } = useBreakpoints();
@@ -33,7 +39,6 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
     {
       label: "VALUTAZIONE STANDARD (20€)",
       value: "VALUTAZIONE STANDARD",
-      checked: true,
     },
     {
       label: "VALUTAZIONE E TRASPORTO (40€)",
@@ -42,7 +47,44 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
     { label: "SMONTO RIMONTO (30€)", value: "SMONTO RIMONTO" },
   ];
 
-  useEffect(() => {}, []);
+  const {
+    register,
+    setValue,
+    getValues,
+    trigger,
+    unregister,
+    setError,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+  });
+
+  useEffect(() => {
+    Object.keys(inputForm).forEach((k: any) => {
+      register(k, validation[k]);
+    });
+    return () => {
+      Object.keys(inputForm).forEach((k: any) => {
+        unregister(k);
+      });
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  const handleChange = (data: { name: string; value: string }) => {
+    const { name, value } = data;
+    setValue(name, value);
+    trigger(name);
+  };
+
+  const handleSubmit = async () => {
+    const data = getValues();
+    const isValid = await trigger();
+    console.log("form", data);
+    if (isValid) {
+    }
+  };
 
   const scrollToMap = () => {
     if (refMap.current) {
@@ -202,7 +244,16 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                         size={[600, null]}
                         title="Conferma acquisto"
                         render={({ close }) => (
-                          <ModalConfirm close={close} services={services} />
+                          <ModalConfirm
+                            close={close}
+                            services={services}
+                            form={{
+                              errors,
+                              getValues,
+                              handleChange,
+                              handleSubmit,
+                            }}
+                          />
                         )}
                       >
                         <Button
@@ -273,8 +324,9 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                 <Section icon="hotelBell" title={"Servizi offerti"}>
                   <RadioButton
                     inline
-                    name="service"
-                    onChange={() => {}}
+                    name={inputForm.service}
+                    defaultValue={getValues(inputForm.service) || null}
+                    onChange={handleChange}
                     options={services}
                   />
                 </Section>
@@ -347,28 +399,35 @@ const Section = ({
   );
 };
 
-const ModalConfirm = ({ close, data, services }: any) => {
+const ModalConfirm = ({ close, data, services, form }: any) => {
+  const { errors, getValues, handleChange, handleSubmit } = form;
   return (
     <StyledModal className="order">
       <div className="content-order">
         <DatePicker
           clearable
+          showTimeSelect
+          name={inputForm.data}
           placeholder="Seleziona la data"
           className="picker"
-          onChange={(d: any) => console.log(d)}
+          onChange={handleChange}
+          defaultValue={getValues(inputForm.data)}
+          isError={!!errors[inputForm.data]}
         />
         <RadioButton
           inline={false}
-          name="service"
-          onChange={() => {}}
+          name={inputForm.service}
+          onChange={handleChange}
           options={services}
+          defaultValue={getValues(inputForm.service)}
+          isError={!!errors[inputForm.service]}
         />
       </div>
       <div className="action">
         <Button fluid kind="error" onClick={close}>
           Chiudi
         </Button>
-        <Button fluid kind="success" onClick={close}>
+        <Button fluid kind="success" onClick={handleSubmit}>
           Confermo
         </Button>
       </div>
