@@ -413,6 +413,11 @@ const ModalConfirm = ({ close, data, services, form }: any) => {
           onChange={handleChange}
           defaultValue={getValues(inputForm.data)}
           isError={!!errors[inputForm.data]}
+          excludeDates={[
+            new Date("09/03/2024"),
+            new Date("09/04/2024"),
+            new Date("09/05/2024"),
+          ]}
         />
         <RadioButton
           inline={false}

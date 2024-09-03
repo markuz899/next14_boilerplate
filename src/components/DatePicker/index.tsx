@@ -330,6 +330,11 @@ const CalendarContainerStyled = styled(CalendarContainer)<{
       width: 100%;
     }
   }
+  .react-datepicker__day--excluded {
+    color: ${theme.colors.error};
+    background: ${theme.colors.greyIcon};
+    border-radius: ${theme.extra.radiusBig};
+  }
   .react-datepicker__month-container {
     width: 100%;
   }
@@ -348,6 +353,9 @@ const CalendarContainerStyled = styled(CalendarContainer)<{
     color: ${theme.colors.dark};
     border: 1px solid ${theme.colors.primary};
     border-radius: ${theme.extra.radiusBig};
+    &.react-datepicker__day--excluded {
+      color: ${theme.colors.error};
+    }
     &.react-datepicker__day--selected {
       color: ${theme.colors.white};
     }
