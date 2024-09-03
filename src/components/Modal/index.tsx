@@ -20,6 +20,7 @@ const Modal: React.FC<ModalProps> = ({
   fullScreen,
   rightScreen,
   fluid,
+  disableOverflow = false
 }) => {
   const [visible, setVisible] = useState(isVisible);
   const overlay = useRef<HTMLDivElement>(null);
@@ -70,6 +71,7 @@ const Modal: React.FC<ModalProps> = ({
             $noTitle={noTitle}
             rightScreen={rightScreen}
             $fullScreen={fullScreen}
+            $disableOverflow={disableOverflow}
           >
             {!noTitle && (
               <Header>
@@ -183,7 +185,7 @@ const Content = styled.div<ModalContentProps>`
   align-self: center;
   flex-basis: auto;
   z-index: ${theme.zIndex.zIndex1};
-  overflow: scroll;
+  overflow: ${(props) => (props.$disableOverflow ? "none" : "scroll")};
   ${(p) => p.$fullScreen && fullContent};
   ${(p) => (p.rightScreen ? rightMode : normalMode)};
   .img {

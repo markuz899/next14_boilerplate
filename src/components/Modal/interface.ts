@@ -12,6 +12,7 @@ export interface ModalProps {
   fullScreen?: boolean;
   rightScreen?: boolean;
   fluid?: boolean;
+  disableOverflow?: boolean
 }
 
 export interface ModalRootProps {
@@ -25,4 +26,5 @@ export interface ModalContentProps {
   $noTitle?: boolean;
   $fullScreen?: boolean;
   rightScreen?: boolean;
+  $disableOverflow?: boolean
 }

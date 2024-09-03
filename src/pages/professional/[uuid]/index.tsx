@@ -198,9 +198,12 @@ const ProfessionalDetail = ({ global, query }: GlobalPageProps) => {
                     <div className="action">
                       <Modal
                         onClickOther
+                        disableOverflow
                         size={[600, null]}
                         title="Conferma acquisto"
-                        render={({ close }) => <ModalConfirm close={close} />}
+                        render={({ close }) => (
+                          <ModalConfirm close={close} services={services} />
+                        )}
                       >
                         <Button
                           kind="primary"
@@ -344,19 +347,21 @@ const Section = ({
   );
 };
 
-const ModalConfirm = ({ close, data }: any) => {
+const ModalConfirm = ({ close, data, services }: any) => {
   return (
-    <StyledModal>
-      <div className="description">
-        <p>Confermi di voler acquistare?</p>
-      </div>
-      <div className="content-picker">
+    <StyledModal className="order">
+      <div className="content-order">
         <DatePicker
           clearable
           placeholder="Seleziona la data"
           className="picker"
-          withPortal={true}
           onChange={(d: any) => console.log(d)}
+        />
+        <RadioButton
+          inline={false}
+          name="service"
+          onChange={() => {}}
+          options={services}
         />
       </div>
       <div className="action">
@@ -427,6 +432,13 @@ const StyledModal = styled.div`
   &.column {
     gap: ${theme.spaces.space3};
     padding: 0 ${theme.spaces.space15};
+  }
+  &.order {
+    .content-order {
+      display: flex;
+      flex-direction: column;
+      gap: ${theme.spaces.space2};
+    }
   }
   .action {
     display: flex;
