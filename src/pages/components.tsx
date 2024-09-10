@@ -475,7 +475,22 @@ const Components = ({ global }: GlobalPageProps) => {
             onChange={(d: any) => console.log(d)}
             clearable
           />
-          <NewDatePicker onChange={(d: any) => console.log("new picker", d)} />
+        </Section>
+        <Section title="New Datepicker">
+          <NewDatePicker
+            className="mt-6"
+            onChange={(d: any) => console.log("new picker", d)}
+          />
+          <NewDatePicker
+            className="mt-6"
+            mode="multiple"
+            onChange={(d: any) => console.log("new picker", d)}
+          />
+          <NewDatePicker
+            className="mt-6"
+            mode="range"
+            onChange={(d: any) => console.log("new picker", d)}
+          />
         </Section>
         <Section title="Modal">
           <Modal

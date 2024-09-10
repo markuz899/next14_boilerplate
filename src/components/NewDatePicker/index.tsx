@@ -28,18 +28,26 @@ interface NewDatePickerProps {
   readOnly?: boolean;
   name?: string;
   onChange?: any;
+  excludeDates?: any;
+  hidden?: any;
+  startMonth?: any;
+  endMonth?: any;
 }
 
 function NewDatePicker({
   className,
   disabled,
-  mode = "range",
-  excludeDisabled,
+  mode = "single",
+  excludeDisabled = true,
   min,
   max,
   readOnly = false,
   name = "datepicker",
   onChange,
+  excludeDates,
+  hidden,
+  startMonth,
+  endMonth,
 }: NewDatePickerProps) {
   const [onlyRead, setOnlyRead] = useState(readOnly);
   const [selected, setSelected] = useState<Date>();
@@ -60,6 +68,11 @@ function NewDatePicker({
   const handleRangeSelection = useCallback(
     (date: { from: Date; to?: Date }, close?: any) => {
       setRangeSelected(date);
+      if (!date) {
+        setInputValue(null);
+        onChange && onChange({ name, value: null });
+        return;
+      }
       onChange &&
         onChange({
           name,
@@ -75,6 +88,9 @@ function NewDatePicker({
   // multiple handler
   const handleMultiSelection = useCallback((date: Date[], close?: any) => {
     setMultiSelected(date);
+    if (!date.length) {
+      setInputValue(null);
+    }
     if (onChange) {
       onChange({
         name,
@@ -87,7 +103,7 @@ function NewDatePicker({
   // const handleDayPickerSelection = useCallback((date: Date, close?: any) => {
   //   if (!date) {
   //     setSelected(undefined);
-  //     setInputValue("");
+  //     setInputValue(null);
   //   } else {
   //     setSelected(date);
   //     setMonth(date);
@@ -98,6 +114,12 @@ function NewDatePicker({
 
   const handleDayPickerSelection = (date: Date, close?: any) => {
     const time = timeRef?.current?.defaultValue;
+    if (!date) {
+      setSelected(date);
+      setInputValue(null);
+      onChange && onChange({ name, value: null });
+      return;
+    }
     if (!time) {
       setSelected(date);
       setInputValue(format(date, FORMAT_DATA));
@@ -188,7 +210,7 @@ function NewDatePicker({
         : format(multiSelected[0], FORMAT_DATA);
     }
     return inputValue;
-  }, [mode, rangeSelected, multiSelected, inputValue]);
+  }, [mode, selected, rangeSelected, multiSelected, inputValue]);
 
   const RenderFooter = () => {
     const handleClick = () => {
@@ -239,13 +261,16 @@ function NewDatePicker({
         <PickerStyle
           locale={it}
           mode={mode}
-          disabled={disabled}
+          disabled={excludeDates}
           captionLayout="dropdown"
           month={month}
           onMonthChange={setMonth}
           excludeDisabled={excludeDisabled}
           min={min}
           max={max}
+          hidden={hidden}
+          startMonth={startMonth}
+          endMonth={endMonth}
           onSelect={(date: any) => handling(date, close)}
           selected={
             mode === "single"
