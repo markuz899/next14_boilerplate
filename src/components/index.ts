@@ -40,6 +40,7 @@ const Textarea = dynamic(() => import("./Textarea"), { loading: () => null });
 const Toggle = dynamic(() => import("./Toggle"), { loading: () => null });
 const Tooltip = dynamic(() => import("./Tooltip"), { loading: () => null });
 const WordChanger = dynamic(() => import("./WordChanger"), { loading: () => null });
+const NewDatePicker = dynamic(() => import("./NewDatePicker"), { loading: () => null });
 
 export {
   Accordion,
@@ -81,5 +82,6 @@ export {
   Textarea,
   Toggle,
   Tooltip,
-  WordChanger
+  WordChanger,
+  NewDatePicker
 };

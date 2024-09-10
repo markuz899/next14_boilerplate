@@ -24,6 +24,7 @@ import {
   MarkersAppointment,
   Modal,
   MultirangeSlider,
+  NewDatePicker,
   Popover,
   QuantitySelect,
   Radio,
@@ -474,6 +475,7 @@ const Components = ({ global }: GlobalPageProps) => {
             onChange={(d: any) => console.log(d)}
             clearable
           />
+          <NewDatePicker onChange={(d: any) => console.log("new picker", d)} />
         </Section>
         <Section title="Modal">
           <Modal

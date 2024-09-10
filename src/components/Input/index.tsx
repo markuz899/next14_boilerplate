@@ -138,7 +138,7 @@ const Input = forwardRef<InputRef, InputProps>(
     }
 
     let cleared =
-      clearable && state.length ? (
+      clearable && state?.length ? (
         <After className="cursor-pointer" onClick={clearInput}>
           <Icon
             name={"close-circular"}
