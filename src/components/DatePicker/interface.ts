@@ -1,27 +1,23 @@
-// DatePicker.interface.ts
 export interface DatePickerProps {
+  className?: string;
+  disabled?: boolean;
+  mode?: any;
   defaultValue?: any;
-  label?: string;
-  placeholder?: string;
-  topPlaceholder?: string;
-  onChange?: any;
+  excludeDisabled?: boolean;
+  min?: any;
+  max?: any;
+  readOnly?: boolean;
   name?: string;
+  onChange?: any;
+  excludeDates?: any;
+  hidden?: any;
+  startMonth?: any;
+  endMonth?: any;
+  clearable?: boolean;
+  range?: boolean;
+  placeholder?: string;
   isError?: boolean;
   message?: string;
-  showTimeSelect?: boolean;
-  className?: string;
-  maxDate?: Date;
-  minDate?: Date;
-  range?: any;
-  start?: string;
-  end?: string;
-  disabled?: boolean;
-  includeDates?: any[];
-  excludeDates?: any[];
-  includeDateIntervals?: any[];
-  excludeDateIntervals?: any[];
-  selectsMultiple?: boolean;
-  withPortal?: boolean;
-  clearable?: boolean;
-  width?: number;
+  hint?: string;
+  withTime?: boolean;
 }
