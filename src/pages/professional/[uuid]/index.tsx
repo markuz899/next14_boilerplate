@@ -406,7 +406,6 @@ const ModalConfirm = ({ close, data, services, form }: any) => {
       <div className="content-order">
         <DatePicker
           clearable
-          showTimeSelect
           name={inputForm.data}
           placeholder="Seleziona la data"
           className="picker"

@@ -1,311 +1,412 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import theme from "@/theme";
+import {
+  ChangeEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
+import styled, { useTheme } from "styled-components";
+import { it } from "date-fns/locale";
 import Dropdown from "../Dropdown";
 import Input from "../Input";
-import ReactDatePicker, { CalendarContainer } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { it } from "date-fns/locale";
+import { format, parse, isValid, setHours, setMinutes } from "date-fns";
+import Button from "../Button";
 import { DatePickerProps } from "./interface";
-import { formatDate } from "@/utils/utils";
-import { Modal } from "..";
+import Icon from "../Icon";
+import theme from "@/theme";
+
+const FORMAT_DATA = "dd/MM/yyyy";
 
 const DatePicker: React.FC<DatePickerProps> = ({
+  className,
+  disabled,
+  mode = "single",
   defaultValue,
-  start,
-  placeholder = "Seleziona data",
-  topPlaceholder,
+  excludeDisabled = true,
+  min,
+  max,
+  readOnly = false,
+  name = "datepicker",
   onChange,
+  excludeDates,
+  hidden,
+  startMonth,
+  endMonth,
+  placeholder = "GG/MM/AAAA",
   isError,
   message,
-  showTimeSelect = false,
-  className,
-  maxDate,
-  minDate,
-  range = false,
-  name = range ? "datepicker-range" : "datepicker",
-  end,
-  disabled = false,
-  includeDates,
-  excludeDates,
-  includeDateIntervals,
-  excludeDateIntervals,
-  selectsMultiple = false,
-  withPortal = false,
-  clearable = true,
-  width = 200,
+  hint,
+  withTime = true,
 }) => {
-  const [startDate, setStartDate] = useState<any>();
-  const [endDate, setEndDate] = useState<any>();
-  const [isWarning, setWarning] = useState<any>(false);
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [onlyRead, setOnlyRead] = useState(readOnly);
+  const [selected, setSelected] = useState<Date | undefined>(defaultValue);
+  const [multiSelected, setMultiSelected] = useState<any>([]);
+  const [rangeSelected, setRangeSelected] = useState<any>();
+  const [inputValue, setInputValue] = useState<any>("");
+  const [month, setMonth] = useState<any>();
+  const [timeValue, setTimeValue] = useState<string>();
+  const timeRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (range) {
-      if (start && end) {
-        const [day, month, year] = start.split("/");
-        const [dayEnd, monthEnd, yearEnd] = end.split("/");
-        const dataStart = new Date(`${month}/${day}/${year}`);
-        const dataEnd = new Date(`${monthEnd}/${dayEnd}/${yearEnd}`);
-        setStartDate(dataStart);
-        setEndDate(dataEnd);
-      } else {
-        setStartDate(null);
-        setEndDate(null);
-      }
-    } else {
-      if (start) {
-        const [day, month, year] = start.split("/");
-        const data = new Date(`${month}/${day}/${year}`);
-        setStartDate(data);
-      } else {
-        setStartDate(null);
-      }
+    if (mode == "multiple" || mode == "range") {
+      setOnlyRead(true);
     }
-  }, [start, end]);
 
-  useEffect(() => {
     if (defaultValue) {
-      if (range) {
-        const [day, month, year] = defaultValue[0].split("/");
-        const [dayEnd, monthEnd, yearEnd] = defaultValue[1].split("/");
-        const dataStart = new Date(`${month}/${day}/${year}`);
-        const dataEnd = new Date(`${monthEnd}/${dayEnd}/${yearEnd}`);
-        setStartDate(dataStart);
-        setEndDate(dataEnd);
-      } else {
-        const [day, month, year] = defaultValue.split("/");
-        const data = new Date(`${month}/${day}/${year}`);
-        setStartDate(data);
+      switch (mode) {
+        case "single":
+          // eslint-disable-next-line
+          const timeOnly = format(defaultValue, "HH:mm");
+          setTimeValue(timeOnly);
+          setSelected(defaultValue);
+          setInputValue(format(defaultValue, FORMAT_DATA));
+          break;
+        case "multiple":
+          setMultiSelected(defaultValue);
+          setInputValue(
+            defaultValue.length > 1
+              ? `${format(defaultValue[0], FORMAT_DATA)} +${
+                  defaultValue.length - 1
+                }`
+              : format(defaultValue[0], FORMAT_DATA)
+          );
+          break;
+        case "range":
+          // eslint-disable-next-line
+          const [from, to] = defaultValue;
+          setRangeSelected({ from, to });
+          setInputValue(
+            `${format(from, FORMAT_DATA)} - ${
+              to ? format(to, FORMAT_DATA) : ""
+            }`
+          );
+          break;
+        default:
+          break;
       }
     }
-  }, [defaultValue]);
+  }, [defaultValue, mode]);
 
-  const select = (value: any, callback?: () => void) => {
-    if (onChange) {
-      if (range) {
-        const [start, end] = value;
-        setStartDate(start);
-        setEndDate(end);
-        if (start && end) {
-          onChange({
-            name,
-            value: {
-              start: formatDate(start, false, showTimeSelect),
-              end: formatDate(end, false, showTimeSelect),
-            },
-          });
-          setWarning(false);
-          if (callback) callback();
-        } else if (!start && !end) {
-          onChange({
-            name,
-            value: null,
-          });
-        } else {
-          setWarning(true);
-        }
-      } else {
+  // range handler
+  const handleRangeSelection = useCallback(
+    (date: { from: Date; to?: Date }) => {
+      setRangeSelected(date);
+      if (!date) {
+        setInputValue(null);
+        onChange && onChange({ name, value: null });
+        return;
+      }
+      onChange &&
         onChange({
           name,
-          value: value ? formatDate(value, false, showTimeSelect) : null,
+          value: {
+            start: date.from ? date.from : null,
+            end: date.to ? date.to : null,
+          },
         });
-        setStartDate(value);
-        setSelectedDates([]);
-        if (callback) callback();
-      }
+    },
+    []
+  );
+
+  // multiple handler
+  const handleMultiSelection = useCallback((date: Date[]) => {
+    setMultiSelected(date);
+    if (!date.length) {
+      setInputValue(null);
     }
+    if (onChange) {
+      onChange({
+        name,
+        value: date,
+      });
+    }
+  }, []);
+
+  const handleDayPickerSelection = (date: Date, close?: () => void) => {
+    if (!date) {
+      setSelected(undefined);
+      setInputValue(null);
+      onChange?.({ name, value: null });
+      return;
+    }
+
+    const time = timeRef?.current?.defaultValue;
+    const formattedDate = format(date, FORMAT_DATA);
+    if (!time) {
+      setSelected(date);
+      setInputValue(formattedDate);
+      onChange?.({ name, value: date });
+      return;
+    }
+
+    const [hours, minutes] = time.split(":").map(Number);
+    const newSelectedDate = setHours(setMinutes(date, minutes), hours);
+
+    setSelected(newSelectedDate);
+    setMonth(newSelectedDate);
+    const formattedDateTime = format(newSelectedDate, `${FORMAT_DATA} HH:mm`);
+    setInputValue(formattedDateTime);
+    onChange?.({ name, value: date });
+
+    close?.();
   };
 
-  const onChangeSelection = (dates: any) => {
-    setSelectedDates(dates);
-    const many = dates.map((el: any) => formatDate(el, false, showTimeSelect));
+  // input handler only single mode
+  const handleInputChange = useCallback((data: any) => {
+    const { value } = data;
+    setInputValue(value);
+
+    if (value) {
+      const parsedDate = parse(value, FORMAT_DATA, new Date());
+      if (isValid(parsedDate)) {
+        setSelected(parsedDate);
+        setMonth(parsedDate);
+        onChange && onChange({ name, value: parsedDate });
+      }
+    } else {
+      setSelected(undefined);
+      onChange && onChange({ name, value: null });
+    }
+  }, []);
+
+  const handleTimeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const time = e.target.value;
+    if (!selected) {
+      setTimeValue(time);
+      return;
+    }
+    const [hours, minutes] = time.split(":").map((str) => parseInt(str, 10));
+    const newSelectedDate = setHours(setMinutes(selected, minutes), hours);
+    setSelected(newSelectedDate);
+    setInputValue(format(newSelectedDate, FORMAT_DATA));
+    setTimeValue(time);
     onChange &&
       onChange({
         name,
-        value: many,
+        value: newSelectedDate,
       });
   };
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLDivElement>,
-    { show, close }: { show: () => void; close: () => void }
-  ) => {
-    if (e.key === "Tab") close();
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") show();
-  };
-
-  const renderValue = () => {
-    if (range) {
-      const s = startDate ? formatDate(startDate, false, showTimeSelect) : "";
-      const e = endDate ? formatDate(endDate, false, showTimeSelect) : "";
-      if (!s && !e) return "";
-      return `${s} - ${e}`;
-    } else if (selectsMultiple) {
-      const many = selectedDates?.map((el: any) =>
-        formatDate(el, false, showTimeSelect)
-      );
-      if (many[0]) {
-        return `${many[0]} +${many.length}`;
+  // traffic gateway
+  const handling = useCallback(
+    (date: any, close?: () => void) => {
+      switch (mode) {
+        case "single":
+          handleDayPickerSelection(date, close);
+          break;
+        case "multiple":
+          handleMultiSelection(date);
+          break;
+        case "range":
+          handleRangeSelection(date);
+          break;
+        default:
+          break;
       }
-      return "";
-    } else {
-      const s = startDate ? formatDate(startDate, false, showTimeSelect) : "";
-      return s;
+    },
+    [mode]
+  );
+
+  const renderLabel = useMemo(() => {
+    if (mode === "range" && rangeSelected?.from) {
+      return `${format(rangeSelected.from, FORMAT_DATA)} - ${
+        rangeSelected.to ? format(rangeSelected.to, FORMAT_DATA) : ""
+      }`;
     }
+    if (mode === "multiple" && multiSelected.length) {
+      return multiSelected.length > 1
+        ? `${format(multiSelected[0], FORMAT_DATA)} +${
+            multiSelected.length - 1
+          }`
+        : format(multiSelected[0], FORMAT_DATA);
+    }
+    return inputValue;
+  }, [mode, selected, rangeSelected, multiSelected, inputValue]);
+
+  const RenderFooter = () => {
+    const handleClick = () => {
+      handleDayPickerSelection(new Date(), () => {});
+    };
+    return (
+      <Button size="sm" onClick={handleClick}>
+        Oggi
+      </Button>
+    );
   };
 
-  const renderTarget = ({
-    show,
-    close,
-  }: {
-    show: () => void;
-    close: () => void;
-  }) => (
-    <Target
-      className={className}
-      onClick={show}
-      onKeyDown={(e) => handleKeyDown(e, { show, close })}
-    >
+  const renderTarget = ({ show }: { show: () => void; close?: () => void }) => (
+    <Target className={className} onClick={show}>
       <Input
-        disabled={disabled}
-        importantDefault
-        onChange={(data: any) => select(data.value as Date)}
-        readOnly={true}
-        topPlaceholder={topPlaceholder}
+        clearable
+        readOnly={onlyRead}
         type="text"
-        name={name}
-        placeholder={placeholder}
-        defaultValue={renderValue()}
-        icon={"calendar"}
-        enableControlledInput
-        isError={isError}
-        isWarning={isWarning}
-        message={message}
         autoComplete="off"
-        clearable={clearable}
+        icon={"calendar"}
+        disabled={disabled}
+        placeholder={placeholder}
+        defaultValue={renderLabel}
+        onChange={handleInputChange}
+        isError={isError}
+        message={message}
+        hint={hint}
       />
     </Target>
   );
 
-  const ContainerPicker: React.FC<{ className?: string; children: any }> = ({
-    className,
-    children,
-  }) => {
+  const CustomDropdownNav: React.FC<any> = (props) => {
+    const propsMonths = props?.children[0].props;
+    const propsYears = props?.children[1].props;
+
+    const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      propsMonths.onChange(e);
+    };
+
+    const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      propsYears.onChange(e);
+    };
+
+    const handlePrevMonth = () => {
+      const prev = propsMonths.value;
+      propsMonths.onChange({ target: { value: prev - 1 } });
+    };
+
+    const handleNextMonth = () => {
+      const next = propsMonths.value;
+      propsMonths.onChange({ target: { value: next + 1 } });
+    };
+
     return (
-      <CalendarContainerStyled className={className} $withPortal={withPortal}>
-        {children}
-      </CalendarContainerStyled>
+      <HeaderWrapper>
+        <IconButton
+          className="datepicker__navigation"
+          onClick={handlePrevMonth}
+        >
+          <Icon
+            className="datepicker__navigation-icon"
+            name="angle-left"
+            size="18px"
+            color={theme.colors.primary}
+          />
+        </IconButton>
+        <WrapperMonthYear>
+          <Select value={propsMonths.value} onChange={handleMonthChange}>
+            {propsMonths?.options?.map((month: any) => (
+              <option
+                disabled={month.disabled}
+                key={month.value}
+                value={month.value}
+              >
+                {month.label}
+              </option>
+            ))}
+          </Select>
+          <Select value={propsYears.value} onChange={handleYearChange}>
+            {propsYears?.options.map((year: any) => (
+              <option
+                disabled={year.disabled}
+                key={year.value}
+                value={year.value}
+              >
+                {year.label}
+              </option>
+            ))}
+          </Select>
+        </WrapperMonthYear>
+        <IconButton
+          className="datepicker__navigation"
+          onClick={handleNextMonth}
+        >
+          <Icon
+            className="datepicker__navigation-icon"
+            name="angle-right"
+            size="18px"
+            color={theme.colors.primary}
+          />
+        </IconButton>
+      </HeaderWrapper>
     );
   };
 
-  const renderDropdown = ({
-    close,
-    visible,
-  }: {
-    close: () => void;
-    visible: boolean;
-  }) => {
-    return (
-      <ReactDatePicker
-        disabled={disabled}
-        locale={it}
-        includeDates={includeDates}
-        excludeDates={excludeDates}
-        excludeDateIntervals={excludeDateIntervals}
-        includeDateIntervals={includeDateIntervals}
-        calendarContainer={ContainerPicker}
-        showTimeSelect={showTimeSelect}
-        showMonthDropdown={visible ? true : false}
-        showYearDropdown={visible ? true : false}
-        scrollableYearDropdown={visible ? true : false}
-        yearDropdownItemNumber={100}
-        selectsRange={range}
-        startDate={startDate}
-        selected={startDate}
-        endDate={endDate}
-        selectsMultiple={selectsMultiple || undefined}
-        selectedDates={selectsMultiple ? selectedDates : []}
-        onChange={(value: any) =>
-          selectsMultiple ? onChangeSelection(value) : select(value, close)
-        }
-        inline
-        maxDate={maxDate}
-        minDate={minDate}
-      />
-    );
-  };
+  const renderDropdown = useCallback(
+    ({ close, visible }: { close: () => void; visible: boolean }) => (
+      <ContentPicker>
+        {mode === "single" && withTime && (
+          <ContentClock>
+            Orario:{" "}
+            <input
+              ref={timeRef}
+              type="time"
+              defaultValue={timeValue}
+              onChange={handleTimeChange}
+            />
+          </ContentClock>
+        )}
+        <PickerStyle
+          locale={it}
+          mode={mode}
+          disabled={excludeDates}
+          captionLayout="dropdown"
+          month={month}
+          onMonthChange={setMonth}
+          excludeDisabled={excludeDisabled}
+          min={min}
+          max={max}
+          hidden={hidden}
+          startMonth={startMonth}
+          endMonth={endMonth}
+          onSelect={(date: any) => handling(date, close)}
+          selected={
+            mode === "single"
+              ? selected
+              : mode === "multiple"
+              ? multiSelected
+              : rangeSelected
+          }
+          footer={mode === "single" && visible && <RenderFooter />}
+          components={{
+            DropdownNav: (props) => (
+              <CustomDropdownNav
+                {...props}
+                date={
+                  mode === "single"
+                    ? selected
+                    : mode === "multiple"
+                    ? multiSelected
+                    : rangeSelected
+                }
+              />
+            ),
+            Button: () => <div style={{ display: "none" }} />,
+          }}
+        />
+      </ContentPicker>
+    ),
+    [
+      mode,
+      disabled,
+      excludeDisabled,
+      min,
+      max,
+      selected,
+      rangeSelected,
+      multiSelected,
+      timeValue,
+    ]
+  );
 
   return (
     <>
-      {withPortal ? (
-        <Modal
-          fluid
-          onClickOther
-          noTitle
-          size={[300, 280]}
-          render={({ close }) => (
-            <ReactDatePicker
-              disabled={disabled}
-              locale={it}
-              includeDates={includeDates}
-              excludeDates={excludeDates}
-              excludeDateIntervals={excludeDateIntervals}
-              includeDateIntervals={includeDateIntervals}
-              calendarContainer={ContainerPicker}
-              showTimeSelect={showTimeSelect}
-              showMonthDropdown={true}
-              showYearDropdown={true}
-              scrollableYearDropdown={true}
-              yearDropdownItemNumber={100}
-              selectsRange={range}
-              startDate={startDate}
-              selected={startDate}
-              endDate={endDate}
-              selectsMultiple={selectsMultiple || undefined}
-              selectedDates={selectsMultiple ? selectedDates : []}
-              onChange={(value: any) =>
-                selectsMultiple
-                  ? onChangeSelection(value)
-                  : select(value, close)
-              }
-              inline
-              maxDate={maxDate}
-              minDate={minDate}
-            />
-          )}
-        >
-          <Target className={className}>
-            <Input
-              disabled={disabled}
-              importantDefault
-              onChange={(data: any) => select(data.value as Date)}
-              readOnly={true}
-              topPlaceholder={topPlaceholder}
-              type="text"
-              name={name}
-              placeholder={placeholder}
-              defaultValue={renderValue() || ""}
-              icon={"calendar"}
-              enableControlledInput
-              isError={isError}
-              isWarning={isWarning}
-              message={message}
-              autoComplete="off"
-              clearable
-            />
-          </Target>
-        </Modal>
-      ) : (
-        <Dropdown
-          renderTarget={renderTarget}
-          renderDropdown={renderDropdown}
-          showArrow={false}
-          width={width}
-          includeTarget
-          leftPosition={0}
-        />
-      )}
+      <Dropdown
+        renderTarget={renderTarget}
+        renderDropdown={renderDropdown}
+        showArrow={false}
+        includeIcon
+        includeTarget
+        leftPosition={0}
+      />
     </>
   );
 };
@@ -319,72 +420,118 @@ const Target = styled.div`
   outline: unset;
 `;
 
-const CalendarContainerStyled = styled(CalendarContainer)<{
-  $withPortal?: boolean;
-}>`
-  &.react-datepicker {
-    width: 100%;
-    border: ${(p) => (p.$withPortal ? "none" : "inherit")};
-    display: flex;
-    .react-datepicker__month-container {
-      width: 100%;
+const ContentPicker = styled.div`
+  padding: ${theme.spaces.space2};
+`;
+
+const PickerStyle = styled(DayPicker)`
+  .rdp-range_middle.rdp-selected {
+    background-color: ${theme.colors.primaryLight}40;
+  }
+  .rdp-range_start.rdp-selected {
+    background: ${`linear-gradient(90deg, transparent 50%, ${({ theme }: any) =>
+      theme.colors.primaryLight}40 50%)`};
+  }
+  .rdp-range_end.rdp-selected {
+    background: ${`linear-gradient(90deg, ${({ theme }: any) =>
+      theme.colors.primaryLight}40 50%, transparent 50%)`};
+  }
+  .rdp-range_start.rdp-selected,
+  .rdp-range_end.rdp-selected {
+    button {
+      border-color: ${theme.colors.primaryLight};
+      background-color: ${theme.colors.primary};
     }
   }
-  .react-datepicker__day--excluded {
-    color: ${theme.colors.error};
-    background: ${theme.colors.greyIcon};
-    border-radius: ${theme.extra.radiusBig};
-  }
-  .react-datepicker__month-container {
-    width: 100%;
-  }
-  .react-datepicker__header {
-    background: ${theme.colors.primary};
-    .react-datepicker__current-month {
-      color: ${theme.colors.white};
+  .rdp-selected {
+    button {
+      border-color: ${theme.colors.primary};
     }
-    .react-datepicker__day-names {
-      & > div {
-        color: ${theme.colors.white};
+  }
+  .rdp-today {
+    color: ${theme.colors.primary};
+  }
+  .rdp-caption_label {
+    svg {
+      fill: ${theme.colors.primary};
+    }
+  }
+  .rdp-day_button {
+    font-weight: 500;
+    width: 28px;
+    height: 28px;
+  }
+  .rdp-nav {
+    button {
+      svg {
+        fill: ${theme.colors.primary};
       }
     }
   }
-  .react-datepicker__day--today {
-    color: ${theme.colors.dark};
+  .rdp-month_grid {
+    width: 100%;
+    .rdp-weeks {
+      .rdp-day {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+`;
+
+const HeaderWrapper = styled.div`
+  padding: 0 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${theme.spaces.space2};
+  width: 100%;
+`;
+
+const WrapperMonthYear = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: ${theme.colors.primaryLight};
+  border: 1px solid ${theme.colors.primary};
+  border-radius: 16px;
+  padding: 8px 16px;
+  min-width: 220px;
+`;
+
+const Select = styled.select`
+  text-transform: capitalize;
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: ${theme.colors.white};
+  &:focus {
+    outline: none;
+  }
+`;
+
+const IconButton = styled.div`
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+`;
+
+const ContentClock = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: ${theme.spaces.space2};
+  padding: 0 10px;
+  input {
+    background: ${theme.colors.primaryLight};
     border: 1px solid ${theme.colors.primary};
-    border-radius: ${theme.extra.radiusBig};
-    &.react-datepicker__day--excluded {
-      color: ${theme.colors.error};
-    }
-    &.react-datepicker__day--selected {
-      color: ${theme.colors.white};
-    }
-  }
-  .react-datepicker__day--in-range {
-    &.react-datepicker__day--today {
-      color: ${theme.colors.white};
-      font-weight: bold;
-    }
-  }
-  .react-datepicker__day--keyboard-selected {
-    color: ${theme.colors.dark};
-    &:hover {
-      color: ${theme.colors.white};
-    }
-  }
-  .react-datepicker__month-read-view--selected-month {
     color: ${theme.colors.white};
-  }
-  .react-datepicker__year-read-view--selected-year {
-    color: ${theme.colors.white};
-  }
-  .react-datepicker-time__header {
-    color: ${theme.colors.white};
-  }
-  .react-datepicker__day--selected {
-    background: ${theme.colors.primary};
-  }
-  .react-datepicker__time-list-item--selected {
-    background-color: ${theme.colors.primary}!important;
+    border-radius: 16px;
+    padding: 5px 10px;
   }
 `;

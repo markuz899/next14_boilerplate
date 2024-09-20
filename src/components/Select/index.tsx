@@ -84,7 +84,7 @@ const Select: React.FC<SelectProps> = ({
       }
     }
     // eslint-disable-next-line
-  }, [defaultValues, options, disabled]);
+  }, [options]);
 
   const onSelect = (
     item: { label: string; value: string },
@@ -233,7 +233,12 @@ const Select: React.FC<SelectProps> = ({
     <Options ref={drop}>
       {filtered &&
         filtered.map((option, i) => (
-          <Row key={`${option.value}-${i}`} $multiselect={!!multiselect}>
+          <Row
+            key={`${option.value}-${i}`}
+            $multiselect={!!multiselect}
+            $active={multiselect ? values.includes(option.value) : false}
+            selected={state === option.label}
+          >
             {multiselect && (
               <Checkbox
                 checked={values.includes(option.value)}
@@ -290,13 +295,23 @@ export const Options = styled.div`
   }
 `;
 
-export const Row = styled.div<{ $multiselect: any }>`
+export const Row = styled.div<{
+  $multiselect: any;
+  selected: boolean;
+  $active: boolean;
+}>`
   cursor: pointer;
   padding: ${theme.spaces.space2};
   display: flex;
   align-items: center;
   justify-content: flex-start;
   border-bottom: 1px solid ${theme.colors.greyIcon};
+  background: ${({ $active, selected }) =>
+    $active || selected
+      ? `${theme.colors.primaryLight}`
+      : selected
+      ? "inherit"
+      : theme.colors.white};
   ${(p) => p.$multiselect && `padding: 0 ${theme.spaces.space2}`}
   &:last-child {
     border-bottom: none;
@@ -315,12 +330,12 @@ export const Option = styled.li<{
   align-items: center;
   text-align: left;
   list-style-type: none;
-  color: ${(p) =>
-    p.selected && p.$hover
+  color: ${({ selected, $hover, $active }) =>
+    selected || $active
+      ? theme.colors.white
+      : selected || $active
       ? theme.colors.primary
-      : p.selected || p.$active
-      ? theme.colors.primary
-      : p.$hover
+      : $hover
       ? theme.colors.primary
       : theme.colors.black};
   font-weight: ${(p) =>
