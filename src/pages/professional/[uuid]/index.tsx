@@ -370,7 +370,7 @@ export async function getServerSideProps(ctx: { req: any; query: any }) {
   };
 }
 
-export default WithAuth(React.memo(ProfessionalDetail));
+export default React.memo(ProfessionalDetail);
 
 const Section = ({
   className,
