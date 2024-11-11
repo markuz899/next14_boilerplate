@@ -598,6 +598,7 @@ const Components = ({ global }: GlobalPageProps) => {
           <Select
             name="city"
             onChange={() => {}}
+            enableInput
             iconBefore="search"
             topPlaceholder="Seleziona città"
             placeholder="Città"
