@@ -321,7 +321,7 @@ const Map = ({
             <TileLayer attribution="Google Maps Ibrida" url={colorMap.hybrid} />
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer name="Default">
-            <TileLayer attribution="Nearme" url={colorMap.default} />
+            <TileLayer attribution="CarFair" url={colorMap.default} />
           </LayersControl.BaseLayer>
 
           {/* <LayersControl.BaseLayer name="Leaflet">

@@ -8,6 +8,7 @@ import { LayoutProps } from "@/utils/interface";
 import { Header, Sidebar, Footer } from "..";
 import { useBreakpoints } from "@/hooks";
 import { ScrollToTop } from "@/components";
+import { SITE_NAME } from "@/utils/constants";
 
 export const Layout = ({
   children,
@@ -32,7 +33,7 @@ export const Layout = ({
   return (
     <LayoutContext.Provider value={{ menuState, setMenuState }}>
       <Head>
-        <title>{`Nearme - ${title}` || "Nearme"}</title>
+        <title>{`${SITE_NAME} - ${title || ""}`}</title>
       </Head>
       <Flex>
         {(isSmall || isMedium) && (

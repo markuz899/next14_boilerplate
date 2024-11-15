@@ -45,6 +45,10 @@ const Header: React.FC<HeaderProps> = ({
                 size={theme.spaces.space8}
                 margin="0 10px 0 0"
               />
+              <div className="agency-slogan">
+                <p>CARFAIR</p>
+                <p>Il tuo alleato per un acquisto sicuro</p>
+              </div>
             </div>
           </Link>
         </div>
@@ -165,6 +169,16 @@ const MenuContent = styled.div<{ $isSmall: boolean }>`
         width: ${theme.extra.logo};
         max-height: 100%;
         height: 100%;
+      }
+      .agency-slogan {
+        p {
+          color: ${theme.colors.primary};
+          font-size: ${theme.font.size.tiny};
+          &:first-child {
+            font-weight: bold;
+            font-size: ${theme.font.size.normal};
+          }
+        }
       }
     }
     &.isSmall {

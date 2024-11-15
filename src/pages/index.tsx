@@ -42,7 +42,6 @@ const Home = ({ global }: GlobalPageProps) => {
   }
 
   const words = [
-    "perfetto",
     "qualificato",
     "giusto",
     "specializzato",
@@ -58,7 +57,7 @@ const Home = ({ global }: GlobalPageProps) => {
           <TextBanner className="primary" color={theme.colors.primaryLight}>
             <div className="content-text-banner">
               <h2>
-                Trova il professionista{" "}
+                Trova l'esperto{" "}
                 <WordChanger
                   color={theme.colors.warning}
                   options={words}
@@ -67,10 +66,10 @@ const Home = ({ global }: GlobalPageProps) => {
                 per ogni tua esigenza, senza compromessi!
               </h2>
               <p>
-                Il nostro portale ti offre accesso immediato a una rete di
-                esperti altamente qualificati, pronti a soddisfare le tue
-                richieste in modo rapido, efficiente e sicuro. Non importa quale
-                sia la tua necessità, qui troverai sempre la persona giusta.
+                Un social network di professionisti del settore automobilistico
+                che ti aiuta a comprare in sicurezza. Trova esperti qualificati
+                che ispezionano il veicolo per te, garantendo trasparenza e
+                tranquillità in ogni acquisto.
               </p>
               <div className="content-action">
                 <Button kind="inverse-warning" label="ISCRIVITI GRATIS" />
@@ -98,16 +97,16 @@ const Home = ({ global }: GlobalPageProps) => {
               <img src="/static/img/review.svg" />
             </div>
             <div className="content-text-banner">
-              <h2>Perchè i professionisti si iscrivono</h2>
+              <h2>Perché i Professionisti Scelgono Noi</h2>
               <p>
-                Il nostro portale offre ai professionisti nuove opportunità per
-                espandere la loro carriera, lavorando con clienti di diversi
-                settori e su progetti stimolanti, il tutto comodamente dalla
-                propria area di residenza. I nostri iscritti continuano a
-                utilizzare la piattaforma perché rappresenta un modo flessibile
-                e gratificante per guadagnare, crescere professionalmente e fare
-                la differenza nella vita delle persone e delle aziende con cui
-                collaborano.
+                Il nostro portale apre nuove porte ai professionisti, offrendo
+                l'opportunità di ampliare la loro carriera collaborando con
+                clienti diversi e progetti entusiasmanti, il tutto rimanendo
+                nella propria zona di competenza. La piattaforma è apprezzata
+                perché combina flessibilità e gratificazione, permettendo di
+                guadagnare, crescere professionalmente e avere un impatto
+                positivo nella vita delle persone e delle aziende con cui
+                lavorano.
               </p>
               <div className="content-action">
                 <Button kind="inverse-primary" label="UNISCITI ALLA RETE" />
