@@ -326,6 +326,8 @@ const Select = forwardRef<any, any>(
   }
 );
 
+Select.displayName = "Select";
+
 export default React.memo(Select);
 
 export const Options = styled.div`

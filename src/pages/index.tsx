@@ -57,6 +57,7 @@ const Home = ({ global }: GlobalPageProps) => {
           <TextBanner className="primary" color={theme.colors.primaryLight}>
             <div className="content-text-banner">
               <h2>
+                {/* eslint-disable-next-line  */}
                 Trova l'esperto{" "}
                 <WordChanger
                   color={theme.colors.warning}
@@ -100,6 +101,7 @@ const Home = ({ global }: GlobalPageProps) => {
               <h2>Perché i Professionisti Scelgono Noi</h2>
               <p>
                 Il nostro portale apre nuove porte ai professionisti, offrendo
+                {/* eslint-disable-next-line  */}
                 l'opportunità di ampliare la loro carriera collaborando con
                 clienti diversi e progetti entusiasmanti, il tutto rimanendo
                 nella propria zona di competenza. La piattaforma è apprezzata
