@@ -10,12 +10,13 @@ import { cache } from "emotion";
 import { ThemeProvider } from "styled-components";
 import { AppGlobalProps } from "@/utils/interface";
 import { ToastContainer } from "react-toastify";
-import { Toast } from "@/utils/toast";
 import router from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
+import "@/services/logger";
+import "@/utils/toast";
 // import { Loader } from "@/components";
 
 const inter = Montserrat({ subsets: ["latin"] });
@@ -107,7 +108,7 @@ const App = ({
       <Provider store={reduxStore}>
         <CacheProvider value={cache}>
           <ThemeProvider theme={themeMode}>
-            <AuthProvider isAuth={authentication.isAuth}>
+            <AuthProvider isAuth={authentication.isAuth || false}>
               {componentMounted && (
                 <main style={{ height: "100%" }}>
                   <Component

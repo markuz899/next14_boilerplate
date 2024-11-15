@@ -1,6 +1,6 @@
-import { CookieManager } from "@/utils/cookie";
 import ApiRequest from "../request";
 import { AUTH_KEY } from "@/utils/constants";
+import { getCookie } from "cookies-next";
 
 class UserService {
   static async getUser(token: string) {
@@ -8,10 +8,10 @@ class UserService {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        Authorization: `Bearer ${token || CookieManager.get(AUTH_KEY)}`,
+        Authorization: `Bearer ${token || getCookie(AUTH_KEY)}`,
       },
     };
-    return await ApiRequest.get("/auth/me", options);
+    return await ApiRequest.get("/api/user/me", options);
   }
 
   static async login(payload: { username: string; password: string }) {
@@ -22,7 +22,7 @@ class UserService {
       },
       body: JSON.stringify(payload),
     };
-    return await ApiRequest.post("/auth/login", options);
+    return await ApiRequest.post("/api/auth/user/login", options);
   }
 
   static async register(payload: {}) {
@@ -33,7 +33,7 @@ class UserService {
       },
       body: JSON.stringify(payload),
     };
-    return await ApiRequest.post("/auth/user/register", options);
+    return await ApiRequest.post("/api/auth/user/register", options);
   }
 
   static async forgotPassword(payload: {}) {
@@ -44,7 +44,7 @@ class UserService {
       },
       body: JSON.stringify(payload),
     };
-    return await ApiRequest.post("/auth/user/forgot-password", options);
+    return await ApiRequest.post("/api/auth/user/forgot-password", options);
   }
 
   static async resetPassword(payload: {}) {
@@ -55,7 +55,7 @@ class UserService {
       },
       body: JSON.stringify(payload),
     };
-    return await ApiRequest.post("/auth/user/reset-password", options);
+    return await ApiRequest.post("/api/auth/user/reset-password", options);
   }
 
   static async pingo() {

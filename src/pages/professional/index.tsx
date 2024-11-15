@@ -178,7 +178,8 @@ export async function getServerSideProps(ctx: { req: any; query: any }) {
   };
 }
 
-export default React.memo(Professional);
+// export default React.memo(Professional);
+export default WithAuth(React.memo(Professional));
 
 const SwitchMobile = styled.div`
   .desktop {

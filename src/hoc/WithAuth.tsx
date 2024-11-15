@@ -1,5 +1,5 @@
 import { AUTH_KEY } from "@/utils/constants";
-import { CookieManager } from "@/utils/cookie";
+import { deleteCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { ComponentType, useEffect, useState } from "react";
 
@@ -13,11 +13,12 @@ const WithAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
     const [verified, setVerified] = useState(authentication?.isAuth);
 
     useEffect(() => {
-      const accessToken = CookieManager.get(AUTH_KEY);
+      const accessToken = getCookie(AUTH_KEY);
       const checkUser = async () => {
         if (!accessToken) {
           Router.replace("/login");
           // remove cookie AUTH_KEY
+          deleteCookie(AUTH_KEY);
         } else {
           setVerified(true);
         }

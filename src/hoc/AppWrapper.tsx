@@ -1,9 +1,10 @@
 import configureStore from "@/utils/redux/configure-store";
 import { User } from "@/services";
 import { AUTH_KEY, USER_KEY } from "@/utils/constants";
-import { CookieManager } from "@/utils/cookie";
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
 import { AppInitialProps, AppProps } from "next/app";
 import { NextPageContext } from "next/dist/shared/lib/utils";
+import { getSession } from "@/lib/get-session";
 import React from "react";
 import { Store } from "redux";
 
@@ -56,6 +57,8 @@ const AppWrapper = (App: any) => {
       const { ctx } = appContext;
       const req = ctx.req as CustomNextPageContext["req"];
       const res = ctx.res;
+      const session = await getSession(req, res);
+      session.user = session?.user || null;
 
       appContext.ctx.reduxStore = reduxStore;
       let appProps: AppInitialProps = { pageProps: {} };
@@ -65,19 +68,20 @@ const AppWrapper = (App: any) => {
         appProps = await App.getInitialProps(appContext);
       }
 
-      const authCookie = CookieManager.getSsrCookie(req, AUTH_KEY);
+      const authCookie = getCookie(AUTH_KEY, { res, req });
       if (authCookie) {
         try {
           isAuth = await User.getUser(authCookie);
           if (isAuth?.error) {
-            CookieManager.removeSsrCookie(req, res, AUTH_KEY);
-            CookieManager.removeSsrCookie(req, res, USER_KEY);
+            deleteCookie(AUTH_KEY, { res, req });
+            deleteCookie(USER_KEY, { res, req });
           } else {
+            session.user = isAuth;
             req.user = isAuth;
           }
         } catch (err) {
-          CookieManager.removeSsrCookie(req, res, AUTH_KEY);
-          CookieManager.removeSsrCookie(req, res, USER_KEY);
+          deleteCookie(AUTH_KEY, { res, req });
+          deleteCookie(USER_KEY, { res, req });
         }
       }
 
@@ -85,7 +89,7 @@ const AppWrapper = (App: any) => {
         ...appProps,
         initialReduxState: reduxStore.getState(),
         authentication: {
-          isAuth: isAuth?.id ? true : false,
+          isAuth: isAuth?.username ? true : false,
           user: isAuth,
         },
       };

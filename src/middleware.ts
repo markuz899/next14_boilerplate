@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const pathname = url.pathname;
   const origin = process.env.NEXT_PUBLIC_SITE_URL;
-  if (request.nextUrl.pathname.startsWith("/about")) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  // if (request.nextUrl.pathname.startsWith("/about")) {
+  //   return NextResponse.redirect(new URL("/", request.url));
+  // }
 }

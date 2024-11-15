@@ -7,19 +7,21 @@ import Link from "next/link";
 import { Toast } from "@/utils/toast";
 import { Button, Icon, Input, Modal } from "@/components";
 
-export default function Login({ global }: GlobalPageProps) {
-  const { login, logout } = useAuth();
+export default function Register({ global }: GlobalPageProps) {
+  const { register, logout } = useAuth();
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
     const formData = new FormData(event.currentTarget);
+    const username = formData.get("username");
+    const surname = formData.get("surname");
     const email = formData.get("email");
     const password = formData.get("password");
-    const loginService = await login({ identifier: email, password });
+    const loginService = await register({ username, surname, email, password });
     if (loginService.error) {
-      Toast({ type: "error", message: loginService.messages });
+      Toast({ type: "error", message: loginService?.messages });
     } else {
       Toast({ type: "success", message: "Login success" });
     }
@@ -44,8 +46,8 @@ export default function Login({ global }: GlobalPageProps) {
                   <Link href="/">
                     <Button>Home</Button>
                   </Link>
-                  <Link href="/register">
-                    <Button>Registrati</Button>
+                  <Link href="/login">
+                    <Button>Signin</Button>
                   </Link>
                   <Button kind="error" onClick={logout}>
                     Logout
@@ -60,10 +62,30 @@ export default function Login({ global }: GlobalPageProps) {
                 >
                   <div>
                     <Input
+                      defaultValue="Bob"
+                      type="text"
+                      name="username"
+                      placeholder="name@company.com"
+                      topPlaceholder="Bob"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      defaultValue="Rossi"
+                      type="text"
+                      name="surname"
+                      placeholder="Rossi"
+                      topPlaceholder="Email"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Input
                       defaultValue="name@company.com"
                       type="text"
                       name="email"
-                      placeholder="name@company.com"
+                      placeholder="name@email.com"
                       topPlaceholder="Email"
                       required
                     />
